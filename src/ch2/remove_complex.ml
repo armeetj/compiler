@@ -10,41 +10,61 @@ let gen_temp_name () = fresh ~base:"$tmp" ~sep:"."
 (* Convert an expression which needs to become atomic.
  * Return the atomic expression as well as a list of
  * names bound to complex operands. *)
-let rec rco_atom (e : L.exp) binding_lst : (var * exp) list * atm =
+
+let rec rco_atom (e : L.exp) : (var * exp) list * atm =
   match e with
-  | L.Int i -> (binding_lst, Int i)
-  | L.Var v -> (binding_lst, Var v)
+  | L.Int i -> ([], Int i)
+  | L.Var v -> ([], Var v)
   | L.Read ->
+      let exp = Read in
       let sym = gen_temp_name () in
-      let exp = Let (sym, Read, Atm (Var sym)) in
-      ((sym, exp) :: binding_lst, Var sym)
+      ([ (sym, exp) ], Var sym)
   | L.Negate e ->
+      let binding_lst, e_atm = rco_atom e in
       let sym = gen_temp_name () in
-      let binding_lst, e_atm = rco_atom e binding_lst in
       ((sym, Negate e_atm) :: binding_lst, Var sym)
   | L.Add (e1, e2) ->
+      let binding_lst_1, e1_atm = rco_atom e1 in
+      let binding_lst_2, e2_atm = rco_atom e2 in
+      let binding_list = binding_lst_2 @ binding_lst_1 in
       let sym = gen_temp_name () in
-      let binding_lst, e1_atm = rco_atom e1 binding_lst in
-      let binding_lst, e2_atm = rco_atom e2 binding_lst in
-      ((sym, Add (e1_atm, e2_atm)) :: binding_lst, Var sym)
+      ((sym, Add (e1_atm, e2_atm)) :: binding_list, Var sym)
   | L.Sub (e1, e2) ->
+      let binding_lst_1, e1_atm = rco_atom e1 in
+      let binding_lst_2, e2_atm = rco_atom e2 in
+      let binding_list = binding_lst_2 @ binding_lst_1 in
       let sym = gen_temp_name () in
-      let binding_lst, e1_atm = rco_atom e1 binding_lst in
-      let binding_lst, e2_atm = rco_atom e2 binding_lst in
-      ((sym, Sub (e1_atm, e2_atm)) :: binding_lst, Var sym)
-  | L.Let (v, e1, e2) -> (* this is wrong, we have to figure out how to handle this *)
-      let sym = gen_temp_name () in
-      ((sym, Let (v, rco_exp e1, rco_exp e2)) :: binding_lst, Var sym)
+      ((sym, Sub (e1_atm, e2_atm)) :: binding_list, Var sym)
+  | L.Let (v, e1, e2) ->
+      let e1 = rco_exp e1 in
+      let binding_lst_2, e2_atm = rco_atom e2 in
+      (binding_lst_2 @ [ (v, e1) ], e2_atm)
 
 and rco_exp (e : L.exp) : exp =
-  let rec construct (e : L.exp) : exp =
-    let bindings_lst, exp_atm = rco_atom e [] in
-    (* let () = (sexp_of_atm exp_atm) |> print_sexp in
-       let () = Printf.printf("!!!") in *)
-    Atm (Var "todo")
+  let rec construct (binding_lst : (var * exp) list) atm : exp =
+    match binding_lst with
+    | [] -> atm
+    | (v, e) :: rest -> Let (v, e, construct rest atm)
   in
-
-  construct e
+  match e with
+  | L.Int i -> Atm (Int i)
+  | L.Var v -> Atm (Var v)
+  | L.Read -> Read
+  | L.Let (v, e1, e2) -> Let (v, rco_exp e1, rco_exp e2)
+  | L.Add (e1, e2) ->
+      let bindings_lst1, e1_atm = rco_atom e1 in
+      let bindings_lst2, e2_atm = rco_atom e2 in
+      let bindings_lst = List.rev (bindings_lst2 @ bindings_lst1) in
+      construct bindings_lst (Add (e1_atm, e2_atm))
+  | L.Sub (e1, e2) ->
+      let bindings_lst1, e1_atm = rco_atom e1 in
+      let bindings_lst2, e2_atm = rco_atom e2 in
+      let bindings_lst = List.rev (bindings_lst2 @ bindings_lst1) in
+      construct bindings_lst (Sub (e1_atm, e2_atm))
+  | L.Negate e ->
+      let bindings_lst, e_atm = rco_atom e in
+      let bindings_lst = List.rev bindings_lst in
+      construct bindings_lst (Negate e_atm)
 
 let remove_complex_operands (prog : L.program) : program =
   let (L.Program exp) = prog in

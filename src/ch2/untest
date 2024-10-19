@@ -1,0 +1,765 @@
+reference/var_test_1.un : OK
+reference/var_test_2.un : OK
+reference/var_test_3.un : OK
+reference/var_test_4.un : OK
+reference/var_test_5.un : OK
+reference/var_test_6.un : OK
+reference/var_test_7.un : OK
+reference/var_test_8.un : DIFFERENT
+----
+5c5,8
+<     (Add (Var x.2) (Var x.1))))
+---
+>     (Let
+>       x.2
+>       (Atm (Int 22))
+>       (Add (Var x.2) (Var x.1)))))
+----
+reference/var_test_9.un : OK
+reference/var_test_10.un : OK
+reference/var_test_11.un : DIFFERENT
+----
+7c7,10
+<       (Add (Var x.1) (Var x.2)))
+---
+>       (Let
+>         x.2
+>         (Atm (Int 22))
+>         (Add (Var x.1) (Var x.2))))
+----
+reference/var_test_12.un : OK
+reference/var_test_13.un : OK
+reference/var_test_14.un : OK
+reference/var_test_15.un : OK
+reference/var_test_16.un : OK
+reference/var_test_17.un : OK
+reference/var_test_18.un : OK
+reference/var_test_19.un : OK
+reference/var_test_20.un : OK
+reference/var_test_21.un : OK
+reference/var_test_22.un : OK
+reference/var_test_23.un : OK
+reference/var_test_24.un : OK
+reference/var_test_25.un : OK
+reference/var_test_26.un : OK
+reference/var_test_27.un : OK
+reference/var_test_28.un : OK
+reference/var_test_29.un : OK
+reference/var_test_30.un : OK
+reference/var_test_31.un : OK
+reference/var_test_32.un : DIFFERENT
+----
+1c1,5
+< (Program (Add (Var b.1) (Var c.1)))
+---
+> (Program
+>   (Let
+>     b.1
+>     Read
+>     (Let c.1 Read (Add (Var b.1) (Var c.1)))))
+----
+reference/var_test_33.un : OK
+reference/var_test_34.un : OK
+reference/var_test_35.un : OK
+reference/var_test_36.un : DIFFERENT
+----
+5c5,17
+<     (Let y.1 Read (Add (Var x.1) (Var z.1)))))
+---
+>     (Let
+>       y.1
+>       Read
+>       (Let
+>         z.1
+>         Read
+>         (Let
+>           $tmp.1
+>           (Negate (Var y.1))
+>           (Let
+>             $tmp.2
+>             (Add (Var z.1) (Var $tmp.1))
+>             (Add (Var x.1) (Var $tmp.2))))))))
+----
+reference/var_test_37.un : OK
+reference/var_test_38.un : OK
+reference/var_test_39.un : OK
+reference/var_test_40.un : OK
+reference/var_test_41.un : OK
+reference/var_test_42.un : OK
+reference/var_test_43.un : OK
+reference/var_test_44.un : DIFFERENT
+----
+5c5,8
+<     (Sub (Var x.2) (Var x.1))))
+---
+>     (Let
+>       x.2
+>       (Atm (Int 22))
+>       (Sub (Var x.2) (Var x.1)))))
+----
+reference/var_test_45.un : OK
+reference/var_test_46.un : OK
+reference/var_test_47.un : OK
+reference/var_test_48.un : DIFFERENT
+----
+3,4c3,4
+<     $tmp.1
+<     (Add (Var g4335.1) (Int 1))
+---
+>     g4294.1
+>     (Atm (Int 1))
+6,7c6,7
+<       $tmp.2
+<       (Add (Var g4333.1) (Var $tmp.1))
+---
+>       g4295.1
+>       (Atm (Int 1))
+9,10c9,10
+<         $tmp.3
+<         (Add (Var g4332.1) (Var $tmp.2))
+---
+>         g4296.1
+>         (Atm (Int 1))
+12,13c12,13
+<           $tmp.4
+<           (Add (Var g4331.1) (Var $tmp.3))
+---
+>           g4297.1
+>           (Atm (Int 1))
+15,16c15,16
+<             $tmp.5
+<             (Add (Var g4330.1) (Var $tmp.4))
+---
+>             g4298.1
+>             (Atm (Int 1))
+18,19c18,19
+<               $tmp.6
+<               (Add (Var g4329.1) (Var $tmp.5))
+---
+>               g4299.1
+>               (Atm (Int 1))
+21,22c21,22
+<                 $tmp.7
+<                 (Add (Var g4328.1) (Var $tmp.6))
+---
+>                 g4300.1
+>                 (Atm (Int 1))
+24,25c24,25
+<                   $tmp.8
+<                   (Add (Var g4327.1) (Var $tmp.7))
+---
+>                   g4301.1
+>                   (Atm (Int 1))
+27,28c27,28
+<                     $tmp.9
+<                     (Add (Var g4326.1) (Var $tmp.8))
+---
+>                     g4302.1
+>                     (Atm (Int 1))
+30,31c30,31
+<                       $tmp.10
+<                       (Add (Var g4325.1) (Var $tmp.9))
+---
+>                       g4303.1
+>                       (Atm (Int 1))
+33,34c33,34
+<                         $tmp.11
+<                         (Add (Var g4324.1) (Var $tmp.10))
+---
+>                         g4304.1
+>                         (Atm (Int 1))
+36,37c36,37
+<                           $tmp.12
+<                           (Add (Var g4323.1) (Var $tmp.11))
+---
+>                           g4305.1
+>                           (Atm (Int 1))
+39,40c39,40
+<                             $tmp.13
+<                             (Add (Var g4322.1) (Var $tmp.12))
+---
+>                             g4306.1
+>                             (Atm (Int 1))
+42,43c42,43
+<                               $tmp.14
+<                               (Add (Var g4321.1) (Var $tmp.13))
+---
+>                               g4307.1
+>                               (Atm (Int 1))
+45,46c45,46
+<                                 $tmp.15
+<                                 (Add (Var g4320.1) (Var $tmp.14))
+---
+>                                 g4308.1
+>                                 (Atm (Int 1))
+48,49c48,49
+<                                   $tmp.16
+<                                   (Add (Var g4319.1) (Var $tmp.15))
+---
+>                                   g4309.1
+>                                   (Atm (Int 1))
+51,52c51,52
+<                                     $tmp.17
+<                                     (Add (Var g4318.1) (Var $tmp.16))
+---
+>                                     g4310.1
+>                                     (Atm (Int 1))
+54,55c54,55
+<                                       $tmp.18
+<                                       (Add (Var g4317.1) (Var $tmp.17))
+---
+>                                       g4311.1
+>                                       (Atm (Int 1))
+57,58c57,58
+<                                         $tmp.19
+<                                         (Add (Var g4316.1) (Var $tmp.18))
+---
+>                                         g4312.1
+>                                         (Atm (Int 1))
+60,61c60,61
+<                                           $tmp.20
+<                                           (Add (Var g4315.1) (Var $tmp.19))
+---
+>                                           g4313.1
+>                                           (Atm (Int 1))
+63,64c63,64
+<                                             $tmp.21
+<                                             (Add (Var g4314.1) (Var $tmp.20))
+---
+>                                             g4314.1
+>                                             (Atm (Int 1))
+66,67c66,67
+<                                               $tmp.22
+<                                               (Add (Var g4313.1) (Var $tmp.21))
+---
+>                                               g4315.1
+>                                               (Atm (Int 1))
+69,70c69,70
+<                                                 $tmp.23
+<                                                 (Add (Var g4312.1) (Var $tmp.22))
+---
+>                                                 g4316.1
+>                                                 (Atm (Int 1))
+72,73c72,73
+<                                                   $tmp.24
+<                                                   (Add (Var g4311.1) (Var $tmp.23))
+---
+>                                                   g4317.1
+>                                                   (Atm (Int 1))
+75,76c75,76
+<                                                     $tmp.25
+<                                                     (Add (Var g4310.1) (Var $tmp.24))
+---
+>                                                     g4318.1
+>                                                     (Atm (Int 1))
+78,79c78,79
+<                                                       $tmp.26
+<                                                       (Add (Var g4309.1) (Var $tmp.25))
+---
+>                                                       g4319.1
+>                                                       (Atm (Int 1))
+81,82c81,82
+<                                                         $tmp.27
+<                                                         (Add (Var g4308.1) (Var $tmp.26))
+---
+>                                                         g4320.1
+>                                                         (Atm (Int 1))
+84,85c84,85
+<                                                           $tmp.28
+<                                                           (Add (Var g4307.1) (Var $tmp.27))
+---
+>                                                           g4321.1
+>                                                           (Atm (Int 1))
+87,88c87,88
+<                                                             $tmp.29
+<                                                             (Add (Var g4306.1) (Var $tmp.28))
+---
+>                                                             g4322.1
+>                                                             (Atm (Int 1))
+90,91c90,91
+<                                                               $tmp.30
+<                                                               (Add (Var g4305.1) (Var $tmp.29))
+---
+>                                                               g4323.1
+>                                                               (Atm (Int 1))
+93,94c93,94
+<                                                                 $tmp.31
+<                                                                 (Add (Var g4304.1) (Var $tmp.30))
+---
+>                                                                 g4324.1
+>                                                                 (Atm (Int 1))
+96,97c96,97
+<                                                                   $tmp.32
+<                                                                   (Add (Var g4303.1) (Var $tmp.31))
+---
+>                                                                   g4325.1
+>                                                                   (Atm (Int 1))
+99,100c99,100
+<                                                                     $tmp.33
+<                                                                     (Add (Var g4302.1) (Var $tmp.32))
+---
+>                                                                     g4326.1
+>                                                                     (Atm (Int 1))
+102,103c102,103
+<                                                                       $tmp.34
+<                                                                       (Add (Var g4301.1) (Var $tmp.33))
+---
+>                                                                       g4327.1
+>                                                                       (Atm (Int 1))
+105,106c105,106
+<                                                                         $tmp.35
+<                                                                         (Add (Var g4300.1) (Var $tmp.34))
+---
+>                                                                         g4328.1
+>                                                                         (Atm (Int 1))
+108,109c108,109
+<                                                                           $tmp.36
+<                                                                           (Add (Var g4299.1) (Var $tmp.35))
+---
+>                                                                           g4329.1
+>                                                                           (Atm (Int 1))
+111,112c111,112
+<                                                                             $tmp.37
+<                                                                             (Add (Var g4298.1) (Var $tmp.36))
+---
+>                                                                             g4330.1
+>                                                                             (Atm (Int 1))
+114,115c114,115
+<                                                                               $tmp.38
+<                                                                               (Add (Var g4297.1) (Var $tmp.37))
+---
+>                                                                               g4331.1
+>                                                                               (Atm (Int 1))
+117,118c117,118
+<                                                                                 $tmp.39
+<                                                                                 (Add (Var g4296.1) (Var $tmp.38))
+---
+>                                                                                 g4332.1
+>                                                                                 (Atm (Int 1))
+120,122c120,245
+<                                                                                   $tmp.40
+<                                                                                   (Add (Var g4295.1) (Var $tmp.39))
+<                                                                                   (Add (Var g4294.1) (Var $tmp.40)))))))))))))))))))))))))))))))))))))))))))
+---
+>                                                                                   g4333.1
+>                                                                                   (Atm (Int 1))
+>                                                                                   (Let
+>                                                                                     g4335.1
+>                                                                                     (Atm (Int 1))
+>                                                                                     (Let
+>                                                                                       $tmp.1
+>                                                                                       (Add (Var g4335.1) (Int 1))
+>                                                                                       (Let
+>                                                                                         $tmp.2
+>                                                                                         (Add (Var g4333.1) (Var $tmp.1))
+>                                                                                         (Let
+>                                                                                           $tmp.3
+>                                                                                           (Add (Var g4332.1) (Var $tmp.2))
+>                                                                                           (Let
+>                                                                                             $tmp.4
+>                                                                                             (Add (Var g4331.1) (Var $tmp.3))
+>                                                                                             (Let
+>                                                                                               $tmp.5
+>                                                                                               (Add (Var g4330.1) (Var $tmp.4))
+>                                                                                               (Let
+>                                                                                                 $tmp.6
+>                                                                                                 (Add (Var g4329.1) (Var $tmp.5))
+>                                                                                                 (Let
+>                                                                                                   $tmp.7
+>                                                                                                   (Add (Var g4328.1) (Var $tmp.6))
+>                                                                                                   (Let
+>                                                                                                     $tmp.8
+>                                                                                                     (Add (Var g4327.1) (Var $tmp.7))
+>                                                                                                     (Let
+>                                                                                                       $tmp.9
+>                                                                                                       (Add (Var g4326.1) (Var $tmp.8))
+>                                                                                                       (Let
+>                                                                                                         $tmp.10
+>                                                                                                         (Add (Var g4325.1) (Var $tmp.9))
+>                                                                                                         (Let
+>                                                                                                           $tmp.11
+>                                                                                                           (Add (Var g4324.1) (Var $tmp.10))
+>                                                                                                           (Let
+>                                                                                                             $tmp.12
+>                                                                                                             (Add (Var g4323.1) (Var $tmp.11))
+>                                                                                                             (Let
+>                                                                                                               $tmp.13
+>                                                                                                               (Add (Var g4322.1) (Var $tmp.12))
+>                                                                                                               (Let
+>                                                                                                                 $tmp.14
+>                                                                                                                 (Add (Var g4321.1) (Var $tmp.13))
+>                                                                                                                 (Let
+>                                                                                                                   $tmp.15
+>                                                                                                                   (Add (Var g4320.1) (Var $tmp.14))
+>                                                                                                                   (Let
+>                                                                                                                     $tmp.16
+>                                                                                                                     (Add (Var g4319.1) (Var $tmp.15))
+>                                                                                                                     (Let
+>                                                                                                                       $tmp.17
+>                                                                                                                       (Add (Var g4318.1) (Var $tmp.16))
+>                                                                                                                       (Let
+>                                                                                                                         $tmp.18
+>                                                                                                                         (Add (Var g4317.1) (Var $tmp.17))
+>                                                                                                                         (Let
+>                                                                                                                           $tmp.19
+>                                                                                                                           (Add (Var g4316.1) (Var $tmp.18))
+>                                                                                                                           (Let
+>                                                                                                                             $tmp.20
+>                                                                                                                             (Add (Var g4315.1) (Var $tmp.19))
+>                                                                                                                             (Let
+>                                                                                                                               $tmp.21
+>                                                                                                                               (Add (Var g4314.1) (Var $tmp.20))
+>                                                                                                                               (Let
+>                                                                                                                                 $tmp.22
+>                                                                                                                                 (Add (Var g4313.1) (Var $tmp.21))
+>                                                                                                                                 (Let
+>                                                                                                                                   $tmp.23
+>                                                                                                                                   (Add (Var g4312.1) (Var $tmp.22))
+>                                                                                                                                   (Let
+>                                                                                                                                     $tmp.24
+>                                                                                                                                     (Add (Var g4311.1) (Var $tmp.23))
+>                                                                                                                                     (Let
+>                                                                                                                                       $tmp.25
+>                                                                                                                                       (Add (Var g4310.1) (Var $tmp.24))
+>                                                                                                                                       (Let
+>                                                                                                                                         $tmp.26
+>                                                                                                                                         (Add (Var g4309.1) (Var $tmp.25))
+>                                                                                                                                         (Let
+>                                                                                                                                           $tmp.27
+>                                                                                                                                           (Add (Var g4308.1) (Var $tmp.26))
+>                                                                                                                                           (Let
+>                                                                                                                                             $tmp.28
+>                                                                                                                                             (Add (Var g4307.1) (Var $tmp.27))
+>                                                                                                                                             (Let
+>                                                                                                                                               $tmp.29
+>                                                                                                                                               (Add (Var g4306.1) (Var $tmp.28))
+>                                                                                                                                               (Let
+>                                                                                                                                                 $tmp.30
+>                                                                                                                                                 (Add (Var g4305.1) (Var $tmp.29))
+>                                                                                                                                                 (Let
+>                                                                                                                                                   $tmp.31
+>                                                                                                                                                   (Add (Var g4304.1) (Var $tmp.30))
+>                                                                                                                                                   (Let
+>                                                                                                                                                     $tmp.32
+>                                                                                                                                                     (Add (Var g4303.1) (Var $tmp.31))
+>                                                                                                                                                     (Let
+>                                                                                                                                                       $tmp.33
+>                                                                                                                                                       (Add (Var g4302.1) (Var $tmp.32))
+>                                                                                                                                                       (Let
+>                                                                                                                                                         $tmp.34
+>                                                                                                                                                         (Add (Var g4301.1) (Var $tmp.33))
+>                                                                                                                                                         (Let
+>                                                                                                                                                           $tmp.35
+>                                                                                                                                                           (Add (Var g4300.1) (Var $tmp.34))
+>                                                                                                                                                           (Let
+>                                                                                                                                                             $tmp.36
+>                                                                                                                                                             (Add (Var g4299.1) (Var $tmp.35))
+>                                                                                                                                                             (Let
+>                                                                                                                                                               $tmp.37
+>                                                                                                                                                               (Add (Var g4298.1) (Var $tmp.36))
+>                                                                                                                                                               (Let
+>                                                                                                                                                                 $tmp.38
+>                                                                                                                                                                 (Add (Var g4297.1) (Var $tmp.37))
+>                                                                                                                                                                 (Let
+>                                                                                                                                                                   $tmp.39
+>                                                                                                                                                                   (Add (Var g4296.1) (Var $tmp.38))
+>                                                                                                                                                                   (Let
+>                                                                                                                                                                     $tmp.40
+>                                                                                                                                                                     (Add (Var g4295.1) (Var $tmp.39))
+>                                                                                                                                                                     (Add (Var g4294.1) (Var $tmp.40))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))
+----
+reference/var_test_49.un : OK
+reference/var_test_50.un : DIFFERENT
+----
+5c5,8
+<     (Add (Var x.1) (Var x.2))))
+---
+>     (Let
+>       x.2
+>       (Atm (Int 22))
+>       (Add (Var x.1) (Var x.2)))))
+----
+reference/var_test_51.un : OK
+reference/var_test_52.un : DIFFERENT
+----
+1c1,8
+< (Program (Add (Var x.1) (Var x.2)))
+---
+> (Program
+>   (Let
+>     x.1
+>     (Atm (Int 10))
+>     (Let
+>       x.2
+>       (Atm (Int 32))
+>       (Add (Var x.1) (Var x.2)))))
+----
+reference/var_test_53.un : OK
+reference/var_test_54.un : OK
+reference/var_test_55.un : OK
+reference/var_test_56.un : OK
+reference/var_test_57.un : OK
+reference/var_test_58.un : OK
+reference/var_test_59.un : OK
+reference/var_test_60.un : OK
+reference/var_test_61.un : OK
+reference/var_test_62.un : OK
+reference/var_test_63.un : OK
+reference/var_test_64.un : OK
+reference/var_test_65.un : DIFFERENT
+----
+1c1,248
+< (Program (Add (Var a.1) (Var a.2)))
+---
+> (Program
+>   (Let
+>     a.1
+>     (Atm (Int 1))
+>     (Let
+>       b.1
+>       (Atm (Int 1))
+>       (Let
+>         c.1
+>         (Atm (Int 1))
+>         (Let
+>           d.1
+>           (Atm (Int 1))
+>           (Let
+>             e.1
+>             (Atm (Int 1))
+>             (Let
+>               f.1
+>               (Atm (Int 1))
+>               (Let
+>                 g.1
+>                 (Atm (Int 1))
+>                 (Let
+>                   h.1
+>                   (Atm (Int 1))
+>                   (Let
+>                     i.1
+>                     (Atm (Int 1))
+>                     (Let
+>                       j.1
+>                       (Atm (Int 1))
+>                       (Let
+>                         k.1
+>                         (Atm (Int 1))
+>                         (Let
+>                           l.1
+>                           (Atm (Int 1))
+>                           (Let
+>                             m.1
+>                             (Atm (Int 1))
+>                             (Let
+>                               n.1
+>                               (Atm (Int 1))
+>                               (Let
+>                                 o.1
+>                                 (Atm (Int 1))
+>                                 (Let
+>                                   p.1
+>                                   (Atm (Int 1))
+>                                   (Let
+>                                     q.1
+>                                     (Atm (Int 1))
+>                                     (Let
+>                                       r.1
+>                                       (Atm (Int 1))
+>                                       (Let
+>                                         s.1
+>                                         (Atm (Int 1))
+>                                         (Let
+>                                           t.1
+>                                           (Atm (Int 1))
+>                                           (Let
+>                                             u.1
+>                                             (Atm (Int 1))
+>                                             (Let
+>                                               $tmp.1
+>                                               (Add (Var t.1) (Var u.1))
+>                                               (Let
+>                                                 $tmp.2
+>                                                 (Add (Var s.1) (Var $tmp.1))
+>                                                 (Let
+>                                                   $tmp.3
+>                                                   (Add (Var r.1) (Var $tmp.2))
+>                                                   (Let
+>                                                     $tmp.4
+>                                                     (Add (Var q.1) (Var $tmp.3))
+>                                                     (Let
+>                                                       $tmp.5
+>                                                       (Add (Var p.1) (Var $tmp.4))
+>                                                       (Let
+>                                                         $tmp.6
+>                                                         (Add (Var o.1) (Var $tmp.5))
+>                                                         (Let
+>                                                           $tmp.7
+>                                                           (Add (Var n.1) (Var $tmp.6))
+>                                                           (Let
+>                                                             $tmp.8
+>                                                             (Add (Var m.1) (Var $tmp.7))
+>                                                             (Let
+>                                                               $tmp.9
+>                                                               (Add (Var l.1) (Var $tmp.8))
+>                                                               (Let
+>                                                                 $tmp.10
+>                                                                 (Add (Var k.1) (Var $tmp.9))
+>                                                                 (Let
+>                                                                   $tmp.11
+>                                                                   (Add (Var j.1) (Var $tmp.10))
+>                                                                   (Let
+>                                                                     $tmp.12
+>                                                                     (Add (Var i.1) (Var $tmp.11))
+>                                                                     (Let
+>                                                                       $tmp.13
+>                                                                       (Add (Var h.1) (Var $tmp.12))
+>                                                                       (Let
+>                                                                         $tmp.14
+>                                                                         (Add (Var g.1) (Var $tmp.13))
+>                                                                         (Let
+>                                                                           $tmp.15
+>                                                                           (Add (Var f.1) (Var $tmp.14))
+>                                                                           (Let
+>                                                                             $tmp.16
+>                                                                             (Add (Var e.1) (Var $tmp.15))
+>                                                                             (Let
+>                                                                               $tmp.17
+>                                                                               (Add (Var d.1) (Var $tmp.16))
+>                                                                               (Let
+>                                                                                 $tmp.18
+>                                                                                 (Add (Var c.1) (Var $tmp.17))
+>                                                                                 (Let
+>                                                                                   $tmp.19
+>                                                                                   (Add (Var b.1) (Var $tmp.18))
+>                                                                                   (Let
+>                                                                                     $tmp.20
+>                                                                                     (Add (Var a.1) (Var $tmp.19))
+>                                                                                     (Let
+>                                                                                       a.2
+>                                                                                       (Atm (Int 1))
+>                                                                                       (Let
+>                                                                                         b.2
+>                                                                                         (Atm (Int 1))
+>                                                                                         (Let
+>                                                                                           c.2
+>                                                                                           (Atm (Int 1))
+>                                                                                           (Let
+>                                                                                             d.2
+>                                                                                             (Atm (Int 1))
+>                                                                                             (Let
+>                                                                                               e.2
+>                                                                                               (Atm (Int 1))
+>                                                                                               (Let
+>                                                                                                 f.2
+>                                                                                                 (Atm (Int 1))
+>                                                                                                 (Let
+>                                                                                                   g.2
+>                                                                                                   (Atm (Int 1))
+>                                                                                                   (Let
+>                                                                                                     h.2
+>                                                                                                     (Atm (Int 1))
+>                                                                                                     (Let
+>                                                                                                       i.2
+>                                                                                                       (Atm (Int 1))
+>                                                                                                       (Let
+>                                                                                                         j.2
+>                                                                                                         (Atm (Int 1))
+>                                                                                                         (Let
+>                                                                                                           k.2
+>                                                                                                           (Atm (Int 1))
+>                                                                                                           (Let
+>                                                                                                             l.2
+>                                                                                                             (Atm (Int 1))
+>                                                                                                             (Let
+>                                                                                                               m.2
+>                                                                                                               (Atm (Int 1))
+>                                                                                                               (Let
+>                                                                                                                 n.2
+>                                                                                                                 (Atm (Int 1))
+>                                                                                                                 (Let
+>                                                                                                                   o.2
+>                                                                                                                   (Atm (Int 1))
+>                                                                                                                   (Let
+>                                                                                                                     p.2
+>                                                                                                                     (Atm (Int 1))
+>                                                                                                                     (Let
+>                                                                                                                       q.2
+>                                                                                                                       (Atm (Int 1))
+>                                                                                                                       (Let
+>                                                                                                                         r.2
+>                                                                                                                         (Atm (Int 1))
+>                                                                                                                         (Let
+>                                                                                                                           s.2
+>                                                                                                                           (Atm (Int 1))
+>                                                                                                                           (Let
+>                                                                                                                             t.2
+>                                                                                                                             (Atm (Int 1))
+>                                                                                                                             (Let
+>                                                                                                                               u.2
+>                                                                                                                               (Atm (Int 1))
+>                                                                                                                               (Let
+>                                                                                                                                 $tmp.21
+>                                                                                                                                 (Add (Var t.2) (Var u.2))
+>                                                                                                                                 (Let
+>                                                                                                                                   $tmp.22
+>                                                                                                                                   (Add (Var s.2) (Var $tmp.21))
+>                                                                                                                                   (Let
+>                                                                                                                                     $tmp.23
+>                                                                                                                                     (Add (Var r.2) (Var $tmp.22))
+>                                                                                                                                     (Let
+>                                                                                                                                       $tmp.24
+>                                                                                                                                       (Add (Var q.2) (Var $tmp.23))
+>                                                                                                                                       (Let
+>                                                                                                                                         $tmp.25
+>                                                                                                                                         (Add (Var p.2) (Var $tmp.24))
+>                                                                                                                                         (Let
+>                                                                                                                                           $tmp.26
+>                                                                                                                                           (Add (Var o.2) (Var $tmp.25))
+>                                                                                                                                           (Let
+>                                                                                                                                             $tmp.27
+>                                                                                                                                             (Add (Var n.2) (Var $tmp.26))
+>                                                                                                                                             (Let
+>                                                                                                                                               $tmp.28
+>                                                                                                                                               (Add (Var m.2) (Var $tmp.27))
+>                                                                                                                                               (Let
+>                                                                                                                                                 $tmp.29
+>                                                                                                                                                 (Add (Var l.2) (Var $tmp.28))
+>                                                                                                                                                 (Let
+>                                                                                                                                                   $tmp.30
+>                                                                                                                                                   (Add (Var k.2) (Var $tmp.29))
+>                                                                                                                                                   (Let
+>                                                                                                                                                     $tmp.31
+>                                                                                                                                                     (Add (Var j.2) (Var $tmp.30))
+>                                                                                                                                                     (Let
+>                                                                                                                                                       $tmp.32
+>                                                                                                                                                       (Add (Var i.2) (Var $tmp.31))
+>                                                                                                                                                       (Let
+>                                                                                                                                                         $tmp.33
+>                                                                                                                                                         (Add (Var h.2) (Var $tmp.32))
+>                                                                                                                                                         (Let
+>                                                                                                                                                           $tmp.34
+>                                                                                                                                                           (Add (Var g.2) (Var $tmp.33))
+>                                                                                                                                                           (Let
+>                                                                                                                                                             $tmp.35
+>                                                                                                                                                             (Add (Var f.2) (Var $tmp.34))
+>                                                                                                                                                             (Let
+>                                                                                                                                                               $tmp.36
+>                                                                                                                                                               (Add (Var e.2) (Var $tmp.35))
+>                                                                                                                                                               (Let
+>                                                                                                                                                                 $tmp.37
+>                                                                                                                                                                 (Add (Var d.2) (Var $tmp.36))
+>                                                                                                                                                                 (Let
+>                                                                                                                                                                   $tmp.38
+>                                                                                                                                                                   (Add (Var c.2) (Var $tmp.37))
+>                                                                                                                                                                   (Let
+>                                                                                                                                                                     $tmp.39
+>                                                                                                                                                                     (Add (Var b.2) (Var $tmp.38))
+>                                                                                                                                                                     (Let
+>                                                                                                                                                                       $tmp.40
+>                                                                                                                                                                       (Add (Var a.2) (Var $tmp.39))
+>                                                                                                                                                                       (Add (Var $tmp.20) (Var $tmp.40)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))
+----
+reference/var_test_66.un : OK
+reference/var_test_67.un : OK
+reference/var_test_68.un : OK
