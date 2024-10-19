@@ -1,5 +1,4 @@
 open Support
-open Support.Utils
 open Types
 open Lvar_mon
 module L = Lvar
