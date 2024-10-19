@@ -1,0 +1,13 @@
+(X86Program
+  (Info1
+    (locals_types
+      ((x.1 Integer)
+       (x.2 Integer)
+       (x.3 Integer))))
+  (((Label start)
+    (Block
+      ((Movq (Imm 99) (Var x.1))
+       (Movq (Imm 22) (Var x.2))
+       (Movq (Imm 42) (Var x.3))
+       (Movq (Var x.3) (Reg Rax))
+       (Jmp (Label conclusion)))))))

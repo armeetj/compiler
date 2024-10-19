@@ -1,0 +1,10 @@
+(X86Program
+  (Info1
+    (locals_types (($tmp.1 Integer))))
+  (((Label start)
+    (Block
+      ((Movq (Imm 5) (Var $tmp.1))
+       (Negq (Var $tmp.1))
+       (Movq (Imm 47) (Reg Rax))
+       (Addq (Var $tmp.1) (Reg Rax))
+       (Jmp (Label conclusion)))))))

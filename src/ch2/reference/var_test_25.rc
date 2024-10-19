@@ -1,0 +1,17 @@
+(Program
+  (Let
+    a.1
+    (Atm (Int 1))
+    (Let
+      b.1
+      (Atm (Int 42))
+      (Let
+        f.1
+        (Atm (Var b.1))
+        (Let
+          e.1
+          (Add (Var a.1) (Var b.1))
+          (Let
+            d.1
+            (Atm (Var f.1))
+            (Atm (Var d.1))))))))

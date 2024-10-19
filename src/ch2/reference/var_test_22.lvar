@@ -1,0 +1,17 @@
+(Program
+  (Let
+    v
+    (Int 1)
+    (Let
+      w
+      (Int 46)
+      (Let
+        x
+        (Add (Var v) (Int 7))
+        (Let
+          y
+          (Add (Int 4) (Var x))
+          (Let
+            z
+            (Add (Var x) (Var w))
+            (Add (Var z) (Negate (Var y)))))))))

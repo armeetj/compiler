@@ -1,0 +1,12 @@
+(library
+ (name support)
+ (modules utils functors ugraph dgraph priority_queue multigraph)
+ (libraries sexplib str unix)
+ (preprocess
+  (pps ppx_sexp_conv))
+ (modes byte))
+
+(env
+ (dev
+  (flags
+   (:standard -warn-error -A))))

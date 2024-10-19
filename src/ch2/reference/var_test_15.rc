@@ -1,0 +1,119 @@
+(Program
+  (Let
+    x1.1
+    Read
+    (Let
+      x2.1
+      Read
+      (Let
+        x3.1
+        Read
+        (Let
+          x4.1
+          Read
+          (Let
+            x5.1
+            Read
+            (Let
+              x6.1
+              Read
+              (Let
+                x7.1
+                Read
+                (Let
+                  x8.1
+                  Read
+                  (Let
+                    x9.1
+                    Read
+                    (Let
+                      x10.1
+                      Read
+                      (Let
+                        x11.1
+                        Read
+                        (Let
+                          x12.1
+                          Read
+                          (Let
+                            x13.1
+                            Read
+                            (Let
+                              x14.1
+                              Read
+                              (Let
+                                x15.1
+                                Read
+                                (Let
+                                  x16.1
+                                  Read
+                                  (Let
+                                    $tmp.1
+                                    (Negate (Var x2.1))
+                                    (Let
+                                      $tmp.2
+                                      (Add (Var x1.1) (Var $tmp.1))
+                                      (Let
+                                        $tmp.3
+                                        (Negate (Var x4.1))
+                                        (Let
+                                          $tmp.4
+                                          (Add (Var x3.1) (Var $tmp.3))
+                                          (Let
+                                            $tmp.5
+                                            (Add (Var $tmp.2) (Var $tmp.4))
+                                            (Let
+                                              $tmp.6
+                                              (Negate (Var x6.1))
+                                              (Let
+                                                $tmp.7
+                                                (Add (Var x5.1) (Var $tmp.6))
+                                                (Let
+                                                  $tmp.8
+                                                  (Negate (Var x8.1))
+                                                  (Let
+                                                    $tmp.9
+                                                    (Add (Var x7.1) (Var $tmp.8))
+                                                    (Let
+                                                      $tmp.10
+                                                      (Add (Var $tmp.7) (Var $tmp.9))
+                                                      (Let
+                                                        $tmp.11
+                                                        (Add (Var $tmp.5) (Var $tmp.10))
+                                                        (Let
+                                                          $tmp.12
+                                                          (Negate (Var x10.1))
+                                                          (Let
+                                                            $tmp.13
+                                                            (Add (Var x9.1) (Var $tmp.12))
+                                                            (Let
+                                                              $tmp.14
+                                                              (Negate (Var x12.1))
+                                                              (Let
+                                                                $tmp.15
+                                                                (Add (Var x11.1) (Var $tmp.14))
+                                                                (Let
+                                                                  $tmp.16
+                                                                  (Add (Var $tmp.13) (Var $tmp.15))
+                                                                  (Let
+                                                                    $tmp.17
+                                                                    (Negate (Var x14.1))
+                                                                    (Let
+                                                                      $tmp.18
+                                                                      (Add (Var x13.1) (Var $tmp.17))
+                                                                      (Let
+                                                                        $tmp.19
+                                                                        (Negate (Var x16.1))
+                                                                        (Let
+                                                                          $tmp.20
+                                                                          (Add (Var x15.1) (Var $tmp.19))
+                                                                          (Let
+                                                                            $tmp.21
+                                                                            (Add (Var $tmp.18) (Var $tmp.20))
+                                                                            (Let
+                                                                              $tmp.22
+                                                                              (Add (Var $tmp.16) (Var $tmp.21))
+                                                                              (Let
+                                                                                $tmp.23
+                                                                                (Add (Var $tmp.11) (Var $tmp.22))
+                                                                                (Add (Var $tmp.23) (Int 42))))))))))))))))))))))))))))))))))))))))))

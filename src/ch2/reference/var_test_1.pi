@@ -1,0 +1,6 @@
+(X86Program
+  (Info (stack_space 0))
+  (((Label start)
+    (Block
+      ((Movq (Imm 42) (Reg Rax))
+       (Jmp (Label conclusion)))))))

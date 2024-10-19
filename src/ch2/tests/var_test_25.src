@@ -1,0 +1,7 @@
+;; OUTPUT: 42
+(let (a 1)
+  (let (b 42)
+    (let (f b)
+      (let (e (+ a b))
+       (let (d f)
+          d)))))

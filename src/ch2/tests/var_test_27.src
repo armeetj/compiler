@@ -1,0 +1,3 @@
+;; INPUT: 21 ; 0
+;; OUTPUT: 42 ; 0
+(let (x (read)) (+ x x))

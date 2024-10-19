@@ -1,0 +1,5 @@
+(Program
+  (Let
+    b.1
+    Read
+    (Let c.1 Read (Add (Var b.1) (Var c.1)))))

@@ -1,0 +1,63 @@
+# Original
+_build/
+safe/
+*.o
+*.s
+*.exe
+compile
+*.zip
+
+# Compiled bytecode files
+*.cmo
+*.cma
+*.cmx
+*.cmxa
+*.o
+*.out
+
+# Interface and object files
+*.cmi
+*.cmti
+
+# Binaries and executable files
+*.exe
+*.bc
+*.native
+
+# Dependency management files
+_opam/
+
+# Build artifacts
+_build/
+*.d
+
+# Editor and IDE specific files
+*.swp
+*.swo
+*.vim
+*~
+.idea/
+.vscode/
+
+# Ocaml
+.dune/
+.opam-switch/
+
+# Log files
+*.log
+
+# Docs
+docs/
+doc/
+*.html
+*.css
+*.json
+*.svg
+*.png
+
+# Cache
+.ccls-cache/
+.DS_Store
+
+# Special Rule
+hidden*

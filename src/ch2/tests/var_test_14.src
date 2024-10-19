@@ -1,0 +1,6 @@
+;; INPUT: 0 0 ; 10 -10
+;; OUTPUT: 42 ; 42
+(let (x (read))
+  (let (y (read))
+    (+ (+ x y)
+       42)))

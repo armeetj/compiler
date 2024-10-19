@@ -1,0 +1,8 @@
+(Program
+  (Let
+    $tmp.1
+    Read
+    (Let
+      $tmp.2
+      (Add (Var $tmp.1) (Int 10))
+      (Negate (Var $tmp.2)))))

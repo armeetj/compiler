@@ -1,0 +1,13 @@
+(X86Program
+  (Info2 (stack_space 32))
+  (((Label start)
+    (Block
+      ((Movq (Imm 10) (Deref Rbp -8))
+       (Movq (Imm 15) (Deref Rbp -16))
+       (Movq (Deref Rbp -16) (Deref Rbp -24))
+       (Addq (Deref Rbp -16) (Deref Rbp -24))
+       (Movq (Imm 2) (Deref Rbp -32))
+       (Addq (Deref Rbp -24) (Deref Rbp -32))
+       (Movq (Deref Rbp -32) (Reg Rax))
+       (Addq (Deref Rbp -8) (Reg Rax))
+       (Jmp (Label conclusion)))))))

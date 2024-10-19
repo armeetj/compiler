@@ -1,0 +1,29 @@
+(Program
+  (Let
+    a
+    Read
+    (Let
+      b
+      Read
+      (Let
+        c
+        Read
+        (Let
+          d
+          Read
+          (Let
+            e
+            Read
+            (Let
+              f
+              Read
+              (Let
+                g
+                Read
+                (Let
+                  h
+                  Read
+                  (Let
+                    i
+                    Read
+                    (Let j Read (Let k Read (Int 42)))))))))))))

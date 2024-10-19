@@ -1,0 +1,17 @@
+(Program
+  (Let
+    x.1
+    Read
+    (Let
+      y.1
+      Read
+      (Let
+        z.1
+        Read
+        (Let
+          $tmp.1
+          (Negate (Var y.1))
+          (Let
+            $tmp.2
+            (Add (Var z.1) (Var $tmp.1))
+            (Add (Var x.1) (Var $tmp.2))))))))

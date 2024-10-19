@@ -1,0 +1,65 @@
+(Program
+  (Let
+    a.1
+    Read
+    (Let
+      b.1
+      Read
+      (Let
+        c.1
+        Read
+        (Let
+          d.1
+          Read
+          (Let
+            e.1
+            Read
+            (Let
+              f.1
+              Read
+              (Let
+                g.1
+                Read
+                (Let
+                  h.1
+                  Read
+                  (Let
+                    i.1
+                    Read
+                    (Let
+                      j.1
+                      Read
+                      (Let
+                        k.1
+                        Read
+                        (Let
+                          $tmp.1
+                          (Add (Var k.1) (Int 31))
+                          (Let
+                            $tmp.2
+                            (Add (Var j.1) (Var $tmp.1))
+                            (Let
+                              $tmp.3
+                              (Add (Var i.1) (Var $tmp.2))
+                              (Let
+                                $tmp.4
+                                (Add (Var h.1) (Var $tmp.3))
+                                (Let
+                                  $tmp.5
+                                  (Add (Var g.1) (Var $tmp.4))
+                                  (Let
+                                    $tmp.6
+                                    (Add (Var f.1) (Var $tmp.5))
+                                    (Let
+                                      $tmp.7
+                                      (Add (Var e.1) (Var $tmp.6))
+                                      (Let
+                                        $tmp.8
+                                        (Add (Var d.1) (Var $tmp.7))
+                                        (Let
+                                          $tmp.9
+                                          (Add (Var c.1) (Var $tmp.8))
+                                          (Let
+                                            $tmp.10
+                                            (Add (Var b.1) (Var $tmp.9))
+                                            (Add (Var a.1) (Var $tmp.10))))))))))))))))))))))))

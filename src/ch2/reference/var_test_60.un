@@ -1,0 +1,14 @@
+(Program
+  (Let
+    x.1
+    (Int 10)
+    (Let
+      y.1
+      (Int 15)
+      (Let
+        z.1
+        (Add (Var y.1) (Var y.1))
+        (Let
+          w.1
+          (Add (Int 2) (Var z.1))
+          (Add (Var w.1) (Var x.1)))))))

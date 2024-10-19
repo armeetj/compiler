@@ -1,0 +1,53 @@
+(Program
+  (Let
+    a.1
+    Read
+    (Let
+      b.1
+      Read
+      (Let
+        c.1
+        Read
+        (Let
+          d.1
+          Read
+          (Let
+            e.1
+            Read
+            (Let
+              f.1
+              Read
+              (Let
+                g.1
+                Read
+                (Let
+                  h.1
+                  Read
+                  (Let
+                    i.1
+                    Read
+                    (Let
+                      j.1
+                      Read
+                      (Let
+                        k.1
+                        Read
+                        (Add
+                          (Var a.1)
+                          (Add
+                            (Var b.1)
+                            (Add
+                              (Var c.1)
+                              (Add
+                                (Var d.1)
+                                (Add
+                                  (Var e.1)
+                                  (Add
+                                    (Var f.1)
+                                    (Add
+                                      (Var g.1)
+                                      (Add
+                                        (Var h.1)
+                                        (Add
+                                          (Var i.1)
+                                          (Add (Var j.1) (Add (Var k.1) (Int 31))))))))))))))))))))))))
