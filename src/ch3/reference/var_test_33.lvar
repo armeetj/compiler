@@ -1,0 +1,28 @@
+(Program
+  (Let
+    x1
+    Read
+    (Let
+      x2
+      Read
+      (Let
+        x3
+        Read
+        (Let
+          x4
+          Read
+          (Let
+            x5
+            Read
+            (Let
+              x6
+              Read
+              (Add
+                (Add
+                  (Add
+                    (Add (Var x1) (Negate (Var x2)))
+                    (Add (Var x3) (Negate (Var x4))))
+                  (Add
+                    (Add (Var x5) (Negate (Var x6)))
+                    (Int 0)))
+                (Int 42)))))))))

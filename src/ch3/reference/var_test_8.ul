@@ -1,0 +1,19 @@
+(X86Program
+  (Info1
+    (locals_types
+      ((x.1 Integer) (x.2 Integer))))
+  (((Label start)
+    (Block
+      (Binfo2
+        ((initial ((RegL Rsp)))
+         (afters
+           (((VarL x.1) (RegL Rsp))
+            ((VarL x.1) (VarL x.2) (RegL Rsp))
+            ((VarL x.1) (RegL Rsp) (RegL Rax))
+            ((RegL Rsp) (RegL Rax))
+            ()))))
+      ((Movq (Imm 20) (Var x.1))
+       (Movq (Imm 22) (Var x.2))
+       (Movq (Var x.2) (Reg Rax))
+       (Addq (Var x.1) (Reg Rax))
+       (Jmp (Label conclusion)))))))

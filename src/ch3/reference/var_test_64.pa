@@ -1,0 +1,95 @@
+start:
+    movq $1, %rsi
+    movq $1, %rdi
+    movq $1, %r8
+    movq $1, %r9
+    movq $1, %r10
+    movq $1, %rbx
+    movq $1, %r12
+    movq $1, %r13
+    movq $1, %r14
+    movq $1, -40(%rbp)
+    movq $1, -48(%rbp)
+    movq $1, -56(%rbp)
+    movq $1, -64(%rbp)
+    movq $1, -72(%rbp)
+    movq $1, -80(%rbp)
+    movq $1, -88(%rbp)
+    movq $1, -96(%rbp)
+    movq $1, -104(%rbp)
+    movq $1, -112(%rbp)
+    movq $1, %rcx
+    movq $1, %rdx
+    movq $1, -128(%rbp)
+    movq $9, -120(%rbp)
+    movq -120(%rbp), %rax
+    movq %rax, -136(%rbp)
+    movq -120(%rbp), %rax
+    addq %rax, -136(%rbp)
+    movq $2, -120(%rbp)
+    movq -136(%rbp), %rax
+    addq %rax, -120(%rbp)
+    movq -128(%rbp), %rax
+    addq %rax, -120(%rbp)
+    addq -120(%rbp), %rdx
+    addq %rdx, %rcx
+    movq -112(%rbp), %rdx
+    addq %rcx, %rdx
+    movq -104(%rbp), %rcx
+    addq %rdx, %rcx
+    movq -96(%rbp), %rdx
+    addq %rcx, %rdx
+    movq -88(%rbp), %rcx
+    addq %rdx, %rcx
+    movq -80(%rbp), %rdx
+    addq %rcx, %rdx
+    movq -72(%rbp), %rcx
+    addq %rdx, %rcx
+    movq -64(%rbp), %rdx
+    addq %rcx, %rdx
+    movq -56(%rbp), %rcx
+    addq %rdx, %rcx
+    movq -48(%rbp), %rdx
+    addq %rcx, %rdx
+    movq -40(%rbp), %rcx
+    addq %rdx, %rcx
+    movq %r14, %rdx
+    addq %rcx, %rdx
+    movq %r13, %rcx
+    addq %rdx, %rcx
+    movq %r12, %rdx
+    addq %rcx, %rdx
+    movq %rbx, %rcx
+    addq %rdx, %rcx
+    movq %r10, %rdx
+    addq %rcx, %rdx
+    movq %r9, %rcx
+    addq %rdx, %rcx
+    movq %r8, %rdx
+    addq %rcx, %rdx
+    movq %rdi, %rcx
+    addq %rdx, %rcx
+    movq %rsi, %rax
+    addq %rcx, %rax
+    jmp conclusion
+
+    .globl main
+
+main:
+    pushq %rbp
+    movq %rsp, %rbp
+    pushq %rbx
+    pushq %r12
+    pushq %r13
+    pushq %r14
+    subq $112, %rsp
+    jmp start
+
+conclusion:
+    addq $112, %rsp
+    popq %r14
+    popq %r13
+    popq %r12
+    popq %rbx
+    popq %rbp
+    retq

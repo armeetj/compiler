@@ -1,0 +1,7 @@
+(Program
+  (Let
+    x.1
+    (Int 14)
+    (Add
+      (Var x.1)
+      (Add (Var x.1) (Var x.1)))))

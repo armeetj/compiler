@@ -1,0 +1,21 @@
+start:
+    movq $20, %rcx
+    movq $22, %rbx
+    addq %rbx, %rcx
+    movq %rcx, %rax
+    jmp conclusion
+
+    .globl main
+
+main:
+    pushq %rbp
+    movq %rsp, %rbp
+    pushq %rbx
+    subq $8, %rsp
+    jmp start
+
+conclusion:
+    addq $8, %rsp
+    popq %rbx
+    popq %rbp
+    retq

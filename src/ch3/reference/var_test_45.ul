@@ -1,0 +1,18 @@
+(X86Program
+  (Info1
+    (locals_types (($tmp.1 Integer))))
+  (((Label start)
+    (Block
+      (Binfo2
+        ((initial ((RegL Rsp)))
+         (afters
+           (((RegL Rsp) (RegL Rax))
+            ((VarL $tmp.1) (RegL Rsp))
+            ((VarL $tmp.1) (RegL Rsp) (RegL Rax))
+            ((RegL Rsp) (RegL Rax))
+            ()))))
+      ((Callq (Label read_int) 0)
+       (Movq (Reg Rax) (Var $tmp.1))
+       (Movq (Imm 84) (Reg Rax))
+       (Subq (Var $tmp.1) (Reg Rax))
+       (Jmp (Label conclusion)))))))

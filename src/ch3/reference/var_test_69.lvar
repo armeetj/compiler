@@ -1,0 +1,5 @@
+(Program
+  (Let
+    a
+    (Let b (Let c (Int 1) (Var c)) (Var b))
+    (Var a)))

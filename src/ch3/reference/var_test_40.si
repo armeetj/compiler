@@ -1,0 +1,18 @@
+(X86Program
+  (Info1
+    (locals_types
+      (($tmp.1 Integer)
+       ($tmp.2 Integer)
+       ($tmp.3 Integer))))
+  (((Label start)
+    (Block
+      Binfo1
+      ((Movq (Imm 10) (Var $tmp.1))
+       (Addq (Imm 11) (Var $tmp.1))
+       (Movq (Imm 4) (Var $tmp.2))
+       (Negq (Var $tmp.2))
+       (Movq (Imm 25) (Var $tmp.3))
+       (Addq (Var $tmp.2) (Var $tmp.3))
+       (Movq (Var $tmp.1) (Reg Rax))
+       (Subq (Var $tmp.3) (Reg Rax))
+       (Jmp (Label conclusion)))))))

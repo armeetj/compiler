@@ -1,0 +1,36 @@
+(X86Program
+  (Info1
+    (locals_types
+      ((x.1 Integer)
+       (y.1 Integer)
+       (z.1 Integer)
+       (w.1 Integer))))
+  (((Label start)
+    (Block
+      (Binfo2
+        ((initial ((RegL Rsp)))
+         (afters
+           (((VarL x.1) (RegL Rsp))
+            ((VarL x.1) (VarL y.1) (RegL Rsp))
+            ((VarL x.1)
+             (VarL y.1)
+             (VarL z.1)
+             (RegL Rsp))
+            ((VarL x.1) (VarL z.1) (RegL Rsp))
+            ((VarL w.1)
+             (VarL x.1)
+             (VarL z.1)
+             (RegL Rsp))
+            ((VarL w.1) (VarL x.1) (RegL Rsp))
+            ((VarL x.1) (RegL Rsp) (RegL Rax))
+            ((RegL Rsp) (RegL Rax))
+            ()))))
+      ((Movq (Imm 10) (Var x.1))
+       (Movq (Imm 15) (Var y.1))
+       (Movq (Var y.1) (Var z.1))
+       (Addq (Var y.1) (Var z.1))
+       (Movq (Imm 2) (Var w.1))
+       (Addq (Var z.1) (Var w.1))
+       (Movq (Var w.1) (Reg Rax))
+       (Addq (Var x.1) (Reg Rax))
+       (Jmp (Label conclusion)))))))

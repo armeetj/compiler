@@ -1,0 +1,55 @@
+start:
+    callq read_int
+    movq %rax, %rbx
+    callq read_int
+    movq %rax, -16(%rbp)
+    callq read_int
+    movq %rax, -24(%rbp)
+    callq read_int
+    movq %rax, -32(%rbp)
+    callq read_int
+    movq %rax, -40(%rbp)
+    callq read_int
+    movq %rax, -48(%rbp)
+    callq read_int
+    movq %rax, -56(%rbp)
+    callq read_int
+    movq %rax, -64(%rbp)
+    callq read_int
+    movq %rax, -72(%rbp)
+    callq read_int
+    movq %rax, -80(%rbp)
+    callq read_int
+    movq %rax, %rcx
+    addq $31, %rcx
+    addq %rcx, -80(%rbp)
+    movq -72(%rbp), %rcx
+    addq -80(%rbp), %rcx
+    addq %rcx, -64(%rbp)
+    movq -56(%rbp), %rcx
+    addq -64(%rbp), %rcx
+    addq %rcx, -48(%rbp)
+    movq -40(%rbp), %rcx
+    addq -48(%rbp), %rcx
+    addq %rcx, -32(%rbp)
+    movq -24(%rbp), %rcx
+    addq -32(%rbp), %rcx
+    addq %rcx, -16(%rbp)
+    movq %rbx, %rax
+    addq -16(%rbp), %rax
+    jmp conclusion
+
+    .globl main
+
+main:
+    pushq %rbp
+    movq %rsp, %rbp
+    pushq %rbx
+    subq $72, %rsp
+    jmp start
+
+conclusion:
+    addq $72, %rsp
+    popq %rbx
+    popq %rbp
+    retq

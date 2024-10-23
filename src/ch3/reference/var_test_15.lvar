@@ -1,0 +1,66 @@
+(Program
+  (Let
+    x1
+    Read
+    (Let
+      x2
+      Read
+      (Let
+        x3
+        Read
+        (Let
+          x4
+          Read
+          (Let
+            x5
+            Read
+            (Let
+              x6
+              Read
+              (Let
+                x7
+                Read
+                (Let
+                  x8
+                  Read
+                  (Let
+                    x9
+                    Read
+                    (Let
+                      x10
+                      Read
+                      (Let
+                        x11
+                        Read
+                        (Let
+                          x12
+                          Read
+                          (Let
+                            x13
+                            Read
+                            (Let
+                              x14
+                              Read
+                              (Let
+                                x15
+                                Read
+                                (Let
+                                  x16
+                                  Read
+                                  (Add
+                                    (Add
+                                      (Add
+                                        (Add
+                                          (Add (Var x1) (Negate (Var x2)))
+                                          (Add (Var x3) (Negate (Var x4))))
+                                        (Add
+                                          (Add (Var x5) (Negate (Var x6)))
+                                          (Add (Var x7) (Negate (Var x8)))))
+                                      (Add
+                                        (Add
+                                          (Add (Var x9) (Negate (Var x10)))
+                                          (Add (Var x11) (Negate (Var x12))))
+                                        (Add
+                                          (Add (Var x13) (Negate (Var x14)))
+                                          (Add (Var x15) (Negate (Var x16))))))
+                                    (Int 42)))))))))))))))))))

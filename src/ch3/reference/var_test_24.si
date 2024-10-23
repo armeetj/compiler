@@ -1,0 +1,7 @@
+(X86Program
+  (Info1 (locals_types ()))
+  (((Label start)
+    (Block
+      Binfo1
+      ((Movq (Imm 47) (Reg Rax))
+       (Jmp (Label conclusion)))))))

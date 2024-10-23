@@ -1,0 +1,53 @@
+(Program
+  (Let
+    a
+    (Int 42)
+    (Let
+      b
+      (Var a)
+      (Let
+        c
+        (Var b)
+        (Let
+          d
+          (Var c)
+          (Let
+            e
+            (Var d)
+            (Let
+              f
+              (Var e)
+              (Let
+                g
+                (Var f)
+                (Let
+                  h
+                  (Var g)
+                  (Let
+                    i
+                    (Var h)
+                    (Let
+                      j
+                      (Var i)
+                      (Let
+                        k
+                        (Var j)
+                        (Let
+                          l
+                          (Var k)
+                          (Let
+                            m
+                            (Var l)
+                            (Let
+                              n
+                              (Var m)
+                              (Let
+                                o
+                                (Var n)
+                                (Let
+                                  p
+                                  (Var o)
+                                  (Let
+                                    q
+                                    (Var p)
+                                    (Let r (Var q) (Let s (Var r) (Var r)))))))))))))))))))))

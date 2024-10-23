@@ -1,0 +1,11 @@
+(Program
+  (Let
+    a
+    Read
+    (Let
+      b
+      Read
+      (Let
+        c
+        Read
+        (Add (Add (Var a) (Var b)) (Var c))))))

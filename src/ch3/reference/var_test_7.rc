@@ -1,0 +1,8 @@
+(Program
+  (Let
+    x.1
+    (Let z.1 (Atm (Int 22)) (Atm (Var z.1)))
+    (Let
+      y.1
+      (Atm (Int 20))
+      (Add (Var x.1) (Var y.1)))))

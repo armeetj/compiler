@@ -1,0 +1,25 @@
+start:
+    movq $10, %rbx
+    addq $11, %rbx
+    movq $4, -16(%rbp)
+    negq -16(%rbp)
+    movq $25, %rcx
+    addq -16(%rbp), %rcx
+    movq %rbx, %rax
+    addq %rcx, %rax
+    jmp conclusion
+
+    .globl main
+
+main:
+    pushq %rbp
+    movq %rsp, %rbp
+    pushq %rbx
+    subq $8, %rsp
+    jmp start
+
+conclusion:
+    addq $8, %rsp
+    popq %rbx
+    popq %rbp
+    retq

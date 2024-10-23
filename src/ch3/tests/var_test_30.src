@@ -1,0 +1,7 @@
+;; INPUT: 42
+;; OUTPUT: 42
+(let (a (read))
+  (let (b a)
+    (let (c b)
+      (let (d c)
+        d))))

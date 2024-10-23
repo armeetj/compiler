@@ -1,0 +1,27 @@
+start:
+    movq $30, %rbx
+    callq read_int
+    movq %rax, %r12
+    callq read_int
+    movq %rax, %rcx
+    subq %r12, %rcx
+    movq %rbx, %rax
+    addq %rcx, %rax
+    jmp conclusion
+
+    .globl main
+
+main:
+    pushq %rbp
+    movq %rsp, %rbp
+    pushq %rbx
+    pushq %r12
+    subq $0, %rsp
+    jmp start
+
+conclusion:
+    addq $0, %rsp
+    popq %r12
+    popq %rbx
+    popq %rbp
+    retq

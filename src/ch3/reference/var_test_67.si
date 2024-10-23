@@ -1,0 +1,21 @@
+(X86Program
+  (Info1
+    (locals_types
+      ((a.1 Integer)
+       (b.1 Integer)
+       (c.1 Integer)
+       ($tmp.1 Integer))))
+  (((Label start)
+    (Block
+      Binfo1
+      ((Callq (Label read_int) 0)
+       (Movq (Reg Rax) (Var a.1))
+       (Callq (Label read_int) 0)
+       (Movq (Reg Rax) (Var b.1))
+       (Callq (Label read_int) 0)
+       (Movq (Reg Rax) (Var c.1))
+       (Movq (Var a.1) (Var $tmp.1))
+       (Addq (Var b.1) (Var $tmp.1))
+       (Movq (Var $tmp.1) (Reg Rax))
+       (Addq (Var c.1) (Reg Rax))
+       (Jmp (Label conclusion)))))))

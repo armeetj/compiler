@@ -1,0 +1,37 @@
+(library
+  (name ch3)
+  (modules
+    types
+    ; data structures
+    graph_coloring
+    ; intermediate languages
+    lvar lvar_mon cvar x86_var x86_int x86_asm
+    ; definitional interpreters
+    interp_lvar interp_lvar_mon interp_cvar
+    ; parsing
+    parser
+    ; compiler passes
+    uniquify
+    remove_complex
+    explicate_control
+    select_instructions
+    uncover_live
+    build_interference
+    allocate_registers
+    patch_instructions
+    prelude_conclusion
+    print_asm
+    )
+  (libraries sexplib str unix support)
+  (preprocess (pps ppx_sexp_conv))
+  (modes byte))
+
+(executable
+  (name compile)
+  (libraries ch3)
+  (modules compile)
+  (modes byte) )
+
+(env
+  (dev
+    (flags (:standard -warn-error -A))))

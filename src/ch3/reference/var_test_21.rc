@@ -1,0 +1,14 @@
+(Program
+  (Let
+    x.1
+    (Atm (Int 30))
+    (Let
+      z.1
+      (Add (Var x.1) (Int 14))
+      (Let
+        y.1
+        (Atm (Int 2))
+        (Let
+          $tmp.1
+          (Negate (Var y.1))
+          (Add (Var z.1) (Var $tmp.1)))))))

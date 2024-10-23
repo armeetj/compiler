@@ -1,0 +1,16 @@
+(X86Program
+  (Info3
+    (locals_types
+      ((x.1 Integer)
+       (x.2 Integer)
+       (x.3 Integer)))
+    (num_spilled 0)
+    (used_callee ()))
+  (((Label start)
+    (Block
+      Binfo1
+      ((Movq (Imm 99) (Reg Rcx))
+       (Movq (Imm 22) (Reg Rcx))
+       (Movq (Imm 42) (Reg Rcx))
+       (Movq (Reg Rcx) (Reg Rax))
+       (Jmp (Label conclusion)))))))

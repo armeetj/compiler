@@ -1,0 +1,5 @@
+(Program
+  (Let
+    x.1
+    (Add (Int 42) (Negate (Int 10)))
+    (Add (Var x.1) (Int 10))))

@@ -1,0 +1,5 @@
+(Program
+  (Let
+    $tmp.1
+    (Negate (Int 5))
+    (Sub (Int 47) (Var $tmp.1))))

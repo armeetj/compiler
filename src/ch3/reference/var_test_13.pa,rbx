@@ -1,0 +1,76 @@
+start:
+    movq $1, -16(%rbp)
+    addq $1, -16(%rbp)
+    movq $1, %rbx
+    addq $1, %rbx
+    addq %rbx, -16(%rbp)
+    movq $1, %rbx
+    addq $1, %rbx
+    movq $1, -24(%rbp)
+    addq $1, -24(%rbp)
+    addq -24(%rbp), %rbx
+    movq -16(%rbp), %rax
+    movq %rax, -24(%rbp)
+    addq %rbx, -24(%rbp)
+    movq $1, -16(%rbp)
+    addq $1, -16(%rbp)
+    movq $1, %rbx
+    addq $1, %rbx
+    addq %rbx, -16(%rbp)
+    movq $1, %rbx
+    addq $1, %rbx
+    movq $1, -32(%rbp)
+    addq $1, -32(%rbp)
+    addq -32(%rbp), %rbx
+    addq %rbx, -16(%rbp)
+    movq -24(%rbp), %rbx
+    addq -16(%rbp), %rbx
+    movq $1, -16(%rbp)
+    addq $1, -16(%rbp)
+    movq $1, -24(%rbp)
+    addq $1, -24(%rbp)
+    movq -24(%rbp), %rax
+    addq %rax, -16(%rbp)
+    movq $1, -24(%rbp)
+    addq $1, -24(%rbp)
+    movq $1, -32(%rbp)
+    addq $1, -32(%rbp)
+    movq -32(%rbp), %rax
+    addq %rax, -24(%rbp)
+    movq -24(%rbp), %rax
+    addq %rax, -16(%rbp)
+    movq $1, -24(%rbp)
+    addq $1, -24(%rbp)
+    movq $1, -32(%rbp)
+    addq $1, -32(%rbp)
+    movq -32(%rbp), %rax
+    addq %rax, -24(%rbp)
+    movq $1, -32(%rbp)
+    addq $1, -32(%rbp)
+    movq $1, -40(%rbp)
+    addq $1, -40(%rbp)
+    movq -40(%rbp), %rax
+    addq %rax, -32(%rbp)
+    movq -32(%rbp), %rax
+    addq %rax, -24(%rbp)
+    movq -24(%rbp), %rax
+    addq %rax, -16(%rbp)
+    addq -16(%rbp), %rbx
+    movq $10, %rax
+    addq %rbx, %rax
+    jmp conclusion
+
+    .globl main
+
+main:
+    pushq %rbp
+    movq %rsp, %rbp
+    pushq %rbx
+    subq $40, %rsp
+    jmp start
+
+conclusion:
+    addq $40, %rsp
+    popq %rbx
+    popq %rbp
+    retq

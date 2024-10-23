@@ -1,0 +1,97 @@
+start:
+    movq $1, %rdx
+    addq $1, %rdx
+    movq $1, %rcx
+    addq %rdx, %rcx
+    movq $1, %rdx
+    addq %rcx, %rdx
+    movq $1, %rcx
+    addq %rdx, %rcx
+    movq $1, %rdx
+    addq %rcx, %rdx
+    movq $1, %rcx
+    addq %rdx, %rcx
+    movq $1, %rdx
+    addq %rcx, %rdx
+    movq $1, %rcx
+    addq %rdx, %rcx
+    movq $1, %rdx
+    addq %rcx, %rdx
+    movq $1, %rcx
+    addq %rdx, %rcx
+    movq $1, %rdx
+    addq %rcx, %rdx
+    movq $1, %rcx
+    addq %rdx, %rcx
+    movq $1, %rdx
+    addq %rcx, %rdx
+    movq $1, %rcx
+    addq %rdx, %rcx
+    movq $1, %rdx
+    addq %rcx, %rdx
+    movq $1, %rcx
+    addq %rdx, %rcx
+    movq $1, %rdx
+    addq %rcx, %rdx
+    movq $1, %rcx
+    addq %rdx, %rcx
+    movq $1, %rdx
+    addq %rcx, %rdx
+    movq $1, %rcx
+    addq %rdx, %rcx
+    movq $1, %rdx
+    addq %rcx, %rdx
+    movq $1, %rcx
+    addq %rdx, %rcx
+    movq $1, %rdx
+    addq %rcx, %rdx
+    movq $1, %rcx
+    addq %rdx, %rcx
+    movq $1, %rdx
+    addq %rcx, %rdx
+    movq $1, %rcx
+    addq %rdx, %rcx
+    movq $1, %rdx
+    addq %rcx, %rdx
+    movq $1, %rcx
+    addq %rdx, %rcx
+    movq $1, %rdx
+    addq %rcx, %rdx
+    movq $1, %rcx
+    addq %rdx, %rcx
+    movq $1, %rdx
+    addq %rcx, %rdx
+    movq $1, %rcx
+    addq %rdx, %rcx
+    movq $1, %rdx
+    addq %rcx, %rdx
+    movq $1, %rcx
+    addq %rdx, %rcx
+    movq $1, %rdx
+    addq %rcx, %rdx
+    movq $1, %rcx
+    addq %rdx, %rcx
+    movq $1, %rdx
+    addq %rcx, %rdx
+    movq $1, %rcx
+    addq %rdx, %rcx
+    movq $1, %rdx
+    addq %rcx, %rdx
+    movq $1, %rcx
+    addq %rdx, %rcx
+    movq $1, %rax
+    addq %rcx, %rax
+    jmp conclusion
+
+    .globl main
+
+main:
+    pushq %rbp
+    movq %rsp, %rbp
+    subq $0, %rsp
+    jmp start
+
+conclusion:
+    addq $0, %rsp
+    popq %rbp
+    retq

@@ -1,0 +1,2 @@
+(Program
+  (Sub (Int 47) (Negate (Int 5))))

@@ -1,0 +1,4 @@
+;; INPUT: 0 ; -1001
+;; OUTPUT: 42 ; 42
+(let (x (read)) ;; unused effect
+  42)
