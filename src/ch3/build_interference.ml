@@ -18,7 +18,7 @@ let add_edges lst1 lst2 g =
       if OrderedLoc.compare u v != 0 then
         let acc = add_vertex_safe acc u in
         let acc = add_vertex_safe acc v in 
-        LocUgraph.add_edge_new (LocUgraph.add_edge_new acc u v) v u
+        LocUgraph.add_edge_new acc u v
       else
         acc
     ) acc lst2
