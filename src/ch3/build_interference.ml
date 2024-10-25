@@ -2,12 +2,6 @@ open Types
 open X86_var
 
 
-(* fixes error related to vertex already in graph*)
-let add_vertex_safe g v =
-  if not (LocUgraph.mem g v) then
-    LocUgraph.add_vertex g v
-  else
-    g
 (* 
 adds undirected edge for every pair u, v, 
 where u is from lst1 and v is from lst2 
@@ -16,8 +10,6 @@ let add_edges lst1 lst2 g =
   List.fold_left (fun acc u ->
     List.fold_left (fun acc v ->
       if OrderedLoc.compare u v != 0 then
-        let acc = add_vertex_safe acc u in
-        let acc = add_vertex_safe acc v in 
         LocUgraph.add_edge_new acc u v
       else
         acc
