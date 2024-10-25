@@ -1,0 +1,23 @@
+---
+author: Emeka Nkurumeh
+date: 2024-10-25
+---
+
+# Grade (100/100)
+
+- Correctness: 100%
+- Quality: 100%
+
+Overall, good job. I have a few small nitpicks, but there were no critical issues with your code. It was easy read and follow. Please make sure to add a `README.md` in each assignment folder detailing who wrote which pass and how many late days were used.
+
+## Remove complex operands
+
+Consider building the binding lists in a diffrent order so you don't have to reverse them before calling `construct`.
+
+## Explicate control
+
+`explicate_tail` shares a lot of code with `convert_atom` when it could simply call `convert_atom` instead. 
+
+## Prelude and conclusion
+
+Some incorrect uses of `fix_label`. These have been marked out in the code.
