@@ -12,7 +12,7 @@ type var = string
 
 module VarSet : SetS.S with type elt = var
 module VarMap : MapS.S with type key = var
-
+              
 (** Environments. *)
 module Env = VarMap
 
@@ -44,7 +44,7 @@ val string_of_reg : reg -> string
 module OrderedRegS : OrderedTypeS with type t = reg
 
 (** Set of registers. *)
-module RegSet : SetS.S with type elt = reg
+module RegSet : SetS.S with type elt = reg 
 
 (** Caller-save registers. *)
 val caller_save_regs : RegSet.t
@@ -79,4 +79,3 @@ module LocUgraph : Ugraph.S with type elt = location
 (** Type of types, for use in type checkers. *)
 type ty = Integer
 [@@deriving sexp]
-
