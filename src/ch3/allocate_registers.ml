@@ -99,7 +99,16 @@ let convert_block (map : location VarMap.t) (bl : 'a block) : 'a block =
   Block (bi, List.map (convert_instr map) ins)
 
 (* Get the count of the number of variables spilled to the stack. *)
-let get_num_spilled (map : location VarMap.t) : int = failwith "TODO"
+let get_num_spilled (map : location VarMap.t) : int =
+  let lset =
+    VarMap.fold
+      (fun var loc acc ->
+        match loc with
+        | StackL (r, i) -> LocSet.add (StackL (r, i)) acc
+        | _ -> acc)
+      map LocSet.empty
+  in
+  LocSet.cardinal lset
 
 (* Compute the set of callee-save registers used. *)
 let get_used_callee (map : location VarMap.t) : RegSet.t = failwith "TODO"
