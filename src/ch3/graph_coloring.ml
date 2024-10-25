@@ -124,7 +124,10 @@ module Make
       (* update map first *)
       let old_node = EMap.find e map in
       let new_node =
-        { color = None; saturation = IntSet.add c old_node.saturation }
+        {
+          color = old_node.color;
+          saturation = IntSet.add c old_node.saturation;
+        }
       in
       let new_map = EMap.add e new_node map in
       (* then update in pq *)
