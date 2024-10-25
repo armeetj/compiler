@@ -93,10 +93,19 @@ module Make
   let initial_priority_queue (map : nodemap) : pqueue =
     (* Priority queue elements are (elt, int) pairs,
      * where the int is the priority. *)
-    failwith "TODO"
+    let handle_node elt node q =
+      match node with
+      | { color = Some _; saturation = _ } -> q
+      | { color = None; saturation = s } -> PQ.insert elt (IntSet.cardinal s) q
+    in
+    EMap.fold handle_node map PQ.empty
 
   (* Pick the smallest non-negative integer not in the set. *)
-  let pick_color (set : IntSet.t) : int = failwith "TODO"
+  let pick_color (set : IntSet.t) : int =
+    let all_registers = IntSet.of_list [ 0; 1; 2; 3; 4; 5; 6; 7; 8; 9; 10 ] in
+    let available_registers = IntSet.diff all_registers set in
+    (* now choose the smallest one *)
+    IntSet.min_elt available_registers
 
   (* Add a color to:
    * a) an element's node
@@ -106,10 +115,33 @@ module Make
    *)
   let add_color (g : graph) (e : elt) (c : int) (map : node eltmap) (pq : PQ.t)
       : node eltmap * PQ.t =
-    failwith "TODO"
+    (* a - add color to e *)
+    let node = EMap.find e map in
+    let new_node = { color = Some c; saturation = node.saturation } in
+    let map = EMap.add e new_node map in
+    (* b - add color to all neighbor saturation maps *)
+    let handle_neighbor (map, pq) e =
+      (* update map first *)
+      let old_node = EMap.find e map in
+      let new_node =
+        { color = None; saturation = IntSet.add c old_node.saturation }
+      in
+      let new_map = EMap.add e new_node map in
+      (* then update in pq *)
+      let new_pq = PQ.update e (IntSet.cardinal new_node.saturation) pq in
+      (new_map, new_pq)
+    in
+    List.fold_left handle_neighbor (map, pq) (Graph.neighbors g e)
 
   (* Generate the final int eltmap from the final node eltmap. *)
-  let make_final_color_map (map : node eltmap) : int eltmap = failwith "TODO"
+  let make_final_color_map (map : node eltmap) : int eltmap =
+    let handle_node e node imap =
+      match node with
+      | { color = Some c; saturation = _ } -> EMap.add e c imap
+      | { color = None; saturation = _ } ->
+          failwith "node doesn't have color! something went wrong in alg"
+    in
+    EMap.fold handle_node map EMap.empty
 
   let color (g : graph) (precolored_map : int eltmap) : int eltmap =
     (* Algorithm:
