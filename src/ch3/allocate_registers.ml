@@ -102,7 +102,7 @@ let convert_block (map : location VarMap.t) (bl : 'a block) : 'a block =
 let get_num_spilled (map : location VarMap.t) : int =
   let lset =
     VarMap.fold
-      (fun var loc acc ->
+      (fun _ loc acc ->
         match loc with
         | StackL (r, i) -> LocSet.add (StackL (r, i)) acc
         | _ -> acc)
@@ -111,7 +111,14 @@ let get_num_spilled (map : location VarMap.t) : int =
   LocSet.cardinal lset
 
 (* Compute the set of callee-save registers used. *)
-let get_used_callee (map : location VarMap.t) : RegSet.t = failwith "TODO"
+let get_used_callee (map : location VarMap.t) : RegSet.t =
+  VarMap.fold
+    (fun _ loc set ->
+      match loc with
+      | RegL r -> (
+          match r with Rbx | R12 | R13 | R14 -> RegSet.add r set | _ -> set)
+      | _ -> set)
+    map RegSet.empty
 
 (* Allocate registers to variables in the code. *)
 let allocate_registers (prog : (info2, binfo1) program) :
