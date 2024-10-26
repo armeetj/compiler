@@ -63,31 +63,21 @@ module Make
    * Also compute the initial saturation sets for all nodes.
    *)
   let initial_nodemap (g : graph) (precolored_map : int eltmap) : nodemap =
-    let vertices = Graph.vertices g in
-    let nmap =
-      List.fold_left
-        (fun map v ->
-          EMap.add v { color = None; saturation = IntSet.empty } map)
-        EMap.empty vertices
-    in
-    let handle_node elt color nmap =
-      (* first add the color to this node *)
-      let old_node = EMap.find elt nmap in
-      let new_node = { color = Some color; saturation = old_node.saturation } in
-      let nmap = EMap.add elt new_node nmap in
-      (* then add color to saturation set of all neighbors *)
-      let handle_neighbor n color nmap =
-        let old_node = EMap.find n nmap in
-        let new_saturation = IntSet.add color old_node.saturation in
-        let new_node =
-          { color = old_node.color; saturation = new_saturation }
-        in
-        EMap.add n new_node nmap
-      in
+    let get_saturation elt =
       let neighbors = Graph.neighbors g elt in
-      List.fold_left (fun nmap n -> handle_neighbor n color nmap) nmap neighbors
+      List.fold_left
+        (fun acc elt ->
+          match EMap.find_opt elt precolored_map with
+          | Some c -> IntSet.add c acc
+          | None -> acc)
+        IntSet.empty neighbors
     in
-    EMap.fold handle_node precolored_map nmap
+    let handle_node nmap elt =
+      let c = EMap.find_opt elt precolored_map in
+      let s = get_saturation elt in
+      EMap.add elt { color = c; saturation = s } nmap
+    in
+    List.fold_left handle_node EMap.empty (Graph.vertices g)
 
   (* Initialize the priority queue with uncolored nodes only. *)
   let initial_priority_queue (map : nodemap) : pqueue =
@@ -102,10 +92,10 @@ module Make
 
   (* Pick the smallest non-negative integer not in the set. *)
   let pick_color (set : IntSet.t) : int =
-    let all_registers = IntSet.of_list [ 0; 1; 2; 3; 4; 5; 6; 7; 8; 9; 10 ] in
-    let available_registers = IntSet.diff all_registers set in
-    (* now choose the smallest one *)
-    IntSet.min_elt available_registers
+    let rec f color =
+      match IntSet.mem color set with true -> f (color + 1) | false -> color
+    in
+    f 0
 
   (* Add a color to:
    * a) an element's node

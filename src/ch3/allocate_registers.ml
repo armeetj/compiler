@@ -77,9 +77,16 @@ let convert_instr (map : location VarMap.t) (ins : instr) : instr =
   let convert_arg a =
     match a with
     | Var v -> (
-        match VarMap.find v map with
-        | StackL (r, i) -> Deref (r, i)
-        | _ -> failwith "var location must be a stack address")
+        match VarMap.find_opt v map with
+        | Some loc -> (
+            match loc with
+            | StackL (r, i) -> Deref (r, i)
+            | RegL r -> Reg r
+            | _ ->
+                failwith
+                  "var location must be a StackL or RegL (some memory location)"
+            )
+        | None -> failwith "key not found")
     | _ -> a
   in
   match ins with
