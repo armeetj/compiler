@@ -12,11 +12,11 @@ Overall, good job. I have a few small nitpicks, but there were no critical issue
 
 ## Remove complex operands
 
-Consider building the binding lists in a diffrent order so you don't have to reverse them before calling `construct`.
+OPTIONAL: Consider building the binding lists in a diffrent order so you don't have to reverse them before calling `construct`.
 
 ## Explicate control
 
-`explicate_tail` shares a lot of code with `convert_atom` when it could simply call `convert_atom` instead. 
+OPTIONAL: `explicate_tail` shares a lot of code with `convert_atom` when it could simply call `convert_atom` instead.
 
 ## Prelude and conclusion
 
