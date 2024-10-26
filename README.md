@@ -7,3 +7,9 @@ Ashug Gurijala `agurijal@caltech.edu`
 
 - Used 1 late day
 - We worked on all passes together
+
+## Assignment 2
+
+- Both: select_instructions, patch_instructions, prelude_conclusion
+- Armeet: graph_coloring, allocate_registers
+- Ashug: uncover_live, build_interference
