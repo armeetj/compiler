@@ -14,8 +14,8 @@ let epilog (ss : int) : instr list =
     Pushq (Reg Rbp);
     Movq (Reg Rsp, Reg Rbp);
     Subq (Imm ss, Reg Rsp);
-    Jmp (Types.Label (fix_label "start"));
-    Label (fix_label "conclusion");
+    Jmp (Types.Label "start");
+    Label "conclusion";
     Addq (Imm ss, Reg Rsp);
     Popq (Reg Rbp);
     Retq;
