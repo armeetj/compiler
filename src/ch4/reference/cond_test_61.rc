@@ -1,0 +1,5 @@
+(Program
+  (If
+    (Prim Eq ((Bool false) (Bool false)))
+    (Atm (Int 42))
+    (Atm (Int 777))))

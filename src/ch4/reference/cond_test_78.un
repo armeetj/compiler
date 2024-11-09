@@ -1,0 +1,20 @@
+(Program
+  (Let
+    x.1
+    (Prim Read ())
+    (Let
+      y.1
+      (Prim Read ())
+      (Let
+        z.1
+        (Prim Read ())
+        (Let
+          w.1
+          (Prim Add ((Var z.1) (Var z.1)))
+          (Prim
+            Add
+            ((Var w.1)
+             (If
+               (Prim Eq ((Var z.1) (Int 0)))
+               (Var x.1)
+               (Var y.1)))))))))

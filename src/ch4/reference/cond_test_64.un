@@ -1,0 +1,11 @@
+(Program
+  (Let
+    x.2
+    (If
+      (Let
+        x.1
+        (Bool true)
+        (If (Var x.1) (Var x.1) (Bool false)))
+      (Bool true)
+      (Bool false))
+    (If (Var x.2) (Int 42) (Int 777))))

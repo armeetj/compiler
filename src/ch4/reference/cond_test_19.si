@@ -1,0 +1,43 @@
+(X86Program
+  (Info1
+    (locals_types
+      (($tmp.1 Integer)
+       ($tmp.2 Integer)
+       ($tmp.3 Integer))))
+  (((Label block_1)
+    (Block
+      Binfo1
+      ((Movq (Imm 2) (Reg Rax))
+       (Addq (Var $tmp.3) (Reg Rax))
+       (Jmp (Label conclusion)))))
+   ((Label block_2)
+    (Block
+      Binfo1
+      ((Movq (Imm 40) (Var $tmp.3))
+       (Jmp (Label block_1)))))
+   ((Label block_3)
+    (Block
+      Binfo1
+      ((Movq (Imm 44) (Var $tmp.3))
+       (Jmp (Label block_1)))))
+   ((Label block_4)
+    (Block
+      Binfo1
+      ((Movq (Imm 77) (Reg Rax))
+       (Jmp (Label conclusion)))))
+   ((Label block_5)
+    (Block
+      Binfo1
+      ((Callq (Label read_int) 0)
+       (Movq (Reg Rax) (Var $tmp.2))
+       (Cmpq (Imm 0) (Var $tmp.2))
+       (JmpIf CC_e (Label block_2))
+       (Jmp (Label block_3)))))
+   ((Label start)
+    (Block
+      Binfo1
+      ((Callq (Label read_int) 0)
+       (Movq (Reg Rax) (Var $tmp.1))
+       (Cmpq (Imm 0) (Var $tmp.1))
+       (JmpIf CC_e (Label block_4))
+       (Jmp (Label block_5)))))))

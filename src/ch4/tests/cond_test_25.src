@@ -1,0 +1,6 @@
+;; INPUT: -1 ; 1
+;; OUTPUT: 77 ; 42
+(if (let (x 1)
+       (not (eq? x (read))))
+    77
+    42)

@@ -1,0 +1,8 @@
+(Program
+  (If
+    (If
+      (Atm (Bool true))
+      (Prim Gt ((Int 42) (Int 0)))
+      (Atm (Bool false)))
+    (Atm (Int 42))
+    (Atm (Int 0))))

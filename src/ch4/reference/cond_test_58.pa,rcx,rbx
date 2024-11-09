@@ -1,0 +1,30 @@
+block_1:
+    movq $42, %rax
+    jmp conclusion
+
+block_2:
+    movq $777, %rax
+    jmp conclusion
+
+start:
+    movq $1, %rax
+    cmpq $0, %rax
+    setg %al
+    movzbq %al, %rcx
+    movq $1, %rax
+    cmpq %rcx, %rax
+    je block_1
+    jmp block_2
+
+    .globl main
+
+main:
+    pushq %rbp
+    movq %rsp, %rbp
+    subq $0, %rsp
+    jmp start
+
+conclusion:
+    addq $0, %rsp
+    popq %rbp
+    retq

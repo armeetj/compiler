@@ -1,0 +1,3 @@
+;; INPUT: 1 ; -1
+;; OUTPUT: 42 ; 0
+(if (eq? (read) 1) 42 0)

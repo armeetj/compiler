@@ -1,0 +1,2 @@
+;; OUTPUT: 42
+(let (x (if (let (x #t) (if x #f #t)) #f #t)) (if x 42 777))

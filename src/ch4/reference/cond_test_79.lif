@@ -1,0 +1,7 @@
+(Program
+  (If
+    (Or
+      (Prim Eq ((Prim Read ()) (Int 1)))
+      (Prim Eq ((Prim Read ()) (Int 0))))
+    (Int 42)
+    (Int 0)))

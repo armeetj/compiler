@@ -1,0 +1,5 @@
+(Program
+  (If
+    (Atm (Bool false))
+    (Atm (Int 0))
+    (Atm (Int 42))))

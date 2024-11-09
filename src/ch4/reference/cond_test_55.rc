@@ -1,0 +1,8 @@
+(Program
+  (If
+    (Atm (Bool true))
+    (Atm (Int 42))
+    (If
+      (Atm (Bool false))
+      (Atm (Int 2))
+      (Atm (Int 3)))))

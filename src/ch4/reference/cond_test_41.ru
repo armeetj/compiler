@@ -1,0 +1,33 @@
+(CProgram
+  (Info
+    (locals_types
+      ((x.1 Integer) (y.1 Integer))))
+  (((Label block_1)
+    (Return (Prim Add ((Var y.1) (Int 2)))))
+   ((Label block_2)
+    (Return (Prim Add ((Var y.1) (Int 10)))))
+   ((Label block_3)
+    (IfStmt
+      (op Eq)
+      (arg1 (Var x.1))
+      (arg2 (Int 0))
+      (jump_then (Label block_1))
+      (jump_else (Label block_2))))
+   ((Label block_4)
+    (IfStmt
+      (op Eq)
+      (arg1 (Var x.1))
+      (arg2 (Int 2))
+      (jump_then (Label block_1))
+      (jump_else (Label block_2))))
+   ((Label start)
+    (Seq
+      (Assign x.1 (Prim Read ()))
+      (Seq
+        (Assign y.1 (Prim Read ()))
+        (IfStmt
+          (op Lt)
+          (arg1 (Var x.1))
+          (arg2 (Int 1))
+          (jump_then (Label block_3))
+          (jump_else (Label block_4))))))))

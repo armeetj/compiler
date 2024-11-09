@@ -1,0 +1,31 @@
+block_1:
+    movq $77, %rax
+    jmp conclusion
+
+block_2:
+    movq $42, %rax
+    jmp conclusion
+
+start:
+    movq $1, -8(%rbp)
+    callq read_int
+    movq %rax, %rcx
+    cmpq %rcx, -8(%rbp)
+    sete %al
+    movzbq %al, %rcx
+    cmpq $0, %rcx
+    je block_1
+    jmp block_2
+
+    .globl main
+
+main:
+    pushq %rbp
+    movq %rsp, %rbp
+    subq $16, %rsp
+    jmp start
+
+conclusion:
+    addq $16, %rsp
+    popq %rbp
+    retq

@@ -1,0 +1,5 @@
+(Program
+  (Let
+    x.1
+    (Atm (Bool false))
+    (Atm (Int 42))))

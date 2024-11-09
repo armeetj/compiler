@@ -1,0 +1,8 @@
+(Program
+  (Let
+    x.1
+    (Atm (Bool true))
+    (If
+      (Atm (Var x.1))
+      (Atm (Int 42))
+      (Atm (Int 0)))))

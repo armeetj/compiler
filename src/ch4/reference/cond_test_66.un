@@ -1,0 +1,14 @@
+(Program
+  (If
+    (Prim
+      Eq
+      ((Let
+         x.1
+         (Int 42)
+         (If
+           (Prim Eq ((Var x.1) (Int 42)))
+           (Var x.1)
+           (Int 20)))
+       (Int 42)))
+    (Int 42)
+    (Int 777)))

@@ -1,0 +1,17 @@
+(Program
+  (If
+    (Let
+      $tmp.1
+      (Prim Read ())
+      (Prim Eq ((Var $tmp.1) (Int 0))))
+    (Atm (Int 77))
+    (Let
+      $tmp.3
+      (If
+        (Let
+          $tmp.2
+          (Prim Read ())
+          (Prim Eq ((Var $tmp.2) (Int 0))))
+        (Atm (Int 40))
+        (Atm (Int 44)))
+      (Prim Add ((Int 2) (Var $tmp.3))))))

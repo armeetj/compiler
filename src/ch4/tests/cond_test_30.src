@@ -1,0 +1,2 @@
+;; OUTPUT: 42
+(let (x #t) (if x 42 0))

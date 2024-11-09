@@ -1,0 +1,31 @@
+(X86Program
+  (Info
+    (locals_types
+      (($tmp.1 Integer)
+       (x.1 Integer)
+       (y.1 Integer)))
+    (num_spilled 0)
+    (used_callee ()))
+  (((Label block_1)
+    (Block
+      ((Movq (Imm 1) (Reg Rax))
+       (Addq (Reg Rcx) (Reg Rax))
+       (Jmp (Label conclusion)))))
+   ((Label block_2)
+    (Block
+      ((Movq (Imm 41) (Reg Rcx))
+       (Jmp (Label block_1)))))
+   ((Label block_3)
+    (Block
+      ((Callq (Label read_int) 0)
+       (Movq (Reg Rax) (Reg Rcx))
+       (Addq (Imm 7) (Reg Rcx))
+       (Jmp (Label block_1)))))
+   ((Label start)
+    (Block
+      ((Callq (Label read_int) 0)
+       (Movq (Reg Rax) (Reg Rcx))
+       (Movq (Imm 0) (Reg Rax))
+       (Cmpq (Reg Rcx) (Reg Rax))
+       (JmpIf CC_l (Label block_2))
+       (Jmp (Label block_3)))))))

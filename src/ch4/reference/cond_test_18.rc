@@ -1,0 +1,14 @@
+(Program
+  (If
+    (Prim Eq ((Int 1) (Int 0)))
+    (Atm (Int 777))
+    (Let
+      $tmp.2
+      (If
+        (Let
+          $tmp.1
+          (Prim Add ((Int 1) (Int 1)))
+          (Prim Eq ((Var $tmp.1) (Int 2))))
+        (Atm (Int 40))
+        (Atm (Int 444)))
+      (Prim Add ((Int 2) (Var $tmp.2))))))

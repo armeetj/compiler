@@ -1,0 +1,8 @@
+(Program
+  (If
+    (Atm (Bool true))
+    (Atm (Int 42))
+    (Let
+      x.1
+      (Prim Read ())
+      (Prim Add ((Var x.1) (Var x.1))))))

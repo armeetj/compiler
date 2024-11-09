@@ -1,0 +1,5 @@
+(Program
+  (If
+    (Or (Bool true) (Bool false))
+    (Int 42)
+    (Int 777)))

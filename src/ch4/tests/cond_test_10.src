@@ -1,0 +1,2 @@
+;; OUTPUT: 42
+(if (and #t #f) 77 42)

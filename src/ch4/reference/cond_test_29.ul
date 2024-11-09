@@ -1,0 +1,27 @@
+(X86Program
+  (Info1 (locals_types ()))
+  (((Label block_1)
+    (Block
+      (Binfo2
+        ((initial ((RegL Rsp)))
+         (afters (((RegL Rsp) (RegL Rax)) ()))))
+      ((Movq (Imm 42) (Reg Rax))
+       (Jmp (Label conclusion)))))
+   ((Label block_2)
+    (Block
+      (Binfo2
+        ((initial ((RegL Rsp)))
+         (afters (((RegL Rsp) (RegL Rax)) ()))))
+      ((Movq (Imm 0) (Reg Rax))
+       (Jmp (Label conclusion)))))
+   ((Label start)
+    (Block
+      (Binfo2
+        ((initial ((RegL Rsp)))
+         (afters
+           (((RegL Rsp) (RegL Rflags))
+            ((RegL Rsp))
+            ()))))
+      ((Cmpq (Imm 0) (Imm 42))
+       (JmpIf CC_g (Label block_1))
+       (Jmp (Label block_2)))))))

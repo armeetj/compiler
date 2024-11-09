@@ -1,0 +1,6 @@
+;; INPUT: 10 10 ; 10 20
+;; OUTPUT: 42 ; 77
+(let (x (read))
+  (let (y (read))
+    (let (z (eq? x y))
+      (if z 42 77))))

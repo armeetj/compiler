@@ -1,0 +1,45 @@
+(X86Program
+  (Info1
+    (locals_types
+      ((x.1 Integer)
+       (y.1 Integer)
+       (z.1 Boolean))))
+  (((Label block_1)
+    (Block
+      (Binfo2
+        ((initial ((RegL Rsp)))
+         (afters (((RegL Rsp) (RegL Rax)) ()))))
+      ((Movq (Imm 42) (Reg Rax))
+       (Jmp (Label conclusion)))))
+   ((Label block_2)
+    (Block
+      (Binfo2
+        ((initial ((RegL Rsp)))
+         (afters (((RegL Rsp) (RegL Rax)) ()))))
+      ((Movq (Imm 77) (Reg Rax))
+       (Jmp (Label conclusion)))))
+   ((Label start)
+    (Block
+      (Binfo2
+        ((initial ((RegL Rsp)))
+         (afters
+           (((RegL Rsp) (RegL Rax))
+            ((VarL x.1) (RegL Rsp))
+            ((VarL x.1) (RegL Rsp) (RegL Rax))
+            ((VarL x.1) (VarL y.1) (RegL Rsp))
+            ((RegL Rsp) (RegL Rflags))
+            ((RegL Rsp) (RegL Rax))
+            ((VarL z.1) (RegL Rsp))
+            ((RegL Rsp) (RegL Rflags))
+            ((RegL Rsp))
+            ()))))
+      ((Callq (Label read_int) 0)
+       (Movq (Reg Rax) (Var x.1))
+       (Callq (Label read_int) 0)
+       (Movq (Reg Rax) (Var y.1))
+       (Cmpq (Var y.1) (Var x.1))
+       (Set CC_e (ByteReg Al))
+       (Movzbq (ByteReg Al) (Var z.1))
+       (Cmpq (Imm 1) (Var z.1))
+       (JmpIf CC_e (Label block_1))
+       (Jmp (Label block_2)))))))

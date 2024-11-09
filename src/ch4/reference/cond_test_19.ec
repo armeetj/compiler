@@ -1,0 +1,33 @@
+(CProgram
+  (Info (locals_types ()))
+  (((Label start)
+    (Seq
+      (Assign $tmp.1 (Prim Read ()))
+      (IfStmt
+        (op Eq)
+        (arg1 (Var $tmp.1))
+        (arg2 (Int 0))
+        (jump_then (Label block_4))
+        (jump_else (Label block_5)))))
+   ((Label block_4)
+    (Return (Atm (Int 77))))
+   ((Label block_5)
+    (Seq
+      (Assign $tmp.2 (Prim Read ()))
+      (IfStmt
+        (op Eq)
+        (arg1 (Var $tmp.2))
+        (arg2 (Int 0))
+        (jump_then (Label block_2))
+        (jump_else (Label block_3)))))
+   ((Label block_2)
+    (Seq
+      (Assign $tmp.3 (Atm (Int 40)))
+      (Goto (Label block_1))))
+   ((Label block_3)
+    (Seq
+      (Assign $tmp.3 (Atm (Int 44)))
+      (Goto (Label block_1))))
+   ((Label block_1)
+    (Return
+      (Prim Add ((Int 2) (Var $tmp.3)))))))

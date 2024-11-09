@@ -1,0 +1,21 @@
+(X86Program
+  (Info
+    (locals_types (($tmp.1 Integer)))
+    (num_spilled 0)
+    (used_callee (Rbx)))
+  (((Label block_1)
+    (Block
+      ((Callq (Label read_int) 0)
+       (Jmp (Label conclusion)))))
+   ((Label block_2)
+    (Block
+      ((Movq (Imm 42) (Reg Rax))
+       (Jmp (Label conclusion)))))
+   ((Label start)
+    (Block
+      ((Callq (Label read_int) 0)
+       (Movq (Reg Rax) (Reg Rbx))
+       (Movq (Imm 0) (Reg Rax))
+       (Cmpq (Reg Rbx) (Reg Rax))
+       (JmpIf CC_e (Label block_1))
+       (Jmp (Label block_2)))))))

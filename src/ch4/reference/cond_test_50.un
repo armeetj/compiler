@@ -1,0 +1,10 @@
+(Program
+  (Let
+    x.1
+    (Prim Read ())
+    (Let
+      y.1
+      (Prim
+        Not
+        ((Prim Eq ((Var x.1) (Int 0)))))
+      (If (Var y.1) (Int 42) (Int 77)))))

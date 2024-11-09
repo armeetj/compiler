@@ -1,0 +1,8 @@
+(Program
+  (Let
+    $tmp.1
+    (If
+      (Atm (Bool true))
+      (Atm (Int 41))
+      (Atm (Int -1)))
+    (Prim Add ((Var $tmp.1) (Int 1)))))

@@ -1,0 +1,24 @@
+(X86Program
+  (Info1
+    (locals_types
+      ((x.1 Integer) (y.1 Integer))))
+  (((Label block_1)
+    (Block
+      Binfo1
+      ((Movq (Imm 42) (Reg Rax))
+       (Jmp (Label conclusion)))))
+   ((Label block_2)
+    (Block
+      Binfo1
+      ((Movq (Imm 0) (Reg Rax))
+       (Jmp (Label conclusion)))))
+   ((Label start)
+    (Block
+      Binfo1
+      ((Callq (Label read_int) 0)
+       (Movq (Reg Rax) (Var x.1))
+       (Callq (Label read_int) 0)
+       (Movq (Reg Rax) (Var y.1))
+       (Cmpq (Var y.1) (Var x.1))
+       (JmpIf CC_e (Label block_1))
+       (Jmp (Label block_2)))))))
