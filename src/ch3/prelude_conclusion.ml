@@ -32,40 +32,27 @@ let convert_arg a =
   | X.Imm i -> Imm i
   | X.Reg r -> Reg r
   | X.Deref (r, i) -> Deref (r, i)
-
-let convert_instr (i : X.instr) : instr list =
-  match i with
-  | X.Addq (a1, a2) -> [ Addq (convert_arg a1, convert_arg a2) ]
-  | X.Subq (a1, a2) -> [ Subq (convert_arg a1, convert_arg a2) ]
-  | X.Movq (a1, a2) -> [ Movq (convert_arg a1, convert_arg a2) ]
-  | X.Negq a -> [ Negq (convert_arg a) ]
-  | X.Pushq a -> [ Pushq (convert_arg a) ]
-  | X.Callq (l, _) -> [ Callq l ]
-  | X.Popq a -> [ Popq (convert_arg a) ]
-  | X.Retq -> [ Retq ]
-  | X.Jmp l -> [ Jmp l ]
   
 let offset arg deref_adjust = match arg with
   | Deref (r, curr) -> Deref (r, curr - deref_adjust)
   | arg -> arg
 
-let rec adjust_stack_access instr_list deref_adjust =
-  match instr_list with
-  | [] -> []
-  | instr :: tail -> 
-    match instr with
-    | Addq (a1, a2) -> Addq (offset a1 deref_adjust, offset a2 deref_adjust) :: adjust_stack_access tail deref_adjust
-    | Subq (a1, a2) -> Subq (offset a1 deref_adjust, offset a2 deref_adjust) :: adjust_stack_access tail deref_adjust
-    | Movq (a1, a2) -> Movq (offset a1 deref_adjust, offset a2 deref_adjust) :: adjust_stack_access tail deref_adjust
-    | Negq a -> Negq (offset a deref_adjust) :: adjust_stack_access tail deref_adjust
-    | Pushq a -> Pushq (offset a deref_adjust) :: adjust_stack_access tail deref_adjust
-    | Popq a -> Popq (offset a deref_adjust) :: adjust_stack_access tail deref_adjust
-    | instr -> instr :: adjust_stack_access tail deref_adjust
+let adjust_stack_access instr deref_adjust =
+  match instr with
+  | X.Addq (a1, a2) -> Addq (offset (convert_arg a1) deref_adjust, offset (convert_arg a2) deref_adjust)
+  | X.Subq (a1, a2) -> Subq (offset (convert_arg a1) deref_adjust, offset (convert_arg a2) deref_adjust)
+  | X.Movq (a1, a2) -> Movq (offset (convert_arg a1) deref_adjust, offset (convert_arg a2) deref_adjust)
+  | X.Negq a -> Negq (offset (convert_arg a) deref_adjust)
+  | X.Pushq a -> Pushq (offset (convert_arg a) deref_adjust)
+  | X.Popq a -> Popq (offset (convert_arg a) deref_adjust)
+  | X.Callq (l, _) -> Callq l
+  | X.Retq -> Retq
+  | X.Jmp l -> Jmp l
 
 let rec instrs_of_block (b : X.instr list) deref_adjust : instr list = 
   match b with
   | [] -> []
-  | h :: t -> adjust_stack_access (convert_instr h) deref_adjust @ (instrs_of_block t deref_adjust)
+  | h :: t -> [adjust_stack_access h deref_adjust] @ (instrs_of_block t deref_adjust)
 
 (* Convert a labeled block to a list of instructions. *)
 let asm_of_lb (deref_adjust : int) (lb : label * X.block) : instr list =

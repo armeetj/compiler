@@ -1,6 +1,4 @@
-open Support
 open Types
-open Utils
 
 module X = X86_var
 
