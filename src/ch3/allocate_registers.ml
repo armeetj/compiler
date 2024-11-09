@@ -123,7 +123,9 @@ let get_used_callee (map : location VarMap.t) : RegSet.t =
     (fun _ loc set ->
       match loc with
       | RegL r -> (
-          match r with Rbx | R12 | R13 | R14 -> RegSet.add r set | _ -> set)
+          match RegSet.find_opt r Types.callee_save_regs with
+          | Some _ -> RegSet.add r set
+          | None -> set)
       | _ -> set)
     map RegSet.empty
 
