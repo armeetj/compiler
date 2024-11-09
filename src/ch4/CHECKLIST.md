@@ -1,6 +1,6 @@
-- [ ] shrink - ashug
-- [ ] uniquify - armeet
-- [ ] remove complex operands - ashug
+- [x] shrink - ashug
+- [x] uniquify - armeet
+- [p] remove complex operands - ashug
 - [ ] explicate control
 - [ ] remove unused blocks
 - [ ] select instructions
