@@ -1,13 +1,13 @@
 - [x] shrink - ashug
 - [x] uniquify - armeet
-- [ ] remove complex operands - ashug
+- [-] remove complex operands - armeet
 - [ ] explicate control
 - [ ] remove unused blocks
-- [ ] select instructions
+- [ ] select instructions - ashug
 - [ ] uncover live
 - [ ] build interference graph
 - [x] graph coloring
-- [ ] allocate regiseters
+- [ ] allocate registers
 - [ ] remove jumps
 - [ ] patch instructions
-- [ ] prelude conclusion
+- [ ] prelude/conclusion
