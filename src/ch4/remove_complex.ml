@@ -14,14 +14,14 @@ let rec rco_atom (e : L.exp) : (var * exp) list * atm =
   | L.Bool b -> ([], Bool b)
   | L.Int i -> ([], Int i)
   | L.Var v -> ([], Var v)
-  | L.Prim (op, args) ->
+  | L.Prim (op, exps) ->
       let binding_lst, atms =
         List.fold_left
-          (fun (binding_lst, atms) arg ->
-            let bindings, atm = rco_atom arg in
+          (fun (binding_lst, atms) e ->
+            let bindings, atm = rco_atom e in
             (* TODO: check if bindings @ bindings_lst is reversed *)
             (bindings @ binding_lst, atms @ [ atm ]))
-          ([], []) args
+          ([], []) exps
       in
       let sym = gen_temp_name () in
       let final_binding = (sym, Prim (op, atms)) in
@@ -47,8 +47,19 @@ and rco_exp (e : L.exp) : exp =
   | L.Int i -> Atm (Int i)
   | L.Var v -> Atm (Var v)
   (* TODO: impl *)
-  | L.Prim (op, args) -> Atm (Bool true)
-  | L.If (cond_exp, then_exp, else_exp) -> Atm (Bool true)
+  | L.Prim (op, exps) ->
+      let binding_lst, atms =
+        List.fold_left
+          (fun (binding_lst, atms) e ->
+            let bindings, atm = rco_atom e in
+            (* TODO: check if bindings @ bindings_lst is reversed *)
+            (bindings @ binding_lst, atms @ [ atm ]))
+          ([], []) exps
+      in
+      let binding_lst = List.rev binding_lst in
+      construct binding_lst (Prim (op, atms))
+  | L.If (cond_exp, then_exp, else_exp) ->
+      If (rco_exp cond_exp, rco_exp then_exp, rco_exp else_exp)
   | L.Let (v, e1, e2) -> Let (v, rco_exp e1, rco_exp e2)
 
 let remove_complex_operands (prog : L.program) : program =
