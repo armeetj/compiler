@@ -15,9 +15,8 @@ let rec rco_atom (e : L.exp) : (var * exp) list * atm =
   | L.Int i -> ([], Int i)
   | L.Var v -> ([], Var v)
   | L.Read ->
-      let exp = Read in
       let sym = gen_temp_name () in
-      ([ (sym, exp) ], Var sym)
+      ([ (sym, Read) ], Var sym)
   | L.Negate e ->
       let binding_lst, e_atm = rco_atom e in
       let sym = gen_temp_name () in
