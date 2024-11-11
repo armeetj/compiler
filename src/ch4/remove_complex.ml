@@ -16,12 +16,12 @@ let rec rco_atom (e : L.exp) : (var * exp) list * atm =
   | L.Var v -> ([], Var v)
   | L.Prim (op, exps) ->
       let binding_lst, atms =
-        List.fold_right
-          (fun e (binding_lst, atms) ->
+        List.fold_left
+          (fun (binding_lst, atms) e ->
             let bindings, atm = rco_atom e in
             (* TODO: check if bindings @ bindings_lst is reversed *)
-            (bindings @ binding_lst, atm :: atms))
-          exps ([], [])
+            (binding_lst @ bindings, atms @ [ atm ]))
+          ([], []) exps
       in
       let sym = gen_temp_name () in
       let final_binding = (sym, Prim (op, atms)) in
@@ -48,15 +48,14 @@ and rco_exp (e : L.exp) : exp =
   | L.Bool b -> Atm (Bool b)
   | L.Int i -> Atm (Int i)
   | L.Var v -> Atm (Var v)
-  (* TODO: impl *)
   | L.Prim (op, exps) ->
       let binding_lst, atms =
-        List.fold_right
-          (fun e (binding_lst, atms) ->
+        List.fold_left
+          (fun (binding_lst, atms) e ->
             let bindings, atm = rco_atom e in
             (* TODO: check if bindings @ bindings_lst is reversed *)
-            (bindings @ binding_lst, atm :: atms))
-          exps ([], [])
+            (bindings @ binding_lst, atms @ [ atm ]))
+          ([], []) exps
       in
       let binding_lst = List.rev binding_lst in
       construct binding_lst (Prim (op, atms))
