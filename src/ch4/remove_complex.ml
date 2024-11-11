@@ -48,6 +48,7 @@ and rco_exp (e : L.exp) : exp =
   | L.Bool b -> Atm (Bool b)
   | L.Int i -> Atm (Int i)
   | L.Var v -> Atm (Var v)
+  | L.Let (v, e1, e2) -> Let (v, rco_exp e1, rco_exp e2)
   | L.Prim (op, exps) ->
       let binding_lst, atms =
         List.fold_left
@@ -64,7 +65,6 @@ and rco_exp (e : L.exp) : exp =
       let then_exp = rco_exp then_exp in
       let else_exp = rco_exp else_exp in
       If (cond_exp, then_exp, else_exp)
-  | L.Let (v, e1, e2) -> Let (v, rco_exp e1, rco_exp e2)
 
 let remove_complex_operands (prog : L.program) : program =
   let (L.Program exp) = prog in
