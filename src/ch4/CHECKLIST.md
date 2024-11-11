@@ -5,7 +5,7 @@
 - [-] remove complex operands - armeet
 - [ ] explicate control
 - [ ] remove unused blocks
-- [-] select instructions - ashug
+- [x] select instructions - ashug
 - [ ] uncover live
 - [ ] build interference graph
 - [x] graph coloring
