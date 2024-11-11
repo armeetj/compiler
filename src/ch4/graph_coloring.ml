@@ -60,7 +60,10 @@ module Make (Elt   : OrderedTypeS)
 
     (* Return `true` if an element's node in a nodemap is uncolored. *)
     let is_uncolored (e : elt) (map : nodemap) : bool =
-      failwith "TODO"
+      match EMap.find_opt e map with
+      | Some { color = Some _; saturation = _ } -> false
+      | _ -> true
+    
 
     (* Starting from an initial partial mapping
      * between graph elements and colors (the precolored map),
@@ -68,17 +71,39 @@ module Make (Elt   : OrderedTypeS)
      * Also compute the initial saturation sets for all nodes.
      *)
     let initial_nodemap (g : graph) (precolored_map : int eltmap) : nodemap =
-      failwith "TODO"
-
+      let get_saturation elt =
+        let neighbors = Graph.neighbors g elt in
+        List.fold_left
+          (fun acc elt ->
+            match EMap.find_opt elt precolored_map with
+            | Some c -> IntSet.add c acc
+            | None -> acc)
+          IntSet.empty neighbors
+      in
+      let handle_node nmap elt =
+        let c = EMap.find_opt elt precolored_map in
+        let s = get_saturation elt in
+        EMap.add elt { color = c; saturation = s } nmap
+      in
+      List.fold_left handle_node EMap.empty (Graph.vertices g)
+    
     (* Initialize the priority queue with uncolored nodes only. *)
     let initial_priority_queue (map : nodemap) : pqueue =
       (* Priority queue elements are (elt, int) pairs,
        * where the int is the priority. *)
-      failwith "TODO"
+      let handle_node elt node q =
+        match node with
+        | { color = Some _; saturation = _ } -> q
+        | { color = None; saturation = s } -> PQ.insert elt (IntSet.cardinal s) q
+      in
+      EMap.fold handle_node map PQ.empty
 
     (* Pick the smallest non-negative integer not in the set. *)
     let pick_color (set : IntSet.t) : int =
-      failwith "TODO"
+      let rec f color =
+        match IntSet.mem color set with true -> f (color + 1) | false -> color
+      in
+      f 0
 
     (* Add a color to:
      * a) an element's node
@@ -88,11 +113,36 @@ module Make (Elt   : OrderedTypeS)
      *)
     let add_color (g : graph) (e : elt) (c : int)
         (map : node eltmap) (pq : PQ.t) : node eltmap * PQ.t =
-      failwith "TODO"
+      (* a - add color to e *)
+      let node = EMap.find e map in
+      let new_node = { color = Some c; saturation = node.saturation } in
+      let map = EMap.add e new_node map in
+      (* b - add color to all neighbor saturation maps *)
+      let handle_neighbor (map, pq) e =
+        (* update map first *)
+        let old_node = EMap.find e map in
+        let new_node =
+          {
+            color = old_node.color;
+            saturation = IntSet.add c old_node.saturation;
+          }
+        in
+        let new_map = EMap.add e new_node map in
+        (* then update in pq *)
+        let new_pq = PQ.update e (IntSet.cardinal new_node.saturation) pq in
+        (new_map, new_pq)
+      in
+      List.fold_left handle_neighbor (map, pq) (Graph.neighbors g e)
 
     (* Generate the final int eltmap from the final node eltmap. *)
     let make_final_color_map (map : node eltmap) : int eltmap =
-      failwith "TODO"
+      let handle_node e node imap =
+        match node with
+        | { color = Some c; saturation = _ } -> EMap.add e c imap
+        | { color = None; saturation = _ } ->
+            failwith "node doesn't have color! something went wrong in alg"
+      in
+      EMap.fold handle_node map EMap.empty
 
     let color (g : graph) (precolored_map : int eltmap) : int eltmap =
       (* Algorithm:
