@@ -12,4 +12,4 @@
 - [ ] allocate registers - armeet
 - [ ] remove jumps - ashug
 - [ ] patch instructions - ashug
-- [ ] prelude/conclusion - ashug
+- [x] prelude/conclusion - ashug
