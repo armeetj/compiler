@@ -11,5 +11,5 @@
 - [x] graph coloring - armeet
 - [ ] allocate registers - armeet
 - [ ] remove jumps - ashug
-- [ ] patch instructions - ashug
+- [x] patch instructions - ashug
 - [x] prelude/conclusion - ashug
