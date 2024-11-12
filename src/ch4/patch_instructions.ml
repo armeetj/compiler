@@ -54,19 +54,19 @@ let convert_instr (i : X.instr) : instr list =
      | X.Deref _, X.Deref _ ->
           [ 
             Movq (convert_arg a1, Reg Rax); 
-            Xorq (Reg Rax, convert_arg a2) 
+            Xorq (Reg Rax, convert_arg a2);
           ]
      | _ -> [ Xorq (convert_arg a1, convert_arg a2) ]
     )
   | X.Cmpq (a1, a2) -> (match a1, a2 with
     | _, X.Imm _ -> [ 
       Movq (convert_arg a2, Reg Rax); 
-      Cmpq (convert_arg a1, Reg Rax) 
+      Cmpq (convert_arg a1, Reg Rax);
     ]
     | X.Deref _, X.Deref _ -> 
       [ 
         Movq (convert_arg a1, Reg Rax); 
-        Cmpq (Reg Rax, convert_arg a2) 
+        Cmpq (Reg Rax, convert_arg a2);
       ]
     | _ -> [ Cmpq (convert_arg a1, convert_arg a2) ])
 
