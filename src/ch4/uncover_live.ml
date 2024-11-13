@@ -105,7 +105,7 @@ let get_next_labels (block : 'a X.block) : LabelSet.t =
  *    b) Otherwise:
  *       1) Construct a label graph from the list of edges.
  *       2) Do a topological sort of the transpose of the graph. *)
- let order_labels (lbs : (label * 'a X.block) list) : label list =
+let order_labels (lbs : (label * 'a X.block) list) : label list =
   failwith "TODO"
 
 let uncover_live
