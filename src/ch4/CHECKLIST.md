@@ -4,7 +4,7 @@
 - [x] uniquify - armeet
 - [/] remove complex operands - armeet
 - [-] explicate control - armeet
-- [ ] remove unused blocks
+- [x] remove unused blocks - ashug
 - [x] select instructions - ashug
 - [ ] uncover live - ashug
 - [x] build interference graph - ashug
