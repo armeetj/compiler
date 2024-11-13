@@ -10,6 +10,6 @@
 - [x] build interference graph - ashug
 - [x] graph coloring - armeet
 - [ ] allocate registers - armeet
-- [ ] remove jumps - ashug
+- [x] remove jumps - ashug
 - [x] patch instructions - ashug
 - [x] prelude/conclusion - ashug
