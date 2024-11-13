@@ -16,4 +16,4 @@ Ashug Gurijala `agurijal@caltech.edu`
 
 ## Assignment 3
 - Used 4 late days
-- Had some trouble with some passes; will do redo
+- Had some trouble with some passes, will revisit on rework
