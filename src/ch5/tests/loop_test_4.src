@@ -1,0 +1,6 @@
+;; INPUT: 5 ; 0 ; -5
+;; OUTPUT: 42 ; 42 ; 42
+(begin
+  (while #f
+    (read))
+  42)

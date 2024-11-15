@@ -1,0 +1,11 @@
+;; INPUT: 10 2
+;; OUTPUT: 42
+(let (x 30)
+  (let (y 20)
+    (+ (+ (begin
+            (set! x (- x (read)))
+            0)
+          (begin
+            (set! y (+ y (read)))
+            0))
+       (+ x y))))

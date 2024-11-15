@@ -1,0 +1,7 @@
+(Program
+  (If
+    (Begin
+      ((Prim Read ()))
+      (Atm (Bool true)))
+    (Prim Read ())
+    (Prim Read ())))

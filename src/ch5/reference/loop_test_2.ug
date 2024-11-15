@@ -1,0 +1,7 @@
+(Program
+  (Let
+    x.1
+    (Int 0)
+    (Begin
+      ((SetBang x.1 (Int 42)))
+      (GetBang x.1))))

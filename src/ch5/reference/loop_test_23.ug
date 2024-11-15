@@ -1,0 +1,8 @@
+(Program
+  (Let
+    x.1
+    (Int 0)
+    (Let
+      y.1
+      (SetBang x.1 (Int 42))
+      (Let z.1 (Var y.1) (GetBang x.1)))))

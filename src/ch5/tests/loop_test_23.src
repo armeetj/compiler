@@ -1,0 +1,5 @@
+;; OUTPUT: 42
+(let (x 0)
+  (let (y (set! x 42))
+    (let (z y)
+      x)))

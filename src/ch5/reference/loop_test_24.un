@@ -1,0 +1,10 @@
+(Program
+  (Let
+    x.1
+    (Prim Read ())
+    (Prim
+      Add
+      ((Var x.1)
+       (Begin
+         ((SetBang x.1 (Int 40)))
+         (Var x.1))))))

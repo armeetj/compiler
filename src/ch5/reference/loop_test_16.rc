@@ -1,0 +1,10 @@
+(Program
+  (Let
+    x.1
+    (Atm (Int 1))
+    (Begin
+      ((If
+         (Atm (Bool true))
+         (SetBang x.1 (Atm (Int 42)))
+         (SetBang x.1 (Atm (Int 0)))))
+      (Atm (Var x.1)))))

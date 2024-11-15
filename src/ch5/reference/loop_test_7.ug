@@ -1,0 +1,26 @@
+(Program
+  (Let
+    x.1
+    (Int 30)
+    (Let
+      y.1
+      (Int 20)
+      (Prim
+        Add
+        ((Prim
+           Add
+           ((Begin
+              ((SetBang
+                 x.1
+                 (Prim
+                   Sub
+                   ((GetBang x.1) (Prim Read ())))))
+              (Int 0))
+            (Begin
+              ((SetBang
+                 y.1
+                 (Prim
+                   Add
+                   ((GetBang y.1) (Prim Read ())))))
+              (Int 0))))
+         (Prim Add ((GetBang x.1) (GetBang y.1))))))))

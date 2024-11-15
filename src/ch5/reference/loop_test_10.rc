@@ -1,0 +1,2 @@
+(Program
+  (Begin ((Atm Void)) (Atm (Int 42))))

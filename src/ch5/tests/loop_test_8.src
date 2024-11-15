@@ -1,0 +1,5 @@
+;; INPUT: -1001 42 ; 10 42
+;; OUTPUT: 42 ; 42
+(if (begin (read) #t)
+    (read)
+    (read))

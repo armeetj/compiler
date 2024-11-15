@@ -1,0 +1,22 @@
+(Program
+  (If
+    (Atm (Bool false))
+    (Let
+      x.1
+      (Atm (Int 0))
+      (Begin
+        ((While
+           (Let
+             $tmp.1
+             (Atm (Var x.1))
+             (Prim Lt ((Var $tmp.1) (Int 1))))
+           (Begin
+             ()
+             (SetBang
+               x.1
+               (Let
+                 $tmp.2
+                 (Atm (Var x.1))
+                 (Prim Add ((Var $tmp.2) (Int 1))))))))
+        (Atm (Var x.1))))
+    (Atm (Int 42))))

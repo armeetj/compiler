@@ -1,0 +1,7 @@
+;; INPUT: 16 ; 12
+;; OUTPUT: 42 ; 42
+(let (x (read))
+  (begin
+    (while (> x 0)
+      (set! x (- x 2)))
+    (+ x 42)))

@@ -1,0 +1,30 @@
+(X86Program
+  (Info2
+    (locals_types ())
+    (conflicts
+      (((RegL Rsp)
+        ((RegL Rax)
+         (RegL Rcx)
+         (RegL Rdx)
+         (RegL Rsi)
+         (RegL Rdi)
+         (RegL R8)
+         (RegL R9)
+         (RegL R10)
+         (RegL R11)))
+       ((RegL Rax) ((RegL Rsp)))
+       ((RegL Rcx) ((RegL Rsp)))
+       ((RegL Rdx) ((RegL Rsp)))
+       ((RegL Rsi) ((RegL Rsp)))
+       ((RegL Rdi) ((RegL Rsp)))
+       ((RegL R8) ((RegL Rsp)))
+       ((RegL R9) ((RegL Rsp)))
+       ((RegL R10) ((RegL Rsp)))
+       ((RegL R11) ((RegL Rsp))))))
+  (((Label start)
+    (Block
+      Binfo1
+      ((Callq (Label read_int) 0)
+       (Callq (Label read_int) 0)
+       (Movq (Imm 42) (Reg Rax))
+       (Jmp (Label conclusion)))))))

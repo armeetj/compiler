@@ -1,0 +1,36 @@
+(X86Program
+  (Info3
+    (locals_types
+      (($tmp.1 Integer)
+       ($tmp.2 Integer)
+       ($tmp.3 Integer)
+       (x.1 Integer)))
+    (num_spilled 0)
+    (used_callee ()))
+  (((Label block_1)
+    (Block
+      Binfo1
+      ((Movq (Reg Rcx) (Reg Rcx))
+       (Movq (Reg Rcx) (Reg Rcx))
+       (Subq (Imm 2) (Reg Rcx))
+       (Jmp (Label loop_1)))))
+   ((Label block_2)
+    (Block
+      Binfo1
+      ((Movq (Reg Rcx) (Reg Rcx))
+       (Movq (Reg Rcx) (Reg Rax))
+       (Addq (Imm 42) (Reg Rax))
+       (Jmp (Label conclusion)))))
+   ((Label loop_1)
+    (Block
+      Binfo1
+      ((Movq (Reg Rcx) (Reg Rcx))
+       (Cmpq (Imm 0) (Reg Rcx))
+       (JmpIf CC_g (Label block_1))
+       (Jmp (Label block_2)))))
+   ((Label start)
+    (Block
+      Binfo1
+      ((Callq (Label read_int) 0)
+       (Movq (Reg Rax) (Reg Rcx))
+       (Jmp (Label loop_1)))))))

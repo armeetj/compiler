@@ -1,0 +1,18 @@
+(Program
+  (Let
+    x.1
+    (Int 42)
+    (Let
+      i.1
+      (Int 2)
+      (Begin
+        ((While
+           (Prim Lt ((GetBang i.1) (Int 0)))
+           (Begin
+             ((SetBang
+                x.1
+                (Prim Add ((GetBang x.1) (Int 1)))))
+             (SetBang
+               i.1
+               (Prim Add ((GetBang x.1) (Int 1)))))))
+        (GetBang x.1)))))

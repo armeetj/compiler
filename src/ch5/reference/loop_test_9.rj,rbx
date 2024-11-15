@@ -1,0 +1,73 @@
+(X86Program
+  (Info3
+    (locals_types
+      (($tmp.1 Integer)
+       ($tmp.2 Integer)
+       ($tmp.3 Integer)
+       ($tmp.4 Integer)
+       ($tmp.5 Integer)
+       ($tmp.6 Integer)
+       ($tmp.7 Integer)
+       ($tmp.8 Integer)
+       (i.1 Integer)
+       (j.1 Integer)
+       (m.1 Integer)
+       (n.1 Integer)
+       (sum.1 Integer)))
+    (num_spilled 5)
+    (used_callee (Rbx)))
+  (((Label block_1)
+    (Block
+      Binfo1
+      ((Movq (Deref Rbp -8) (Deref Rbp -8))
+       (Movq (Deref Rbp -16) (Deref Rbp -16))
+       (Movq (Deref Rbp -24) (Deref Rbp -24))
+       (Movq (Deref Rbp -16) (Deref Rbp -40))
+       (Addq (Deref Rbp -24) (Deref Rbp -40))
+       (Movq (Deref Rbp -8) (Deref Rbp -8))
+       (Addq (Deref Rbp -40) (Deref Rbp -8))
+       (Movq (Deref Rbp -24) (Deref Rbp -24))
+       (Movq (Deref Rbp -24) (Deref Rbp -24))
+       (Addq (Imm 1) (Deref Rbp -24))
+       (Jmp (Label loop_2)))))
+   ((Label block_2)
+    (Block
+      Binfo1
+      ((Movq (Deref Rbp -16) (Deref Rbp -16))
+       (Movq (Deref Rbp -16) (Deref Rbp -16))
+       (Addq (Imm 1) (Deref Rbp -16))
+       (Jmp (Label loop_1)))))
+   ((Label block_3)
+    (Block
+      Binfo1
+      ((Movq (Imm 1) (Deref Rbp -24))
+       (Jmp (Label loop_2)))))
+   ((Label block_4)
+    (Block
+      Binfo1
+      ((Movq (Deref Rbp -8) (Reg Rax))
+       (Jmp (Label conclusion)))))
+   ((Label loop_1)
+    (Block
+      Binfo1
+      ((Movq (Deref Rbp -16) (Deref Rbp -16))
+       (Cmpq (Reg Rbx) (Deref Rbp -16))
+       (JmpIf CC_le (Label block_3))
+       (Jmp (Label block_4)))))
+   ((Label loop_2)
+    (Block
+      Binfo1
+      ((Movq (Deref Rbp -24) (Deref Rbp -24))
+       (Cmpq (Deref Rbp -32) (Deref Rbp -24))
+       (JmpIf CC_le (Label block_1))
+       (Jmp (Label block_2)))))
+   ((Label start)
+    (Block
+      Binfo1
+      ((Movq (Imm 0) (Deref Rbp -8))
+       (Callq (Label read_int) 0)
+       (Movq (Reg Rax) (Reg Rbx))
+       (Callq (Label read_int) 0)
+       (Movq (Reg Rax) (Deref Rbp -32))
+       (Movq (Imm 1) (Deref Rbp -16))
+       (Jmp (Label loop_1)))))))

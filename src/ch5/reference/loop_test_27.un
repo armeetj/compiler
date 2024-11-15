@@ -1,0 +1,16 @@
+(Program
+  (If
+    (Bool false)
+    (Let
+      x.1
+      (Int 0)
+      (Begin
+        ((While
+           (Prim Lt ((Var x.1) (Int 1)))
+           (Begin
+             ()
+             (SetBang
+               x.1
+               (Prim Add ((Var x.1) (Int 1)))))))
+        (Var x.1)))
+    (Int 42)))

@@ -1,0 +1,9 @@
+;; OUTPUT: 42
+(if #f
+    (let (x 0)
+      (begin
+        (while (< x 1)
+          (begin
+            (set! x (+ x 1))))
+        x))
+    42)

@@ -1,0 +1,62 @@
+block_1:
+    addq $1, -40(%rbp)
+    jmp loop_2
+
+block_2:
+    movq $1, -24(%rbp)
+    jmp block_1
+
+block_3:
+    jmp block_1
+
+block_4:
+    movq -40(%rbp), %rax
+    cmpq %rax, -32(%rbp)
+    je block_2
+    jmp block_3
+
+block_5:
+    addq $1, -32(%rbp)
+    jmp loop_1
+
+block_6:
+    addq -8(%rbp), %rcx
+    addq -16(%rbp), %rcx
+    movq -24(%rbp), %rax
+    movq %rax, -8(%rbp)
+    addq -8(%rbp), %rcx
+    movq %rcx, %rax
+    addq $40, %rax
+    jmp conclusion
+
+loop_1:
+    cmpq $2, -32(%rbp)
+    jl loop_2
+    jmp block_6
+
+loop_2:
+    cmpq $2, -40(%rbp)
+    jl block_4
+    jmp block_5
+
+start:
+    movq $1, %rcx
+    movq $0, -8(%rbp)
+    movq $0, -16(%rbp)
+    movq $0, -24(%rbp)
+    movq $1, -32(%rbp)
+    movq $1, -40(%rbp)
+    jmp loop_1
+
+    .globl main
+
+main:
+    pushq %rbp
+    movq %rsp, %rbp
+    subq $48, %rsp
+    jmp start
+
+conclusion:
+    addq $48, %rsp
+    popq %rbp
+    retq

@@ -1,0 +1,12 @@
+(Program
+  (Begin
+    ()
+    (Let
+      x.1
+      (Int 1)
+      (Begin
+        ((SetBang x.1 (Int 2)))
+        (If
+          (Prim Eq ((GetBang x.1) (Int 2)))
+          (Int 42)
+          (Int 0))))))

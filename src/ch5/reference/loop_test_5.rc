@@ -1,0 +1,33 @@
+(Program
+  (Let
+    sum.1
+    (Atm (Int 0))
+    (Let
+      i.1
+      (Prim Read ())
+      (Begin
+        ((While
+           (Let
+             $tmp.1
+             (Atm (Var i.1))
+             (Prim Gt ((Var $tmp.1) (Int 0))))
+           (Begin
+             ((SetBang
+                sum.1
+                (Let
+                  $tmp.2
+                  (Atm (Var sum.1))
+                  (Let
+                    $tmp.3
+                    (Atm (Var i.1))
+                    (Prim Add ((Var $tmp.2) (Var $tmp.3)))))))
+             (SetBang
+               i.1
+               (Let
+                 $tmp.4
+                 (Atm (Var i.1))
+                 (Prim Sub ((Var $tmp.4) (Int 1))))))))
+        (Let
+          $tmp.5
+          (Atm (Var sum.1))
+          (Prim Add ((Int 27) (Var $tmp.5))))))))

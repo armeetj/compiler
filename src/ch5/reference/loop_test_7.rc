@@ -1,0 +1,46 @@
+(Program
+  (Let
+    x.1
+    (Atm (Int 30))
+    (Let
+      y.1
+      (Atm (Int 20))
+      (Let
+        $tmp.3
+        (Begin
+          ((SetBang
+             x.1
+             (Let
+               $tmp.1
+               (Atm (Var x.1))
+               (Let
+                 $tmp.2
+                 (Prim Read ())
+                 (Prim Sub ((Var $tmp.1) (Var $tmp.2)))))))
+          (Atm (Int 0)))
+        (Let
+          $tmp.6
+          (Begin
+            ((SetBang
+               y.1
+               (Let
+                 $tmp.4
+                 (Atm (Var y.1))
+                 (Let
+                   $tmp.5
+                   (Prim Read ())
+                   (Prim Add ((Var $tmp.4) (Var $tmp.5)))))))
+            (Atm (Int 0)))
+          (Let
+            $tmp.7
+            (Prim Add ((Var $tmp.3) (Var $tmp.6)))
+            (Let
+              $tmp.8
+              (Atm (Var x.1))
+              (Let
+                $tmp.9
+                (Atm (Var y.1))
+                (Let
+                  $tmp.10
+                  (Prim Add ((Var $tmp.8) (Var $tmp.9)))
+                  (Prim Add ((Var $tmp.7) (Var $tmp.10))))))))))))

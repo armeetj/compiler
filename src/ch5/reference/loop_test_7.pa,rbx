@@ -1,0 +1,42 @@
+start:
+    movq $30, -32(%rbp)
+    movq $20, -16(%rbp)
+    movq -32(%rbp), %rbx
+    callq read_int
+    movq %rax, -24(%rbp)
+    movq %rbx, -32(%rbp)
+    movq -24(%rbp), %rax
+    subq %rax, -32(%rbp)
+    movq $0, %rbx
+    callq read_int
+    movq %rax, -24(%rbp)
+    movq -24(%rbp), %rax
+    addq %rax, -16(%rbp)
+    movq $0, -24(%rbp)
+    addq -24(%rbp), %rbx
+    movq -32(%rbp), %rax
+    movq %rax, -24(%rbp)
+    movq -16(%rbp), %rax
+    movq %rax, -32(%rbp)
+    movq -24(%rbp), %rax
+    movq %rax, -16(%rbp)
+    movq -32(%rbp), %rax
+    addq %rax, -16(%rbp)
+    movq %rbx, %rax
+    addq -16(%rbp), %rax
+    jmp conclusion
+
+    .globl main
+
+main:
+    pushq %rbp
+    movq %rsp, %rbp
+    pushq %rbx
+    subq $24, %rsp
+    jmp start
+
+conclusion:
+    addq $24, %rsp
+    popq %rbx
+    popq %rbp
+    retq

@@ -1,0 +1,8 @@
+;; INPUT: -1001
+;; OUTPUT: 42
+(if #f
+    (begin
+      (while #t
+        (read))
+      0)
+    42)

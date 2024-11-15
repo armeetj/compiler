@@ -1,0 +1,53 @@
+(X86Program
+  (Info1
+    (locals_types
+      (($tmp.1 Integer)
+       ($tmp.2 Integer)
+       ($tmp.3 Integer)
+       (i.1 Integer))))
+  (((Label block_1)
+    (Block
+      (Binfo2
+        ((initial ((VarL i.1) (RegL Rsp)))
+         (afters
+           (((VarL $tmp.2) (RegL Rsp))
+            ((VarL i.1) (RegL Rsp))
+            ((VarL i.1) (RegL Rsp))
+            ()))))
+      ((Movq (Var i.1) (Var $tmp.2))
+       (Movq (Var $tmp.2) (Var i.1))
+       (Subq (Imm 1) (Var i.1))
+       (Jmp (Label loop_1)))))
+   ((Label block_2)
+    (Block
+      (Binfo2
+        ((initial ((VarL i.1) (RegL Rsp)))
+         (afters
+           (((VarL $tmp.3) (RegL Rsp))
+            ((RegL Rsp) (RegL Rax))
+            ((RegL Rsp) (RegL Rax))
+            ()))))
+      ((Movq (Var i.1) (Var $tmp.3))
+       (Movq (Var $tmp.3) (Reg Rax))
+       (Addq (Imm 42) (Reg Rax))
+       (Jmp (Label conclusion)))))
+   ((Label loop_1)
+    (Block
+      (Binfo2
+        ((initial ((VarL i.1) (RegL Rsp)))
+         (afters
+           (((VarL $tmp.1) (VarL i.1) (RegL Rsp))
+            ((VarL i.1) (RegL Rsp) (RegL Rflags))
+            ((VarL i.1) (RegL Rsp))
+            ()))))
+      ((Movq (Var i.1) (Var $tmp.1))
+       (Cmpq (Imm 0) (Var $tmp.1))
+       (JmpIf CC_g (Label block_1))
+       (Jmp (Label block_2)))))
+   ((Label start)
+    (Block
+      (Binfo2
+        ((initial ((RegL Rsp)))
+         (afters (((VarL i.1) (RegL Rsp)) ()))))
+      ((Movq (Imm 5) (Var i.1))
+       (Jmp (Label loop_1)))))))

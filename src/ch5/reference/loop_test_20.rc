@@ -1,0 +1,4 @@
+(Program
+  (Begin
+    ((Prim Read ()) (Prim Read ()))
+    (Atm (Int 42))))
