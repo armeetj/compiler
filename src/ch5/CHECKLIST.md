@@ -1,0 +1,13 @@
+- [x] remove unused blocks
+- [x] build interference graph
+- [x] graph coloring
+- [ ] allocate registers (need todo from last week)
+- [ ] remove jumps (need todo from last week)
+- [x] patch instructions
+- [x] add prelude and conclusion
+- [x] shrink
+- [ ] uniquify
+- [ ] remove complex operands
+- [ ] explicate control
+- [ ] select instructions
+- [ ] uncover live
