@@ -2,7 +2,7 @@
 - [x] build interference graph
 - [x] graph coloring
 - [ ] allocate registers (need todo from last week)
-- [ ] remove jumps (need todo from last week)
+- [x] remove jumps 
 - [x] patch instructions
 - [x] add prelude and conclusion
 - [x] shrink
