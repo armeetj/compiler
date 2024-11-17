@@ -6,7 +6,7 @@
 - [x] patch instructions
 - [x] add prelude and conclusion
 - [x] shrink
-- [ ] uniquify
+- [x] uniquify
 - [ ] remove complex operands
 - [ ] explicate control
 - [ ] select instructions
