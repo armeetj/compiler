@@ -1,0 +1,78 @@
+---
+author: Emeka Nkurumeh
+date: 2024-11-21
+---
+
+# Grade (74/100)
+
+- Correctness: 73% (8/11 passes)
+- Quality: 75%
+
+The complete passes, are pretty well-written with only some minor quality issues (manual folds,
+reimplementing existing functions, etc.). Incorrect/icomplete passes are marked with an '*'.
+
+## Explicate Control*
+
+Line 68: if the primitive in a `if` isn't a `cmp_op`, you can signal an error.
+
+Line 69: a `let` inside an `if` should be handled according to the transformation given in the write-up:
+
+```
+(if (let (x e1) e2) then_tl else_tl)
+-->
+(let (x e1) (if e2 then_tl else_tl))
+```
+
+The transformed AST can then be handled via a call to `explicate_assign` and `explicate_pred`. Note,
+you don't actually want to construct new `L.exp` nodes. Rather, you should just call
+`explicate_assign` and `explicate_pred` on the subexpressions directly.
+
+Line 70: an `if` inside an `if` should be handled according to the transformation in the write-up:
+
+```
+(if (if e1 e2 e3) then_tl else_tl)
+-->
+(if e1 (if e2 then_tl else_tl) (if e3 then_tl else_tl))
+```
+
+Like the write-up mentions, we don't want to duplicate `then_tl` or `else_tl`, so use `create_block`
+to converted them to labels and replace the tails with jumps to those blocks. All in all, the
+transform looks more like
+
+```
+(if (if e1 e2 e3) then_tl else_tl)
+-->
+(if e1 (if e2 (goto then_label) (goto else_label)) (if e3 (goto then_label) (goto else_label)))
+```
+
+## Remove Unused Blocks
+
+The helper function `tm_of_l` is equivalent to `LabelMap.of_list`.
+
+`find_reachable_list` can be rewritten as a fold
+
+## Select Instructions
+
+All the `cmp_op` cases in `proces_stmt` can be combined using `Types.cc_of_op` to convert from
+`cmp_op` to `cc` (use the syntax `#cmp_op as op` mentioned in the write-up to ensure the argument to
+`cc_op_op` is a `cmp_op`).
+
+## Uncover Live*
+
+Line 64: for the case of `JmpIf`, we need to combine to `LocSet.t` for the target of the jump
+(obtained from `live_before_map`) with the `LocSet.t` from the following `Jmp`. The first `LocSet.t`
+can be computed the same way as in the `Jmp` case. For the second set, we can notice that **all**
+`JmpIf`s are followed by exactly 1 `Jmp` instruction and we are traversing the list of instructions
+in reverse. This means that `l_after` must be the `LocSet.t` of the following `Jmp`. Note that
+`JmpIf` also reads from the `RFlags` register.
+
+`helper (List.rev instrs)` in `uncover_live_in_block` can be replaced with `List.fold_right process
+instrs`
+
+`helper` in `get_next_labels` can be replaced with a fold
+
+Line 108, 130: refer to the notes in the write-up/comments.
+
+## Allocate Registers*
+
+As far as I can tell, the only things missing are the unhandled cases in `convert_instr`.
