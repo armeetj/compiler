@@ -1,8 +1,10 @@
+# Checklist (ch5)
+
 - [x] remove unused blocks
 - [x] build interference graph
 - [x] graph coloring
-- [ ] allocate registers (need todo from last week)
-- [x] remove jumps 
+- [x] allocate registers
+- [x] remove jumps
 - [x] patch instructions
 - [x] add prelude and conclusion
 - [x] shrink
