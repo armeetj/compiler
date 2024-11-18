@@ -11,4 +11,4 @@
 - [ ] explicate control
 - [x] select instructions
 - [ ] uncover live
-- [ ] uncover get
+- [x] uncover get
