@@ -93,12 +93,14 @@ let convert_instr (map : location VarMap.t) (ins : instr) : instr =
   | Addq (a1, a2) -> Addq (convert_arg a1, convert_arg a2)
   | Subq (a1, a2) -> Subq (convert_arg a1, convert_arg a2)
   | Negq a -> Negq (convert_arg a)
+  | Xorq (a1, a2) -> Xorq (convert_arg a1, convert_arg a2)
+  | Cmpq (a1, a2) -> Cmpq (convert_arg a1, convert_arg a2)
+  | Set (cc, a) -> Set (cc, convert_arg a)
   | Movq (a1, a2) -> Movq (convert_arg a1, convert_arg a2)
+  | Movzbq (a1, a2) -> Movzbq (convert_arg a1, convert_arg a2)
   | Pushq a -> Pushq (convert_arg a)
   | Popq a -> Popq (convert_arg a)
-  | Callq (l, i) -> Callq (l, i)
-  | Retq -> Retq
-  | Jmp l -> Jmp l
+  | _ -> ins
 
 (* Convert a block.  Block info is empty, so it's just passed through. *)
 let convert_block (map : location VarMap.t) (bl : 'a block) : 'a block =
