@@ -9,5 +9,5 @@
 - [x] uniquify
 - [ ] remove complex operands
 - [ ] explicate control
-- [ ] select instructions
+- [x] select instructions
 - [ ] uncover live
