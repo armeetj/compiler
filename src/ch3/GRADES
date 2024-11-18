@@ -1,25 +1,11 @@
 ---
 author: Emeka Nkurumeh
-date: 2024-11-07
+date: 2024-11-17
 ---
 
-# Grade (98/100)
+# Grade (100/100)
 
 - Correctness: 100%
-- Quality: 90%
+- Quality: 100%
 
-Overall, good job! Your code passes all tests and was easy to follow. In the
-future, while not strictly necessary, try to make sure your code compiles
-without warnings.
-
-## Allocate Registers
-
-Instead of writing out the callee-save registers in `get_used_callee`, use the
-set `callee_save_regs` defined in `types.ml`.
-
-## Prelude and Conclusion
-
-`convert_instr` doesn't need to return a list since all branches of the match
-return lists with exactly 1 element. Furthermore, this function could be
-combined with `adjust_stack_access` to adjust `Deref` nodes as they are being
-converted.
+Overall, good job! Your code passes all tests and was easy to follow.
