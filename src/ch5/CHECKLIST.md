@@ -10,7 +10,7 @@
 - [x] shrink
 - [x] uniquify
 - [x] remove complex operands
-- [x] explicate control
+- [.] explicate control
 - [x] remove complex operands
 - [ ] explicate control
 - [x] select instructions
