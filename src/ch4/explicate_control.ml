@@ -48,26 +48,61 @@ and explicate_pred (e : L.exp) (then_tl : tail) (else_tl : tail) : tail =
             "cond can't be an Int, this shouldn't have made it past the type \
              checker"
       | L.Var v ->
+          let then_block = create_block then_tl in
+          let else_block = create_block else_tl in
           IfStmt
             {
               op = `Eq;
               arg1 = Var v;
               arg2 = Bool true;
-              jump_then = create_block then_tl;
-              jump_else = create_block else_tl;
-            })
+              jump_then = then_block;
+              jump_else = else_block;
+            }
+          (* a1 cmp a2 *))
   | L.Prim ((#cmp_op as op), [ a1; a2 ]) ->
+      let then_block = create_block then_tl in
+      let else_block = create_block else_tl in
       IfStmt
         {
           op;
           arg1 = convert_atom a1;
           arg2 = convert_atom a2;
-          jump_then = create_block then_tl;
-          jump_else = create_block else_tl;
+          jump_then = then_block;
+          jump_else = else_block;
         }
-  | L.Prim _ -> failwith "todo"
-  | L.Let _ -> failwith "todo"
-  | L.If _ -> failwith "todo"
+  (* Not a *)
+  | L.Prim (`Not, [ a ]) -> (
+      match a with
+      | L.Bool true -> else_tl
+      | L.Bool false -> then_tl
+      | L.Int _ ->
+          failwith
+            "cond can't be an Int, this shouldn't have made it past the type \
+             checker"
+      | L.Var v ->
+          let then_block = create_block then_tl in
+          let else_block = create_block else_tl in
+          IfStmt
+            {
+              op = `Eq;
+              arg1 = Var v;
+              arg2 = Bool false;
+              jump_then = then_block;
+              jump_else = else_block;
+            })
+  | L.Let (v, binding_exp, body_exp) ->
+      explicate_assign binding_exp v (explicate_pred body_exp then_tl else_tl)
+  | L.If (cond, then_exp, else_exp) ->
+      let then_block = create_block then_tl in
+      let else_block = create_block else_tl in
+      let tail_true =
+        explicate_pred then_exp (Goto then_block) (Goto else_block)
+      in
+      let tail_false =
+        explicate_pred else_exp (Goto then_block) (Goto else_block)
+      in
+      explicate_pred cond tail_true tail_false
+  | _ -> failwith "invalid cond exp type (must be a boolean resolvable exp)"
 
 (* Convert expressions in tail position.
  * This includes:
