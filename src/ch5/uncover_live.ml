@@ -4,11 +4,37 @@ open Utils
 
 module X = X86_var_loop
 
+
+(* WILL DO IN REWORK *)
+
+let rec read_set lst set =
+  match lst with
+  | [] -> set
+  | h :: t -> match h with
+    | X.Var v -> LocSet.add (VarL v) (read_set t set) 
+    | X.Reg r -> LocSet.add (RegL r) (read_set t set) 
+    | _ -> read_set t set
+
+(* takes in list of args and removes the useful ones from the set *)
+let rec write_set lst set = 
+  match lst with
+  | [] -> set
+  | h :: t -> match h with
+    | X.Var v -> LocSet.remove (VarL v) (write_set t set) 
+    | X.Reg r -> LocSet.remove (RegL r) (write_set t set) 
+    | _ -> write_set t set
+  
+let rec first_i i lst = match i, lst with
+  | 0, _ -> []
+  | _, [] -> []
+  | _, h :: t -> h :: first_i (i-1) t
+
+let list_of_regset st = 
+  List.map (fun x -> X.Reg x) (RegSet.elements st)
 (* Flag; when true, extra debugging information is printed. *)
 let _debug = ref false
 
 let rflags_reg = X.Reg Rflags
-
 
 (* Compute the live sets for the instructions of a single labeled block.
  * The `live_before_map` is the live-before sets for each block named

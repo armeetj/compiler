@@ -13,5 +13,5 @@
 - [.] explicate control
 - [x] remove complex operands
 - [x] select instructions
-- [ ] uncover live
+- [.] uncover live
 - [x] uncover get
