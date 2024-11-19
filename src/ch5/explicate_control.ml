@@ -21,11 +21,7 @@ let convert_exp (e : L.exp) : exp =
   match e with
   | L.Atm a -> Atm (convert_atom a)
   | L.Prim (op, exp_lst) -> Prim (op, List.map convert_atom exp_lst)
-  | L.SetBang (v, e) -> failwith "todo"
-  | L.Begin (exp_lst, e) -> failwith "todo"
-  | L.If (_, _, _) -> failwith "If should never be passed to convert_exp"
-  | L.Let (_, _, _) -> failwith "Let should never be passed to convert_exp"
-  | L.While (_, _) -> failwith "While should never be passed to convert_exp"
+  | _ -> failwith "invalid type passed to convert_exp"
 
 (* Convert expressions which are the binding expression of a `let` expression
  * (i.e. in `(let (var <exp1>) <exp2>)` the binding expression is `<exp1>`).
@@ -53,10 +49,10 @@ and explicate_pred (e : L.exp) (then_tl : tail) (else_tl : tail) : tail =
       match a with
       | L.Bool true -> then_tl
       | L.Bool false -> else_tl
-      | L.Int _ ->
+      | L.Int _ | L.Void ->
           failwith
-            "cond can't be an Int, this shouldn't have made it past the type \
-             checker"
+            "cond can't be an Int or Void, this shouldn't have made it past \
+             the type checker"
       | L.Var v ->
           let then_block = create_block then_tl in
           let else_block = create_block else_tl in
@@ -85,7 +81,7 @@ and explicate_pred (e : L.exp) (then_tl : tail) (else_tl : tail) : tail =
       match a with
       | L.Bool true -> else_tl
       | L.Bool false -> then_tl
-      | L.Int _ ->
+      | L.Int _ | L.Void ->
           failwith
             "cond can't be an Int, this shouldn't have made it past the type \
              checker"
@@ -121,7 +117,7 @@ and explicate_pred (e : L.exp) (then_tl : tail) (else_tl : tail) : tail =
  * These are expressions that are only evaluated for their side effects.
  * Pure expressions in effect position are discarded,
  * since they can't have any effect. *)
-and explicate_effect (e : L.exp) (tl : tail) : tail = failwith "TODO"
+and explicate_effect (e : L.exp) (tl : tail) : tail = match e with _ -> tl
 
 (* Convert expressions in tail position.
  * This includes:

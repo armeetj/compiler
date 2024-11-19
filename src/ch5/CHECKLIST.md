@@ -9,7 +9,7 @@
 - [x] add prelude and conclusion
 - [x] shrink
 - [x] uniquify
-- [ ] remove complex operands
+- [x] remove complex operands
 - [.] explicate control
 - [x] select instructions
 - [ ] uncover live
