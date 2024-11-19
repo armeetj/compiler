@@ -9,8 +9,10 @@
 - [x] add prelude and conclusion
 - [x] shrink
 - [x] uniquify
-- [ ] remove complex operands
-- [.] explicate control
+- [x] remove complex operands
+- [x] explicate control
+- [x] remove complex operands
+- [ ] explicate control
 - [x] select instructions
 - [ ] uncover live
 - [x] uncover get
