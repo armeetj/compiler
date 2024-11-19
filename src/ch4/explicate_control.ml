@@ -57,8 +57,8 @@ and explicate_pred (e : L.exp) (then_tl : tail) (else_tl : tail) : tail =
               arg2 = Bool true;
               jump_then = then_block;
               jump_else = else_block;
-            }
-          (* a1 cmp a2 *))
+            })
+  (* a1 cmp a2 *)
   | L.Prim ((#cmp_op as op), [ a1; a2 ]) ->
       let then_block = create_block then_tl in
       let else_block = create_block else_tl in
