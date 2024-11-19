@@ -5,16 +5,20 @@ Ashug Gurijala `agurijal@caltech.edu`
 
 ## Assignment 1
 
-- Used 1 late day
 - We worked on all passes together
 
 ## Assignment 2
 
-- Both: `select_instructions`, `patch_instructions`, `prelude_conclusion`
-- Armeet: `graph_coloring`, `allocate_registers`
-- Ashug: `uncover_live`, `build_interference`
+- **Both**: `select_instructions`, `patch_instructions`, `prelude_conclusion`
+- **Armeet**: `graph_coloring`, `allocate_registers`
+- **Ashug**: `uncover_live`, `build_interference`
 
 ## Assignment 3
-- Used 4 late days
-- Had some trouble with some passes, will revisit on rework
-- Checklist contains work split
+
+- **Both**: `remove_complex_operands`, `uncover_live`
+- **Armeet**:  `uniquify`, `explicate_control`, `graph_coloring`, `allocate_registers`
+- **Ashug**: `shrink`, `remove_unused_blocks`, `select_instructions`, `build_interference_graph`, `remove_jumps`, `patch_instructions`, `prelude_conclusion`
+
+## Assignment 4
+
+- same worksplit as Assignment 3
