@@ -11,6 +11,7 @@
 - [x] uniquify
 - [x] remove complex operands
 - [.] explicate control
+- [x] remove complex operands
 - [x] select instructions
 - [ ] uncover live
 - [x] uncover get
