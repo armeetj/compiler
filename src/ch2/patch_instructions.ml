@@ -7,7 +7,8 @@ let convert_arg (a : X.arg) : arg =
   | X.Imm i -> Imm i
   | X.Reg r -> Reg r
   | X.Deref (r, i) -> Deref (r, i)
-  | X.Var _ -> failwith "We got rid of all Var's after in assign homes"
+  | X.Var _ ->
+      failwith "convert_arg: We got rid of all Var's after in assign homes"
 
 let convert_instr (i : X.instr) : instr list =
   match i with

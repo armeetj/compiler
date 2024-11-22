@@ -12,7 +12,7 @@ let convert_exp (e : L.exp) : exp =
   | L.Negate a -> Negate (convert_atom a)
   | L.Add (a1, a2) -> Add (convert_atom a1, convert_atom a2)
   | L.Sub (a1, a2) -> Sub (convert_atom a1, convert_atom a2)
-  | L.Let (_, _, _) -> failwith "this should never happen"
+  | L.Let _ -> failwith "this should never happen"
 
 (* Convert expressions which are the binding expression of a `let` expression
  * (i.e. in `(let (var <exp1>) <exp2>)` the binding expression is `<exp1>`).
@@ -20,8 +20,9 @@ let convert_exp (e : L.exp) : exp =
  * The `tail` is the continuation (what to do after the binding). *)
 let rec explicate_assign (e : L.exp) (v : var) (tl : tail) : tail =
   match e with
-  | L.Let (v_in, e1, e2) -> explicate_assign e2 v tl |> explicate_assign e1 v_in
-  | _ ->
+  | L.Let (v_in, e1, e2) ->
+      explicate_assign e1 v_in (explicate_assign e2 v tl)
+  | Read | Atm _ | Negate _ | Add _ | Sub _ ->
       let e_conv = convert_exp e in
       Seq (Assign (v, e_conv), tl)
 

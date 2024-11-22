@@ -12,10 +12,9 @@ creates the chain of lets using the bindings list.
 - the last expression should maintain throughout.
 - assumes bindings are in correct order 
 *)
-let rec process (bindings : (var * exp) list) (last) : exp = 
-  match bindings with 
-  | [] -> last
-  | h :: t -> let (v, exp) = h in Let (v, exp, process t last)
+let process (bindings : (var * exp) list) (last : exp) : exp = 
+  List.fold_right (fun (v, e) acc -> Let (v, e, acc)) bindings
+    last
 
 (* Convert an expression which needs to become atomic.
  * Return the atomic expression as well as a list of

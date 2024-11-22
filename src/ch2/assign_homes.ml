@@ -39,7 +39,7 @@ let assign_homes (prog : info1 program) : info2 program =
   match prog with
   | X86Program (Info1 { locals_types }, p) ->
       let aligned_stack_space =
-        List.length locals_types |> ( * ) 8 |> align_16
+        align_16 (8 * List.length locals_types)
       in
       let dict =
         assign_stack (List.mapi (fun i v -> (i, v)) locals_types) VarMap.empty
