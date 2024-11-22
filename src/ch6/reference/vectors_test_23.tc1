@@ -1,0 +1,13 @@
+(Program
+  (Let
+    v
+    (Vec ((Int 42)) ((Vector (Integer))))
+    (Let
+      w
+      (Vec
+        ((Var v))
+        ((Vector ((Vector (Integer))))))
+      (Let
+        v^
+        (VecRef (Var w) 0)
+        (VecRef (Var v^) 0)))))

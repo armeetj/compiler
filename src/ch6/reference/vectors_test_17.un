@@ -1,0 +1,8 @@
+(Program
+  (VecRef
+    (VecRef
+      (Vec
+        ((Vec ((Int 42)) (Vector (Integer))))
+        (Vector ((Vector (Integer)))))
+      0)
+    0))

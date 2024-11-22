@@ -1,0 +1,7 @@
+(Program
+  (Let
+    v
+    (Vec
+      ((Int 1) (Int 2))
+      (Vector (Integer Integer)))
+    (Int 42)))

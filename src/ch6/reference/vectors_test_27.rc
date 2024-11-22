@@ -1,0 +1,35 @@
+(Program
+  (Let
+    v.1
+    (Let
+      _.2
+      (If
+        (Let
+          $tmp.1
+          (GlobalVal free_ptr)
+          (Let
+            $tmp.2
+            (Prim Add ((Var $tmp.1) (Int 16)))
+            (Let
+              $tmp.3
+              (GlobalVal fromspace_end)
+              (Prim Lt ((Var $tmp.2) (Var $tmp.3))))))
+        (Atm Void)
+        (Collect 16))
+      (Let
+        $ea.1
+        (Allocate 1 (Vector (Boolean)))
+        (Let
+          _.1
+          (VecSet (Var $ea.1) 0 (Bool true))
+          (Atm (Var $ea.1)))))
+    (Let
+      $tmp.5
+      (If
+        (VecRef (Var v.1) 0)
+        (Let
+          $tmp.4
+          (Prim Read ())
+          (Prim Negate ((Var $tmp.4))))
+        (Prim Read ()))
+      (Prim Negate ((Var $tmp.5))))))

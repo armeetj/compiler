@@ -1,0 +1,5 @@
+;; INPUT: 1 ; 2
+;; OUTPUT: 42 ; 48
+(let (x (if (eq? (read) 1) 41 47))
+  (let (v (vector x))
+    (+ (vector-ref v 0) 1)))

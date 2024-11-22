@@ -1,0 +1,57 @@
+(Program
+  (Let
+    t.1
+    (Let
+      $ea.2
+      (Let
+        _.2
+        (If
+          (Prim
+            Lt
+            ((Prim
+               Add
+               ((GlobalVal free_ptr) (Int 16)))
+             (GlobalVal fromspace_end)))
+          Void
+          (Collect 16))
+        (Let
+          $ea.1
+          (Allocate 1 (Vector (Integer)))
+          (Let
+            _.1
+            (VecSet (Var $ea.1) 0 (Int 2))
+            (Var $ea.1))))
+      (Let
+        _.6
+        (If
+          (Prim
+            Lt
+            ((Prim
+               Add
+               ((GlobalVal free_ptr) (Int 32)))
+             (GlobalVal fromspace_end)))
+          Void
+          (Collect 32))
+        (Let
+          $ea.3
+          (Allocate
+            3
+            (Vector
+              (Integer Boolean (Vector (Integer)))))
+          (Let
+            _.5
+            (VecSet (Var $ea.3) 0 (Int 40))
+            (Let
+              _.4
+              (VecSet (Var $ea.3) 1 (Bool true))
+              (Let
+                _.3
+                (VecSet (Var $ea.3) 2 (Var $ea.2))
+                (Var $ea.3)))))))
+    (If
+      (VecRef (Var t.1) 1)
+      (Prim
+        Add
+        ((VecRef (Var t.1) 0)
+         (VecRef (VecRef (Var t.1) 2) 0)))
+      (Int 44))))

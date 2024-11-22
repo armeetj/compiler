@@ -1,0 +1,82 @@
+(Program
+  (Let
+    a.1
+    (Let
+      $ea.2
+      (Let
+        _.2
+        (If
+          (Prim
+            Lt
+            ((Prim
+               Add
+               ((GlobalVal free_ptr) (Int 16)))
+             (GlobalVal fromspace_end)))
+          Void
+          (Collect 16))
+        (Let
+          $ea.1
+          (Allocate 1 (Vector (Integer)))
+          (Let
+            _.1
+            (VecSet (Var $ea.1) 0 (Int 777))
+            (Var $ea.1))))
+      (Let
+        _.5
+        (If
+          (Prim
+            Lt
+            ((Prim
+               Add
+               ((GlobalVal free_ptr) (Int 24)))
+             (GlobalVal fromspace_end)))
+          Void
+          (Collect 24))
+        (Let
+          $ea.3
+          (Allocate
+            2
+            (Vector ((Vector (Integer)) Integer)))
+          (Let
+            _.4
+            (VecSet (Var $ea.3) 0 (Var $ea.2))
+            (Let
+              _.3
+              (VecSet (Var $ea.3) 1 (Int 98))
+              (Var $ea.3))))))
+    (Let
+      b.1
+      (Let
+        $ea.4
+        (VecRef (Var a.1) 0)
+        (Let
+          _.9
+          (If
+            (Prim
+              Lt
+              ((Prim
+                 Add
+                 ((GlobalVal free_ptr) (Int 32)))
+               (GlobalVal fromspace_end)))
+            Void
+            (Collect 32))
+          (Let
+            $ea.5
+            (Allocate
+              3
+              (Vector
+                ((Vector (Integer)) Integer Integer)))
+            (Let
+              _.8
+              (VecSet (Var $ea.5) 0 (Var $ea.4))
+              (Let
+                _.7
+                (VecSet (Var $ea.5) 1 (Int 99))
+                (Let
+                  _.6
+                  (VecSet (Var $ea.5) 2 (Int 100))
+                  (Var $ea.5)))))))
+      (Let
+        _.1
+        (VecSet (VecRef (Var b.1) 0) 0 (Int 42))
+        (VecRef (VecRef (Var a.1) 0) 0)))))

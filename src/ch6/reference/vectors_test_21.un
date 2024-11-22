@@ -1,0 +1,13 @@
+(Program
+  (Let
+    x.1
+    (If
+      (Prim Eq ((Prim Read ()) (Int 1)))
+      (Int 41)
+      (Int 47))
+    (Let
+      v.1
+      (Vec ((Var x.1)) (Vector (Integer)))
+      (Prim
+        Add
+        ((VecRef (Var v.1) 0) (Int 1))))))

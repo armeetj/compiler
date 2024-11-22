@@ -1,0 +1,8 @@
+;; OUTPUT: 42
+(let (u (vector 0))
+(let (v (vector 1))
+(let (w (vector 42))
+(let (y (vector v))
+(let (_ (vector-set! v 0 3))
+(let (_ (vector-set! y 0 w))
+  (vector-ref (vector-ref y 0) 0)))))))

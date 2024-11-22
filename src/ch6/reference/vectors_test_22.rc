@@ -1,0 +1,88 @@
+(Program
+  (Let
+    v.1
+    (Let
+      $ea.2
+      (Let
+        _.2
+        (If
+          (Let
+            $tmp.1
+            (GlobalVal free_ptr)
+            (Let
+              $tmp.2
+              (Prim Add ((Var $tmp.1) (Int 16)))
+              (Let
+                $tmp.3
+                (GlobalVal fromspace_end)
+                (Prim Lt ((Var $tmp.2) (Var $tmp.3))))))
+          (Atm Void)
+          (Collect 16))
+        (Let
+          $ea.1
+          (Allocate 1 (Vector (Integer)))
+          (Let
+            _.1
+            (VecSet (Var $ea.1) 0 (Int 44))
+            (Atm (Var $ea.1)))))
+      (Let
+        _.4
+        (If
+          (Let
+            $tmp.4
+            (GlobalVal free_ptr)
+            (Let
+              $tmp.5
+              (Prim Add ((Var $tmp.4) (Int 16)))
+              (Let
+                $tmp.6
+                (GlobalVal fromspace_end)
+                (Prim Lt ((Var $tmp.5) (Var $tmp.6))))))
+          (Atm Void)
+          (Collect 16))
+        (Let
+          $ea.3
+          (Allocate
+            1
+            (Vector ((Vector (Integer)))))
+          (Let
+            _.3
+            (VecSet (Var $ea.3) 0 (Var $ea.2))
+            (Atm (Var $ea.3))))))
+    (Let
+      x.1
+      (Let
+        w.1
+        (Let
+          _.6
+          (If
+            (Let
+              $tmp.7
+              (GlobalVal free_ptr)
+              (Let
+                $tmp.8
+                (Prim Add ((Var $tmp.7) (Int 16)))
+                (Let
+                  $tmp.9
+                  (GlobalVal fromspace_end)
+                  (Prim Lt ((Var $tmp.8) (Var $tmp.9))))))
+            (Atm Void)
+            (Collect 16))
+          (Let
+            $ea.4
+            (Allocate 1 (Vector (Integer)))
+            (Let
+              _.5
+              (VecSet (Var $ea.4) 0 (Int 42))
+              (Atm (Var $ea.4)))))
+        (Let
+          _.1
+          (VecSet (Var v.1) 0 (Var w.1))
+          (Atm (Int 0))))
+      (Let
+        $tmp.10
+        (VecRef (Var v.1) 0)
+        (Let
+          $tmp.11
+          (VecRef (Var $tmp.10) 0)
+          (Prim Add ((Var x.1) (Var $tmp.11))))))))

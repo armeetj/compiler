@@ -1,0 +1,16 @@
+(Program
+  (Let
+    v
+    (Vec ((Vec ((Int 44)) ())) ())
+    (Let
+      x
+      (Let
+        w
+        (Vec ((Int 42)) ())
+        (Let
+          _
+          (VecSet (Var v) 0 (Var w))
+          (Int 0)))
+      (Prim
+        Add
+        ((Var x) (VecRef (VecRef (Var v) 0) 0))))))

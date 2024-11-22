@@ -1,0 +1,7 @@
+;; OUTPUT: 42
+(let (a (vector (vector 42) 1))
+  (let (b (vector-ref a 0))
+    (let (c a)
+      (begin
+        (vector-set! c 0 (vector 1))
+        (vector-ref b 0)))))

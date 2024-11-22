@@ -1,0 +1,4 @@
+;; OUTPUT: 42
+(let (v0 (vector 42))
+  (vector-ref v0 0))
+

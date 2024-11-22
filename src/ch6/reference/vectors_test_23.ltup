@@ -1,0 +1,11 @@
+(Program
+  (Let
+    v
+    (Vec ((Int 42)) ())
+    (Let
+      w
+      (Vec ((Var v)) ())
+      (Let
+        v^
+        (VecRef (Var w) 0)
+        (VecRef (Var v^) 0)))))

@@ -1,0 +1,48 @@
+(library
+  (name ch6)
+  (modules
+    types alloc_utils
+    ; data structures
+    graph_coloring
+    ; intermediate languages
+    ltup ltup_shrink lalloc lalloc_get lalloc_mon ctup
+    x86_var_global x86_global x86_asm
+    ; definitional interpreters
+    interp_utils interp
+    interp_ltup interp_ltup_shrink
+    interp_lalloc interp_lalloc_get interp_lalloc_mon
+    interp_ctup
+    ; type checking
+    type_check type_check_ltup type_check_ctup
+    ; parsing
+    parser
+    ; compiler passes
+    shrink
+    uniquify
+    expose_allocation
+    uncover_get
+    remove_complex
+    explicate_control
+    remove_unused
+    select_instructions
+    uncover_live
+    build_interference
+    allocate_registers
+    remove_jumps
+    patch_instructions
+    prelude_conclusion
+    print_asm
+    )
+  (libraries sexplib str unix support)
+  (preprocess (pps ppx_sexp_conv))
+  (modes byte))
+
+(executable
+  (name compile)
+  (libraries ch6)
+  (modules compile)
+  (modes byte) )
+
+(env
+  (dev
+    (flags (:standard -warn-error -A))))

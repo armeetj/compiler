@@ -1,0 +1,9 @@
+(Program
+  (Let
+    v
+    (Vec
+      ((Int 40) (Int 2))
+      ((Vector (Integer Integer))))
+    (Prim
+      Add
+      ((VecRef (Var v) 0) (VecRef (Var v) 1)))))

@@ -1,0 +1,19 @@
+(Program
+  (Let
+    v0.1
+    (Let
+      _.1
+      (If
+        (Prim
+          Lt
+          ((Prim
+             Add
+             ((GlobalVal free_ptr) (Int 8)))
+           (GlobalVal fromspace_end)))
+        Void
+        (Collect 8))
+      (Let
+        $ea.1
+        (Allocate 0 (Vector ()))
+        (Var $ea.1)))
+    (Int 42)))

@@ -1,0 +1,5 @@
+;; OUTPUT: 42
+(let (v (vector 42))
+  (let (w (vector v))
+    (let (v^ (vector-ref w 0))
+      (vector-ref v^ 0))))

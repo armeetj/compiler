@@ -1,0 +1,59 @@
+block_1:
+    movq free_ptr(%rip), %r11
+    addq $24, free_ptr(%rip)
+    movq $5, 0(%r11)
+    movq %r11, -8(%r15)
+    movq -8(%r15), %r11
+    movq $40, 8(%r11)
+    movq $0, %rcx
+    movq -8(%r15), %r11
+    movq $2, 16(%r11)
+    movq $0, %rcx
+    movq -8(%r15), %rcx
+    movq %rcx, %r11
+    movq 8(%r11), %rax
+    movq %rax, -8(%r15)
+    movq %rcx, %r11
+    movq 16(%r11), %rcx
+    movq -8(%r15), %rax
+    addq %rcx, %rax
+    jmp conclusion
+
+block_2:
+    movq $0, %rcx
+    jmp block_1
+
+block_3:
+    movq %r15, %rdi
+    movq $24, %rsi
+    callq collect
+    jmp block_1
+
+start:
+    movq free_ptr(%rip), %rcx
+    addq $24, %rcx
+    movq fromspace_end(%rip), %rax
+    movq %rax, -8(%rbp)
+    cmpq -8(%rbp), %rcx
+    jl block_2
+    jmp block_3
+
+    .globl main
+
+main:
+    pushq %rbp
+    movq %rsp, %rbp
+    subq $16, %rsp
+    movq $65536, %rdi
+    movq $65536, %rsi
+    callq initialize
+    movq rootstack_begin(%rip), %r15
+    movq $0, 0(%r15)
+    addq $8, %r15
+    jmp start
+
+conclusion:
+    subq $8, %r15
+    addq $16, %rsp
+    popq %rbp
+    retq

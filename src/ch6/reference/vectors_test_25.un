@@ -1,0 +1,8 @@
+(Program
+  (Let
+    v.1
+    (Vec ((Int 777)) (Vector (Integer)))
+    (Let
+      _.1
+      (VecSet (Var v.1) 0 (Int 42))
+      (VecRef (Var v.1) 0))))

@@ -1,0 +1,8 @@
+(Program
+  (Let
+    v.1
+    (Vec ((Int 0)) (Vector (Integer)))
+    (If
+      (Prim Eq ((Var v.1) (Var v.1)))
+      (Int 42)
+      (Int 777))))

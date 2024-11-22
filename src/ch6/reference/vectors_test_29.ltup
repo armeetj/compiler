@@ -1,0 +1,5 @@
+(Program
+  (Let
+    v
+    (Vec ((Int 777)) ())
+    (Prim Add ((VecLen (Var v)) (Int 41)))))
