@@ -1,3 +1,4 @@
+open Support.Utils
 open Types
 
 module X = X86_var
@@ -20,11 +21,6 @@ let rec write_set lst set =
     | X.Reg r -> LocSet.remove (RegL r) (write_set t set) 
     | _ -> write_set t set
   
-let rec first_i i lst = match i, lst with
-  | 0, _ -> []
-  | _, [] -> []
-  | _, h :: t -> h :: first_i (i-1) t
-
 let list_of_regset st = 
   List.map (fun x -> X.Reg x) (RegSet.elements st)
 
@@ -42,7 +38,10 @@ let uncover_live_in_block
         | X.Popq arg -> read_set [arg] l_after
         | X.Retq -> read_set [X.Reg Rax] l_after
         (* remove (write) from caller and then add first i of callee, as according to spec*)
-        | X.Callq (_, i) -> read_set (first_i i (list_of_regset callee_save_regs)) (write_set (list_of_regset caller_save_regs) l_after)
+        | X.Callq (_, i) ->
+            read_set
+              (take i (list_of_regset callee_save_regs))
+              (write_set (list_of_regset caller_save_regs) l_after)
         | X.Jmp label -> 
           let args = List.map (function x -> match x with
             | VarL v -> X.Var v
