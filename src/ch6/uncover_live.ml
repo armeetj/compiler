@@ -5,6 +5,7 @@ module X = X86_var_global
 
 (* Flag; when true, extra debugging information is printed. *)
 let _debug = ref false
+
 let rflags_reg = X.Reg Rflags
 
 (* Compute the live sets for the instructions of a single labeled block.
@@ -47,22 +48,18 @@ let compute_liveness (g : LabelDgraph.t) (imap : X.instr list LabelMap.t) :
 let uncover_live (prog : (X.info1, X.binfo1) X.program) :
     (X.info1, X.binfo2) X.program =
   let (X.X86Program (info, lbs)) = prog in
-
   (* Generate the control-flow graph from the (label, block) pairs. *)
   let cfg =
     LabelDgraph.of_alist lbs (fun bl -> LabelSet.elements (get_next_labels bl))
   in
-
   (* Create a label->instrs map. *)
   let (imap : X.instr list LabelMap.t) =
     lbs
     |> List.map (fun (lbl, X.Block (_, instrs)) -> (lbl, instrs))
     |> LabelMap.of_list
   in
-
   (* Compute all the live-before sets. *)
   let (live_before_sets : LocSet.t LabelMap.t) = compute_liveness cfg imap in
-
   (* We run the liveness computation one last time after computing
    * all the live-before sets to get the full liveness information
    * for a block.  This is a little inefficient; we could generate it
@@ -74,18 +71,17 @@ let uncover_live (prog : (X.info1, X.binfo1) X.program) :
       LabelMap.find_or_fail lbl imap
         ~err_msg:
           (Printf.sprintf "uncover_live: no instructions for label (%s)"
-             (string_of_label lbl))
+             (string_of_label lbl) )
     in
     uncover_live_in_block live_before_sets instrs
   in
-
   (* Rewrite the label/block information with new block info containing
    * the liveness information. *)
   let lbs' =
     List.map
       (fun (lbl, X.Block (_, instrs)) ->
         let b = X.Binfo2 (get_live lbl) in
-        (lbl, X.Block (b, instrs)))
+        (lbl, X.Block (b, instrs)) )
       lbs
   in
   X.X86Program (info, lbs')

@@ -9,8 +9,11 @@ let _debug_gc = ref false
 
 module type GraphColor = sig
   type elt
+
   type graph
+
   type pqueue
+
   type 'a eltmap
 
   val color : graph -> int eltmap -> int eltmap
@@ -27,12 +30,15 @@ module Make
      and type pqueue = PQ.t
      and type graph = Graph.t = struct
   type elt = Elt.t
+
   type 'a eltmap = 'a EMap.t [@@deriving sexp]
+
   type graph = Graph.t
+
   type pqueue = PQ.t
 
   (* Where node information is stored. *)
-  type node = { color : int option; saturation : IntSet.t } [@@deriving sexp]
+  type node = {color : int option; saturation : IntSet.t} [@@deriving sexp]
 
   (* Map between graph elements and nodes.
    * This is what gets updated as the algorithm unfolds. *)

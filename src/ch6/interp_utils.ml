@@ -10,11 +10,12 @@ let debug_gc_eval = ref false
  *)
 
 let free_ptr = ref 0
+
 let fromspace_end = ref 0
 
 (* Initialize the garbage collection global variables. *)
 let init_gc_globals () =
-  free_ptr := 0;
+  free_ptr := 0 ;
   fromspace_end := 65536
 
 (* Do one (simulated) garbage collection pass.
@@ -22,14 +23,14 @@ let init_gc_globals () =
  * so that not all memory requests result in garbage collection. *)
 let collect n =
   if !debug_gc_eval then
-    Printf.printf "Running garbage collector to get %d bytes." n;
-  free_ptr := 0;
+    Printf.printf "Running garbage collector to get %d bytes." n ;
+  free_ptr := 0 ;
   fromspace_end := 2 * n
 
 (* Allocate `n` bytes. *)
 let allocate n =
-  if !debug_gc_eval then Printf.printf "Allocating %d bytes.\n%!" n;
-  free_ptr := !free_ptr + n;
+  if !debug_gc_eval then Printf.printf "Allocating %d bytes.\n%!" n ;
+  free_ptr := !free_ptr + n ;
   if !free_ptr >= !fromspace_end then
     failwithf "allocate: couldn't allocate %d bytes" n
 
@@ -37,7 +38,11 @@ let allocate n =
  * The actual value doesn't matter. *)
 let rec default_val (t : ty) : value =
   match t with
-  | Unit -> VoidV
-  | Boolean -> BoolV false
-  | Integer -> IntV 0
-  | Vector ts -> VecV (Array.map default_val ts)
+  | Unit ->
+      VoidV
+  | Boolean ->
+      BoolV false
+  | Integer ->
+      IntV 0
+  | Vector ts ->
+      VecV (Array.map default_val ts)

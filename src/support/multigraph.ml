@@ -6,24 +6,41 @@ open Functors
 
 module type S = sig
   type t
+
   type elt
 
   val empty : t
+
   val is_empty : t -> bool
+
   val mem : t -> elt -> bool
+
   val add_vertex : t -> elt -> t
+
   val remove_vertex : t -> elt -> t
+
   val add_edge : t -> elt -> elt -> t
+
   val add_edge_new : t -> elt -> elt -> t
+
   val neighbors_in : t -> elt -> elt list
+
   val neighbors_out : t -> elt -> elt list
+
   val vertices : t -> elt list
+
   val transpose : t -> t
+
   val topological_sort : ?start:elt option -> t -> elt list
+
   val sexp_of_t : t -> Sexp.t
+
   val t_of_sexp : Sexp.t -> t
+
   val to_string : t -> string
+
   val of_list : (elt * elt) list -> t
+
   val of_alist : (elt * 'a) list -> ('a -> elt list) -> t
 end
 
@@ -35,10 +52,9 @@ module Make (Elt : OrderedTypeS) : S with type elt = Elt.t = struct
   (* We use int maps instead of sets because we can have multiple
    * edges between the same vertices.  The int is the count of edges
    * between the two vertices. *)
-  type node = {
-    in_edges : int VMap.t; (* vertices with edges to this node *)
-    out_edges : int VMap.t (* vertices from this node to other vertices *);
-  }
+  type node =
+    { in_edges : int VMap.t (* vertices with edges to this node *)
+    ; out_edges : int VMap.t (* vertices from this node to other vertices *) }
   [@@deriving sexp]
 
   type t = node VMap.t (* map from elt to node *) [@@deriving sexp]
@@ -50,9 +66,12 @@ module Make (Elt : OrderedTypeS) : S with type elt = Elt.t = struct
    * ------------------------------------------------------------------ *)
 
   let empty = VMap.empty
+
   let is_empty g = VMap.is_empty g
+
   let mem g e = VMap.mem e g
-  let empty_node = { in_edges = VMap.empty; out_edges = VMap.empty }
+
+  let empty_node = {in_edges = VMap.empty; out_edges = VMap.empty}
 
   let vertex_missing (func_name : string) (e : elt) =
     failwith
@@ -77,26 +96,27 @@ module Make (Elt : OrderedTypeS) : S with type elt = Elt.t = struct
     (* Remove in edges from e_in to e. *)
     let remove_in_edges (g : t) (e : elt) (e_in : elt) : t =
       match VMap.find_opt e g with
-      | None -> vertex_missing "remove_vertex: remove_in_edges" e
+      | None ->
+          vertex_missing "remove_vertex: remove_in_edges" e
       | Some node ->
           let in_edges' = VMap.remove e_in node.in_edges in
-          let node' = { node with in_edges = in_edges' } in
+          let node' = {node with in_edges = in_edges'} in
           VMap.add e node' g
     in
-
     (* Remove out edges from e to e_out. *)
     let remove_out_edges (g : t) (e : elt) (e_out : elt) : t =
       match VMap.find_opt e g with
-      | None -> vertex_missing "remove_vertex: remove_out_edges" e
+      | None ->
+          vertex_missing "remove_vertex: remove_out_edges" e
       | Some node ->
           let out_edges' = VMap.remove e_out node.out_edges in
-          let node' = { node with out_edges = out_edges' } in
+          let node' = {node with out_edges = out_edges'} in
           VMap.add e node' g
     in
-
     match VMap.find_opt e g with
-    | None -> vertex_missing "remove_vertex" e
-    | Some { in_edges; out_edges } ->
+    | None ->
+        vertex_missing "remove_vertex" e
+    | Some {in_edges; out_edges} ->
         (* Remove the vertex itself. *)
         let g' = VMap.remove e g in
         (* Remove the in edges (edges going to the deleted vertex).
@@ -121,19 +141,20 @@ module Make (Elt : OrderedTypeS) : S with type elt = Elt.t = struct
       (* Add `e2` as an out_edge to `e1`'s node (`node_start`). *)
       let node_start' =
         let out_edges' = incr_edge_count e2 node_start.out_edges in
-        { node_start with out_edges = out_edges' }
+        {node_start with out_edges = out_edges'}
       in
       (* Add `e1` as an in_edge to `e2`'s node (`node_end`). *)
       let node_end' =
         let in_edges' = incr_edge_count e1 node_end.in_edges in
-        { node_end with in_edges = in_edges' }
+        {node_end with in_edges = in_edges'}
       in
       let g' = VMap.add e1 node_start' g in
       VMap.add e2 node_end' g'
 
   let add_edge_new g e1 e2 =
     match (mem g e1, mem g e2) with
-    | true, true -> add_edge g e1 e2
+    | true, true ->
+        add_edge g e1 e2
     | true, false ->
         let g' = add_vertex g e2 in
         add_edge g' e1 e2
@@ -147,13 +168,17 @@ module Make (Elt : OrderedTypeS) : S with type elt = Elt.t = struct
 
   let neighbors_in g e =
     match VMap.find_opt e g with
-    | None -> vertex_missing "neighbors_in" e
-    | Some n -> VMap.keys n.in_edges
+    | None ->
+        vertex_missing "neighbors_in" e
+    | Some n ->
+        VMap.keys n.in_edges
 
   let neighbors_out g e =
     match VMap.find_opt e g with
-    | None -> vertex_missing "neighbors_out" e
-    | Some n -> VMap.keys n.out_edges
+    | None ->
+        vertex_missing "neighbors_out" e
+    | Some n ->
+        VMap.keys n.out_edges
 
   let vertices g = VMap.keys g
 
@@ -161,7 +186,7 @@ module Make (Elt : OrderedTypeS) : S with type elt = Elt.t = struct
     (* For each node, swap the in_edges and the out_edges. *)
     let swap_in_out g e =
       let n = VMap.find e g in
-      let n' = { in_edges = n.out_edges; out_edges = n.in_edges } in
+      let n' = {in_edges = n.out_edges; out_edges = n.in_edges} in
       VMap.add e n' g
     in
     List.fold_left swap_in_out g (vertices g)
@@ -173,7 +198,6 @@ module Make (Elt : OrderedTypeS) : S with type elt = Elt.t = struct
         (fun es (e, n) -> if VMap.is_empty n.in_edges then e :: es else es)
         [] (VMap.bindings g)
     in
-
     (* Pick the "best" vertex with no incoming edges.
      * If there is a designated start vertex,
      * and one which matches the designated start vertex, pick that.
@@ -182,22 +206,23 @@ module Make (Elt : OrderedTypeS) : S with type elt = Elt.t = struct
     let best_next_vertex (g : t) : elt option =
       let rec best s (rest : elt list) (e_best : elt) : elt =
         match rest with
-        | [] -> e_best
+        | [] ->
+            e_best
         | e :: es ->
             if Elt.compare s e = 0 then e
             else if Elt.compare e_best e > 0 then best s es e
             else best s es e_best
       in
-
       match vertices_no_incoming g with
-      | [] -> None
+      | [] ->
+          None
       | e :: es -> (
-          match start with
-          | None -> Some (List.fold_left min e es)
-          | Some s -> if Elt.compare s e = 0 then Some e else Some (best s es e)
-          )
+        match start with
+        | None ->
+            Some (List.fold_left min e es)
+        | Some s ->
+            if Elt.compare s e = 0 then Some e else Some (best s es e) )
     in
-
     (* Get the best next vertex, remove it (and store it),
      * and continue until all vertices have been removed.
      * Collect the vertices in the order they were removed. *)
@@ -212,7 +237,6 @@ module Make (Elt : OrderedTypeS) : S with type elt = Elt.t = struct
             let g' = remove_vertex g e in
             iter g' (e :: sorted)
     in
-
     if is_empty g then
       failwith "multigraph: topological_sort: no graph to sort!"
     else iter g []
@@ -223,6 +247,6 @@ module Make (Elt : OrderedTypeS) : S with type elt = Elt.t = struct
   let of_alist alist get_elts =
     alist
     |> List.concat_map (fun (e, x) ->
-           get_elts x |> List.map (fun e' -> (e, e')))
+           get_elts x |> List.map (fun e' -> (e, e')) )
     |> of_list
 end

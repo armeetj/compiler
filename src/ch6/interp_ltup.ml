@@ -13,7 +13,9 @@ open Ltup
    though that isn't a particularly important goal here.) *)
 
 let void_exp _ = VoidV
+
 let bool_exp b _ = BoolV b
+
 let int_exp i _ = IntV i
 
 let var_exp v env =
@@ -32,43 +34,50 @@ let set_bang_exp var e env =
     Env.find_or_fail var env
       ~err_msg:(Printf.sprintf "set! : variable (%s) not found" var)
   in
-  loc := v;
+  loc := v ;
   VoidV
 
 let begin_exp es e env =
-  List.iter (fun e -> ignore (e env)) es;
+  List.iter (fun e -> ignore (e env)) es ;
   e env
 
 let if_exp e1 e2 e3 env =
   match e1 env with
-  | BoolV b -> if b then e2 env else e3 env
-  | _ -> failwith "if : wrong test expression type"
+  | BoolV b ->
+      if b then e2 env else e3 env
+  | _ ->
+      failwith "if : wrong test expression type"
 
 let and_exp e1 e2 env =
   match e1 env with
-  | BoolV false -> BoolV false
+  | BoolV false ->
+      BoolV false
   | BoolV true -> (
       let v2 = e2 env in
-      match v2 with BoolV _ -> v2 | _ -> failwith "and : wrong types")
-  | _ -> failwith "and : wrong types"
+      match v2 with BoolV _ -> v2 | _ -> failwith "and : wrong types" )
+  | _ ->
+      failwith "and : wrong types"
 
 let or_exp e1 e2 env =
   match e1 env with
-  | BoolV true -> BoolV true
+  | BoolV true ->
+      BoolV true
   | BoolV false -> (
       let v2 = e2 env in
-      match v2 with BoolV _ -> v2 | _ -> failwith "or : wrong types")
-  | _ -> failwith "or : wrong types"
+      match v2 with BoolV _ -> v2 | _ -> failwith "or : wrong types" )
+  | _ ->
+      failwith "or : wrong types"
 
 let while_exp e_test e_body env =
   let rec iter test body =
     match test env with
     | BoolV b ->
         if b then (
-          ignore (body env);
-          iter test body)
+          ignore (body env) ;
+          iter test body )
         else VoidV
-    | _ -> failwith "while : wrong test expression type"
+    | _ ->
+        failwith "while : wrong test expression type"
   in
   iter e_test e_body
 
@@ -84,15 +93,18 @@ let vec_exp es _ env =
 
 let vec_len_exp e env =
   match e env with
-  | VecV vs -> IntV (Array.length vs)
-  | _ -> failwith "vector-length : wrong type"
+  | VecV vs ->
+      IntV (Array.length vs)
+  | _ ->
+      failwith "vector-length : wrong type"
 
 let vec_ref_exp e i env =
   match e env with
   | VecV vs ->
       if i >= 0 && i < Array.length vs then vs.(i)
       else failwith "vector-ref : index out of range"
-  | _ -> failwith "vector-ref : wrong types"
+  | _ ->
+      failwith "vector-ref : wrong types"
 
 let vec_set_exp e1 i e2 env =
   let vec = e1 env in
@@ -100,31 +112,48 @@ let vec_set_exp e1 i e2 env =
   match vec with
   | VecV vs ->
       if i >= 0 && i < Array.length vs then (
-        vs.(i) <- v;
-        VoidV)
+        vs.(i) <- v ;
+        VoidV )
       else failwith "vector-set! : index out of range"
-  | _ -> failwith "vector-set! : wrong types"
+  | _ ->
+      failwith "vector-set! : wrong types"
 
 let rec convert_exp (e : exp) : fexp =
   let conv = convert_exp in
   let map_conv = List.map conv in
   match e with
-  | Void -> void_exp
-  | Bool b -> bool_exp b
-  | Int i -> int_exp i
-  | Var v -> var_exp v
-  | Prim (op, args) -> prim_exp op (map_conv args)
-  | SetBang (v, e) -> set_bang_exp v (conv e)
-  | Begin (es, e) -> begin_exp (map_conv es) (conv e)
-  | If (e1, e2, e3) -> if_exp (conv e1) (conv e2) (conv e3)
-  | And (e1, e2) -> and_exp (conv e1) (conv e2)
-  | Or (e1, e2) -> or_exp (conv e1) (conv e2)
-  | While (e1, e2) -> while_exp (conv e1) (conv e2)
-  | Let (v, e1, e2) -> let_exp v (conv e1) (conv e2)
-  | Vec (es, topt) -> vec_exp (map_conv es) topt
-  | VecLen e -> vec_len_exp (conv e)
-  | VecRef (e, i) -> vec_ref_exp (conv e) i
-  | VecSet (e1, i, e2) -> vec_set_exp (conv e1) i (conv e2)
+  | Void ->
+      void_exp
+  | Bool b ->
+      bool_exp b
+  | Int i ->
+      int_exp i
+  | Var v ->
+      var_exp v
+  | Prim (op, args) ->
+      prim_exp op (map_conv args)
+  | SetBang (v, e) ->
+      set_bang_exp v (conv e)
+  | Begin (es, e) ->
+      begin_exp (map_conv es) (conv e)
+  | If (e1, e2, e3) ->
+      if_exp (conv e1) (conv e2) (conv e3)
+  | And (e1, e2) ->
+      and_exp (conv e1) (conv e2)
+  | Or (e1, e2) ->
+      or_exp (conv e1) (conv e2)
+  | While (e1, e2) ->
+      while_exp (conv e1) (conv e2)
+  | Let (v, e1, e2) ->
+      let_exp v (conv e1) (conv e2)
+  | Vec (es, topt) ->
+      vec_exp (map_conv es) topt
+  | VecLen e ->
+      vec_len_exp (conv e)
+  | VecRef (e, i) ->
+      vec_ref_exp (conv e) i
+  | VecSet (e1, i, e2) ->
+      vec_set_exp (conv e1) i (conv e2)
 
 let interp (Program exp : program) : int =
   let initial_env = Env.empty in

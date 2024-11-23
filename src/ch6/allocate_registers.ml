@@ -15,16 +15,18 @@ module Color = Graph_coloring.Make (OrderedLoc) (LocMap) (PQ) (LocUgraph)
  *   NOTE: r15 should point to the end of the root stack.
  *)
 let registers_used =
-  [ Rcx; Rdx; Rsi; Rdi; R8; R9; R10; (* caller-saved *) Rbx; R12; R13; R14 ]
+  [Rcx; Rdx; Rsi; Rdi; R8; R9; R10; (* caller-saved *) Rbx; R12; R13; R14]
 (* callee-saved *)
 
 (* We use references for these parameters so they can be
  * overridden by command-line arguments. *)
 let last_register_color = ref 0
+
 let register_color_list : (location * int) list ref = ref []
 
 (* Counters for spilled stack locations. *)
 let next_stack_index = ref 0
+
 let next_root_stack_index = ref 0
 
 let register_list_ok regs =
@@ -36,13 +38,14 @@ let set_register_color_list regs =
   else
     let nums = range 0 (List.length regs) in
     let reg_colors = List.combine regs nums in
-    let assignments = [ (Rflags, -6); (Rsp, -2); (Rax, -1) ] @ reg_colors in
+    let assignments = [(Rflags, -6); (Rsp, -2); (Rax, -1)] @ reg_colors in
     let rc_list = List.map (fun (r, i) -> (RegL r, i)) assignments in
-    register_color_list := rc_list;
+    register_color_list := rc_list ;
     last_register_color := List.length regs - 1
 
 (* Default color assignments to registers. *)
 let _ = set_register_color_list registers_used
+
 let register_color_map () : int LocMap.t = LocMap.of_list !register_color_list
 
 let color_register_map () : location IntMap.t =
@@ -66,8 +69,10 @@ let spilled_location_dict : (int, location) Hashtbl.t = Hashtbl.create 20
  *)
 let location_of_color (i : int) (vector_typed : bool) : location =
   match IntMap.find_opt i (color_register_map ()) with
-  | None -> failwith "TODO"
-  | Some loc -> loc
+  | None ->
+      failwith "TODO"
+  | Some loc ->
+      loc
 
 (* ----------------------------------------------------------------- *)
 
@@ -82,11 +87,11 @@ let varmap_of_colormap (vvs : VarSet.t) (color_map : int LocMap.t) :
 let get_variable_location_map (g : LocUgraph.t) (vvs : VarSet.t) :
     location VarMap.t =
   (* Reset the spill counters and location dictionary. *)
-  next_stack_index := 1;
+  next_stack_index := 1 ;
   (* index 1 --> -8(%rbp) *)
-  next_root_stack_index := 1;
+  next_root_stack_index := 1 ;
   (* index 1 --> -8(%r15) *)
-  Hashtbl.clear spilled_location_dict;
+  Hashtbl.clear spilled_location_dict ;
   (* Perform the graph coloring, and convert to var -> loc map. *)
   varmap_of_colormap vvs (Color.color g (register_color_map ()))
 
@@ -130,8 +135,10 @@ let check_no_variables (prog : (info3, binfo1) program) : unit =
     | Movq (a1, a2)
     | Movzbq (a1, a2) ->
         is_var a1 || is_var a2
-    | Negq a | Set (_, a) | Pushq a | Popq a -> is_var a
-    | _ -> false
+    | Negq a | Set (_, a) | Pushq a | Popq a ->
+        is_var a
+    | _ ->
+        false
   in
   let (X86Program (_, lbs)) = prog in
   let _, bs = List.split lbs in
@@ -139,8 +146,8 @@ let check_no_variables (prog : (info3, binfo1) program) : unit =
   let (ins : instr list) = bs |> List.map get_instrs |> List.concat in
   if List.exists has_var ins then
     failwith
-      ("allocate_registers: check_no_variables: "
-     ^ "variables still present in code after pass")
+      ( "allocate_registers: check_no_variables: "
+      ^ "variables still present in code after pass" )
   else ()
 
 (* Allocate registers to variables in the code. *)
@@ -154,12 +161,10 @@ let allocate_registers (prog : (info2, binfo1) program) :
   let num_spilled, num_spilled_root = get_num_spilled () in
   let info' =
     Info3
-      {
-        locals_types = info.locals_types;
-        num_spilled;
-        num_spilled_root;
-        used_callee = get_used_callee map;
-      }
+      { locals_types = info.locals_types
+      ; num_spilled
+      ; num_spilled_root
+      ; used_callee = get_used_callee map }
   in
   (* Rewrite the code using the variable->register map. *)
   let lbs' =

@@ -7,13 +7,16 @@ open Type_check
  * so it returns the updated expression as well as the type. *)
 let rec type_check_exp (env : ty_env_t) (e : exp) : exp * ty =
   match e with
-  | Void -> (e, Unit)
-  | Bool _ -> (e, Boolean)
-  | Int _ -> (e, Integer)
+  | Void ->
+      (e, Unit)
+  | Bool _ ->
+      (e, Boolean)
+  | Int _ ->
+      (e, Integer)
   | Var v ->
       let t =
         Env.find_or v env ~f:(fun () ->
-            ty_err_simple ("unbound variable: " ^ v))
+            ty_err_simple ("unbound variable: " ^ v) )
       in
       (e, t)
   | Prim (op, es) ->
@@ -23,7 +26,7 @@ let rec type_check_exp (env : ty_env_t) (e : exp) : exp * ty =
   | SetBang (v, e) ->
       let t =
         Env.find_or v env ~f:(fun () ->
-            ty_err_simple ("set! : unbound variable: " ^ v))
+            ty_err_simple ("set! : unbound variable: " ^ v) )
       in
       let e', t' = type_check_exp env e in
       if not (ty_equal t t') then ty_err "set!" ~expected:t ~got:t'
@@ -83,12 +86,13 @@ let rec type_check_exp (env : ty_env_t) (e : exp) : exp * ty =
   | VecLen e -> (
       let e', t = type_check_exp env e in
       match t with
-      | Vector _ -> (VecLen e', Integer)
+      | Vector _ ->
+          (VecLen e', Integer)
       | t ->
           ty_err_simple
           @@ Printf.sprintf
                "type error: vector-length : expected a vector, got: %s"
-               (string_of_ty t))
+               (string_of_ty t) )
   | VecRef (e, i) -> (
       let e', t = type_check_exp env e in
       match t with
@@ -102,7 +106,7 @@ let rec type_check_exp (env : ty_env_t) (e : exp) : exp * ty =
           ty_err_simple
           @@ Printf.sprintf
                "type error: vector-ref : expected a vector, got: %s"
-               (string_of_ty t))
+               (string_of_ty t) )
   | VecSet (e1, i, e2) -> (
       let e1', t1 = type_check_exp env e1 in
       let e2', t2 = type_check_exp env e2 in
@@ -120,9 +124,11 @@ let rec type_check_exp (env : ty_env_t) (e : exp) : exp * ty =
           ty_err_simple
           @@ Printf.sprintf
                "type error: vector-set! : expected a vector, got: %s"
-               (string_of_ty t))
+               (string_of_ty t) )
 
 let type_check (Program e) =
   match type_check_exp empty_ty_env e with
-  | e', Integer -> Program e'
-  | _ -> ty_err_simple "program should have type Integer"
+  | e', Integer ->
+      Program e'
+  | _ ->
+      ty_err_simple "program should have type Integer"

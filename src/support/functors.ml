@@ -5,7 +5,9 @@ module type OrderedTypeS = sig
   include Set.OrderedType
 
   val sexp_of_t : t -> Sexp.t
+
   val t_of_sexp : Sexp.t -> t
+
   val to_string : t -> string
 end
 
@@ -14,7 +16,9 @@ module SetS = struct
     include Set.S
 
     val sexp_of_t : t -> Sexp.t
+
     val t_of_sexp : Sexp.t -> t
+
     val to_string : t -> string
   end
 
@@ -23,7 +27,9 @@ module SetS = struct
     include Wrap
 
     let sexp_of_t set = Std.sexp_of_list Ord.sexp_of_t (elements set)
+
     let t_of_sexp sexp = of_list (Std.list_of_sexp Ord.t_of_sexp sexp)
+
     let to_string set = Utils.pretty_print (sexp_of_t set)
   end
 end
@@ -33,11 +39,17 @@ module MapS = struct
     include Map.S
 
     val keys : 'a t -> key list
+
     val of_list : (key * 'a) list -> 'a t
+
     val sexp_of_t : ('a -> Sexp.t) -> 'a t -> Sexp.t
+
     val t_of_sexp : (Sexp.t -> 'a) -> Sexp.t -> 'a t
+
     val to_string : ('a -> Sexp.t) -> 'a t -> string
+
     val find_or : key -> 'a t -> f:(unit -> 'a) -> 'a
+
     val find_or_fail : key -> 'a t -> err_msg:string -> 'a
   end
 
@@ -46,6 +58,7 @@ module MapS = struct
     include Wrap
 
     let keys map = List.map fst (bindings map)
+
     let of_list bindings = of_seq (List.to_seq bindings)
 
     let sexp_of_t sexp_of_a map =

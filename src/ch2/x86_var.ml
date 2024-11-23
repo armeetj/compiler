@@ -21,6 +21,9 @@ type instr =
 [@@deriving sexp]
 
 type block = Block of instr list [@@deriving sexp]
+
 type 'a program = X86Program of 'a * (label * block) list [@@deriving sexp]
-type info1 = Info1 of { locals_types : (var * ty) list } [@@deriving sexp]
-type info2 = Info2 of { stack_space : int } [@@deriving sexp]
+
+type info1 = Info1 of {locals_types : (var * ty) list} [@@deriving sexp]
+
+type info2 = Info2 of {stack_space : int} [@@deriving sexp]

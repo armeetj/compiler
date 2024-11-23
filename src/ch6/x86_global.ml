@@ -31,12 +31,11 @@ type instr =
 type block = Block of instr list [@@deriving sexp]
 
 type info =
-  | Info of {
-      locals_types : (var * ty) list;
-      num_spilled : int;
-      num_spilled_root : int;
-      used_callee : RegSet.t;
-    }
+  | Info of
+      { locals_types : (var * ty) list
+      ; num_spilled : int
+      ; num_spilled_root : int
+      ; used_callee : RegSet.t }
 [@@deriving sexp]
 
 type program = X86Program of info * (label * block) list [@@deriving sexp]

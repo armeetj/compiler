@@ -24,9 +24,9 @@ let vector_vars (lts : (var * ty) list) : VarSet.t =
 let build_interference (program : (info1, binfo2) program) :
     (info2, binfo1) program =
   let (X86Program (info1, lbs)) = program in
-  let (Info1 { locals_types = lts }) = info1 in
+  let (Info1 {locals_types = lts}) = info1 in
   let vvs = vector_vars lts in
   let conflicts = make_graph LocUgraph.empty lbs vvs in
   let lbs' = replace_binfo lbs in
-  let info2 = Info2 { locals_types = lts; conflicts } in
+  let info2 = Info2 {locals_types = lts; conflicts} in
   X86Program (info2, lbs')

@@ -11,6 +11,4 @@ type exp =
   | Let of var * exp * exp
 [@@deriving sexp]
 
-type program = Program of exp
-[@@deriving sexp]
-
+type program = Program of exp [@@deriving sexp]

@@ -23,5 +23,4 @@ Ashug Gurijala `agurijal@caltech.edu`
 
 - same worksplit as Assignment 3
 
-
 ## Assignment 5

@@ -16,6 +16,7 @@ let some x = Some x
  * so you can do e.g. `slist @@ [satom "foo", satom "bar"]`. *)
 
 let satom s = Atom s
+
 let slist s = List s
 
 (* ---------------------------------------------------------------------- 
@@ -23,7 +24,7 @@ let slist s = List s
  * ---------------------------------------------------------------------- *)
 
 let align_16 i =
-  assert (i >= 0);
+  assert (i >= 0) ;
   let m = i mod 16 in
   if m = 0 then i else i + (16 - m)
 
@@ -58,32 +59,46 @@ let no_string_repeats ss =
  * ---------------------------------------------------------------------- *)
 
 let rec last = function
-  | [] -> invalid_arg "last: empty list"
-  | [ x ] -> x
-  | _ :: t -> last t
+  | [] ->
+      invalid_arg "last: empty list"
+  | [x] ->
+      x
+  | _ :: t ->
+      last t
 
 let butlast lst =
   let rec iter collect rest =
     match rest with
-    | [] -> invalid_arg "butlast: empty list"
-    | [ _ ] -> List.rev collect
-    | h :: t -> iter (h :: collect) t
+    | [] ->
+        invalid_arg "butlast: empty list"
+    | [_] ->
+        List.rev collect
+    | h :: t ->
+        iter (h :: collect) t
   in
   iter [] lst
 
 let rec take n lst =
   match (n, lst) with
-  | _ when n < 0 -> invalid_arg "take: negative n"
-  | 0, _ -> []
-  | _, [] -> invalid_arg "take: empty list"
-  | _, h :: t -> h :: take (n - 1) t
+  | _ when n < 0 ->
+      invalid_arg "take: negative n"
+  | 0, _ ->
+      []
+  | _, [] ->
+      invalid_arg "take: empty list"
+  | _, h :: t ->
+      h :: take (n - 1) t
 
 let rec drop n lst =
   match (n, lst) with
-  | _ when n < 0 -> invalid_arg "drop: negative n"
-  | 0, _ -> lst
-  | _, [] -> invalid_arg "drop: empty list"
-  | _, _ :: t -> drop (n - 1) t
+  | _ when n < 0 ->
+      invalid_arg "drop: negative n"
+  | 0, _ ->
+      lst
+  | _, [] ->
+      invalid_arg "drop: empty list"
+  | _, _ :: t ->
+      drop (n - 1) t
 
 let range m n =
   let rec iter m lst =
@@ -118,8 +133,10 @@ let pp_indent = ref 2
 
 let rec flat_format s =
   match s with
-  | Atom s -> s
-  | List l -> "(" ^ String.concat " " (List.map flat_format l) ^ ")"
+  | Atom s ->
+      s
+  | List l ->
+      "(" ^ String.concat " " (List.map flat_format l) ^ ")"
 
 (* Add indent to each item of a list. *)
 let add_indent n lst = List.map (fun (i, s) -> (i + n, s)) lst
@@ -128,26 +145,33 @@ let add_indent n lst = List.map (fun (i, s) -> (i + n, s)) lst
    Add 1 to the indents of all other lines. *)
 let add_open (lst : (int * string) list) : (int * string) list =
   match lst with
-  | [] -> failwith "no items in list"
-  | (n, s) :: t -> (n, "(" ^ s) :: add_indent 1 t
+  | [] ->
+      failwith "no items in list"
+  | (n, s) :: t ->
+      (n, "(" ^ s) :: add_indent 1 t
 
 (* Add a close parenthesis to the end of the last line. *)
 let rec add_close (lst : (int * string) list) : (int * string) list =
   match lst with
-  | [] -> failwith "no items in list"
-  | [ (n, s) ] -> [ (n, s ^ ")") ]
-  | h :: t -> h :: add_close t
+  | [] ->
+      failwith "no items in list"
+  | [(n, s)] ->
+      [(n, s ^ ")")]
+  | h :: t ->
+      h :: add_close t
 
 let rec sexp_format n s : (int * string) list =
   let flat = flat_format s in
-  if String.length flat <= !pp_line_limit then [ (n, flat) ]
-  else long_format n s
+  if String.length flat <= !pp_line_limit then [(n, flat)] else long_format n s
 
 and long_format n s : (int * string) list =
   match s with
-  | Atom s -> [ (n, s) ]
-  | List [] -> [ (n, "()") ]
-  | List [ Atom s ] -> [ (n, "(" ^ s ^ ")") ]
+  | Atom s ->
+      [(n, s)]
+  | List [] ->
+      [(n, "()")]
+  | List [Atom s] ->
+      [(n, "(" ^ s ^ ")")]
   | List (Atom s :: rest) ->
       let first = (n, s) in
       let rest' = List.concat_map (sexp_format (n + !pp_indent - 1)) rest in
@@ -163,11 +187,12 @@ let render_lines lines =
   String.concat "\n" (List.map render_line lines)
 
 let pretty_print sexp = render_lines (sexp_format 0 sexp)
+
 let print_sexp sexp = Printf.printf "%s\n%!" (pretty_print sexp)
 
 let print_sexp_to_file filename sexp =
   let file = open_out filename in
-  Printf.fprintf file "%s\n%!" (pretty_print sexp);
+  Printf.fprintf file "%s\n%!" (pretty_print sexp) ;
   close_out file
 
 (* ---------------------------------------------------------------------- 
@@ -185,7 +210,6 @@ module StringMap = Map.Make (OrderedString)
 let make_gensym () =
   (* Map between symbol names and counter values (ints). *)
   let syms = ref StringMap.empty in
-
   (* Get a fresh name that starts with the name `v`.
    * The resulting name is the base name, the separator `sep`,
    * and an integer. *)
@@ -193,7 +217,7 @@ let make_gensym () =
     let n =
       match StringMap.find_opt base !syms with None -> 1 | Some n -> n + 1
     in
-    syms := StringMap.add base n !syms;
+    syms := StringMap.add base n !syms ;
     Printf.sprintf "%s%s%d" base sep n
   in
   fresh

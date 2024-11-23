@@ -17,5 +17,7 @@ type instr =
 [@@deriving sexp]
 
 type block = Block of instr list [@@deriving sexp]
-type info = Info of { stack_space : int } [@@deriving sexp]
+
+type info = Info of {stack_space : int} [@@deriving sexp]
+
 type program = X86Program of info * (label * block) list [@@deriving sexp]

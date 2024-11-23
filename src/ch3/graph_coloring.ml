@@ -9,8 +9,11 @@ let _debug_gc = ref false
 
 module type GraphColor = sig
   type elt
+
   type graph
+
   type pqueue
+
   type 'a eltmap
 
   val color : graph -> int eltmap -> int eltmap
@@ -27,12 +30,15 @@ module Make
      and type pqueue = PQ.t
      and type graph = Graph.t = struct
   type elt = Elt.t
+
   type 'a eltmap = 'a EMap.t [@@deriving sexp]
+
   type graph = Graph.t
+
   type pqueue = PQ.t
 
   (* Where node information is stored. *)
-  type node = { color : int option; saturation : IntSet.t } [@@deriving sexp]
+  type node = {color : int option; saturation : IntSet.t} [@@deriving sexp]
 
   (* Map between graph elements and nodes.
    * This is what gets updated as the algorithm unfolds. *)
@@ -54,8 +60,10 @@ module Make
   (* Return `true` if an element's node in a nodemap is uncolored. *)
   let is_uncolored (e : elt) (map : nodemap) : bool =
     match EMap.find_opt e map with
-    | Some { color = Some _; saturation = _ } -> false
-    | _ -> true
+    | Some {color = Some _; saturation = _} ->
+        false
+    | _ ->
+        true
 
   (* Starting from an initial partial mapping
    * between graph elements and colors (the precolored map),
@@ -68,14 +76,16 @@ module Make
       List.fold_left
         (fun acc elt ->
           match EMap.find_opt elt precolored_map with
-          | Some c -> IntSet.add c acc
-          | None -> acc)
+          | Some c ->
+              IntSet.add c acc
+          | None ->
+              acc )
         IntSet.empty neighbors
     in
     let handle_node nmap elt =
       let c = EMap.find_opt elt precolored_map in
       let s = get_saturation elt in
-      EMap.add elt { color = c; saturation = s } nmap
+      EMap.add elt {color = c; saturation = s} nmap
     in
     List.fold_left handle_node EMap.empty (Graph.vertices g)
 
@@ -85,8 +95,10 @@ module Make
      * where the int is the priority. *)
     let handle_node elt node q =
       match node with
-      | { color = Some _; saturation = _ } -> q
-      | { color = None; saturation = s } -> PQ.insert elt (IntSet.cardinal s) q
+      | {color = Some _; saturation = _} ->
+          q
+      | {color = None; saturation = s} ->
+          PQ.insert elt (IntSet.cardinal s) q
     in
     EMap.fold handle_node map PQ.empty
 
@@ -107,17 +119,14 @@ module Make
       : node eltmap * PQ.t =
     (* a - add color to e *)
     let node = EMap.find e map in
-    let new_node = { color = Some c; saturation = node.saturation } in
+    let new_node = {color = Some c; saturation = node.saturation} in
     let map = EMap.add e new_node map in
     (* b - add color to all neighbor saturation maps *)
     let handle_neighbor (map, pq) e =
       (* update map first *)
       let old_node = EMap.find e map in
       let new_node =
-        {
-          color = old_node.color;
-          saturation = IntSet.add c old_node.saturation;
-        }
+        {color = old_node.color; saturation = IntSet.add c old_node.saturation}
       in
       let new_map = EMap.add e new_node map in
       (* then update in pq *)
@@ -130,8 +139,9 @@ module Make
   let make_final_color_map (map : node eltmap) : int eltmap =
     let handle_node e node imap =
       match node with
-      | { color = Some c; saturation = _ } -> EMap.add e c imap
-      | { color = None; saturation = _ } ->
+      | {color = Some c; saturation = _} ->
+          EMap.add e c imap
+      | {color = None; saturation = _} ->
           failwith "node doesn't have color! something went wrong in alg"
     in
     EMap.fold handle_node map EMap.empty

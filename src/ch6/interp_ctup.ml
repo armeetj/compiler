@@ -16,16 +16,20 @@ open Ctup
 
 let interp_atm (env : value Env.t) (a : atm) : value =
   match a with
-  | Void -> VoidV
-  | Bool b -> BoolV b
-  | Int i -> IntV i
+  | Void ->
+      VoidV
+  | Bool b ->
+      BoolV b
+  | Int i ->
+      IntV i
   | Var v ->
       Env.find_or_fail v env
         ~err_msg:(Printf.sprintf "interp_atm: unbound name: %s" v)
 
 let interp_exp (env : value Env.t) (e : exp) : value =
   match e with
-  | Atm a -> interp_atm env a
+  | Atm a ->
+      interp_atm env a
   | Prim (op, args) ->
       let args' = List.map (interp_atm env) args in
       interp_core_op op args'
@@ -38,71 +42,82 @@ let interp_exp (env : value Env.t) (e : exp) : value =
          * 8 bytes for each slot + 8 bytes for the tag.
          * Allocate the memory and return a vector of uninitialized values. *)
         let size = 8 * (n + 1) in
-        allocate size;
+        allocate size ;
         VecV (Array.map default_val ts)
   | Allocate (_, t) ->
       failwithf "interp_exp: can't allocate type (%s)" (string_of_ty t)
   | GlobalVal v -> (
-      match v with
-      | "free_ptr" -> IntV !free_ptr
-      | "fromspace_end" -> IntV !fromspace_end
-      | _ -> failwithf "unknown global variable (%s)" v)
+    match v with
+    | "free_ptr" ->
+        IntV !free_ptr
+    | "fromspace_end" ->
+        IntV !fromspace_end
+    | _ ->
+        failwithf "unknown global variable (%s)" v )
   | VecLen a -> (
-      match interp_atm env a with
-      | VecV vs -> IntV (Array.length vs)
-      | _ -> failwith "interp_exp: vector-length : wrong type")
+    match interp_atm env a with
+    | VecV vs ->
+        IntV (Array.length vs)
+    | _ ->
+        failwith "interp_exp: vector-length : wrong type" )
   | VecRef (a, i) -> (
-      match interp_atm env a with
-      | VecV vs ->
-          if i >= 0 && i < Array.length vs then vs.(i)
-          else failwith "interp_exp: vector-ref : index out of range"
-      | _ -> failwith "interp_exp: vector-ref : wrong types")
+    match interp_atm env a with
+    | VecV vs ->
+        if i >= 0 && i < Array.length vs then vs.(i)
+        else failwith "interp_exp: vector-ref : index out of range"
+    | _ ->
+        failwith "interp_exp: vector-ref : wrong types" )
   | VecSet (a1, i, a2) -> (
-      match interp_atm env a1 with
-      | VecV vs ->
-          if i >= 0 && i < Array.length vs then (
-            let v = interp_atm env a2 in
-            vs.(i) <- v;
-            VoidV)
-          else failwith "interp_exp: vector-set! : index out of range"
-      | _ -> failwith "interp_exp: vector-set! : wrong types")
+    match interp_atm env a1 with
+    | VecV vs ->
+        if i >= 0 && i < Array.length vs then (
+          let v = interp_atm env a2 in
+          vs.(i) <- v ;
+          VoidV )
+        else failwith "interp_exp: vector-set! : index out of range"
+    | _ ->
+        failwith "interp_exp: vector-set! : wrong types" )
 
 let interp_stmt (env : value Env.t) (s : stmt) : value Env.t =
   match s with
-  | Assign (v, e) -> Env.add v (interp_exp env e) env
+  | Assign (v, e) ->
+      Env.add v (interp_exp env e) env
   | PrimS (op, args) ->
       let args' = List.map (interp_atm env) args in
-      ignore (interp_stmt_op op args');
+      ignore (interp_stmt_op op args') ;
       env
   | Collect n ->
-      collect n;
-      env
+      collect n ; env
   | VecSetS (a1, i, a2) -> (
-      match interp_atm env a1 with
-      | VecV vs ->
-          if i >= 0 && i < Array.length vs then (
-            let v = interp_atm env a2 in
-            vs.(i) <- v;
-            env)
-          else failwith "interp_stmt: vector-set! : index out of range"
-      | _ -> failwith "interp_stmt: vector-set! : wrong types")
+    match interp_atm env a1 with
+    | VecV vs ->
+        if i >= 0 && i < Array.length vs then (
+          let v = interp_atm env a2 in
+          vs.(i) <- v ;
+          env )
+        else failwith "interp_stmt: vector-set! : index out of range"
+    | _ ->
+        failwith "interp_stmt: vector-set! : wrong types" )
 
 let rec interp_tail (lmap : tail LabelMap.t) (env : value Env.t) (t : tail) :
     value Env.t * value =
   match t with
-  | Return e -> (env, interp_exp env e)
+  | Return e ->
+      (env, interp_exp env e)
   | Seq (stmt, t') ->
       let env' = interp_stmt env stmt in
       interp_tail lmap env' t'
-  | Goto lbl -> interp_lbl lmap env lbl
-  | IfStmt { op; arg1; arg2; jump_then; jump_else } -> (
+  | Goto lbl ->
+      interp_lbl lmap env lbl
+  | IfStmt {op; arg1; arg2; jump_then; jump_else} -> (
       let arg1' = interp_atm env arg1 in
       let arg2' = interp_atm env arg2 in
-      match interp_cmp_op op [ arg1'; arg2' ] with
+      match interp_cmp_op op [arg1'; arg2'] with
       | BoolV b ->
           let lbl = if b then jump_then else jump_else in
           interp_lbl lmap env lbl
-      | _ -> failwith "interp_tail: if: wrong type")
+      | _ ->
+          failwith "interp_tail: if: wrong type" )
 
 and interp_lbl (lmap : tail LabelMap.t) (env : value Env.t) (lbl : label) :
     value Env.t * value =

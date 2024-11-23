@@ -7,7 +7,7 @@ open X86_asm
 
 let resize_initial_heap_size (n : int) : unit =
   if n < min_heap_size || n mod 8 <> 0 then
-    failwithf "heap size must be divisible by 8 and >= %d" min_heap_size;
+    failwithf "heap size must be divisible by 8 and >= %d" min_heap_size ;
   init_heap_size := n
 
 (* Code that has to be added to each program at the end.
@@ -23,7 +23,7 @@ let asm_of_lb (deref_adjust : int) (lb : label * X.block) : instr list =
 
 let prelude_conclusion (prog : X.program) : program =
   let (X.X86Program (info, lbs)) = prog in
-  let (X.Info { num_spilled; num_spilled_root; used_callee; _ }) = info in
+  let (X.Info {num_spilled; num_spilled_root; used_callee; _}) = info in
   let num_callees = RegSet.cardinal used_callee in
   (* Amount to shift all stack locations that are relative to %rbp: *)
   let deref_adjust = 8 * num_callees in
