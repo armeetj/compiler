@@ -2,6 +2,7 @@
 
 - [ ] shrink
 - [ ] uniquify
+- [ ] expose allocation - armeet
 - [ ] uncover get
 - [ ] remove complex
 - [ ] explicate control
