@@ -1,21 +1,17 @@
 open Support
 open Types
 open Utils
-
 module X = X86_var_global
 
 (* Flag; when true, extra debugging information is printed. *)
 let _debug = ref false
-
 let rflags_reg = X.Reg Rflags
-
 
 (* Compute the live sets for the instructions of a single labeled block.
  * The `live_before_map` is the live-before sets for each block named
  * by the given labels. *)
-let uncover_live_in_block
-      (live_before_map : LocSet.t LabelMap.t) (instrs : X.instr list)
-        : X.live =
+let uncover_live_in_block (live_before_map : LocSet.t LabelMap.t)
+    (instrs : X.instr list) : X.live =
   failwith "TODO"
 
 (* Get the next jump labels, if any.
@@ -44,33 +40,28 @@ let get_next_labels (block : 'a X.block) : LabelSet.t =
  * NOTE: Make sure to never add the label "conclusion" to the queue!
  * It has no corresponding instructions.
  *)
-let compute_liveness
-    (g    : LabelDgraph.t)
-    (imap : (X.instr list) LabelMap.t)
-      : LocSet.t LabelMap.t =
+let compute_liveness (g : LabelDgraph.t) (imap : X.instr list LabelMap.t) :
+    LocSet.t LabelMap.t =
   failwith "TODO"
 
-let uncover_live
-    (prog : (X.info1, X.binfo1) X.program) : (X.info1, X.binfo2) X.program =
+let uncover_live (prog : (X.info1, X.binfo1) X.program) :
+    (X.info1, X.binfo2) X.program =
   let (X.X86Program (info, lbs)) = prog in
 
   (* Generate the control-flow graph from the (label, block) pairs. *)
   let cfg =
-    LabelDgraph.of_alist lbs
-      (fun bl -> LabelSet.elements (get_next_labels bl))
+    LabelDgraph.of_alist lbs (fun bl -> LabelSet.elements (get_next_labels bl))
   in
 
   (* Create a label->instrs map. *)
-  let (imap : (X.instr list) LabelMap.t) =
+  let (imap : X.instr list LabelMap.t) =
     lbs
-      |> List.map (fun (lbl, X.Block (_, instrs)) -> (lbl, instrs))
-      |> LabelMap.of_list
+    |> List.map (fun (lbl, X.Block (_, instrs)) -> (lbl, instrs))
+    |> LabelMap.of_list
   in
 
   (* Compute all the live-before sets. *)
-  let (live_before_sets : LocSet.t LabelMap.t) =
-    compute_liveness cfg imap
-  in
+  let (live_before_sets : LocSet.t LabelMap.t) = compute_liveness cfg imap in
 
   (* We run the liveness computation one last time after computing
    * all the live-before sets to get the full liveness information
@@ -85,7 +76,7 @@ let uncover_live
           (Printf.sprintf "uncover_live: no instructions for label (%s)"
              (string_of_label lbl))
     in
-      uncover_live_in_block live_before_sets instrs
+    uncover_live_in_block live_before_sets instrs
   in
 
   (* Rewrite the label/block information with new block info containing
@@ -93,8 +84,8 @@ let uncover_live
   let lbs' =
     List.map
       (fun (lbl, X.Block (_, instrs)) ->
-         let b = X.Binfo2 (get_live lbl) in
-           (lbl, X.Block (b, instrs)))
+        let b = X.Binfo2 (get_live lbl) in
+        (lbl, X.Block (b, instrs)))
       lbs
   in
-    X.X86Program (info, lbs')
+  X.X86Program (info, lbs')
