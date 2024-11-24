@@ -73,6 +73,8 @@ and explicate_pred (e : L.exp) (then_tl : tail) (else_tl : tail) : tail =
         ; arg2 = convert_atom a2
         ; jump_then = then_block
         ; jump_else = else_block }
+  | L.Prim (_, [_; _]) ->
+      failwith "explicate_pred: primitive of if must be a cmp_op"
   (* Not a *)
   | L.Prim (`Not, [a]) -> (
     match a with

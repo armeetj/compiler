@@ -14,6 +14,7 @@ reimplementing existing functions, etc.). Incorrect/icomplete passes are marked 
 ## Explicate Control*
 
 Line 68: if the primitive in a `if` isn't a `cmp_op`, you can signal an error.
+>> handled on line 76
 
 Line 69: a `let` inside an `if` should be handled according to the transformation given in the write-up:
 
@@ -48,8 +49,10 @@ transform looks more like
 ## Remove Unused Blocks
 
 The helper function `tm_of_l` is equivalent to `LabelMap.of_list`.
+>> fixed
 
 `find_reachable_list` can be rewritten as a fold
+>> done
 
 ## Select Instructions
 
