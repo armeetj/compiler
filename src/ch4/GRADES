@@ -79,3 +79,4 @@ Line 108, 130: refer to the notes in the write-up/comments.
 ## Allocate Registers*
 
 As far as I can tell, the only things missing are the unhandled cases in `convert_instr`.
+>> done, all tests pass
