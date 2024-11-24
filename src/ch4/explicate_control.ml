@@ -16,12 +16,12 @@ let convert_exp (e : L.exp) : exp =
   match e with
   | L.Atm a ->
       Atm (convert_atom a)
-  | L.Prim (op, exp_lst) ->
-      Prim (op, List.map convert_atom exp_lst)
+  | L.Prim (op, atm_lst) ->
+      Prim (op, List.map convert_atom atm_lst)
   | L.If (_, _, _) ->
-      failwith "If should never be passed to convert_exp"
+      failwith "[ec:convert_exp] If should never be passed to convert_exp"
   | L.Let (_, _, _) ->
-      failwith "Let should never be passed to convert_exp"
+      failwith "[ec:convert_exp] Let should never be passed to convert_exp"
 
 (* Convert expressions which are the binding expression of a `let` expression
  * (i.e. in `(let (var <exp1>) <exp2>)` the binding expression is `<exp1>`).
@@ -30,7 +30,7 @@ let convert_exp (e : L.exp) : exp =
 let rec explicate_assign (e : L.exp) (v : var) (tl : tail) : tail =
   match e with
   | L.Let (v_in, binding_exp, body_exp) ->
-      explicate_assign body_exp v tl |> explicate_assign binding_exp v_in
+      explicate_assign binding_exp v_in (explicate_assign body_exp v tl)
   | L.If (cond, then_exp, else_exp) ->
       let tail_block = create_block tl in
       explicate_pred cond
@@ -124,7 +124,7 @@ and explicate_tail (e : L.exp) : tail =
   | L.If (cond, then_exp, else_exp) ->
       explicate_pred cond (explicate_tail then_exp) (explicate_tail else_exp)
   | L.Let (v, binding_exp, body_exp) ->
-      explicate_tail body_exp |> explicate_assign binding_exp v
+      explicate_assign binding_exp v (explicate_tail body_exp)
   | _ ->
       Return (convert_exp e)
 

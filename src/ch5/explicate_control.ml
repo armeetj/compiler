@@ -38,12 +38,26 @@ let convert_exp (e : L.exp) : exp =
 let rec explicate_assign (e : L.exp) (v : var) (tl : tail) : tail =
   match e with
   | L.Let (v_in, binding_exp, body_exp) ->
-      explicate_assign body_exp v tl |> explicate_assign binding_exp v_in
+      explicate_assign binding_exp v_in (explicate_assign body_exp v tl)
   | L.If (cond, then_exp, else_exp) ->
       let tail_block = create_block tl in
       explicate_pred cond
         (explicate_assign then_exp v (Goto tail_block))
         (explicate_assign else_exp v (Goto tail_block))
+  (* all effect expressions first -> final exp *)
+  | L.Begin (effect_exps, final_exp) ->
+      (*  first assign (v = final_exp, tl) *)
+      let aux = explicate_assign final_exp v tl in
+      (* then fold_right all side effects *)
+      List.fold_right (fun e acc -> explicate_effect e acc) effect_exps aux
+  | L.While (cond, body) ->
+      (* first handle body *)
+      let aux = explicate_effect body tl in
+      explicate_assign cond v aux
+  | L.SetBang (v_in, exp) ->
+      let aux = explicate_assign exp v_in tl in
+      (* awkwardly return void *)
+      explicate_assign (Atm Void) v aux
   | _ ->
       Seq (Assign (v, convert_exp e), tl)
 
@@ -114,6 +128,13 @@ and explicate_pred (e : L.exp) (then_tl : tail) (else_tl : tail) : tail =
         explicate_pred else_exp (Goto then_block) (Goto else_block)
       in
       explicate_pred cond tail_true tail_false
+  | While _ ->
+      failwith "ec:explicate_pred invalid exp type : While"
+  | SetBang _ ->
+      failwith "ec:explicate_pred invalid exp type : SetBang"
+  | Begin (effect_exps, final_exp) ->
+      let aux = explicate_pred final_exp then_tl else_tl in
+      List.fold_right explicate_effect effect_exps aux
   | _ ->
       failwith "invalid cond exp type (must be a boolean resolvable exp)"
 
