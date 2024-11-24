@@ -145,7 +145,22 @@ and explicate_pred (e : L.exp) (then_tl : tail) (else_tl : tail) : tail =
  * These are expressions that are only evaluated for their side effects.
  * Pure expressions in effect position are discarded,
  * since they can't have any effect. *)
-and explicate_effect (e : L.exp) (tl : tail) : tail = match e with _ -> tl
+and explicate_effect (e : L.exp) (tl : tail) : tail =
+  match e with
+  | Atm _ ->
+      tl
+  | Prim (_, _) ->
+      failwith "todo"
+  | SetBang (_, _) ->
+      failwith "todo"
+  | Begin (_, _) ->
+      failwith "todo"
+  | If (_, _, _) ->
+      failwith "todo"
+  | While (_, _) ->
+      failwith "todo"
+  | Let (_, _, _) ->
+      failwith "todo"
 
 (* Convert expressions in tail position.
  * This includes:
