@@ -2,14 +2,14 @@
 
 - [x] shrink
 - [x] uniquify
+- [x] uncover get
 - [x] remove complex operands
 - [.] explicate control
 - [x] remove unused blocks
-- [.] uncover live
-- [x] uncover get
 - [x] select instructions
-- [x] build interference graph
+- [.] uncover live
 - [x] graph coloring
+- [x] build interference graph
 - [x] allocate registers
 - [x] remove jumps
 - [x] patch instructions
