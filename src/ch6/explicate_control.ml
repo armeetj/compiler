@@ -1,3 +1,4 @@
+(* ch6 *)
 open Support.Utils
 open Types
 open Ctup
@@ -26,6 +27,16 @@ let convert_exp (e : L.exp) : exp =
       Atm (convert_atom a)
   | L.Prim (op, exp_lst) ->
       Prim (op, List.map convert_atom exp_lst)
+  (* | L.GlobalVal v ->
+         GlobalVal v
+     | L.Allocate (i, ty) ->
+         Allocate (i, ty)
+     | L.VecLen a ->
+         VecLen (convert_atom a)
+     | L.VecRef (a, idx) ->
+         VecRef (convert_atom a, idx)
+     | L.VecSet (a1, idx, a2) ->
+         VecSet (convert_atom a1, idx, convert_atom a2) *)
   | _ ->
       failwith "invalid type passed to convert_exp"
 
@@ -37,12 +48,38 @@ let convert_exp (e : L.exp) : exp =
 let rec explicate_assign (e : L.exp) (v : var) (tl : tail) : tail =
   match e with
   | L.Let (v_in, binding_exp, body_exp) ->
-      explicate_assign body_exp v tl |> explicate_assign binding_exp v_in
+      explicate_assign binding_exp v_in (explicate_assign body_exp v tl)
   | L.If (cond, then_exp, else_exp) ->
       let tail_block = create_block tl in
       explicate_pred cond
         (explicate_assign then_exp v (Goto tail_block))
         (explicate_assign else_exp v (Goto tail_block))
+  (* all effect expressions first -> final exp *)
+  | L.Begin (effect_exps, final_exp) ->
+      (*  first assign (v = final_exp, tl) *)
+      let aux = explicate_assign final_exp v tl in
+      (* then fold_right all side effects *)
+      List.fold_right (fun e acc -> explicate_effect e acc) effect_exps aux
+  | L.While (cond, body) ->
+      (* first handle body *)
+      let aux = explicate_effect body tl in
+      explicate_assign cond v aux
+  | L.SetBang (v_in, exp) ->
+      let aux = explicate_assign exp v_in tl in
+      (* awkwardly return void *)
+      explicate_assign (Atm Void) v aux
+  | Collect i ->
+      failwith "todo"
+  | Allocate (i, ty) ->
+      failwith "todo"
+  | GlobalVal v ->
+      failwith "todo"
+  | VecLen a ->
+      failwith "todo"
+  | VecRef (a, idx) ->
+      failwith "todo"
+  | VecSet (a1, i, a2) ->
+      failwith "todo"
   | _ ->
       Seq (Assign (v, convert_exp e), tl)
 
@@ -113,6 +150,13 @@ and explicate_pred (e : L.exp) (then_tl : tail) (else_tl : tail) : tail =
         explicate_pred else_exp (Goto then_block) (Goto else_block)
       in
       explicate_pred cond tail_true tail_false
+  | While _ ->
+      failwith "ec:explicate_pred invalid exp type : While"
+  | SetBang _ ->
+      failwith "ec:explicate_pred invalid exp type : SetBang"
+  | Begin (effect_exps, final_exp) ->
+      let aux = explicate_pred final_exp then_tl else_tl in
+      List.fold_right explicate_effect effect_exps aux
   | _ ->
       failwith "invalid cond exp type (must be a boolean resolvable exp)"
 
@@ -123,7 +167,38 @@ and explicate_pred (e : L.exp) (then_tl : tail) (else_tl : tail) : tail =
  * These are expressions that are only evaluated for their side effects.
  * Pure expressions in effect position are discarded,
  * since they can't have any effect. *)
-and explicate_effect (e : L.exp) (tl : tail) : tail = match e with _ -> tl
+and explicate_effect (e : L.exp) (tl : tail) : tail =
+  match e with
+  | L.Atm _ ->
+      tl
+  | L.Prim (((`Read | `Print) as op), a_lst) ->
+      let atm_lst = List.map convert_atom a_lst in
+      Seq (PrimS (op, atm_lst), tl)
+  | L.SetBang (v, e) ->
+      explicate_assign e v tl
+  | L.Begin (effect_exps, final_exp) ->
+      List.fold_right explicate_effect effect_exps
+        (explicate_effect final_exp tl)
+  | L.If (cond_exp, then_exp, else_exp) ->
+      let aux = create_block tl in
+      let then_tl = explicate_effect then_exp (Goto aux) in
+      let else_tl = explicate_effect else_exp (Goto aux) in
+      explicate_pred cond_exp then_tl else_tl
+  | L.While (cond_exp, body_exp) ->
+      let loop_label = Label (!fresh ~base:"loop" ~sep:"_") in
+      let body_aux = explicate_effect body_exp (Goto loop_label) in
+      (* "if equiv form has to be processed be explicate_pred returning a tail which constitutes a basic_block" *)
+      let basic_block = explicate_pred cond_exp body_aux tl in
+      let () =
+        basic_blocks := LabelMap.add loop_label basic_block !basic_blocks
+      in
+      Goto loop_label
+  | L.Let (v, bind_exp, body_exp) ->
+      let tl = explicate_effect body_exp tl in
+      explicate_assign bind_exp v tl
+  | _ ->
+      failwith
+        "ec:explicate_effect unsupported exp type passed to explicate_effect"
 
 (* Convert expressions in tail position.
  * This includes:
@@ -137,10 +212,22 @@ and explicate_effect (e : L.exp) (tl : tail) : tail = match e with _ -> tl
  *)
 and explicate_tail (e : L.exp) : tail =
   match e with
+  | L.While _ ->
+      let tl = Return (Atm Void) in
+      explicate_effect e tl
+  | L.Begin (effect_exps, final_exp) ->
+      let tl = explicate_tail final_exp in
+      List.fold_right explicate_effect effect_exps tl
+  | L.SetBang (v, e) ->
+      let tl = Return (Atm Void) in
+      explicate_assign e v tl
   | L.If (cond, then_exp, else_exp) ->
-      explicate_pred cond (explicate_tail then_exp) (explicate_tail else_exp)
+      let aux_else = explicate_tail else_exp in
+      let aux_then = explicate_tail then_exp in
+      explicate_pred cond aux_then aux_else
   | L.Let (v, binding_exp, body_exp) ->
-      explicate_tail body_exp |> explicate_assign binding_exp v
+      let aux = explicate_tail body_exp in
+      explicate_assign binding_exp v aux
   | _ ->
       Return (convert_exp e)
 
