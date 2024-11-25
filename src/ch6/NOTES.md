@@ -20,7 +20,13 @@
 2) then check if there is enough space
    - if there is space -> (void)
    - if no space -> (collect nbytes) which also returns void
-3)  
+3) (let (v (allocate len type)) ...)
+    allocate space for the vector
+    there should be space now, bc of 2)
+4) (let (_ (vector-set! v 0 x_0)))...
+    set all vector slots to default value of 0
+5) then set all slots values
+6) return vector v
 
 ## heap memory
 
