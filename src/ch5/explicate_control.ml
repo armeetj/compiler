@@ -147,21 +147,33 @@ and explicate_pred (e : L.exp) (then_tl : tail) (else_tl : tail) : tail =
  * since they can't have any effect. *)
 and explicate_effect (e : L.exp) (tl : tail) : tail =
   match e with
-  | Atm _ ->
+  | L.Atm _ ->
       tl
   | L.Prim (((`Read | `Print) as op), a_lst) ->
       let atm_lst = List.map convert_atom a_lst in
       Seq (PrimS (op, atm_lst), tl)
-  | SetBang (_, _) ->
-      failwith "todo"
-  | Begin (_, _) ->
-      failwith "todo"
-  | If (_, _, _) ->
-      failwith "todo"
-  | While (_, _) ->
-      failwith "todo"
-  | Let (_, _, _) ->
-      failwith "todo"
+  | L.SetBang (v, e) ->
+      explicate_assign e v tl
+  | L.Begin (effect_exps, final_exp) ->
+      List.fold_right explicate_effect effect_exps
+        (explicate_effect final_exp tl)
+  | L.If (cond_exp, then_exp, else_exp) ->
+      let aux = create_block tl in
+      let then_tl = explicate_effect then_exp (Goto aux) in
+      let else_tl = explicate_effect else_exp (Goto aux) in
+      explicate_pred cond_exp then_tl else_tl
+  | L.While (cond_exp, body_exp) ->
+      let loop_label = Label (!fresh ~base:"loop" ~sep:"_") in
+      let body_aux = explicate_effect body_exp (Goto loop_label) in
+      (* "if equiv form has to be processed be explicate_pred returning a tail which constitutes a basic_block" *)
+      let basic_block = explicate_pred cond_exp body_aux tl in
+      let () =
+        basic_blocks := LabelMap.add loop_label basic_block !basic_blocks
+      in
+      Goto loop_label
+  | L.Let (v, bind_exp, body_exp) ->
+      let tl = explicate_effect body_exp tl in
+      explicate_assign bind_exp v tl
   | _ ->
       failwith
         "ec:explicate_effect unsupported exp type passed to explicate_effect"
@@ -178,10 +190,22 @@ and explicate_effect (e : L.exp) (tl : tail) : tail =
  *)
 and explicate_tail (e : L.exp) : tail =
   match e with
+  | L.While _ ->
+      let tl = Return (Atm Void) in
+      explicate_effect e tl
+  | L.Begin (effect_exps, final_exp) ->
+      let tl = explicate_tail final_exp in
+      List.fold_right explicate_effect effect_exps tl
+  | L.SetBang (v, e) ->
+      let tl = Return (Atm Void) in
+      explicate_assign e v tl
   | L.If (cond, then_exp, else_exp) ->
-      explicate_pred cond (explicate_tail then_exp) (explicate_tail else_exp)
+      let aux_else = explicate_tail else_exp in
+      let aux_then = explicate_tail then_exp in
+      explicate_pred cond aux_then aux_else
   | L.Let (v, binding_exp, body_exp) ->
-      explicate_tail body_exp |> explicate_assign binding_exp v
+      let aux = explicate_tail body_exp in
+      explicate_assign binding_exp v aux
   | _ ->
       Return (convert_exp e)
 
