@@ -4,7 +4,7 @@
 - [x] uniquify
 - [x] uncover get
 - [x] remove complex operands
-- [ ] explicate control
+- [x] explicate control
 - [x] remove unused blocks
 - [x] select instructions
 - [ ] uncover live
