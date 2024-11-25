@@ -149,8 +149,9 @@ and explicate_effect (e : L.exp) (tl : tail) : tail =
   match e with
   | Atm _ ->
       tl
-  | Prim (_, _) ->
-      failwith "todo"
+  | L.Prim (((`Read | `Print) as op), a_lst) ->
+      let atm_lst = List.map convert_atom a_lst in
+      Seq (PrimS (op, atm_lst), tl)
   | SetBang (_, _) ->
       failwith "todo"
   | Begin (_, _) ->
@@ -161,6 +162,9 @@ and explicate_effect (e : L.exp) (tl : tail) : tail =
       failwith "todo"
   | Let (_, _, _) ->
       failwith "todo"
+  | _ ->
+      failwith
+        "ec:explicate_effect unsupported exp type passed to explicate_effect"
 
 (* Convert expressions in tail position.
  * This includes:
