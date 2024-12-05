@@ -2,6 +2,11 @@
 open Ltup_shrink
 module L = Ltup
 
+let ty_of_option ty = 
+    match ty with 
+    | Some ty -> ty
+    | None -> failwith "shouldn't reach?"
+
 let rec shrink_exp (e : L.exp) : exp =
   match e with
   | And (e1, e2) ->
@@ -29,13 +34,13 @@ let rec shrink_exp (e : L.exp) : exp =
   | Begin (el, e) ->
       Begin (List.map (fun exp -> shrink_exp exp) el, shrink_exp e)
   | Vec (exp_lst, ty) ->
-      failwith "shrink_exp: todo"
+    Vec (List.map shrink_exp exp_lst, ty_of_option ty)
   | VecLen exp ->
-      failwith "shrink_exp: todo"
-  | VecSet _ ->
-      failwith "shrink_exp: todo"
-  | VecRef _ ->
-      failwith "shrink_exp: todo"
+    VecLen (shrink_exp exp)
+  | VecSet (exp1, i, exp2) ->
+    VecSet ((shrink_exp exp1), i, (shrink_exp exp2))
+  | VecRef (exp, i) ->
+    VecRef (shrink_exp exp, i)
 
 let shrink (prog : L.program) : program =
   let (L.Program e) = prog in

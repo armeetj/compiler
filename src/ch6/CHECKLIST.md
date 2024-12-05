@@ -1,6 +1,6 @@
 # Checklist (ch6)
 
-- [ ] shrink
+- [x] shrink
 - [ ] uniquify
 - [ ] expose allocation - armeet
 - [ ] uncover get
