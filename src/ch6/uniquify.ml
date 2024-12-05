@@ -38,13 +38,16 @@ let uniquify_exp (e : exp) : exp =
     | While (exp1, exp2) ->
         While (un_helper exp1 map, un_helper exp2 map)
     | Vec (exp_lst, ty) ->
-        failwith "uniquify_exp.un_helper: todo"
+        let new_exp_lst = List.map (fun e -> un_helper e map) exp_lst in 
+        Vec (new_exp_lst, ty)
     | VecLen exp ->
-        failwith "uniquify_exp.un_helper: todo"
-    | VecSet _ ->
-        failwith "uniquify_exp.un_helper: todo"
-    | VecRef _ ->
-        failwith "uniquify_exp.un_helper: todo"
+        VecLen (un_helper exp map)   
+    | VecSet (exp1, i, exp2)  ->
+        let new_exp1 = un_helper exp1 map in 
+        let new_exp2 = un_helper exp2 map in 
+        VecSet (new_exp1, i, new_exp2)
+    | VecRef (exp, i) ->
+        VecRef (un_helper exp map, i)
   in
   un_helper e VarMap.empty
 

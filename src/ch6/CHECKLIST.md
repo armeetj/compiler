@@ -1,7 +1,7 @@
 # Checklist (ch6)
 
 - [x] shrink
-- [ ] uniquify
+- [x] uniquify
 - [ ] expose allocation - armeet
 - [ ] uncover get
 - [ ] remove complex
