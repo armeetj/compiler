@@ -5,8 +5,8 @@
 - [ ] expose allocation - armeet
 - [x] uncover get
 - [x] remove complex
-- [ ] explicate control
-- [ ] remove unused
+- [ ] explicate control - armeet
+- [x] remove unused
 - [ ] select instructions
 - [ ] uncover live
 - [ ] build interference
