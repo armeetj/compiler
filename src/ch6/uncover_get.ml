@@ -52,14 +52,14 @@ let rec uncover_get_exp (s : S.t) (e : L.exp) : exp =
       Bool b
   | L.Int i ->
       Int i
-  | Collect _
-  | Allocate (_, _)
-  | GlobalVal _
-  | VecLen _
-  | VecRef (_, _)
-  | VecSet (_, _, _) ->
-      failwith "collect_set_vars: todo"
-
+  | Collect i-> 
+    Collect i
+  | Allocate (i, ty) -> Allocate (i, ty)
+  | GlobalVal v -> GlobalVal v
+  | VecLen exp -> VecLen (uncover_get_exp s exp)
+  | VecRef (exp, i) -> VecRef (uncover_get_exp s exp, i)
+  | VecSet (exp1, i, exp2) ->
+    VecSet (uncover_get_exp s exp1, i, uncover_get_exp s exp2)
 let uncover_get (prog : L.program) : program =
   let (L.Program e) = prog in
   let set_vars = collect_set_vars e in

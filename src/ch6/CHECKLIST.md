@@ -3,7 +3,7 @@
 - [x] shrink
 - [x] uniquify
 - [ ] expose allocation - armeet
-- [ ] uncover get
+- [x] uncover get
 - [ ] remove complex
 - [ ] explicate control
 - [ ] remove unused
