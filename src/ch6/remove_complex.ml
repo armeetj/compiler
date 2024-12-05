@@ -75,18 +75,33 @@ let rec rco_atom (e : L.exp) : (var * exp) list * atm =
       let bindings, atm_lst = helper exp_lst in
       let tmp = gen_temp_name () in
       (bindings @ [(tmp, Prim (cop, atm_lst))], Var tmp)
-  (* Let case, weird as usual *)
+      (* Let case, weird as usual *)
   | L.Let (v, exp1, exp2) ->
-      let bindings, atm = rco_atom exp2 in
-      let e1 = rco_exp exp1 in
+    let e1 = rco_exp exp1 in
+    let bindings, atm = rco_atom exp2 in
       ([(v, e1)] @ bindings, atm)
-  | Collect _
-  | Allocate (_, _)
-  | GlobalVal _
-  | VecLen _
-  | VecRef (_, _)
-  | VecSet (_, _, _) ->
-      failwith "rco_atom: todo"
+  | Collect i ->
+      let tmp = "$_" in
+      ([(tmp, Collect i)], Void)
+  | Allocate (i, ty) ->
+      let tmp = gen_temp_name () in
+      ([(tmp, Allocate (i, ty))], Var tmp)
+  | GlobalVal v ->
+      let tmp = gen_temp_name () in
+      ([(tmp, GlobalVal v)], Var tmp)
+  | VecLen exp ->
+      let bindings, atm = rco_atom exp in
+      let tmp = gen_temp_name () in
+      (bindings @ [(tmp, VecLen atm)], Var tmp)
+  | L.VecRef (exp, idx) ->
+      let bindings, atm = rco_atom exp in
+      let tmp = gen_temp_name () in
+      (bindings @ [(tmp, VecRef (atm, idx))], Var tmp)
+  | L.VecSet (exp1, idx, exp2) ->
+      let bindings1, atm1 = rco_atom exp1 in
+      let bindings2, atm2 = rco_atom exp2 in
+      let tmp = gen_temp_name () in
+      ([(tmp, VecSet (atm1, idx, atm2))] @ bindings1 @ bindings2, Void)
 
 and rco_exp (e : L.exp) : exp =
   match e with
@@ -131,13 +146,22 @@ and rco_exp (e : L.exp) : exp =
       in
       let bindings, atm_lst = helper exp_lst in
       process bindings (Prim (cop, atm_lst))
-  | Collect _
-  | Allocate (_, _)
-  | GlobalVal _
-  | VecLen _
-  | VecRef (_, _)
-  | VecSet (_, _, _) ->
-      failwith "rco_exp: todo"
+  | L.Collect n ->
+      Collect n
+  | L.Allocate (size, ty) ->
+        Allocate (size, ty)
+    | L.GlobalVal v ->
+        GlobalVal v
+    | L.VecLen exp ->
+        let bindings, atm = rco_atom exp in
+        process bindings (VecLen atm)
+    | L.VecRef (exp, idx) ->
+        let bindings, atm = rco_atom exp in
+        process bindings (VecRef (atm, idx))
+    | L.VecSet (exp1, idx, exp2) ->
+        let bindings1, atm1 = rco_atom exp1 in
+        let bindings2, atm2 = rco_atom exp2 in
+        process (bindings1 @ bindings2) (VecSet ( atm1, idx, atm2))
 
 let remove_complex_operands (prog : L.program) : program =
   let (L.Program exp) = prog in

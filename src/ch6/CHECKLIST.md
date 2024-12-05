@@ -4,7 +4,7 @@
 - [x] uniquify
 - [ ] expose allocation - armeet
 - [x] uncover get
-- [ ] remove complex
+- [x] remove complex
 - [ ] explicate control
 - [ ] remove unused
 - [ ] select instructions
