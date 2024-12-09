@@ -15,13 +15,16 @@ functions of multiple arguments as well i.e. prefer `g` to `(fun x y -> g x y)`.
 ## Remove Complex Operands
 
 `process` can be replaced with a right fold.
+>> done
 
 The helper function in the `Prim` cases can be replaced with a right fold.
+
 
 ## Select Instructions
 
 In `process_stmt`, there is a lot of code repetition in the comparison cases.
 Use the `#cmp_op as op` and `cc_of_op` to avoid repeating code.
+>> done
 
 ## Uncover Live*
 

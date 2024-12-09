@@ -13,13 +13,8 @@ let gen_temp_name () = fresh ~base:"$tmp" ~sep:"."
    - the last expression should maintain throughout.
    - assumes bindings are in correct order
 *)
-let rec process (bindings : (var * exp) list) last : exp =
-  match bindings with
-  | [] ->
-      last
-  | h :: t ->
-      let v, exp = h in
-      Let (v, exp, process t last)
+let process (bindings : (var * exp) list) last : exp =
+  List.fold_right (fun (v, exp) acc -> Let (v, exp, acc)) bindings last
 
 (* Convert an expression which needs to become atomic.
  * Return the atomic expression as well as a list of
