@@ -18,7 +18,7 @@ functions of multiple arguments as well i.e. prefer `g` to `(fun x y -> g x y)`.
 >> done
 
 The helper function in the `Prim` cases can be replaced with a right fold.
-
+>> TODO: fix order logic
 
 ## Select Instructions
 
@@ -31,3 +31,4 @@ Use the `#cmp_op as op` and `cc_of_op` to avoid repeating code.
 `uncover_live_in_block` and `get_next_labels` can be written based off of the
 code for Assignment 4. For `compute_liveness`, follow the steps given in the
 comment.
+>> TODO:
