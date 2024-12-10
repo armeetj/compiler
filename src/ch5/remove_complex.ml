@@ -108,16 +108,13 @@ and rco_exp (e : L.exp) : exp =
       let exp3 = rco_exp exp3 in
       If (exp1, exp2, exp3)
   | L.Prim (cop, exp_lst) ->
-      let rec helper exp_lst =
-        match exp_lst with
-        | [] ->
-            ([], [])
-        | h :: t ->
-            let binding, atm = rco_atom h in
-            let bindings, atms = helper t in
-            (binding @ bindings, atm :: atms)
+      let bindings, atm_lst =
+        List.fold_left
+          (fun (bindings, atms) exp ->
+            let binding, atm = rco_atom exp in
+            (bindings @ binding, atms @ [atm]) )
+          ([], []) exp_lst
       in
-      let bindings, atm_lst = helper exp_lst in
       process bindings (Prim (cop, atm_lst))
 
 let remove_complex_operands (prog : L.program) : program =
