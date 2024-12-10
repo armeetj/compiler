@@ -7,7 +7,7 @@
 - [x] explicate control
 - [x] remove unused blocks
 - [x] select instructions
-- [ ] uncover live
+- [x] uncover live
 - [x] graph coloring
 - [x] build interference graph
 - [x] allocate registers
