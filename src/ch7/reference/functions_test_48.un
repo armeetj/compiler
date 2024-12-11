@@ -1,0 +1,35 @@
+(Program
+  ((Def
+     main
+     ((args ())
+      (ret Integer)
+      (body
+        (Apply (Var f) ((Int 11) (Int 10))))))
+   (Def
+     add
+     ((args ((x.1 Integer) (y.1 Integer)))
+      (ret (Vector (Integer)))
+      (body
+        (Vec
+          ((Prim Add ((Var x.1) (Var y.1))))
+          ((Vector (Integer)))))))
+   (Def
+     f
+     ((args ((x.2 Integer) (y.2 Integer)))
+      (ret Integer)
+      (body
+        (Let
+          v.1
+          (Vec
+            ((Var x.2) (Var y.2))
+            ((Vector (Integer Integer))))
+          (Let
+            z.1
+            (Apply (Var add) ((Var x.2) (Var y.2)))
+            (Prim
+              Add
+              ((Prim
+                 Add
+                 ((VecRef (Var v.1) 0)
+                  (VecRef (Var v.1) 1)))
+               (VecRef (Var z.1) 0))))))))))

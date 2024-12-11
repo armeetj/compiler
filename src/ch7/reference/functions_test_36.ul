@@ -1,0 +1,65 @@
+(X86Program
+  ((Def
+     (Label main)
+     Finfo1
+     ((nparams 0)
+      (locals
+        (($tmp.1 (Function (Integer) Integer))
+         (uhoh (Function (Integer) Integer))))
+      (body
+        (((Label main_start)
+          (Block
+            (Binfo2
+              ((initial ())
+               (afters
+                 (((VarL $tmp.1))
+                  ((VarL $tmp.1) (RegL Rdi))
+                  ()))))
+            ((Leaq
+               (GlobalArg (Label uhoh))
+               (Var $tmp.1))
+             (Movq (Imm 42) (Reg Rdi))
+             (TailJmp (Var $tmp.1) 1))))))))
+   (Def
+     (Label uhoh)
+     Finfo1
+     ((nparams 1)
+      (locals
+        ((x.1 Integer)
+         ($tmp.2 (Function (Integer) Integer))
+         (uhoh (Function (Integer) Integer))
+         (x.1 Integer)))
+      (body
+        (((Label block_1)
+          (Block
+            (Binfo2
+              ((initial ((VarL x.1)))
+               (afters
+                 (((VarL $tmp.2) (VarL x.1))
+                  ((VarL $tmp.2) (RegL Rdi))
+                  ()))))
+            ((Leaq
+               (GlobalArg (Label uhoh))
+               (Var $tmp.2))
+             (Movq (Var x.1) (Reg Rdi))
+             (TailJmp (Var $tmp.2) 1))))
+         ((Label block_2)
+          (Block
+            (Binfo2
+              ((initial ((VarL x.1) (RegL Rsp)))
+               (afters (((RegL Rsp) (RegL Rax)) ()))))
+            ((Movq (Var x.1) (Reg Rax))
+             (Jmp (Label uhoh_conclusion)))))
+         ((Label uhoh_start)
+          (Block
+            (Binfo2
+              ((initial ((RegL Rsp) (RegL Rdi)))
+               (afters
+                 (((VarL x.1) (RegL Rsp))
+                  ((VarL x.1) (RegL Rsp) (RegL Rflags))
+                  ((VarL x.1) (RegL Rsp))
+                  ()))))
+            ((Movq (Reg Rdi) (Var x.1))
+             (Cmpq (Imm 0) (Var x.1))
+             (JmpIf CC_e (Label block_1))
+             (Jmp (Label block_2)))))))))))

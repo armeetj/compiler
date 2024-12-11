@@ -1,0 +1,50 @@
+(Program
+  ((Def
+     (Label main)
+     ((args ())
+      (ret Integer)
+      (body
+        (Apply
+          (FunRef (Label fun) 6)
+          ((Int 5)
+           (Int 5)
+           (Int 5)
+           (Int 5)
+           (Int 5)
+           (Vec
+             ((Int 5) (Int 5) (Int 7))
+             ((Vector (Integer Integer Integer)))))))))
+   (Def
+     (Label fun)
+     ((args
+        ((x1.1 Integer)
+         (x2.1 Integer)
+         (x3.1 Integer)
+         (x4.1 Integer)
+         (x5.1 Integer)
+         ($tup.1
+           (Vector (Integer Integer Integer)))))
+      (ret Integer)
+      (body
+        (Prim
+          Add
+          ((Var x1.1)
+           (Prim
+             Add
+             ((Var x2.1)
+              (Prim
+                Add
+                ((Var x3.1)
+                 (Prim
+                   Add
+                   ((Var x4.1)
+                    (Prim
+                      Add
+                      ((Var x5.1)
+                       (Prim
+                         Add
+                         ((VecRef (Var $tup.1) 0)
+                          (Prim
+                            Add
+                            ((VecRef (Var $tup.1) 1)
+                             (VecRef (Var $tup.1) 2))))))))))))))))))))

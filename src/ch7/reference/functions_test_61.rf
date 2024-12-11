@@ -1,0 +1,43 @@
+(Program
+  ((Def
+     (Label main)
+     ((args ())
+      (ret Integer)
+      (body
+        (Apply
+          (FunRef (Label h) 7)
+          ((Int 0)
+           (Int 0)
+           (Int 0)
+           (Int 0)
+           (Int 0)
+           (Int 1)
+           (Int 0))))))
+   (Def
+     (Label h)
+     ((args
+        ((a.1 Integer)
+         (b.1 Integer)
+         (c.1 Integer)
+         (d.1 Integer)
+         (e.1 Integer)
+         (f.1 Integer)
+         (g.1 Integer)))
+      (ret Integer)
+      (body
+        (Prim
+          Add
+          ((Var a.1)
+           (Prim
+             Add
+             ((Var b.1)
+              (Prim
+                Add
+                ((Var c.1)
+                 (Prim
+                   Add
+                   ((Var d.1)
+                    (Prim
+                      Add
+                      ((Var e.1)
+                       (Prim Add ((Var f.1) (Var g.1))))))))))))))))))

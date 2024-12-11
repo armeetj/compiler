@@ -1,0 +1,139 @@
+block_1:
+    movq free_ptr(%rip), %r11
+    addq $24, free_ptr(%rip)
+    movq $5, 0(%r11)
+    movq %r11, %rcx
+    movq $0, 8(%r11)
+    movq $0, -32(%rbp)
+    movq %rcx, %r11
+    movq $41, 16(%r11)
+    movq $0, -32(%rbp)
+    movq -8(%rbp), %rdi
+    movq %rcx, %rsi
+    callq *-24(%rbp)
+    movq %rax, %rcx
+    movq %rcx, %r11
+    movq 16(%r11), %rax
+    jmp main_conclusion
+
+block_2:
+    movq $0, %rcx
+    jmp block_1
+
+block_3:
+    movq %r15, %rdi
+    movq $24, %rsi
+    callq collect
+    jmp block_1
+
+main_start:
+    leaq map_vec(%rip), %rax
+    movq %rax, -24(%rbp)
+    leaq add1(%rip), %rax
+    movq %rax, -8(%rbp)
+    movq free_ptr(%rip), %rcx
+    addq $24, %rcx
+    movq fromspace_end(%rip), %rax
+    movq %rax, -16(%rbp)
+    cmpq -16(%rbp), %rcx
+    jl block_2
+    jmp block_3
+
+    .globl main
+    .align 8
+
+main:
+    pushq %rbp
+    movq %rsp, %rbp
+    subq $32, %rsp
+    movq $65536, %rdi
+    movq $65536, %rsi
+    callq initialize
+    movq rootstack_begin(%rip), %r15
+    jmp main_start
+
+main_conclusion:
+    addq $32, %rsp
+    popq %rbp
+    retq
+
+block_4:
+    movq free_ptr(%rip), %r11
+    addq $24, free_ptr(%rip)
+    movq $5, 0(%r11)
+    movq %r11, -8(%r15)
+    movq -8(%rbp), %rax
+    movq %rax, 8(%r11)
+    movq $0, %rcx
+    movq -8(%r15), %r11
+    movq -16(%rbp), %rax
+    movq %rax, 16(%r11)
+    movq $0, %rcx
+    movq -8(%r15), %rax
+    jmp map_vec_conclusion
+
+block_5:
+    movq $0, %rcx
+    jmp block_4
+
+block_6:
+    movq %r15, %rdi
+    movq $24, %rsi
+    callq collect
+    jmp block_4
+
+map_vec_start:
+    movq %rdi, -16(%rbp)
+    movq %rsi, -24(%rbp)
+    movq -24(%rbp), %r11
+    movq 8(%r11), %rcx
+    movq %rcx, %rdi
+    callq *-16(%rbp)
+    movq %rax, -8(%rbp)
+    movq -24(%rbp), %r11
+    movq 16(%r11), %rcx
+    movq %rcx, %rdi
+    callq *-16(%rbp)
+    movq %rax, -16(%rbp)
+    movq free_ptr(%rip), %rcx
+    addq $24, %rcx
+    movq fromspace_end(%rip), %rax
+    movq %rax, -24(%rbp)
+    cmpq -24(%rbp), %rcx
+    jl block_5
+    jmp block_6
+
+    .globl map_vec
+    .align 8
+
+map_vec:
+    pushq %rbp
+    movq %rsp, %rbp
+    subq $32, %rsp
+    movq $0, 0(%r15)
+    addq $8, %r15
+    jmp map_vec_start
+
+map_vec_conclusion:
+    subq $8, %r15
+    addq $32, %rsp
+    popq %rbp
+    retq
+
+add1_start:
+    movq %rdi, %rcx
+    movq %rcx, %rax
+    addq $1, %rax
+    jmp add1_conclusion
+
+    .globl add1
+    .align 8
+
+add1:
+    pushq %rbp
+    movq %rsp, %rbp
+    jmp add1_start
+
+add1_conclusion:
+    popq %rbp
+    retq

@@ -1,0 +1,11 @@
+;; OUTPUT: 42
+
+(define (f (x : Integer)) : Void
+  (begin
+    (set! x 0)
+    (void)))
+
+(let (y 42)
+  (begin
+    (f y)
+    y))

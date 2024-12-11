@@ -1,0 +1,5 @@
+#utop_prompt_dummy;;
+(* Comment out this next line if you want command completion. *)
+UTop.set_show_box false;;
+#use_output "dune ocaml top";;
+open Ch7;;

@@ -1,0 +1,12 @@
+;; OUTPUT: 42
+
+(define (add (x : Integer) (y : Integer)) : (Vector Integer)
+  (vector (+ x y)))
+
+(define (f (x : Integer) (y : Integer)) : Integer
+  (let (v (vector x y))
+    (let (z (add x y))
+      (+ (+ (vector-ref v 0) (vector-ref v 1))
+         (vector-ref z 0)))))
+
+(f 11 10)

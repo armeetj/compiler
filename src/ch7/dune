@@ -1,0 +1,53 @@
+(library
+  (name ch7)
+  (modules
+    types alloc_utils
+    ; data structures
+    graph_coloring
+    ; intermediate languages
+    lfun lfun_shrink lfun_ref lfun_ref_alloc
+    lfun_ref_alloc_get lfun_ref_mon cfun
+    x86_var_def x86_def x86_asm
+    ; definitional interpreters
+    interp_utils interp
+    interp_lfun interp_lfun_shrink
+    interp_lfun_ref interp_lfun_ref_alloc
+    interp_lfun_ref_alloc_get interp_lfun_ref_mon
+    interp_cfun
+    ; type checking
+    type_check type_check_lfun type_check_lfun_ref type_check_cfun
+    ; parsing
+    parser
+    ; compiler passes
+    shrink
+    uniquify
+    reveal_functions
+    limit_functions
+    expose_allocation
+    uncover_get
+    remove_complex
+    explicate_control
+    remove_unused
+    select_instructions
+    uncover_live
+    build_interference
+    allocate_registers
+    remove_jumps
+    patch_instructions
+    prelude_conclusion
+    optimize
+    print_asm
+    )
+  (libraries sexplib str unix support)
+  (preprocess (pps ppx_sexp_conv))
+  (modes byte))
+
+(executable
+  (name compile)
+  (libraries ch7)
+  (modules compile)
+  (modes byte) )
+
+(env
+  (dev
+    (flags (:standard -warn-error -A))))

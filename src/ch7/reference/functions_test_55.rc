@@ -1,0 +1,23 @@
+(Program
+  ((Def
+     (Label main)
+     ((args ())
+      (ret Integer)
+      (body
+        (Let
+          y.1
+          (Atm (Int 42))
+          (Begin
+            ((Let
+               $tmp.1
+               (FunRef (Label f) 1)
+               (Apply (Var $tmp.1) ((Var y.1)))))
+            (Atm (Var y.1)))))))
+   (Def
+     (Label f)
+     ((args ((x.1 Integer)))
+      (ret Unit)
+      (body
+        (Begin
+          ((SetBang x.1 (Atm (Int 0))))
+          (Atm Void)))))))

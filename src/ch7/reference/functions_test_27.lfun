@@ -1,0 +1,7 @@
+(Program
+  ((Def
+     id
+     ((args ((x Integer)))
+      (ret Integer)
+      (body (Var x)))))
+  (Apply (Var id) ((Int 42))))

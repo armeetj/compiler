@@ -1,0 +1,29 @@
+(Program
+  ((Def
+     (Label main)
+     ((args ())
+      (ret Integer)
+      (body
+        (If
+          (Prim
+            Eq
+            ((Apply (FunRef (Label sum) 1) ((Int 3)))
+             (Int 6)))
+          (Int 42)
+          (Int 777)))))
+   (Def
+     (Label sum)
+     ((args ((x.1 Integer)))
+      (ret Integer)
+      (body
+        (If
+          (Prim Eq ((Var x.1) (Int 1)))
+          (Int 1)
+          (Prim
+            Add
+            ((Var x.1)
+             (Apply
+               (FunRef (Label sum) 1)
+               ((Prim
+                  Add
+                  ((Var x.1) (Prim Negate ((Int 1)))))))))))))))

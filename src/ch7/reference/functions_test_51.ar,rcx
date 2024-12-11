@@ -1,0 +1,218 @@
+(X86Program
+  ((Def
+     (Label main)
+     (Finfo3
+       (num_spilled 1)
+       (num_spilled_root 0)
+       (used_callee ()))
+     ((nparams 0)
+      (locals
+        (($tmp.1
+           (Function
+             (Integer
+               Integer
+               Integer
+               Integer
+               Integer
+               (Vector (Integer Integer Integer)))
+             Integer))
+         ($tmp.2
+           (Function
+             ((Function
+                (Integer
+                  Integer
+                  Integer
+                  Integer
+                  Integer
+                  (Vector (Integer Integer Integer)))
+                Integer))
+             Integer))
+         ($tmp.3 Integer)
+         (g
+           (Function
+             ((Function
+                (Integer
+                  Integer
+                  Integer
+                  Integer
+                  Integer
+                  (Vector (Integer Integer Integer)))
+                Integer))
+             Integer))
+         (sum_eight
+           (Function
+             (Integer
+               Integer
+               Integer
+               Integer
+               Integer
+               (Vector (Integer Integer Integer)))
+             Integer))))
+      (body
+        (((Label main_start)
+          (Block
+            Binfo1
+            ((Leaq
+               (GlobalArg (Label g))
+               (Deref Rbp -8))
+             (Leaq
+               (GlobalArg (Label sum_eight))
+               (Reg Rcx))
+             (Movq (Reg Rcx) (Reg Rdi))
+             (IndirectCallq (Deref Rbp -8) 1)
+             (Movq (Reg Rax) (Reg Rcx))
+             (Movq (Imm 6) (Reg Rax))
+             (Addq (Reg Rcx) (Reg Rax))
+             (Jmp (Label main_conclusion)))))))))
+   (Def
+     (Label sum_eight)
+     (Finfo3
+       (num_spilled 5)
+       (num_spilled_root 0)
+       (used_callee ()))
+     ((nparams 6)
+      (locals
+        ((a.1 Integer)
+         (b.1 Integer)
+         (c.1 Integer)
+         (d.1 Integer)
+         (e.1 Integer)
+         ($tup.1
+           (Vector (Integer Integer Integer)))
+         ($tmp.10 Integer)
+         ($tmp.11 Integer)
+         ($tmp.12 Integer)
+         ($tmp.4 Integer)
+         ($tmp.5 Integer)
+         ($tmp.6 Integer)
+         ($tmp.7 Integer)
+         ($tmp.8 Integer)
+         ($tmp.9 Integer)
+         ($tup.1
+           (Vector (Integer Integer Integer)))
+         (a.1 Integer)
+         (b.1 Integer)
+         (c.1 Integer)
+         (d.1 Integer)
+         (e.1 Integer)))
+      (body
+        (((Label sum_eight_start)
+          (Block
+            Binfo1
+            ((Movq (Reg Rdi) (Deref Rbp -16))
+             (Movq (Reg Rsi) (Deref Rbp -8))
+             (Movq (Reg Rdx) (Deref Rbp -32))
+             (Movq (Reg Rcx) (Deref Rbp -40))
+             (Movq (Reg R8) (Deref Rbp -24))
+             (Movq (Reg R9) (Reg Rcx))
+             (Movq (Deref Rbp -16) (Deref Rbp -16))
+             (Addq (Deref Rbp -8) (Deref Rbp -16))
+             (Movq (Deref Rbp -32) (Deref Rbp -8))
+             (Addq (Deref Rbp -40) (Deref Rbp -8))
+             (Movq (Deref Rbp -16) (Deref Rbp -16))
+             (Addq (Deref Rbp -8) (Deref Rbp -16))
+             (Movq (Reg Rcx) (Reg R11))
+             (Movq (Deref R11 8) (Deref Rbp -8))
+             (Movq (Deref Rbp -24) (Deref Rbp -24))
+             (Addq (Deref Rbp -8) (Deref Rbp -24))
+             (Movq (Reg Rcx) (Reg R11))
+             (Movq (Deref R11 16) (Deref Rbp -8))
+             (Movq (Reg Rcx) (Reg R11))
+             (Movq (Deref R11 24) (Reg Rcx))
+             (Movq (Deref Rbp -8) (Deref Rbp -8))
+             (Addq (Reg Rcx) (Deref Rbp -8))
+             (Movq (Deref Rbp -24) (Reg Rcx))
+             (Addq (Deref Rbp -8) (Reg Rcx))
+             (Movq (Deref Rbp -16) (Reg Rax))
+             (Addq (Reg Rcx) (Reg Rax))
+             (Jmp (Label sum_eight_conclusion)))))))))
+   (Def
+     (Label g)
+     (Finfo3
+       (num_spilled 2)
+       (num_spilled_root 1)
+       (used_callee ()))
+     ((nparams 1)
+      (locals
+        ((f.2
+           (Function
+             (Integer
+               Integer
+               Integer
+               Integer
+               Integer
+               (Vector (Integer Integer Integer)))
+             Integer))
+         ($ea.1
+           (Vector (Integer Integer Integer)))
+         ($tmp.13 Integer)
+         ($tmp.14 Integer)
+         ($tmp.15 Integer)
+         (_.1 Unit)
+         (_.2 Unit)
+         (_.3 Unit)
+         (_.4 Unit)
+         (f.2
+           (Function
+             (Integer
+               Integer
+               Integer
+               Integer
+               Integer
+               (Vector (Integer Integer Integer)))
+             Integer))))
+      (body
+        (((Label block_1)
+          (Block
+            Binfo1
+            ((Movq
+               (GlobalArg (Label free_ptr))
+               (Reg R11))
+             (Addq
+               (Imm 32)
+               (GlobalArg (Label free_ptr)))
+             (Movq (Imm 7) (Deref R11 0))
+             (Movq (Reg R11) (Deref R15 -8))
+             (Movq (Deref R15 -8) (Reg R11))
+             (Movq (Imm 6) (Deref R11 8))
+             (Movq (Imm 0) (Reg Rcx))
+             (Movq (Deref R15 -8) (Reg R11))
+             (Movq (Imm 7) (Deref R11 16))
+             (Movq (Imm 0) (Reg Rcx))
+             (Movq (Deref R15 -8) (Reg R11))
+             (Movq (Imm 8) (Deref R11 24))
+             (Movq (Imm 0) (Reg Rcx))
+             (Movq (Imm 1) (Reg Rdi))
+             (Movq (Imm 2) (Reg Rsi))
+             (Movq (Imm 3) (Reg Rdx))
+             (Movq (Imm 4) (Reg Rcx))
+             (Movq (Imm 5) (Reg R8))
+             (Movq (Deref R15 -8) (Reg R9))
+             (TailJmp (Deref Rbp -16) 6))))
+         ((Label block_2)
+          (Block
+            Binfo1
+            ((Movq (Imm 0) (Reg Rcx))
+             (Jmp (Label block_1)))))
+         ((Label block_3)
+          (Block
+            Binfo1
+            ((Movq (Reg R15) (Reg Rdi))
+             (Movq (Imm 32) (Reg Rsi))
+             (Callq (Label collect) 2)
+             (Jmp (Label block_1)))))
+         ((Label g_start)
+          (Block
+            Binfo1
+            ((Movq (Reg Rdi) (Deref Rbp -16))
+             (Movq
+               (GlobalArg (Label free_ptr))
+               (Deref R15 -8))
+             (Movq (Deref R15 -8) (Deref R15 -8))
+             (Addq (Imm 32) (Deref R15 -8))
+             (Movq
+               (GlobalArg (Label fromspace_end))
+               (Deref Rbp -8))
+             (Cmpq (Deref Rbp -8) (Deref R15 -8))
+             (JmpIf CC_l (Label block_2))
+             (Jmp (Label block_3)))))))))))

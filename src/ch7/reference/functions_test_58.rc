@@ -1,0 +1,47 @@
+(Program
+  ((Def
+     (Label main)
+     ((args ())
+      (ret Integer)
+      (body
+        (Let
+          $tmp.1
+          (FunRef (Label rrrid) 1)
+          (Let
+            $tmp.2
+            (Apply (Var $tmp.1) ((Int 0)))
+            (Let
+              $tmp.3
+              (Apply (Var $tmp.2) ((Int 0)))
+              (Let
+                $tmp.4
+                (Apply (Var $tmp.3) ((Int 0)))
+                (Apply (Var $tmp.4) ((Int 42))))))))))
+   (Def
+     (Label id)
+     ((args ((x.1 Integer)))
+      (ret Integer)
+      (body (Atm (Var x.1)))))
+   (Def
+     (Label rid)
+     ((args ((x.2 Integer)))
+      (ret (Function (Integer) Integer))
+      (body (FunRef (Label id) 1))))
+   (Def
+     (Label rrid)
+     ((args ((x.3 Integer)))
+      (ret
+        (Function
+          (Integer)
+          (Function (Integer) Integer)))
+      (body (FunRef (Label rid) 1))))
+   (Def
+     (Label rrrid)
+     ((args ((x.4 Integer)))
+      (ret
+        (Function
+          (Integer)
+          (Function
+            (Integer)
+            (Function (Integer) Integer))))
+      (body (FunRef (Label rrid) 1))))))

@@ -1,0 +1,46 @@
+(Program
+  ((Def
+     main
+     ((args ())
+      (ret Integer)
+      (body
+        (Let
+          vec.1
+          (Vec
+            ((Var odd?))
+            ((Vector ((Function (Integer) Boolean)))))
+          (Let
+            dummy.1
+            (VecSet (Var vec.1) 0 (Var even?))
+            (If
+              (Apply
+                (VecRef (Var vec.1) 0)
+                ((Int 21)))
+              (Int 999)
+              (Int 42)))))))
+   (Def
+     even?
+     ((args ((x.1 Integer)))
+      (ret Boolean)
+      (body
+        (If
+          (Prim Eq ((Var x.1) (Int 0)))
+          (Bool true)
+          (Apply
+            (Var odd?)
+            ((Prim
+               Add
+               ((Prim Negate ((Int 1))) (Var x.1)))))))))
+   (Def
+     odd?
+     ((args ((x.2 Integer)))
+      (ret Boolean)
+      (body
+        (If
+          (Prim Eq ((Var x.2) (Int 0)))
+          (Bool false)
+          (Apply
+            (Var even?)
+            ((Prim
+               Add
+               ((Prim Negate ((Int 1))) (Var x.2)))))))))))

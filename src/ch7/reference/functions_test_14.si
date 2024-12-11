@@ -1,0 +1,897 @@
+(X86Program
+  ((Def
+     (Label main)
+     Finfo1
+     ((nparams 0)
+      (locals
+        (($ea.1 (Vector ()))
+         ($ea.2 (Vector ((Vector ()) Integer)))
+         ($ea.3
+           (Vector
+             ((Vector ())
+              Integer
+              (Vector ((Vector ()) Integer)))))
+         ($ea.4
+           (Vector
+             ((Vector ())
+              Integer
+              (Vector ((Vector ()) Integer))
+              (Vector
+                ((Vector ())
+                 Integer
+                 (Vector ((Vector ()) Integer)))))))
+         ($ea.5
+           (Vector
+             ((Vector ())
+              Integer
+              (Vector ((Vector ()) Integer))
+              (Vector
+                ((Vector ())
+                 Integer
+                 (Vector ((Vector ()) Integer))))
+              (Vector
+                ((Vector ())
+                 Integer
+                 (Vector ((Vector ()) Integer))
+                 (Vector
+                   ((Vector ())
+                    Integer
+                    (Vector ((Vector ()) Integer)))))))))
+         ($tmp.1
+           (Function (Integer) (Vector ())))
+         ($tmp.10 (Vector ((Vector ()) Integer)))
+         ($tmp.2
+           (Function
+             (Integer)
+             (Vector ((Vector ()) Integer))))
+         ($tmp.3
+           (Function
+             (Integer)
+             (Vector
+               ((Vector ())
+                Integer
+                (Vector ((Vector ()) Integer))))))
+         ($tmp.4
+           (Function
+             (Integer)
+             (Vector
+               ((Vector ())
+                Integer
+                (Vector ((Vector ()) Integer))
+                (Vector
+                  ((Vector ())
+                   Integer
+                   (Vector ((Vector ()) Integer))))))))
+         ($tmp.5 Integer)
+         ($tmp.6 Integer)
+         ($tmp.7 Integer)
+         ($tmp.8
+           (Vector
+             ((Vector ())
+              Integer
+              (Vector ((Vector ()) Integer))
+              (Vector
+                ((Vector ())
+                 Integer
+                 (Vector ((Vector ()) Integer)))))))
+         ($tmp.9
+           (Vector
+             ((Vector ())
+              Integer
+              (Vector ((Vector ()) Integer)))))
+         (_.1 Unit)
+         (_.2 Unit)
+         (_.3 Unit)
+         (_.4 Unit)
+         (_.5 Unit)
+         (_.6 Unit)
+         (one
+           (Function
+             (Integer)
+             (Vector ((Vector ()) Integer))))
+         (three
+           (Function
+             (Integer)
+             (Vector
+               ((Vector ())
+                Integer
+                (Vector ((Vector ()) Integer))
+                (Vector
+                  ((Vector ())
+                   Integer
+                   (Vector ((Vector ()) Integer))))))))
+         (two
+           (Function
+             (Integer)
+             (Vector
+               ((Vector ())
+                Integer
+                (Vector ((Vector ()) Integer))))))
+         (zero (Function (Integer) (Vector ())))))
+      (body
+        (((Label block_1)
+          (Block
+            Binfo1
+            ((Movq
+               (GlobalArg (Label free_ptr))
+               (Reg R11))
+             (Addq
+               (Imm 48)
+               (GlobalArg (Label free_ptr)))
+             (Movq (Imm 2955) (Deref R11 0))
+             (Movq (Reg R11) (Var $ea.5))
+             (Movq (Var $ea.5) (Reg R11))
+             (Movq (Var $ea.1) (Deref R11 8))
+             (Movq (Imm 0) (Var _.5))
+             (Movq (Var $ea.5) (Reg R11))
+             (Movq (Imm 42) (Deref R11 16))
+             (Movq (Imm 0) (Var _.4))
+             (Movq (Var $ea.5) (Reg R11))
+             (Movq (Var $ea.2) (Deref R11 24))
+             (Movq (Imm 0) (Var _.3))
+             (Movq (Var $ea.5) (Reg R11))
+             (Movq (Var $ea.3) (Deref R11 32))
+             (Movq (Imm 0) (Var _.2))
+             (Movq (Var $ea.5) (Reg R11))
+             (Movq (Var $ea.4) (Deref R11 40))
+             (Movq (Imm 0) (Var _.1))
+             (Movq (Var $ea.5) (Reg R11))
+             (Movq (Deref R11 40) (Var $tmp.8))
+             (Movq (Var $tmp.8) (Reg R11))
+             (Movq (Deref R11 32) (Var $tmp.9))
+             (Movq (Var $tmp.9) (Reg R11))
+             (Movq (Deref R11 24) (Var $tmp.10))
+             (Movq (Var $tmp.10) (Reg R11))
+             (Movq (Deref R11 16) (Reg Rax))
+             (Jmp (Label main_conclusion)))))
+         ((Label block_2)
+          (Block
+            Binfo1
+            ((Movq (Imm 0) (Var _.6))
+             (Jmp (Label block_1)))))
+         ((Label block_3)
+          (Block
+            Binfo1
+            ((Movq (Reg R15) (Reg Rdi))
+             (Movq (Imm 48) (Reg Rsi))
+             (Callq (Label collect) 2)
+             (Jmp (Label block_1)))))
+         ((Label main_start)
+          (Block
+            Binfo1
+            ((Leaq
+               (GlobalArg (Label zero))
+               (Var $tmp.1))
+             (Movq (Imm 20) (Reg Rdi))
+             (IndirectCallq (Var $tmp.1) 1)
+             (Movq (Reg Rax) (Var $ea.1))
+             (Leaq
+               (GlobalArg (Label one))
+               (Var $tmp.2))
+             (Movq (Imm 20) (Reg Rdi))
+             (IndirectCallq (Var $tmp.2) 1)
+             (Movq (Reg Rax) (Var $ea.2))
+             (Leaq
+               (GlobalArg (Label two))
+               (Var $tmp.3))
+             (Movq (Imm 20) (Reg Rdi))
+             (IndirectCallq (Var $tmp.3) 1)
+             (Movq (Reg Rax) (Var $ea.3))
+             (Leaq
+               (GlobalArg (Label three))
+               (Var $tmp.4))
+             (Movq (Imm 20) (Reg Rdi))
+             (IndirectCallq (Var $tmp.4) 1)
+             (Movq (Reg Rax) (Var $ea.4))
+             (Movq
+               (GlobalArg (Label free_ptr))
+               (Var $tmp.5))
+             (Movq (Var $tmp.5) (Var $tmp.6))
+             (Addq (Imm 48) (Var $tmp.6))
+             (Movq
+               (GlobalArg (Label fromspace_end))
+               (Var $tmp.7))
+             (Cmpq (Var $tmp.7) (Var $tmp.6))
+             (JmpIf CC_l (Label block_2))
+             (Jmp (Label block_3)))))))))
+   (Def
+     (Label minus)
+     Finfo1
+     ((nparams 2)
+      (locals
+        ((n.1 Integer)
+         (m.1 Integer)
+         ($tmp.11 Integer)
+         (m.1 Integer)
+         (n.1 Integer)))
+      (body
+        (((Label minus_start)
+          (Block
+            Binfo1
+            ((Movq (Reg Rdi) (Var n.1))
+             (Movq (Reg Rsi) (Var m.1))
+             (Movq (Var m.1) (Var $tmp.11))
+             (Negq (Var $tmp.11))
+             (Movq (Var n.1) (Reg Rax))
+             (Addq (Var $tmp.11) (Reg Rax))
+             (Jmp (Label minus_conclusion)))))))))
+   (Def
+     (Label zero)
+     Finfo1
+     ((nparams 1)
+      (locals
+        ((x.1 Integer)
+         ($ea.6 (Vector ()))
+         ($ea.7 (Vector (Integer)))
+         ($tmp.12 Integer)
+         ($tmp.13 Integer)
+         ($tmp.14 Integer)
+         ($tmp.15 Integer)
+         ($tmp.16 Integer)
+         ($tmp.17 Integer)
+         ($tmp.18 Integer)
+         ($tmp.19
+           (Function (Integer Integer) Integer))
+         ($tmp.20 Integer)
+         ($tmp.21
+           (Function (Integer) (Vector ())))
+         (_.7 Unit)
+         (_.8 Unit)
+         (_.9 Unit)
+         (minus
+           (Function (Integer Integer) Integer))
+         (x.1 Integer)
+         (zero (Function (Integer) (Vector ())))))
+      (body
+        (((Label block_10)
+          (Block
+            Binfo1
+            ((Movq
+               (GlobalArg (Label free_ptr))
+               (Var $tmp.12))
+             (Movq (Var $tmp.12) (Var $tmp.13))
+             (Addq (Imm 8) (Var $tmp.13))
+             (Movq
+               (GlobalArg (Label fromspace_end))
+               (Var $tmp.14))
+             (Cmpq (Var $tmp.14) (Var $tmp.13))
+             (JmpIf CC_l (Label block_5))
+             (Jmp (Label block_6)))))
+         ((Label block_11)
+          (Block
+            Binfo1
+            ((Leaq
+               (GlobalArg (Label zero))
+               (Var $tmp.21))
+             (Leaq
+               (GlobalArg (Label minus))
+               (Var $tmp.19))
+             (Movq
+               (GlobalArg (Label free_ptr))
+               (Var $tmp.15))
+             (Movq (Var $tmp.15) (Var $tmp.16))
+             (Addq (Imm 16) (Var $tmp.16))
+             (Movq
+               (GlobalArg (Label fromspace_end))
+               (Var $tmp.17))
+             (Cmpq (Var $tmp.17) (Var $tmp.16))
+             (JmpIf CC_l (Label block_8))
+             (Jmp (Label block_9)))))
+         ((Label block_4)
+          (Block
+            Binfo1
+            ((Movq
+               (GlobalArg (Label free_ptr))
+               (Reg R11))
+             (Addq
+               (Imm 8)
+               (GlobalArg (Label free_ptr)))
+             (Movq (Imm 1) (Deref R11 0))
+             (Movq (Reg R11) (Var $ea.6))
+             (Movq (Var $ea.6) (Reg Rax))
+             (Jmp (Label zero_conclusion)))))
+         ((Label block_5)
+          (Block
+            Binfo1
+            ((Movq (Imm 0) (Var _.7))
+             (Jmp (Label block_4)))))
+         ((Label block_6)
+          (Block
+            Binfo1
+            ((Movq (Reg R15) (Reg Rdi))
+             (Movq (Imm 8) (Reg Rsi))
+             (Callq (Label collect) 2)
+             (Jmp (Label block_4)))))
+         ((Label block_7)
+          (Block
+            Binfo1
+            ((Movq
+               (GlobalArg (Label free_ptr))
+               (Reg R11))
+             (Addq
+               (Imm 16)
+               (GlobalArg (Label free_ptr)))
+             (Movq (Imm 3) (Deref R11 0))
+             (Movq (Reg R11) (Var $ea.7))
+             (Movq (Var $ea.7) (Reg R11))
+             (Movq (Var x.1) (Deref R11 8))
+             (Movq (Imm 0) (Var _.8))
+             (Movq (Var $ea.7) (Reg R11))
+             (Movq (Deref R11 8) (Var $tmp.18))
+             (Movq (Var $tmp.18) (Reg Rdi))
+             (Movq (Imm 1) (Reg Rsi))
+             (IndirectCallq (Var $tmp.19) 2)
+             (Movq (Reg Rax) (Var $tmp.20))
+             (Movq (Var $tmp.20) (Reg Rdi))
+             (TailJmp (Var $tmp.21) 1))))
+         ((Label block_8)
+          (Block
+            Binfo1
+            ((Movq (Imm 0) (Var _.9))
+             (Jmp (Label block_7)))))
+         ((Label block_9)
+          (Block
+            Binfo1
+            ((Movq (Reg R15) (Reg Rdi))
+             (Movq (Imm 16) (Reg Rsi))
+             (Callq (Label collect) 2)
+             (Jmp (Label block_7)))))
+         ((Label zero_start)
+          (Block
+            Binfo1
+            ((Movq (Reg Rdi) (Var x.1))
+             (Cmpq (Imm 0) (Var x.1))
+             (JmpIf CC_e (Label block_10))
+             (Jmp (Label block_11)))))))))
+   (Def
+     (Label one)
+     Finfo1
+     ((nparams 1)
+      (locals
+        ((x.2 Integer)
+         ($ea.10 (Vector (Integer)))
+         ($ea.8 (Vector ()))
+         ($ea.9 (Vector ((Vector ()) Integer)))
+         ($tmp.22
+           (Function (Integer) (Vector ())))
+         ($tmp.23 Integer)
+         ($tmp.24 Integer)
+         ($tmp.25 Integer)
+         ($tmp.26 Integer)
+         ($tmp.27 Integer)
+         ($tmp.28 Integer)
+         ($tmp.29 Integer)
+         ($tmp.30
+           (Function (Integer Integer) Integer))
+         ($tmp.31 Integer)
+         ($tmp.32
+           (Function
+             (Integer)
+             (Vector ((Vector ()) Integer))))
+         (_.10 Unit)
+         (_.11 Unit)
+         (_.12 Unit)
+         (_.13 Unit)
+         (_.14 Unit)
+         (minus
+           (Function (Integer Integer) Integer))
+         (one
+           (Function
+             (Integer)
+             (Vector ((Vector ()) Integer))))
+         (x.2 Integer)
+         (zero (Function (Integer) (Vector ())))))
+      (body
+        (((Label block_12)
+          (Block
+            Binfo1
+            ((Movq
+               (GlobalArg (Label free_ptr))
+               (Reg R11))
+             (Addq
+               (Imm 24)
+               (GlobalArg (Label free_ptr)))
+             (Movq (Imm 261) (Deref R11 0))
+             (Movq (Reg R11) (Var $ea.9))
+             (Movq (Var $ea.9) (Reg R11))
+             (Movq (Var $ea.8) (Deref R11 8))
+             (Movq (Imm 0) (Var _.11))
+             (Movq (Var $ea.9) (Reg R11))
+             (Movq (Imm 42) (Deref R11 16))
+             (Movq (Imm 0) (Var _.10))
+             (Movq (Var $ea.9) (Reg Rax))
+             (Jmp (Label one_conclusion)))))
+         ((Label block_13)
+          (Block
+            Binfo1
+            ((Movq (Imm 0) (Var _.12))
+             (Jmp (Label block_12)))))
+         ((Label block_14)
+          (Block
+            Binfo1
+            ((Movq (Reg R15) (Reg Rdi))
+             (Movq (Imm 24) (Reg Rsi))
+             (Callq (Label collect) 2)
+             (Jmp (Label block_12)))))
+         ((Label block_15)
+          (Block
+            Binfo1
+            ((Movq
+               (GlobalArg (Label free_ptr))
+               (Reg R11))
+             (Addq
+               (Imm 16)
+               (GlobalArg (Label free_ptr)))
+             (Movq (Imm 3) (Deref R11 0))
+             (Movq (Reg R11) (Var $ea.10))
+             (Movq (Var $ea.10) (Reg R11))
+             (Movq (Var x.2) (Deref R11 8))
+             (Movq (Imm 0) (Var _.13))
+             (Movq (Var $ea.10) (Reg R11))
+             (Movq (Deref R11 8) (Var $tmp.29))
+             (Movq (Var $tmp.29) (Reg Rdi))
+             (Movq (Imm 1) (Reg Rsi))
+             (IndirectCallq (Var $tmp.30) 2)
+             (Movq (Reg Rax) (Var $tmp.31))
+             (Movq (Var $tmp.31) (Reg Rdi))
+             (TailJmp (Var $tmp.32) 1))))
+         ((Label block_16)
+          (Block
+            Binfo1
+            ((Movq (Imm 0) (Var _.14))
+             (Jmp (Label block_15)))))
+         ((Label block_17)
+          (Block
+            Binfo1
+            ((Movq (Reg R15) (Reg Rdi))
+             (Movq (Imm 16) (Reg Rsi))
+             (Callq (Label collect) 2)
+             (Jmp (Label block_15)))))
+         ((Label block_18)
+          (Block
+            Binfo1
+            ((Leaq
+               (GlobalArg (Label zero))
+               (Var $tmp.22))
+             (Movq (Imm 20) (Reg Rdi))
+             (IndirectCallq (Var $tmp.22) 1)
+             (Movq (Reg Rax) (Var $ea.8))
+             (Movq
+               (GlobalArg (Label free_ptr))
+               (Var $tmp.23))
+             (Movq (Var $tmp.23) (Var $tmp.24))
+             (Addq (Imm 24) (Var $tmp.24))
+             (Movq
+               (GlobalArg (Label fromspace_end))
+               (Var $tmp.25))
+             (Cmpq (Var $tmp.25) (Var $tmp.24))
+             (JmpIf CC_l (Label block_13))
+             (Jmp (Label block_14)))))
+         ((Label block_19)
+          (Block
+            Binfo1
+            ((Leaq
+               (GlobalArg (Label one))
+               (Var $tmp.32))
+             (Leaq
+               (GlobalArg (Label minus))
+               (Var $tmp.30))
+             (Movq
+               (GlobalArg (Label free_ptr))
+               (Var $tmp.26))
+             (Movq (Var $tmp.26) (Var $tmp.27))
+             (Addq (Imm 16) (Var $tmp.27))
+             (Movq
+               (GlobalArg (Label fromspace_end))
+               (Var $tmp.28))
+             (Cmpq (Var $tmp.28) (Var $tmp.27))
+             (JmpIf CC_l (Label block_16))
+             (Jmp (Label block_17)))))
+         ((Label one_start)
+          (Block
+            Binfo1
+            ((Movq (Reg Rdi) (Var x.2))
+             (Cmpq (Imm 0) (Var x.2))
+             (JmpIf CC_e (Label block_18))
+             (Jmp (Label block_19)))))))))
+   (Def
+     (Label two)
+     Finfo1
+     ((nparams 1)
+      (locals
+        ((x.3 Integer)
+         ($ea.11 (Vector ()))
+         ($ea.12 (Vector ((Vector ()) Integer)))
+         ($ea.13
+           (Vector
+             ((Vector ())
+              Integer
+              (Vector ((Vector ()) Integer)))))
+         ($ea.14 (Vector (Integer)))
+         ($tmp.33
+           (Function (Integer) (Vector ())))
+         ($tmp.34
+           (Function
+             (Integer)
+             (Vector ((Vector ()) Integer))))
+         ($tmp.35 Integer)
+         ($tmp.36 Integer)
+         ($tmp.37 Integer)
+         ($tmp.38 Integer)
+         ($tmp.39 Integer)
+         ($tmp.40 Integer)
+         ($tmp.41 Integer)
+         ($tmp.42
+           (Function (Integer Integer) Integer))
+         ($tmp.43 Integer)
+         ($tmp.44
+           (Function
+             (Integer)
+             (Vector
+               ((Vector ())
+                Integer
+                (Vector ((Vector ()) Integer))))))
+         (_.15 Unit)
+         (_.16 Unit)
+         (_.17 Unit)
+         (_.18 Unit)
+         (_.19 Unit)
+         (_.20 Unit)
+         (minus
+           (Function (Integer Integer) Integer))
+         (one
+           (Function
+             (Integer)
+             (Vector ((Vector ()) Integer))))
+         (two
+           (Function
+             (Integer)
+             (Vector
+               ((Vector ())
+                Integer
+                (Vector ((Vector ()) Integer))))))
+         (x.3 Integer)
+         (zero (Function (Integer) (Vector ())))))
+      (body
+        (((Label block_20)
+          (Block
+            Binfo1
+            ((Movq
+               (GlobalArg (Label free_ptr))
+               (Reg R11))
+             (Addq
+               (Imm 32)
+               (GlobalArg (Label free_ptr)))
+             (Movq (Imm 647) (Deref R11 0))
+             (Movq (Reg R11) (Var $ea.13))
+             (Movq (Var $ea.13) (Reg R11))
+             (Movq (Var $ea.11) (Deref R11 8))
+             (Movq (Imm 0) (Var _.17))
+             (Movq (Var $ea.13) (Reg R11))
+             (Movq (Imm 42) (Deref R11 16))
+             (Movq (Imm 0) (Var _.16))
+             (Movq (Var $ea.13) (Reg R11))
+             (Movq (Var $ea.12) (Deref R11 24))
+             (Movq (Imm 0) (Var _.15))
+             (Movq (Var $ea.13) (Reg Rax))
+             (Jmp (Label two_conclusion)))))
+         ((Label block_21)
+          (Block
+            Binfo1
+            ((Movq (Imm 0) (Var _.18))
+             (Jmp (Label block_20)))))
+         ((Label block_22)
+          (Block
+            Binfo1
+            ((Movq (Reg R15) (Reg Rdi))
+             (Movq (Imm 32) (Reg Rsi))
+             (Callq (Label collect) 2)
+             (Jmp (Label block_20)))))
+         ((Label block_23)
+          (Block
+            Binfo1
+            ((Movq
+               (GlobalArg (Label free_ptr))
+               (Reg R11))
+             (Addq
+               (Imm 16)
+               (GlobalArg (Label free_ptr)))
+             (Movq (Imm 3) (Deref R11 0))
+             (Movq (Reg R11) (Var $ea.14))
+             (Movq (Var $ea.14) (Reg R11))
+             (Movq (Var x.3) (Deref R11 8))
+             (Movq (Imm 0) (Var _.19))
+             (Movq (Var $ea.14) (Reg R11))
+             (Movq (Deref R11 8) (Var $tmp.41))
+             (Movq (Var $tmp.41) (Reg Rdi))
+             (Movq (Imm 1) (Reg Rsi))
+             (IndirectCallq (Var $tmp.42) 2)
+             (Movq (Reg Rax) (Var $tmp.43))
+             (Movq (Var $tmp.43) (Reg Rdi))
+             (TailJmp (Var $tmp.44) 1))))
+         ((Label block_24)
+          (Block
+            Binfo1
+            ((Movq (Imm 0) (Var _.20))
+             (Jmp (Label block_23)))))
+         ((Label block_25)
+          (Block
+            Binfo1
+            ((Movq (Reg R15) (Reg Rdi))
+             (Movq (Imm 16) (Reg Rsi))
+             (Callq (Label collect) 2)
+             (Jmp (Label block_23)))))
+         ((Label block_26)
+          (Block
+            Binfo1
+            ((Leaq
+               (GlobalArg (Label zero))
+               (Var $tmp.33))
+             (Movq (Imm 20) (Reg Rdi))
+             (IndirectCallq (Var $tmp.33) 1)
+             (Movq (Reg Rax) (Var $ea.11))
+             (Leaq
+               (GlobalArg (Label one))
+               (Var $tmp.34))
+             (Movq (Imm 20) (Reg Rdi))
+             (IndirectCallq (Var $tmp.34) 1)
+             (Movq (Reg Rax) (Var $ea.12))
+             (Movq
+               (GlobalArg (Label free_ptr))
+               (Var $tmp.35))
+             (Movq (Var $tmp.35) (Var $tmp.36))
+             (Addq (Imm 32) (Var $tmp.36))
+             (Movq
+               (GlobalArg (Label fromspace_end))
+               (Var $tmp.37))
+             (Cmpq (Var $tmp.37) (Var $tmp.36))
+             (JmpIf CC_l (Label block_21))
+             (Jmp (Label block_22)))))
+         ((Label block_27)
+          (Block
+            Binfo1
+            ((Leaq
+               (GlobalArg (Label two))
+               (Var $tmp.44))
+             (Leaq
+               (GlobalArg (Label minus))
+               (Var $tmp.42))
+             (Movq
+               (GlobalArg (Label free_ptr))
+               (Var $tmp.38))
+             (Movq (Var $tmp.38) (Var $tmp.39))
+             (Addq (Imm 16) (Var $tmp.39))
+             (Movq
+               (GlobalArg (Label fromspace_end))
+               (Var $tmp.40))
+             (Cmpq (Var $tmp.40) (Var $tmp.39))
+             (JmpIf CC_l (Label block_24))
+             (Jmp (Label block_25)))))
+         ((Label two_start)
+          (Block
+            Binfo1
+            ((Movq (Reg Rdi) (Var x.3))
+             (Cmpq (Imm 0) (Var x.3))
+             (JmpIf CC_e (Label block_26))
+             (Jmp (Label block_27)))))))))
+   (Def
+     (Label three)
+     Finfo1
+     ((nparams 1)
+      (locals
+        ((x.4 Integer)
+         ($ea.15 (Vector ()))
+         ($ea.16 (Vector ((Vector ()) Integer)))
+         ($ea.17
+           (Vector
+             ((Vector ())
+              Integer
+              (Vector ((Vector ()) Integer)))))
+         ($ea.18
+           (Vector
+             ((Vector ())
+              Integer
+              (Vector ((Vector ()) Integer))
+              (Vector
+                ((Vector ())
+                 Integer
+                 (Vector ((Vector ()) Integer)))))))
+         ($ea.19 (Vector (Integer)))
+         ($tmp.45
+           (Function (Integer) (Vector ())))
+         ($tmp.46
+           (Function
+             (Integer)
+             (Vector ((Vector ()) Integer))))
+         ($tmp.47
+           (Function
+             (Integer)
+             (Vector
+               ((Vector ())
+                Integer
+                (Vector ((Vector ()) Integer))))))
+         ($tmp.48 Integer)
+         ($tmp.49 Integer)
+         ($tmp.50 Integer)
+         ($tmp.51 Integer)
+         ($tmp.52 Integer)
+         ($tmp.53 Integer)
+         ($tmp.54 Integer)
+         ($tmp.55
+           (Function (Integer Integer) Integer))
+         ($tmp.56 Integer)
+         ($tmp.57
+           (Function
+             (Integer)
+             (Vector
+               ((Vector ())
+                Integer
+                (Vector ((Vector ()) Integer))
+                (Vector
+                  ((Vector ())
+                   Integer
+                   (Vector ((Vector ()) Integer))))))))
+         (_.21 Unit)
+         (_.22 Unit)
+         (_.23 Unit)
+         (_.24 Unit)
+         (_.25 Unit)
+         (_.26 Unit)
+         (_.27 Unit)
+         (minus
+           (Function (Integer Integer) Integer))
+         (one
+           (Function
+             (Integer)
+             (Vector ((Vector ()) Integer))))
+         (three
+           (Function
+             (Integer)
+             (Vector
+               ((Vector ())
+                Integer
+                (Vector ((Vector ()) Integer))
+                (Vector
+                  ((Vector ())
+                   Integer
+                   (Vector ((Vector ()) Integer))))))))
+         (two
+           (Function
+             (Integer)
+             (Vector
+               ((Vector ())
+                Integer
+                (Vector ((Vector ()) Integer))))))
+         (x.4 Integer)
+         (zero (Function (Integer) (Vector ())))))
+      (body
+        (((Label block_28)
+          (Block
+            Binfo1
+            ((Movq
+               (GlobalArg (Label free_ptr))
+               (Reg R11))
+             (Addq
+               (Imm 40)
+               (GlobalArg (Label free_ptr)))
+             (Movq (Imm 1417) (Deref R11 0))
+             (Movq (Reg R11) (Var $ea.18))
+             (Movq (Var $ea.18) (Reg R11))
+             (Movq (Var $ea.15) (Deref R11 8))
+             (Movq (Imm 0) (Var _.24))
+             (Movq (Var $ea.18) (Reg R11))
+             (Movq (Imm 42) (Deref R11 16))
+             (Movq (Imm 0) (Var _.23))
+             (Movq (Var $ea.18) (Reg R11))
+             (Movq (Var $ea.16) (Deref R11 24))
+             (Movq (Imm 0) (Var _.22))
+             (Movq (Var $ea.18) (Reg R11))
+             (Movq (Var $ea.17) (Deref R11 32))
+             (Movq (Imm 0) (Var _.21))
+             (Movq (Var $ea.18) (Reg Rax))
+             (Jmp (Label three_conclusion)))))
+         ((Label block_29)
+          (Block
+            Binfo1
+            ((Movq (Imm 0) (Var _.25))
+             (Jmp (Label block_28)))))
+         ((Label block_30)
+          (Block
+            Binfo1
+            ((Movq (Reg R15) (Reg Rdi))
+             (Movq (Imm 40) (Reg Rsi))
+             (Callq (Label collect) 2)
+             (Jmp (Label block_28)))))
+         ((Label block_31)
+          (Block
+            Binfo1
+            ((Movq
+               (GlobalArg (Label free_ptr))
+               (Reg R11))
+             (Addq
+               (Imm 16)
+               (GlobalArg (Label free_ptr)))
+             (Movq (Imm 3) (Deref R11 0))
+             (Movq (Reg R11) (Var $ea.19))
+             (Movq (Var $ea.19) (Reg R11))
+             (Movq (Var x.4) (Deref R11 8))
+             (Movq (Imm 0) (Var _.26))
+             (Movq (Var $ea.19) (Reg R11))
+             (Movq (Deref R11 8) (Var $tmp.54))
+             (Movq (Var $tmp.54) (Reg Rdi))
+             (Movq (Imm 1) (Reg Rsi))
+             (IndirectCallq (Var $tmp.55) 2)
+             (Movq (Reg Rax) (Var $tmp.56))
+             (Movq (Var $tmp.56) (Reg Rdi))
+             (TailJmp (Var $tmp.57) 1))))
+         ((Label block_32)
+          (Block
+            Binfo1
+            ((Movq (Imm 0) (Var _.27))
+             (Jmp (Label block_31)))))
+         ((Label block_33)
+          (Block
+            Binfo1
+            ((Movq (Reg R15) (Reg Rdi))
+             (Movq (Imm 16) (Reg Rsi))
+             (Callq (Label collect) 2)
+             (Jmp (Label block_31)))))
+         ((Label block_34)
+          (Block
+            Binfo1
+            ((Leaq
+               (GlobalArg (Label zero))
+               (Var $tmp.45))
+             (Movq (Imm 20) (Reg Rdi))
+             (IndirectCallq (Var $tmp.45) 1)
+             (Movq (Reg Rax) (Var $ea.15))
+             (Leaq
+               (GlobalArg (Label one))
+               (Var $tmp.46))
+             (Movq (Imm 20) (Reg Rdi))
+             (IndirectCallq (Var $tmp.46) 1)
+             (Movq (Reg Rax) (Var $ea.16))
+             (Leaq
+               (GlobalArg (Label two))
+               (Var $tmp.47))
+             (Movq (Imm 20) (Reg Rdi))
+             (IndirectCallq (Var $tmp.47) 1)
+             (Movq (Reg Rax) (Var $ea.17))
+             (Movq
+               (GlobalArg (Label free_ptr))
+               (Var $tmp.48))
+             (Movq (Var $tmp.48) (Var $tmp.49))
+             (Addq (Imm 40) (Var $tmp.49))
+             (Movq
+               (GlobalArg (Label fromspace_end))
+               (Var $tmp.50))
+             (Cmpq (Var $tmp.50) (Var $tmp.49))
+             (JmpIf CC_l (Label block_29))
+             (Jmp (Label block_30)))))
+         ((Label block_35)
+          (Block
+            Binfo1
+            ((Leaq
+               (GlobalArg (Label three))
+               (Var $tmp.57))
+             (Leaq
+               (GlobalArg (Label minus))
+               (Var $tmp.55))
+             (Movq
+               (GlobalArg (Label free_ptr))
+               (Var $tmp.51))
+             (Movq (Var $tmp.51) (Var $tmp.52))
+             (Addq (Imm 16) (Var $tmp.52))
+             (Movq
+               (GlobalArg (Label fromspace_end))
+               (Var $tmp.53))
+             (Cmpq (Var $tmp.53) (Var $tmp.52))
+             (JmpIf CC_l (Label block_32))
+             (Jmp (Label block_33)))))
+         ((Label three_start)
+          (Block
+            Binfo1
+            ((Movq (Reg Rdi) (Var x.4))
+             (Cmpq (Imm 0) (Var x.4))
+             (JmpIf CC_e (Label block_34))
+             (Jmp (Label block_35)))))))))))

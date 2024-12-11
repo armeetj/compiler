@@ -1,0 +1,38 @@
+(Program
+  ((Def
+     (Label main)
+     ((args ())
+      (ret Integer)
+      (body
+        (If
+          (Apply
+            (FunRef (Label even?) 1)
+            ((Prim Read ())))
+          (Int 999)
+          (Int 42)))))
+   (Def
+     (Label even?)
+     ((args ((x.1 Integer)))
+      (ret Boolean)
+      (body
+        (If
+          (Prim Eq ((Var x.1) (Int 0)))
+          (Bool true)
+          (Apply
+            (FunRef (Label odd?) 1)
+            ((Prim
+               Add
+               ((Prim Negate ((Int 1))) (Var x.1)))))))))
+   (Def
+     (Label odd?)
+     ((args ((x.2 Integer)))
+      (ret Boolean)
+      (body
+        (If
+          (Prim Eq ((Var x.2) (Int 0)))
+          (Bool false)
+          (Apply
+            (FunRef (Label even?) 1)
+            ((Prim
+               Add
+               ((Prim Negate ((Int 1))) (Var x.2)))))))))))

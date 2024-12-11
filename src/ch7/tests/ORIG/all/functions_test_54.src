@@ -1,0 +1,6 @@
+(define (apply (f : (Integer -> Integer)) (x : Integer)) : Integer
+  (f (f x)))
+
+(define (inc (x : Integer)) : Integer (+ x 1))
+
+(apply inc (read))

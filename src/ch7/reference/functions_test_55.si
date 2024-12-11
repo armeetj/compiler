@@ -1,0 +1,34 @@
+(X86Program
+  ((Def
+     (Label main)
+     Finfo1
+     ((nparams 0)
+      (locals
+        (($tmp.1 (Function (Integer) Unit))
+         (f (Function (Integer) Unit))
+         (y.1 Integer)))
+      (body
+        (((Label main_start)
+          (Block
+            Binfo1
+            ((Movq (Imm 42) (Var y.1))
+             (Leaq
+               (GlobalArg (Label f))
+               (Var $tmp.1))
+             (Movq (Var y.1) (Reg Rdi))
+             (IndirectCallq (Var $tmp.1) 1)
+             (Movq (Var y.1) (Reg Rax))
+             (Jmp (Label main_conclusion)))))))))
+   (Def
+     (Label f)
+     Finfo1
+     ((nparams 1)
+      (locals ((x.1 Integer) (x.1 Integer)))
+      (body
+        (((Label f_start)
+          (Block
+            Binfo1
+            ((Movq (Reg Rdi) (Var x.1))
+             (Movq (Imm 0) (Var x.1))
+             (Movq (Imm 0) (Reg Rax))
+             (Jmp (Label f_conclusion)))))))))))

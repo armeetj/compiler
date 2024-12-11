@@ -1,0 +1,64 @@
+main_start:
+    leaq mult(%rip), %rcx
+    movq $6, %rdi
+    movq $7, %rsi
+    movq %rcx, %rax
+    popq %rbp
+    jmp *%rax
+
+    .globl main
+    .align 8
+
+main:
+    pushq %rbp
+    movq %rsp, %rbp
+    movq $65536, %rdi
+    movq $65536, %rsi
+    callq initialize
+    movq rootstack_begin(%rip), %r15
+    jmp main_start
+
+main_conclusion:
+    popq %rbp
+    retq
+
+block_1:
+    movq $0, %rax
+    jmp mult_conclusion
+
+block_2:
+    leaq mult(%rip), %rcx
+    movq $1, %rsi
+    negq %rsi
+    addq %rdx, %rsi
+    movq %rsi, %rdi
+    movq %rbx, %rsi
+    callq *%rcx
+    movq %rax, %rcx
+    movq %rbx, %rax
+    addq %rcx, %rax
+    jmp mult_conclusion
+
+mult_start:
+    movq %rdi, %rdx
+    movq %rsi, %rbx
+    movq $0, %rax
+    cmpq %rdx, %rax
+    je block_1
+    jmp block_2
+
+    .globl mult
+    .align 8
+
+mult:
+    pushq %rbp
+    movq %rsp, %rbp
+    pushq %rbx
+    subq $8, %rsp
+    jmp mult_start
+
+mult_conclusion:
+    addq $8, %rsp
+    popq %rbx
+    popq %rbp
+    retq

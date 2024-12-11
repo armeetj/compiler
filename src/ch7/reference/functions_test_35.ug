@@ -1,0 +1,101 @@
+(Program
+  ((Def
+     (Label main)
+     ((args ())
+      (ret Integer)
+      (body
+        (Let
+          vec.1
+          (Let
+            _.4
+            (If
+              (Prim
+                Lt
+                ((Prim
+                   Add
+                   ((GlobalVal free_ptr) (Int 32)))
+                 (GlobalVal fromspace_end)))
+              Void
+              (Collect 32))
+            (Let
+              $ea.1
+              (Allocate
+                3
+                (Vector (Integer Integer Integer)))
+              (Let
+                _.3
+                (VecSet (Var $ea.1) 0 (Int 1))
+                (Let
+                  _.2
+                  (VecSet (Var $ea.1) 1 (Int 2))
+                  (Let
+                    _.1
+                    (VecSet (Var $ea.1) 2 (Int 3))
+                    (Var $ea.1))))))
+          (Let
+            vec2.1
+            (Apply
+              (FunRef (Label mapint) 2)
+              ((FunRef (Label add1) 1) (Var vec.1)))
+            (Prim
+              Add
+              ((VecRef (Var vec2.1) 0)
+               (Prim
+                 Add
+                 ((VecRef (Var vec2.1) 1)
+                  (Prim
+                    Add
+                    ((VecRef (Var vec2.1) 2) (Int 33))))))))))))
+   (Def
+     (Label mapint)
+     ((args
+        ((fun.1 (Function (Integer) Integer))
+         (v.1 (Vector (Integer Integer Integer)))))
+      (ret (Vector (Integer Integer Integer)))
+      (body
+        (Let
+          $ea.2
+          (Apply
+            (Var fun.1)
+            ((VecRef (Var v.1) 0)))
+          (Let
+            $ea.3
+            (Apply
+              (Var fun.1)
+              ((VecRef (Var v.1) 1)))
+            (Let
+              $ea.4
+              (Apply
+                (Var fun.1)
+                ((VecRef (Var v.1) 2)))
+              (Let
+                _.8
+                (If
+                  (Prim
+                    Lt
+                    ((Prim
+                       Add
+                       ((GlobalVal free_ptr) (Int 32)))
+                     (GlobalVal fromspace_end)))
+                  Void
+                  (Collect 32))
+                (Let
+                  $ea.5
+                  (Allocate
+                    3
+                    (Vector (Integer Integer Integer)))
+                  (Let
+                    _.7
+                    (VecSet (Var $ea.5) 0 (Var $ea.2))
+                    (Let
+                      _.6
+                      (VecSet (Var $ea.5) 1 (Var $ea.3))
+                      (Let
+                        _.5
+                        (VecSet (Var $ea.5) 2 (Var $ea.4))
+                        (Var $ea.5))))))))))))
+   (Def
+     (Label add1)
+     ((args ((x.1 Integer)))
+      (ret Integer)
+      (body (Prim Add ((Var x.1) (Int 1))))))))

@@ -1,0 +1,15 @@
+;; OUTPUT: 42
+
+(define (id (x : Integer)) : Integer
+  x)
+
+(define (rid (x : Integer)) : (Integer -> Integer)
+  id)
+
+(define (rrid (x : Integer)) : (Integer -> (Integer -> Integer))
+  rid)
+
+(define (rrrid (x : Integer)) : (Integer -> (Integer -> (Integer -> Integer)))
+  rrid)
+
+((((rrrid 0) 0) 0) 42)

@@ -1,0 +1,84 @@
+(Program
+  ((Def
+     (Label main)
+     ((args ())
+      (ret Integer)
+      (body
+        (Let
+          $tmp.5
+          (FunRef (Label map_vector) 2)
+          (Let
+            $tmp.1
+            (FunRef (Label minus) 2)
+            (Let
+              _.2
+              (If
+                (Let
+                  $tmp.2
+                  (GlobalVal free_ptr)
+                  (Let
+                    $tmp.3
+                    (Prim Add ((Var $tmp.2) (Int 16)))
+                    (Let
+                      $tmp.4
+                      (GlobalVal fromspace_end)
+                      (Prim Lt ((Var $tmp.3) (Var $tmp.4))))))
+                (Atm Void)
+                (Collect 16))
+              (Let
+                $ea.1
+                (Allocate 1 (Vector (Integer)))
+                (Let
+                  _.1
+                  (VecSet (Var $ea.1) 0 (Int 43))
+                  (Let
+                    $tmp.6
+                    (Apply
+                      (Var $tmp.5)
+                      ((Var $tmp.1) (Var $ea.1)))
+                    (VecRef (Var $tmp.6) 0))))))))))
+   (Def
+     (Label minus)
+     ((args ((n.1 Integer) (m.1 Integer)))
+      (ret Integer)
+      (body
+        (Let
+          $tmp.7
+          (Prim Negate ((Var m.1)))
+          (Prim Add ((Var n.1) (Var $tmp.7)))))))
+   (Def
+     (Label map_vector)
+     ((args
+        ((f.1
+           (Function (Integer Integer) Integer))
+         (v.1 (Vector (Integer)))))
+      (ret (Vector (Integer)))
+      (body
+        (Let
+          $ea.2
+          (Let
+            $tmp.8
+            (VecRef (Var v.1) 0)
+            (Apply (Var f.1) ((Var $tmp.8) (Int 1))))
+          (Let
+            _.4
+            (If
+              (Let
+                $tmp.9
+                (GlobalVal free_ptr)
+                (Let
+                  $tmp.10
+                  (Prim Add ((Var $tmp.9) (Int 16)))
+                  (Let
+                    $tmp.11
+                    (GlobalVal fromspace_end)
+                    (Prim Lt ((Var $tmp.10) (Var $tmp.11))))))
+              (Atm Void)
+              (Collect 16))
+            (Let
+              $ea.3
+              (Allocate 1 (Vector (Integer)))
+              (Let
+                _.3
+                (VecSet (Var $ea.3) 0 (Var $ea.2))
+                (Atm (Var $ea.3)))))))))))

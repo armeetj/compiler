@@ -1,0 +1,119 @@
+block_1:
+    movq free_ptr(%rip), %r11
+    addq $32, free_ptr(%rip)
+    movq $7, 0(%r11)
+    movq %r11, -8(%r15)
+    movq $5, 8(%r11)
+    movq $0, -16(%rbp)
+    movq -8(%r15), %r11
+    movq $6, 16(%r11)
+    movq $0, -16(%rbp)
+    movq -8(%r15), %r11
+    movq $7, 24(%r11)
+    movq $0, -16(%rbp)
+    movq $42, %rdi
+    movq $1, %rsi
+    movq $2, %rdx
+    movq $3, %rcx
+    movq $4, %r8
+    movq -8(%r15), %r9
+    movq %rbx, %rax
+    subq $8, %r15
+    addq $24, %rsp
+    popq %rbx
+    popq %rbp
+    jmp *%rax
+
+block_2:
+    movq $0, -8(%r15)
+    jmp block_1
+
+block_3:
+    movq %r15, %rdi
+    movq $32, %rsi
+    callq collect
+    jmp block_1
+
+main_start:
+    leaq rf(%rip), %rbx
+    movq $0, %rdi
+    callq *%rbx
+    movq %rax, %rbx
+    movq free_ptr(%rip), %rax
+    movq %rax, -16(%rbp)
+    addq $32, -16(%rbp)
+    movq fromspace_end(%rip), %rax
+    movq %rax, -24(%rbp)
+    cmpq %rax, -16(%rbp)
+    jl block_2
+    jmp block_3
+
+    .globl main
+    .align 8
+
+main:
+    pushq %rbp
+    movq %rsp, %rbp
+    pushq %rbx
+    subq $24, %rsp
+    movq $65536, %rdi
+    movq $65536, %rsi
+    callq initialize
+    movq rootstack_begin(%rip), %r15
+    movq $0, 0(%r15)
+    addq $8, %r15
+    jmp main_start
+
+main_conclusion:
+    subq $8, %r15
+    addq $24, %rsp
+    popq %rbx
+    popq %rbp
+    retq
+
+f_start:
+    movq %rdi, -16(%rbp)
+    movq %rsi, %rbx
+    movq %rdx, %rbx
+    movq %rcx, %rbx
+    movq %r8, %rbx
+    movq %r9, %rbx
+    movq -16(%rbp), %rax
+    jmp f_conclusion
+
+    .globl f
+    .align 8
+
+f:
+    pushq %rbp
+    movq %rsp, %rbp
+    pushq %rbx
+    subq $8, %rsp
+    jmp f_start
+
+f_conclusion:
+    addq $8, %rsp
+    popq %rbx
+    popq %rbp
+    retq
+
+rf_start:
+    movq %rdi, %rbx
+    leaq f(%rip), %rax
+    jmp rf_conclusion
+
+    .globl rf
+    .align 8
+
+rf:
+    pushq %rbp
+    movq %rsp, %rbp
+    pushq %rbx
+    subq $8, %rsp
+    jmp rf_start
+
+rf_conclusion:
+    addq $8, %rsp
+    popq %rbx
+    popq %rbp
+    retq

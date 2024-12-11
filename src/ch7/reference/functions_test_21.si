@@ -1,0 +1,67 @@
+(X86Program
+  ((Def
+     (Label main)
+     Finfo1
+     ((nparams 0)
+      (locals
+        (($tmp.1
+           (Function (Integer Integer) Integer))
+         ($tmp.2 Integer)
+         (tail_sum
+           (Function (Integer Integer) Integer))))
+      (body
+        (((Label main_start)
+          (Block
+            Binfo1
+            ((Leaq
+               (GlobalArg (Label tail_sum))
+               (Var $tmp.1))
+             (Movq (Imm 5) (Reg Rdi))
+             (Movq (Imm 0) (Reg Rsi))
+             (IndirectCallq (Var $tmp.1) 2)
+             (Movq (Reg Rax) (Var $tmp.2))
+             (Movq (Var $tmp.2) (Reg Rax))
+             (Addq (Imm 27) (Reg Rax))
+             (Jmp (Label main_conclusion)))))))))
+   (Def
+     (Label tail_sum)
+     Finfo1
+     ((nparams 2)
+      (locals
+        ((n.1 Integer)
+         (r.1 Integer)
+         ($tmp.3 Integer)
+         ($tmp.4 Integer)
+         ($tmp.5
+           (Function (Integer Integer) Integer))
+         (n.1 Integer)
+         (r.1 Integer)
+         (tail_sum
+           (Function (Integer Integer) Integer))))
+      (body
+        (((Label block_1)
+          (Block
+            Binfo1
+            ((Movq (Var r.1) (Reg Rax))
+             (Jmp (Label tail_sum_conclusion)))))
+         ((Label block_2)
+          (Block
+            Binfo1
+            ((Leaq
+               (GlobalArg (Label tail_sum))
+               (Var $tmp.5))
+             (Movq (Var n.1) (Var $tmp.3))
+             (Subq (Imm 1) (Var $tmp.3))
+             (Movq (Var n.1) (Var $tmp.4))
+             (Addq (Var r.1) (Var $tmp.4))
+             (Movq (Var $tmp.3) (Reg Rdi))
+             (Movq (Var $tmp.4) (Reg Rsi))
+             (TailJmp (Var $tmp.5) 2))))
+         ((Label tail_sum_start)
+          (Block
+            Binfo1
+            ((Movq (Reg Rdi) (Var n.1))
+             (Movq (Reg Rsi) (Var r.1))
+             (Cmpq (Imm 0) (Var n.1))
+             (JmpIf CC_e (Label block_1))
+             (Jmp (Label block_2)))))))))))

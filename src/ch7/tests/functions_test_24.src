@@ -1,0 +1,10 @@
+;; INPUT: 0 0 0 ; 1 2 3 ; 3 2 1
+;; OUTPUT: 42 ; 75 ; 73
+
+(define (big (x : Integer) (y : Integer) (z : Integer)) : Integer
+  (+ (+ (+ (+ x y) (+ x z))
+        (+ (+ z x) (+ z y)))
+     (+ (+ (+ y y) (+ y x))
+        (+ (+ z x) (+ z z)))))
+
+(+ 42 (big (read) (read) (read)))

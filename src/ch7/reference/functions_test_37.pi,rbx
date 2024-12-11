@@ -1,0 +1,38 @@
+(X86Program
+  ((Def
+     (Label main)
+     (Finfo
+       (num_spilled 0)
+       (num_spilled_root 0)
+       (used_callee ()))
+     ((nparams 0)
+      (locals ())
+      (body
+        (((Label main_start)
+          (Block
+            ((Movq (Imm 42) (Reg Rax))
+             (Jmp (Label main_conclusion)))))))))
+   (Def
+     (Label bluh)
+     (Finfo
+       (num_spilled 0)
+       (num_spilled_root 0)
+       (used_callee (Rbx)))
+     ((nparams 0)
+      (locals
+        (($tmp.1
+           (Function
+             ()
+             (Function (Integer) Integer)))
+         (bluh
+           (Function
+             ()
+             (Function (Integer) Integer)))))
+      (body
+        (((Label bluh_start)
+          (Block
+            ((Leaq
+               (GlobalArg (Label bluh))
+               (Reg Rbx))
+             (Movq (Reg Rbx) (Reg Rax))
+             (TailJmp (Reg Rax) 0))))))))))

@@ -1,0 +1,68 @@
+(Program
+  ((Def
+     (Label main)
+     ((args ())
+      (ret Integer)
+      (body
+        (Let
+          a.1
+          (Apply
+            (FunRef (Label big) 6)
+            ((Int 1)
+             (Int 2)
+             (Int 3)
+             (Int 10)
+             (Int 5)
+             (Vec
+               ((Int 6)
+                (Int 7)
+                (Int 8)
+                (Int 9)
+                (Int 11))
+               ())))
+          (Let
+            b.1
+            (Apply
+              (FunRef (Label big2) 6)
+              ((Int 1)
+               (Int 2)
+               (Int 3)
+               (Int 10)
+               (Int 5)
+               (Vec ((Int 6) (Int 7) (Int 11)) ())))
+            (Prim Add ((Var a.1) (Var b.1))))))))
+   (Def
+     (Label big)
+     ((args
+        ((a.2 Integer)
+         (b.2 Integer)
+         (c.1 Integer)
+         (d.1 Integer)
+         (e.1 Integer)
+         ($tup.1
+           (Vector
+             (Integer
+               Integer
+               Integer
+               Integer
+               Integer)))))
+      (ret Integer)
+      (body
+        (Prim
+          Add
+          ((Var d.1) (VecRef (Var $tup.1) 4))))))
+   (Def
+     (Label big2)
+     ((args
+        ((a.3 Integer)
+         (b.3 Integer)
+         (c.2 Integer)
+         (d.2 Integer)
+         (e.2 Integer)
+         ($tup.2
+           (Vector (Integer Integer Integer)))))
+      (ret Integer)
+      (body
+        (Prim
+          Add
+          ((Var d.2) (VecRef (Var $tup.2) 2))))))))

@@ -1,0 +1,37 @@
+(X86Program
+  ((Def
+     (Label main)
+     Finfo1
+     ((nparams 0)
+      (locals ())
+      (body
+        (((Label main_start)
+          (Block
+            (Binfo2
+              ((initial ((RegL Rsp)))
+               (afters (((RegL Rsp) (RegL Rax)) ()))))
+            ((Movq (Imm 42) (Reg Rax))
+             (Jmp (Label main_conclusion)))))))))
+   (Def
+     (Label bluh)
+     Finfo1
+     ((nparams 0)
+      (locals
+        (($tmp.1
+           (Function
+             ()
+             (Function (Integer) Integer)))
+         (bluh
+           (Function
+             ()
+             (Function (Integer) Integer)))))
+      (body
+        (((Label bluh_start)
+          (Block
+            (Binfo2
+              ((initial ())
+               (afters (((VarL $tmp.1)) ()))))
+            ((Leaq
+               (GlobalArg (Label bluh))
+               (Var $tmp.1))
+             (TailJmp (Var $tmp.1) 0))))))))))

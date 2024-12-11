@@ -1,0 +1,40 @@
+main_start:
+    leaq sub1(%rip), %rcx
+    movq $43, %rdi
+    movq %rcx, %rax
+    popq %rbp
+    jmp *%rax
+
+    .globl main
+    .align 8
+
+main:
+    pushq %rbp
+    movq %rsp, %rbp
+    movq $65536, %rdi
+    movq $65536, %rsi
+    callq initialize
+    movq rootstack_begin(%rip), %r15
+    jmp main_start
+
+main_conclusion:
+    popq %rbp
+    retq
+
+sub1_start:
+    movq %rdi, %rcx
+    movq %rcx, %rax
+    subq $1, %rax
+    jmp sub1_conclusion
+
+    .globl sub1
+    .align 8
+
+sub1:
+    pushq %rbp
+    movq %rsp, %rbp
+    jmp sub1_start
+
+sub1_conclusion:
+    popq %rbp
+    retq

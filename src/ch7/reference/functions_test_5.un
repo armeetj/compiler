@@ -1,0 +1,26 @@
+(Program
+  ((Def
+     main
+     ((args ())
+      (ret Integer)
+      (body
+        (If
+          (Prim
+            Eq
+            ((Int 0)
+             (Apply (Var tailrecur) ((Int 99)))))
+          (Int 42)
+          (Int 777)))))
+   (Def
+     tailrecur
+     ((args ((x.1 Integer)))
+      (ret Integer)
+      (body
+        (If
+          (Prim Eq ((Var x.1) (Int 0)))
+          (Int 0)
+          (Apply
+            (Var tailrecur)
+            ((Prim
+               Add
+               ((Var x.1) (Prim Negate ((Int 1)))))))))))))

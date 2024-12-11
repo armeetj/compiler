@@ -1,0 +1,7 @@
+(Program
+  ((Def
+     bluh
+     ((args ())
+      (ret (Function (Integer) Integer))
+      (body (Apply (Var bluh) ())))))
+  (Int 42))

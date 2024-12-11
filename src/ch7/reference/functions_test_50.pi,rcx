@@ -1,0 +1,80 @@
+(X86Program
+  ((Def
+     (Label main)
+     (Finfo
+       (num_spilled 2)
+       (num_spilled_root 0)
+       (used_callee ()))
+     ((nparams 0)
+      (locals
+        (($tmp.1 (Function (Integer) Integer))
+         ($tmp.2 Integer)
+         ($tmp.3
+           (Function
+             ((Function (Integer) Integer) Integer)
+             Integer))
+         (add1 (Function (Integer) Integer))
+         (twice
+           (Function
+             ((Function (Integer) Integer) Integer)
+             Integer))))
+      (body
+        (((Label main_start)
+          (Block
+            ((Leaq
+               (GlobalArg (Label twice))
+               (Reg Rax))
+             (Movq (Reg Rax) (Deref Rbp -16))
+             (Leaq
+               (GlobalArg (Label add1))
+               (Reg Rax))
+             (Movq (Reg Rax) (Deref Rbp -8))
+             (Callq (Label read_int) 0)
+             (Movq (Reg Rax) (Reg Rcx))
+             (Movq (Deref Rbp -8) (Reg Rdi))
+             (Movq (Reg Rcx) (Reg Rsi))
+             (Movq (Deref Rbp -16) (Reg Rax))
+             (TailJmp (Reg Rax) 2))))))))
+   (Def
+     (Label add1)
+     (Finfo
+       (num_spilled 0)
+       (num_spilled_root 0)
+       (used_callee ()))
+     ((nparams 1)
+      (locals ((y.1 Integer) (y.1 Integer)))
+      (body
+        (((Label add1_start)
+          (Block
+            ((Movq (Reg Rdi) (Reg Rcx))
+             (Movq (Imm 1) (Reg Rax))
+             (Addq (Reg Rcx) (Reg Rax))
+             (Jmp (Label add1_conclusion)))))))))
+   (Def
+     (Label twice)
+     (Finfo
+       (num_spilled 3)
+       (num_spilled_root 0)
+       (used_callee ()))
+     ((nparams 2)
+      (locals
+        ((f.1 (Function (Integer) Integer))
+         (x.1 Integer)
+         ($tmp.4 Integer)
+         ($tmp.5 Integer)
+         (f.1 (Function (Integer) Integer))
+         (x.1 Integer)))
+      (body
+        (((Label twice_start)
+          (Block
+            ((Movq (Reg Rdi) (Deref Rbp -16))
+             (Movq (Reg Rsi) (Deref Rbp -24))
+             (Movq (Deref Rbp -24) (Reg Rdi))
+             (IndirectCallq (Deref Rbp -16) 1)
+             (Movq (Reg Rax) (Deref Rbp -8))
+             (Movq (Deref Rbp -24) (Reg Rdi))
+             (IndirectCallq (Deref Rbp -16) 1)
+             (Movq (Reg Rax) (Reg Rcx))
+             (Movq (Deref Rbp -8) (Reg Rax))
+             (Addq (Reg Rcx) (Reg Rax))
+             (Jmp (Label twice_conclusion)))))))))))

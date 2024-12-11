@@ -1,0 +1,6 @@
+;; OUTPUT: 0
+
+(define (id (x : Integer)) : Integer
+  (if (= x 0) 0 42))
+
+(id 0)

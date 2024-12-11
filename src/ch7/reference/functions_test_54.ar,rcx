@@ -1,0 +1,75 @@
+(X86Program
+  ((Def
+     (Label main)
+     (Finfo3
+       (num_spilled 2)
+       (num_spilled_root 0)
+       (used_callee ()))
+     ((nparams 0)
+      (locals
+        (($tmp.1 (Function (Integer) Integer))
+         ($tmp.2 Integer)
+         ($tmp.3
+           (Function
+             ((Function (Integer) Integer) Integer)
+             Integer))
+         (apply
+           (Function
+             ((Function (Integer) Integer) Integer)
+             Integer))
+         (inc (Function (Integer) Integer))))
+      (body
+        (((Label main_start)
+          (Block
+            Binfo1
+            ((Leaq
+               (GlobalArg (Label apply))
+               (Deref Rbp -16))
+             (Leaq
+               (GlobalArg (Label inc))
+               (Deref Rbp -8))
+             (Callq (Label read_int) 0)
+             (Movq (Reg Rax) (Reg Rcx))
+             (Movq (Deref Rbp -8) (Reg Rdi))
+             (Movq (Reg Rcx) (Reg Rsi))
+             (TailJmp (Deref Rbp -16) 2))))))))
+   (Def
+     (Label apply)
+     (Finfo3
+       (num_spilled 1)
+       (num_spilled_root 0)
+       (used_callee ()))
+     ((nparams 2)
+      (locals
+        ((f.1 (Function (Integer) Integer))
+         (x.1 Integer)
+         ($tmp.4 Integer)
+         (f.1 (Function (Integer) Integer))
+         (x.1 Integer)))
+      (body
+        (((Label apply_start)
+          (Block
+            Binfo1
+            ((Movq (Reg Rdi) (Deref Rbp -8))
+             (Movq (Reg Rsi) (Reg Rcx))
+             (Movq (Reg Rcx) (Reg Rdi))
+             (IndirectCallq (Deref Rbp -8) 1)
+             (Movq (Reg Rax) (Reg Rcx))
+             (Movq (Reg Rcx) (Reg Rdi))
+             (TailJmp (Deref Rbp -8) 1))))))))
+   (Def
+     (Label inc)
+     (Finfo3
+       (num_spilled 0)
+       (num_spilled_root 0)
+       (used_callee ()))
+     ((nparams 1)
+      (locals ((x.2 Integer) (x.2 Integer)))
+      (body
+        (((Label inc_start)
+          (Block
+            Binfo1
+            ((Movq (Reg Rdi) (Reg Rcx))
+             (Movq (Reg Rcx) (Reg Rax))
+             (Addq (Imm 1) (Reg Rax))
+             (Jmp (Label inc_conclusion)))))))))))

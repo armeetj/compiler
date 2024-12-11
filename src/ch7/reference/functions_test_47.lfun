@@ -1,0 +1,34 @@
+(Program
+  ((Def
+     sum
+     ((args ((x Integer)))
+      (ret Integer)
+      (body
+        (Let
+          x-vec
+          (Vec ((Var x)) ())
+          (Let
+            one
+            (Vec ((Int 1)) ())
+            (Let
+              neg-one
+              (Vec ((Prim Negate ((Int 1)))) ())
+              (If
+                (Prim
+                  Eq
+                  ((VecRef (Var x-vec) 0) (Int 1)))
+                (VecRef (Var one) 0)
+                (Prim
+                  Add
+                  ((Var x)
+                   (Apply
+                     (Var sum)
+                     ((Prim
+                        Add
+                        ((Var x) (VecRef (Var neg-one) 0)))))))))))))))
+  (If
+    (Prim
+      Eq
+      ((Apply (Var sum) ((Int 3))) (Int 6)))
+    (Int 42)
+    (Int 777)))

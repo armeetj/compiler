@@ -1,0 +1,15 @@
+(Program
+  ((Def
+     (Label main)
+     ((args ())
+      (ret Integer)
+      (body
+        (Let
+          $tmp.1
+          (FunRef (Label add) 2)
+          (Apply (Var $tmp.1) ((Int 20) (Int 22)))))))
+   (Def
+     (Label add)
+     ((args ((x.1 Integer) (y.1 Integer)))
+      (ret Integer)
+      (body (Prim Add ((Var x.1) (Var y.1))))))))

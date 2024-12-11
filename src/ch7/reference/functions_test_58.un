@@ -1,0 +1,41 @@
+(Program
+  ((Def
+     main
+     ((args ())
+      (ret Integer)
+      (body
+        (Apply
+          (Apply
+            (Apply
+              (Apply (Var rrrid) ((Int 0)))
+              ((Int 0)))
+            ((Int 0)))
+          ((Int 42))))))
+   (Def
+     id
+     ((args ((x.1 Integer)))
+      (ret Integer)
+      (body (Var x.1))))
+   (Def
+     rid
+     ((args ((x.2 Integer)))
+      (ret (Function (Integer) Integer))
+      (body (Var id))))
+   (Def
+     rrid
+     ((args ((x.3 Integer)))
+      (ret
+        (Function
+          (Integer)
+          (Function (Integer) Integer)))
+      (body (Var rid))))
+   (Def
+     rrrid
+     ((args ((x.4 Integer)))
+      (ret
+        (Function
+          (Integer)
+          (Function
+            (Integer)
+            (Function (Integer) Integer))))
+      (body (Var rrid))))))

@@ -1,0 +1,38 @@
+(Program
+  ((Def
+     main
+     ((args ())
+      (ret Integer)
+      (body
+        (VecRef
+          (Vec
+            ((Apply (Var zero) ((Int 1)))
+             (Apply (Var zero) ((Int 2)))
+             (Int 42))
+            ((Vector
+               ((Vector ()) (Vector ()) Integer))))
+          2))))
+   (Def
+     minus
+     ((args ((n.1 Integer) (m.1 Integer)))
+      (ret Integer)
+      (body
+        (Prim
+          Add
+          ((Var n.1) (Prim Negate ((Var m.1))))))))
+   (Def
+     zero
+     ((args ((x.1 Integer)))
+      (ret (Vector ()))
+      (body
+        (If
+          (Prim Eq ((Var x.1) (Int 0)))
+          (Vec () ((Vector ())))
+          (Apply
+            (Var zero)
+            ((Prim
+               Add
+               ((VecRef
+                  (Vec ((Var x.1)) ((Vector (Integer))))
+                  0)
+                (Prim Negate ((Int 1)))))))))))))

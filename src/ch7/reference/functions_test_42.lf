@@ -1,0 +1,48 @@
+(Program
+  ((Def
+     (Label main)
+     ((args ())
+      (ret Integer)
+      (body
+        (Let
+          vec.1
+          (Vec
+            ((Int 1) (Int 2) (Int 3))
+            ((Vector (Integer Integer Integer))))
+          (Let
+            vec2.1
+            (Apply
+              (FunRef (Label mapint) 2)
+              ((FunRef (Label add1) 1) (Var vec.1)))
+            (Prim
+              Add
+              ((VecRef (Var vec2.1) 0)
+               (Prim
+                 Add
+                 ((VecRef (Var vec2.1) 1)
+                  (Prim
+                    Add
+                    ((VecRef (Var vec2.1) 2) (Int 33))))))))))))
+   (Def
+     (Label mapint)
+     ((args
+        ((fun.1 (Function (Integer) Integer))
+         (v.1 (Vector (Integer Integer Integer)))))
+      (ret (Vector (Integer Integer Integer)))
+      (body
+        (Vec
+          ((Apply
+             (Var fun.1)
+             ((VecRef (Var v.1) 0)))
+           (Apply
+             (Var fun.1)
+             ((VecRef (Var v.1) 1)))
+           (Apply
+             (Var fun.1)
+             ((VecRef (Var v.1) 2))))
+          ((Vector (Integer Integer Integer)))))))
+   (Def
+     (Label add1)
+     ((args ((x.1 Integer)))
+      (ret Integer)
+      (body (Prim Add ((Int 1) (Var x.1))))))))

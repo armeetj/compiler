@@ -1,0 +1,63 @@
+(Program
+  ((Def
+     (Label main)
+     ((args ())
+      (ret Integer)
+      (body
+        (Prim
+          Add
+          ((Int 6)
+           (Apply
+             (FunRef (Label g) 1)
+             ((FunRef (Label sum_eight) 6))))))))
+   (Def
+     (Label sum_eight)
+     ((args
+        ((a.1 Integer)
+         (b.1 Integer)
+         (c.1 Integer)
+         (d.1 Integer)
+         (e.1 Integer)
+         ($tup.1
+           (Vector (Integer Integer Integer)))))
+      (ret Integer)
+      (body
+        (Prim
+          Add
+          ((Prim
+             Add
+             ((Prim Add ((Var a.1) (Var b.1)))
+              (Prim Add ((Var c.1) (Var d.1)))))
+           (Prim
+             Add
+             ((Prim
+                Add
+                ((Var e.1) (VecRef (Var $tup.1) 0)))
+              (Prim
+                Add
+                ((VecRef (Var $tup.1) 1)
+                 (VecRef (Var $tup.1) 2))))))))))
+   (Def
+     (Label g)
+     ((args
+        ((f.2
+           (Function
+             (Integer
+               Integer
+               Integer
+               Integer
+               Integer
+               (Vector (Integer Integer Integer)))
+             Integer))))
+      (ret Integer)
+      (body
+        (Apply
+          (Var f.2)
+          ((Int 1)
+           (Int 2)
+           (Int 3)
+           (Int 4)
+           (Int 5)
+           (Vec
+             ((Int 6) (Int 7) (Int 8))
+             ((Vector (Integer Integer Integer)))))))))))

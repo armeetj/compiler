@@ -1,0 +1,7 @@
+(define (add1 (y : Integer)) : Integer
+  (+ 1 y))
+
+(define (twice (f : (Integer -> Integer)) (x : Integer)) : Integer
+  (+ (f x) (f x)))
+
+(twice add1 (read))

@@ -1,0 +1,384 @@
+(Program
+  ((Def
+     minus
+     ((args ((m Integer) (n Integer)))
+      (ret Integer)
+      (body
+        (Prim
+          Add
+          ((Var m) (Prim Negate ((Var n))))))))
+   (Def
+     z
+     ((args ((i Integer)))
+      (ret (Vector (Integer)))
+      (body
+        (If
+          (Prim Eq ((Var i) (Int 0)))
+          (Vec ((Int 42)) ())
+          (Let
+            junk
+            (Vec
+              ((Vec ((Int 1)) ())
+               (Vec ((Int 2)) ())
+               (Vec ((Int 3)) ())
+               (Vec ((Int 4)) ())
+               (Vec ((Int 5)) ()))
+              ())
+            (Let
+              garbage
+              (Vec
+                ((Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1))
+                ())
+              (Let
+                more
+                (Vec
+                  ((Var junk)
+                   (Var garbage)
+                   (Var junk)
+                   (Var garbage)
+                   (Var junk)
+                   (Var garbage)
+                   (Var junk)
+                   (Var garbage))
+                  ())
+                (Apply
+                  (Var z)
+                  ((Apply (Var minus) ((Var i) (Int 1))))))))))))
+   (Def
+     o
+     ((args
+        ((i Integer) (v (Vector (Integer)))))
+      (ret (Vector ((Vector (Integer)))))
+      (body
+        (If
+          (Prim Eq ((Var i) (Int 0)))
+          (Vec ((Var v)) ())
+          (Let
+            junk
+            (Vec
+              ((Vec ((Int 1)) ())
+               (Vec ((Int 2)) ())
+               (Vec ((Int 3)) ())
+               (Vec ((Int 4)) ())
+               (Vec ((Int 5)) ()))
+              ())
+            (Let
+              garbage
+              (Vec
+                ((Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1))
+                ())
+              (Let
+                more
+                (Vec
+                  ((Var junk)
+                   (Var garbage)
+                   (Var junk)
+                   (Var garbage)
+                   (Var junk)
+                   (Var garbage)
+                   (Var junk)
+                   (Var garbage))
+                  ())
+                (Apply
+                  (Var o)
+                  ((Apply (Var minus) ((Var i) (Int 1)))
+                   (Var v))))))))))
+   (Def
+     t
+     ((args
+        ((i Integer)
+         (v (Vector ((Vector (Integer)))))))
+      (ret
+        (Vector ((Vector ((Vector (Integer)))))))
+      (body
+        (If
+          (Prim Eq ((Var i) (Int 0)))
+          (Vec ((Var v)) ())
+          (Let
+            junk
+            (Vec
+              ((Vec ((Int 1)) ())
+               (Vec ((Int 2)) ())
+               (Vec ((Int 3)) ())
+               (Vec ((Int 4)) ())
+               (Vec ((Int 5)) ()))
+              ())
+            (Let
+              garbage
+              (Vec
+                ((Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1))
+                ())
+              (Let
+                more
+                (Vec
+                  ((Var junk)
+                   (Var garbage)
+                   (Var junk)
+                   (Var garbage)
+                   (Var junk)
+                   (Var garbage)
+                   (Var junk)
+                   (Var garbage))
+                  ())
+                (Apply
+                  (Var t)
+                  ((Apply (Var minus) ((Var i) (Int 1)))
+                   (Var v))))))))))
+   (Def
+     h
+     ((args
+        ((i Integer)
+         (v
+           (Vector ((Vector ((Vector (Integer)))))))))
+      (ret
+        (Vector
+          ((Vector ((Vector ((Vector (Integer)))))))))
+      (body
+        (If
+          (Prim Eq ((Var i) (Int 0)))
+          (Vec ((Var v)) ())
+          (Let
+            junk
+            (Vec
+              ((Vec ((Int 1)) ())
+               (Vec ((Int 2)) ())
+               (Vec ((Int 3)) ())
+               (Vec ((Int 4)) ())
+               (Vec ((Int 5)) ()))
+              ())
+            (Let
+              garbage
+              (Vec
+                ((Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1))
+                ())
+              (Let
+                more
+                (Vec
+                  ((Var junk)
+                   (Var garbage)
+                   (Var junk)
+                   (Var garbage)
+                   (Var junk)
+                   (Var garbage)
+                   (Var junk)
+                   (Var garbage))
+                  ())
+                (Apply
+                  (Var h)
+                  ((Apply (Var minus) ((Var i) (Int 1)))
+                   (Var v))))))))))
+   (Def
+     f
+     ((args
+        ((i Integer)
+         (v
+           (Vector
+             ((Vector ((Vector ((Vector (Integer)))))))))))
+      (ret
+        (Vector
+          ((Vector
+             ((Vector ((Vector ((Vector (Integer)))))))))))
+      (body
+        (If
+          (Prim Eq ((Var i) (Int 0)))
+          (Vec ((Var v)) ())
+          (Let
+            junk
+            (Vec
+              ((Vec ((Int 1)) ())
+               (Vec ((Int 2)) ())
+               (Vec ((Int 3)) ())
+               (Vec ((Int 4)) ())
+               (Vec ((Int 5)) ()))
+              ())
+            (Let
+              garbage
+              (Vec
+                ((Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1))
+                ())
+              (Let
+                more
+                (Vec
+                  ((Var junk)
+                   (Var garbage)
+                   (Var junk)
+                   (Var garbage)
+                   (Var junk)
+                   (Var garbage)
+                   (Var junk)
+                   (Var garbage))
+                  ())
+                (Apply
+                  (Var f)
+                  ((Apply (Var minus) ((Var i) (Int 1)))
+                   (Var v))))))))))
+   (Def
+     e
+     ((args
+        ((i Integer)
+         (v
+           (Vector
+             ((Vector
+                ((Vector ((Vector ((Vector (Integer)))))))))))))
+      (ret
+        (Vector
+          ((Vector
+             ((Vector
+                ((Vector ((Vector ((Vector (Integer)))))))))))))
+      (body
+        (If
+          (Prim Eq ((Var i) (Int 0)))
+          (Vec ((Var v)) ())
+          (Let
+            junk
+            (Vec
+              ((Vec ((Int 1)) ())
+               (Vec ((Int 2)) ())
+               (Vec ((Int 3)) ())
+               (Vec ((Int 4)) ())
+               (Vec ((Int 5)) ()))
+              ())
+            (Let
+              garbage
+              (Vec
+                ((Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1)
+                 (Int -1))
+                ())
+              (Let
+                more
+                (Vec
+                  ((Var junk)
+                   (Var garbage)
+                   (Var junk)
+                   (Var garbage)
+                   (Var junk)
+                   (Var garbage)
+                   (Var junk)
+                   (Var garbage))
+                  ())
+                (Apply
+                  (Var e)
+                  ((Apply (Var minus) ((Var i) (Int 1)))
+                   (Var v)))))))))))
+  (VecRef
+    (VecRef
+      (VecRef
+        (VecRef
+          (VecRef
+            (VecRef
+              (Apply
+                (Var e)
+                ((Int 20)
+                 (Apply
+                   (Var f)
+                   ((Int 20)
+                    (Apply
+                      (Var h)
+                      ((Int 20)
+                       (Apply
+                         (Var t)
+                         ((Int 20)
+                          (Apply
+                            (Var o)
+                            ((Int 20) (Apply (Var z) ((Int 20)))))))))))))
+              0)
+            0)
+          0)
+        0)
+      0)
+    0))

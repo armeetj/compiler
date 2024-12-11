@@ -1,0 +1,94 @@
+(Program
+  ((Def
+     (Label main)
+     ((args ())
+      (ret Integer)
+      (body
+        (If
+          (Prim
+            Eq
+            ((Apply (FunRef (Label sum) 1) ((Int 3)))
+             (Int 6)))
+          (Int 42)
+          (Int 777)))))
+   (Def
+     (Label sum)
+     ((args ((x.1 Integer)))
+      (ret Integer)
+      (body
+        (Let
+          x-vec.1
+          (Let
+            _.2
+            (If
+              (Prim
+                Lt
+                ((Prim
+                   Add
+                   ((GlobalVal free_ptr) (Int 16)))
+                 (GlobalVal fromspace_end)))
+              Void
+              (Collect 16))
+            (Let
+              $ea.1
+              (Allocate 1 (Vector (Integer)))
+              (Let
+                _.1
+                (VecSet (Var $ea.1) 0 (Var x.1))
+                (Var $ea.1))))
+          (Let
+            one.1
+            (Let
+              _.4
+              (If
+                (Prim
+                  Lt
+                  ((Prim
+                     Add
+                     ((GlobalVal free_ptr) (Int 16)))
+                   (GlobalVal fromspace_end)))
+                Void
+                (Collect 16))
+              (Let
+                $ea.2
+                (Allocate 1 (Vector (Integer)))
+                (Let
+                  _.3
+                  (VecSet (Var $ea.2) 0 (Int 1))
+                  (Var $ea.2))))
+            (Let
+              neg-one.1
+              (Let
+                $ea.3
+                (Prim Negate ((Int 1)))
+                (Let
+                  _.6
+                  (If
+                    (Prim
+                      Lt
+                      ((Prim
+                         Add
+                         ((GlobalVal free_ptr) (Int 16)))
+                       (GlobalVal fromspace_end)))
+                    Void
+                    (Collect 16))
+                  (Let
+                    $ea.4
+                    (Allocate 1 (Vector (Integer)))
+                    (Let
+                      _.5
+                      (VecSet (Var $ea.4) 0 (Var $ea.3))
+                      (Var $ea.4)))))
+              (If
+                (Prim
+                  Eq
+                  ((VecRef (Var x-vec.1) 0) (Int 1)))
+                (VecRef (Var one.1) 0)
+                (Prim
+                  Add
+                  ((Var x.1)
+                   (Apply
+                     (FunRef (Label sum) 1)
+                     ((Prim
+                        Add
+                        ((Var x.1) (VecRef (Var neg-one.1) 0))))))))))))))))

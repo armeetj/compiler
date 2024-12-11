@@ -1,0 +1,56 @@
+;;
+;;
+;;  m x p   p x n  m x n
+;;
+;;  aaa   x bb  =  cc
+;;  aaa     bb     cc
+;;  aaa     bb     cc
+;;  aaa            cc
+
+
+(define (offset (row : Integer) (col : Integer) (ncols : Integer)) : Integer
+  (+ (* row ncols) col))
+
+(define (matmul (A : (Vectorof Integer))(B : (Vectorof Integer))
+                (C : (Vectorof Integer))
+                (m : Integer) (p : Integer) (n : Integer)) : Void
+  (let ((i 0)) ;; to m
+  (while (< i m)
+    (let ((j 0)) ;; to n
+    (begin
+      (while (< j n)
+        (let ((k 0)) ;; to p
+        (let ((dp 0))
+        (begin
+          ;; dot-product
+          (while (< k p)
+            (begin
+              (set! dp (+ dp (* (vector-ref A (offset i k p))
+                                (vector-ref B (offset k j n)))))
+              (set! k (+ k 1))
+              ))
+          (vector-set! C (offset i j n) dp)
+          (set! j (+ j 1))
+          ))))
+      (set! i (+ i 1))
+      )))))
+
+(define (sum (A : (Vectorof Integer)) (n : Integer)) : Integer
+  (let ((i 0))
+    (let ((s 0))
+      (begin
+        (while (< i n)
+          (begin
+            (set! s (+ s (vector-ref A i)))
+            (set! i (+ i 1))))
+        s))))
+
+(let ((m 4))
+(let ((p 3))
+(let ((n 2))
+(let ((A (make-vector (* m p) 1)))
+(let ((B (make-vector (* p n) 1)))
+(let ((C (make-vector (* m n) 0)))
+  (begin
+    (matmul A B C m p n)
+    (+ 18 (sum C (* m n))))))))))

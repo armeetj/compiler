@@ -1,0 +1,88 @@
+(Program
+  ((Def
+     (Label main)
+     ((args ())
+      (ret Integer)
+      (body
+        (Let
+          v1.1
+          (Vec ((Int 1)) ((Vector (Integer))))
+          (Let
+            v2.1
+            (Vec ((Int 1)) ((Vector (Integer))))
+            (Let
+              v3.1
+              (Vec ((Int 1)) ((Vector (Integer))))
+              (Let
+                v4.1
+                (Vec ((Int 1)) ((Vector (Integer))))
+                (Let
+                  v5.1
+                  (Vec ((Int 1)) ((Vector (Integer))))
+                  (Let
+                    v6.1
+                    (Vec ((Int 1)) ((Vector (Integer))))
+                    (Let
+                      v7.1
+                      (Vec ((Int 1)) ((Vector (Integer))))
+                      (Let
+                        v8.1
+                        (Vec ((Int 1)) ((Vector (Integer))))
+                        (Let
+                          v9.1
+                          (Vec ((Int 1)) ((Vector (Integer))))
+                          (Let
+                            v10.1
+                            (Vec ((Int 1)) ((Vector (Integer))))
+                            (Let
+                              y.1
+                              (Apply
+                                (FunRef (Label g) 1)
+                                ((Int 1000)))
+                              (Prim
+                                Add
+                                ((Prim Add ((Int 32) (Var y.1)))
+                                 (Prim
+                                   Add
+                                   ((VecRef (Var v1.1) 0)
+                                    (Prim
+                                      Add
+                                      ((VecRef (Var v2.1) 0)
+                                       (Prim
+                                         Add
+                                         ((VecRef (Var v3.1) 0)
+                                          (Prim
+                                            Add
+                                            ((VecRef (Var v4.1) 0)
+                                             (Prim
+                                               Add
+                                               ((VecRef (Var v5.1) 0)
+                                                (Prim
+                                                  Add
+                                                  ((VecRef (Var v6.1) 0)
+                                                   (Prim
+                                                     Add
+                                                     ((VecRef (Var v7.1) 0)
+                                                      (Prim
+                                                        Add
+                                                        ((VecRef (Var v8.1) 0)
+                                                         (Prim
+                                                           Add
+                                                           ((VecRef (Var v9.1) 0)
+                                                            (VecRef (Var v10.1) 0)))))))))))))))))))))))))))))))))))
+   (Def
+     (Label g)
+     ((args ((x.1 Integer)))
+      (ret Integer)
+      (body
+        (Let
+          v.1
+          (Vec ((Int 1)) ((Vector (Integer))))
+          (If
+            (Prim Eq ((Var x.1) (Int 0)))
+            (Int 0)
+            (Apply
+              (FunRef (Label g) 1)
+              ((Prim
+                 Sub
+                 ((Var x.1) (VecRef (Var v.1) 0))))))))))))

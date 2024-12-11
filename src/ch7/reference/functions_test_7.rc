@@ -1,0 +1,27 @@
+(Program
+  ((Def
+     (Label main)
+     ((args ())
+      (ret Integer)
+      (body
+        (Let
+          $tmp.2
+          (FunRef (Label id) 1)
+          (Let
+            $tmp.1
+            (FunRef (Label inc) 1)
+            (Let
+              $tmp.3
+              (Apply (Var $tmp.2) ((Var $tmp.1)))
+              (Apply (Var $tmp.3) ((Int 41)))))))))
+   (Def
+     (Label id)
+     ((args
+        ((f.1 (Function (Integer) Integer))))
+      (ret (Function (Integer) Integer))
+      (body (Atm (Var f.1)))))
+   (Def
+     (Label inc)
+     ((args ((x.1 Integer)))
+      (ret Integer)
+      (body (Prim Add ((Var x.1) (Int 1))))))))

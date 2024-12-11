@@ -1,0 +1,139 @@
+(Program
+  ((Def
+     (Label main)
+     ((args ())
+      (ret Integer)
+      (body
+        (Let
+          a.1
+          (Let
+            $tmp.4
+            (FunRef (Label big) 6)
+            (Let
+              _.6
+              (If
+                (Let
+                  $tmp.1
+                  (GlobalVal free_ptr)
+                  (Let
+                    $tmp.2
+                    (Prim Add ((Var $tmp.1) (Int 48)))
+                    (Let
+                      $tmp.3
+                      (GlobalVal fromspace_end)
+                      (Prim Lt ((Var $tmp.2) (Var $tmp.3))))))
+                (Atm Void)
+                (Collect 48))
+              (Let
+                $ea.1
+                (Allocate
+                  5
+                  (Vector
+                    (Integer
+                      Integer
+                      Integer
+                      Integer
+                      Integer)))
+                (Let
+                  _.5
+                  (VecSet (Var $ea.1) 0 (Int 6))
+                  (Let
+                    _.4
+                    (VecSet (Var $ea.1) 1 (Int 7))
+                    (Let
+                      _.3
+                      (VecSet (Var $ea.1) 2 (Int 8))
+                      (Let
+                        _.2
+                        (VecSet (Var $ea.1) 3 (Int 9))
+                        (Let
+                          _.1
+                          (VecSet (Var $ea.1) 4 (Int 11))
+                          (Apply
+                            (Var $tmp.4)
+                            ((Int 1)
+                             (Int 2)
+                             (Int 3)
+                             (Int 10)
+                             (Int 5)
+                             (Var $ea.1)))))))))))
+          (Let
+            b.1
+            (Let
+              $tmp.8
+              (FunRef (Label big2) 6)
+              (Let
+                _.10
+                (If
+                  (Let
+                    $tmp.5
+                    (GlobalVal free_ptr)
+                    (Let
+                      $tmp.6
+                      (Prim Add ((Var $tmp.5) (Int 32)))
+                      (Let
+                        $tmp.7
+                        (GlobalVal fromspace_end)
+                        (Prim Lt ((Var $tmp.6) (Var $tmp.7))))))
+                  (Atm Void)
+                  (Collect 32))
+                (Let
+                  $ea.2
+                  (Allocate
+                    3
+                    (Vector (Integer Integer Integer)))
+                  (Let
+                    _.9
+                    (VecSet (Var $ea.2) 0 (Int 6))
+                    (Let
+                      _.8
+                      (VecSet (Var $ea.2) 1 (Int 7))
+                      (Let
+                        _.7
+                        (VecSet (Var $ea.2) 2 (Int 11))
+                        (Apply
+                          (Var $tmp.8)
+                          ((Int 1)
+                           (Int 2)
+                           (Int 3)
+                           (Int 10)
+                           (Int 5)
+                           (Var $ea.2)))))))))
+            (Prim Add ((Var a.1) (Var b.1))))))))
+   (Def
+     (Label big)
+     ((args
+        ((a.2 Integer)
+         (b.2 Integer)
+         (c.1 Integer)
+         (d.1 Integer)
+         (e.1 Integer)
+         ($tup.1
+           (Vector
+             (Integer
+               Integer
+               Integer
+               Integer
+               Integer)))))
+      (ret Integer)
+      (body
+        (Let
+          $tmp.9
+          (VecRef (Var $tup.1) 4)
+          (Prim Add ((Var d.1) (Var $tmp.9)))))))
+   (Def
+     (Label big2)
+     ((args
+        ((a.3 Integer)
+         (b.3 Integer)
+         (c.2 Integer)
+         (d.2 Integer)
+         (e.2 Integer)
+         ($tup.2
+           (Vector (Integer Integer Integer)))))
+      (ret Integer)
+      (body
+        (Let
+          $tmp.10
+          (VecRef (Var $tup.2) 2)
+          (Prim Add ((Var d.2) (Var $tmp.10)))))))))

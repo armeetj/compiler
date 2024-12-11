@@ -1,0 +1,26 @@
+(Program
+  ((Def
+     (Label main)
+     ((args ())
+      (ret Integer)
+      (body
+        (Apply
+          (FunRef (Label mult) 2)
+          ((Int 6) (Int 7))))))
+   (Def
+     (Label mult)
+     ((args ((x.1 Integer) (y.1 Integer)))
+      (ret Integer)
+      (body
+        (If
+          (Prim Eq ((Int 0) (Var x.1)))
+          (Int 0)
+          (Prim
+            Add
+            ((Var y.1)
+             (Apply
+               (FunRef (Label mult) 2)
+               ((Prim
+                  Add
+                  ((Prim Negate ((Int 1))) (Var x.1)))
+                (Var y.1)))))))))))

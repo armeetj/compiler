@@ -1,0 +1,33 @@
+(Program
+  ((Def
+     main
+     ((args ())
+      (ret Integer)
+      (body
+        (VecRef
+          (Apply
+            (Var map_vector)
+            ((Var minus)
+             (Vec ((Int 43)) ((Vector (Integer))))))
+          0))))
+   (Def
+     minus
+     ((args ((n.1 Integer) (m.1 Integer)))
+      (ret Integer)
+      (body
+        (Prim
+          Add
+          ((Var n.1) (Prim Negate ((Var m.1))))))))
+   (Def
+     map_vector
+     ((args
+        ((f.1
+           (Function (Integer Integer) Integer))
+         (v.1 (Vector (Integer)))))
+      (ret (Vector (Integer)))
+      (body
+        (Vec
+          ((Apply
+             (Var f.1)
+             ((VecRef (Var v.1) 0) (Int 1))))
+          ((Vector (Integer)))))))))

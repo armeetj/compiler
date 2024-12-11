@@ -1,0 +1,19 @@
+(Program
+  ((Def
+     main
+     ((args ())
+      (ret Integer)
+      (body
+        (Apply
+          (Var id2)
+          ((Apply (Var id) ((Int 42))))))))
+   (Def
+     id
+     ((args ((x.1 Integer)))
+      (ret Integer)
+      (body (Var x.1))))
+   (Def
+     id2
+     ((args ((y.1 Integer)))
+      (ret Integer)
+      (body (Var y.1))))))

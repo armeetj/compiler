@@ -1,0 +1,83 @@
+main_start:
+    leaq triple(%rip), %rcx
+    movq $13, %rdi
+    callq *%rcx
+    movq %rax, %rsi
+    movq %rsi, %r11
+    movq 8(%r11), %rdx
+    movq %rsi, %r11
+    movq 16(%r11), %rcx
+    movq %rsi, %r11
+    movq 24(%r11), %rsi
+    addq $3, %rsi
+    addq %rsi, %rcx
+    movq %rdx, %rax
+    addq %rcx, %rax
+    jmp main_conclusion
+
+    .globl main
+    .align 8
+
+main:
+    pushq %rbp
+    movq %rsp, %rbp
+    movq $65536, %rdi
+    movq $65536, %rsi
+    callq initialize
+    movq rootstack_begin(%rip), %r15
+    jmp main_start
+
+main_conclusion:
+    popq %rbp
+    retq
+
+block_1:
+    movq free_ptr(%rip), %r11
+    addq $32, free_ptr(%rip)
+    movq $7, 0(%r11)
+    movq %r11, %rcx
+    movq %rbx, 8(%r11)
+    movq $0, %rdx
+    movq %rcx, %r11
+    movq %rbx, 16(%r11)
+    movq $0, %rdx
+    movq %rcx, %r11
+    movq %rbx, 24(%r11)
+    movq $0, %rdx
+    movq %rcx, %rax
+    jmp triple_conclusion
+
+block_2:
+    movq $0, %rcx
+    jmp block_1
+
+block_3:
+    movq %r15, %rdi
+    movq $32, %rsi
+    callq collect
+    jmp block_1
+
+triple_start:
+    movq %rdi, %rbx
+    movq free_ptr(%rip), %rcx
+    addq $32, %rcx
+    movq fromspace_end(%rip), %rsi
+    cmpq %rsi, %rcx
+    jl block_2
+    jmp block_3
+
+    .globl triple
+    .align 8
+
+triple:
+    pushq %rbp
+    movq %rsp, %rbp
+    pushq %rbx
+    subq $8, %rsp
+    jmp triple_start
+
+triple_conclusion:
+    addq $8, %rsp
+    popq %rbx
+    popq %rbp
+    retq

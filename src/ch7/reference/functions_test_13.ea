@@ -1,0 +1,100 @@
+(Program
+  ((Def
+     (Label main)
+     ((args ())
+      (ret Integer)
+      (body
+        (VecRef
+          (Let
+            $ea.1
+            (Apply
+              (FunRef (Label zero) 1)
+              ((Int 1)))
+            (Let
+              $ea.2
+              (Apply
+                (FunRef (Label zero) 1)
+                ((Int 2)))
+              (Let
+                _.4
+                (If
+                  (Prim
+                    Lt
+                    ((Prim
+                       Add
+                       ((GlobalVal free_ptr) (Int 32)))
+                     (GlobalVal fromspace_end)))
+                  Void
+                  (Collect 32))
+                (Let
+                  $ea.3
+                  (Allocate
+                    3
+                    (Vector
+                      ((Vector ()) (Vector ()) Integer)))
+                  (Let
+                    _.3
+                    (VecSet (Var $ea.3) 0 (Var $ea.1))
+                    (Let
+                      _.2
+                      (VecSet (Var $ea.3) 1 (Var $ea.2))
+                      (Let
+                        _.1
+                        (VecSet (Var $ea.3) 2 (Int 42))
+                        (Var $ea.3))))))))
+          2))))
+   (Def
+     (Label minus)
+     ((args ((n.1 Integer) (m.1 Integer)))
+      (ret Integer)
+      (body
+        (Prim
+          Add
+          ((Var n.1) (Prim Negate ((Var m.1))))))))
+   (Def
+     (Label zero)
+     ((args ((x.1 Integer)))
+      (ret (Vector ()))
+      (body
+        (If
+          (Prim Eq ((Var x.1) (Int 0)))
+          (Let
+            _.5
+            (If
+              (Prim
+                Lt
+                ((Prim
+                   Add
+                   ((GlobalVal free_ptr) (Int 8)))
+                 (GlobalVal fromspace_end)))
+              Void
+              (Collect 8))
+            (Let
+              $ea.4
+              (Allocate 0 (Vector ()))
+              (Var $ea.4)))
+          (Apply
+            (FunRef (Label zero) 1)
+            ((Prim
+               Add
+               ((VecRef
+                  (Let
+                    _.7
+                    (If
+                      (Prim
+                        Lt
+                        ((Prim
+                           Add
+                           ((GlobalVal free_ptr) (Int 16)))
+                         (GlobalVal fromspace_end)))
+                      Void
+                      (Collect 16))
+                    (Let
+                      $ea.5
+                      (Allocate 1 (Vector (Integer)))
+                      (Let
+                        _.6
+                        (VecSet (Var $ea.5) 0 (Var x.1))
+                        (Var $ea.5))))
+                  0)
+                (Prim Negate ((Int 1)))))))))))))

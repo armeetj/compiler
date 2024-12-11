@@ -1,0 +1,65 @@
+(Program
+  ((Def
+     (Label main)
+     ((args ())
+      (ret Integer)
+      (body
+        (Prim
+          Add
+          ((Apply
+             (FunRef (Label factorial) 1)
+             ((Int 0)))
+           (Prim
+             Add
+             ((Apply
+                (FunRef (Label factorial) 1)
+                ((Int 1)))
+              (Prim
+                Add
+                ((Apply
+                   (FunRef (Label factorial) 1)
+                   ((Int 2)))
+                 (Prim
+                   Add
+                   ((Apply
+                      (FunRef (Label factorial) 1)
+                      ((Int 3)))
+                    (Prim
+                      Add
+                      ((Apply
+                         (FunRef (Label factorial) 1)
+                         ((Int 4)))
+                       (Apply
+                         (FunRef (Label factorial) 1)
+                         ((Int 5))))))))))))))))
+   (Def
+     (Label mult)
+     ((args ((x.1 Integer) (y.1 Integer)))
+      (ret Integer)
+      (body
+        (If
+          (Prim Eq ((Int 0) (Var x.1)))
+          (Int 0)
+          (Prim
+            Add
+            ((Var y.1)
+             (Apply
+               (FunRef (Label mult) 2)
+               ((Prim
+                  Add
+                  ((Prim Negate ((Int 1))) (Var x.1)))
+                (Var y.1)))))))))
+   (Def
+     (Label factorial)
+     ((args ((n.1 Integer)))
+      (ret Integer)
+      (body
+        (If
+          (Prim Eq ((Var n.1) (Int 0)))
+          (Int 1)
+          (Apply
+            (FunRef (Label mult) 2)
+            ((Var n.1)
+             (Apply
+               (FunRef (Label factorial) 1)
+               ((Prim Sub ((Var n.1) (Int 1)))))))))))))

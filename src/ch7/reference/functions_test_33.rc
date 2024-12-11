@@ -1,0 +1,52 @@
+(Program
+  ((Def
+     (Label main)
+     ((args ())
+      (ret Integer)
+      (body
+        (If
+          (Let
+            $tmp.2
+            (FunRef (Label even?) 1)
+            (Let
+              $tmp.1
+              (Prim Read ())
+              (Apply (Var $tmp.2) ((Var $tmp.1)))))
+          (Atm (Int 999))
+          (Atm (Int 42))))))
+   (Def
+     (Label even?)
+     ((args ((x.1 Integer)))
+      (ret Boolean)
+      (body
+        (If
+          (Prim Eq ((Var x.1) (Int 0)))
+          (Atm (Bool true))
+          (Let
+            $tmp.5
+            (FunRef (Label odd?) 1)
+            (Let
+              $tmp.3
+              (Prim Negate ((Int 1)))
+              (Let
+                $tmp.4
+                (Prim Add ((Var $tmp.3) (Var x.1)))
+                (Apply (Var $tmp.5) ((Var $tmp.4))))))))))
+   (Def
+     (Label odd?)
+     ((args ((x.2 Integer)))
+      (ret Boolean)
+      (body
+        (If
+          (Prim Eq ((Var x.2) (Int 0)))
+          (Atm (Bool false))
+          (Let
+            $tmp.8
+            (FunRef (Label even?) 1)
+            (Let
+              $tmp.6
+              (Prim Negate ((Int 1)))
+              (Let
+                $tmp.7
+                (Prim Add ((Var $tmp.6) (Var x.2)))
+                (Apply (Var $tmp.8) ((Var $tmp.7))))))))))))

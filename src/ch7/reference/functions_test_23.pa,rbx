@@ -1,0 +1,140 @@
+main_start:
+    leaq f(%rip), %rbx
+    movq $8, %rdi
+    callq *%rbx
+    movq %rax, %rbx
+    leaq g(%rip), %rax
+    movq %rax, -16(%rbp)
+    movq $8, %rdi
+    movq $0, %rsi
+    movq $1, %rdx
+    callq *-16(%rbp)
+    movq %rax, -24(%rbp)
+    movq %rbx, %rax
+    addq -24(%rbp), %rax
+    jmp main_conclusion
+
+    .globl main
+    .align 8
+
+main:
+    pushq %rbp
+    movq %rsp, %rbp
+    pushq %rbx
+    subq $24, %rsp
+    movq $65536, %rdi
+    movq $65536, %rsi
+    callq initialize
+    movq rootstack_begin(%rip), %r15
+    jmp main_start
+
+main_conclusion:
+    addq $24, %rsp
+    popq %rbx
+    popq %rbp
+    retq
+
+block_1:
+    movq $1, %rax
+    jmp f_conclusion
+
+block_2:
+    leaq f(%rip), %rax
+    movq %rax, -24(%rbp)
+    movq %rbx, -16(%rbp)
+    subq $1, -16(%rbp)
+    movq -16(%rbp), %rdi
+    callq *-24(%rbp)
+    movq %rax, -24(%rbp)
+    leaq f(%rip), %rax
+    movq %rax, -32(%rbp)
+    subq $2, %rbx
+    movq %rbx, %rdi
+    callq *-32(%rbp)
+    movq %rax, %rbx
+    movq -24(%rbp), %rax
+    addq %rbx, %rax
+    jmp f_conclusion
+
+block_3:
+    movq $0, %rax
+    jmp f_conclusion
+
+block_4:
+    cmpq $1, %rbx
+    je block_1
+    jmp block_2
+
+f_start:
+    movq %rdi, %rbx
+    cmpq $0, %rbx
+    je block_3
+    jmp block_4
+
+    .globl f
+    .align 8
+
+f:
+    pushq %rbp
+    movq %rsp, %rbp
+    pushq %rbx
+    subq $24, %rsp
+    jmp f_start
+
+f_conclusion:
+    addq $24, %rsp
+    popq %rbx
+    popq %rbp
+    retq
+
+block_5:
+    movq -32(%rbp), %rax
+    jmp g_conclusion
+
+block_6:
+    leaq g(%rip), %rax
+    movq %rax, -24(%rbp)
+    subq $1, %rbx
+    movq -32(%rbp), %rax
+    addq %rax, -16(%rbp)
+    movq %rbx, %rdi
+    movq -32(%rbp), %rsi
+    movq -16(%rbp), %rdx
+    movq -24(%rbp), %rax
+    addq $24, %rsp
+    popq %rbx
+    popq %rbp
+    jmp *%rax
+
+block_7:
+    movq -16(%rbp), %rax
+    jmp g_conclusion
+
+block_8:
+    cmpq $1, %rbx
+    je block_5
+    jmp block_6
+
+g_start:
+    movq %rdi, %rbx
+    movq %rsi, -16(%rbp)
+    movq %rdx, -32(%rbp)
+    cmpq $0, %rbx
+    je block_7
+    jmp block_8
+
+    .globl g
+    .align 8
+
+g:
+    pushq %rbp
+    movq %rsp, %rbp
+    pushq %rbx
+    subq $24, %rsp
+    jmp g_start
+
+g_conclusion:
+    addq $24, %rsp
+    popq %rbx
+    popq %rbp
+    retq

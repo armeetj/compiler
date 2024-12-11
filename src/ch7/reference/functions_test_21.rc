@@ -1,0 +1,33 @@
+(Program
+  ((Def
+     (Label main)
+     ((args ())
+      (ret Integer)
+      (body
+        (Let
+          $tmp.1
+          (FunRef (Label tail_sum) 2)
+          (Let
+            $tmp.2
+            (Apply (Var $tmp.1) ((Int 5) (Int 0)))
+            (Prim Add ((Var $tmp.2) (Int 27))))))))
+   (Def
+     (Label tail_sum)
+     ((args ((n.1 Integer) (r.1 Integer)))
+      (ret Integer)
+      (body
+        (If
+          (Prim Eq ((Var n.1) (Int 0)))
+          (Atm (Var r.1))
+          (Let
+            $tmp.5
+            (FunRef (Label tail_sum) 2)
+            (Let
+              $tmp.3
+              (Prim Sub ((Var n.1) (Int 1)))
+              (Let
+                $tmp.4
+                (Prim Add ((Var n.1) (Var r.1)))
+                (Apply
+                  (Var $tmp.5)
+                  ((Var $tmp.3) (Var $tmp.4))))))))))))

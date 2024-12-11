@@ -1,0 +1,39 @@
+(Program
+  ((Def
+     (Label main)
+     ((args ())
+      (ret Integer)
+      (body
+        (Apply
+          (Apply (FunRef (Label rf) 1) ((Int 0)))
+          ((Int 42)
+           (Int 1)
+           (Int 2)
+           (Int 3)
+           (Int 4)
+           (Vec ((Int 5) (Int 6) (Int 7)) ()))))))
+   (Def
+     (Label f)
+     ((args
+        ((x1.1 Integer)
+         (x2.1 Integer)
+         (x3.1 Integer)
+         (x4.1 Integer)
+         (x5.1 Integer)
+         ($tup.1
+           (Vector (Integer Integer Integer)))))
+      (ret Integer)
+      (body (Var x1.1))))
+   (Def
+     (Label rf)
+     ((args ((x.1 Integer)))
+      (ret
+        (Function
+          (Integer
+            Integer
+            Integer
+            Integer
+            Integer
+            (Vector (Integer Integer Integer)))
+          Integer))
+      (body (FunRef (Label f) 6))))))

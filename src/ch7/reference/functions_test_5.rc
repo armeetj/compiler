@@ -1,0 +1,34 @@
+(Program
+  ((Def
+     (Label main)
+     ((args ())
+      (ret Integer)
+      (body
+        (If
+          (Let
+            $tmp.1
+            (FunRef (Label tailrecur) 1)
+            (Let
+              $tmp.2
+              (Apply (Var $tmp.1) ((Int 99)))
+              (Prim Eq ((Int 0) (Var $tmp.2)))))
+          (Atm (Int 42))
+          (Atm (Int 777))))))
+   (Def
+     (Label tailrecur)
+     ((args ((x.1 Integer)))
+      (ret Integer)
+      (body
+        (If
+          (Prim Eq ((Var x.1) (Int 0)))
+          (Atm (Int 0))
+          (Let
+            $tmp.5
+            (FunRef (Label tailrecur) 1)
+            (Let
+              $tmp.3
+              (Prim Negate ((Int 1)))
+              (Let
+                $tmp.4
+                (Prim Add ((Var x.1) (Var $tmp.3)))
+                (Apply (Var $tmp.5) ((Var $tmp.4))))))))))))

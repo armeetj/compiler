@@ -1,0 +1,51 @@
+(Program
+  ((Def
+     (Label main)
+     ((args ())
+      (ret Integer)
+      (body
+        (Let
+          $tmp.4
+          (FunRef (Label f) 1)
+          (Let
+            $ea.1
+            (FunRef (Label id) 1)
+            (Let
+              _.2
+              (If
+                (Let
+                  $tmp.1
+                  (GlobalVal free_ptr)
+                  (Let
+                    $tmp.2
+                    (Prim Add ((Var $tmp.1) (Int 16)))
+                    (Let
+                      $tmp.3
+                      (GlobalVal fromspace_end)
+                      (Prim Lt ((Var $tmp.2) (Var $tmp.3))))))
+                (Atm Void)
+                (Collect 16))
+              (Let
+                $ea.2
+                (Allocate
+                  1
+                  (Vector ((Function (Integer) Integer))))
+                (Let
+                  _.1
+                  (VecSet (Var $ea.2) 0 (Var $ea.1))
+                  (Let
+                    $tmp.5
+                    (Apply (Var $tmp.4) ((Var $ea.2)))
+                    (Apply (Var $tmp.5) ((Int 42))))))))))))
+   (Def
+     (Label id)
+     ((args ((x.1 Integer)))
+      (ret Integer)
+      (body (Atm (Var x.1)))))
+   (Def
+     (Label f)
+     ((args
+        ((v.1
+           (Vector ((Function (Integer) Integer))))))
+      (ret (Function (Integer) Integer))
+      (body (VecRef (Var v.1) 0))))))

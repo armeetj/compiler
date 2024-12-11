@@ -1,0 +1,13 @@
+(define (sum (A : (Vectorof Integer)) (n : Integer)) : Integer
+  (let ((i 0))
+    (let ((s 0))
+      (begin
+        (while (< i n)
+          (begin
+            (set! s (+ s (vector-ref A i)))
+            (set! i (+ i 1))))
+        s))))
+
+(let ((A (make-vector 42 1)))
+  (sum A 42))
+    

@@ -1,0 +1,2458 @@
+(Program
+  ((Def
+     (Label main)
+     ((args ())
+      (ret Integer)
+      (body
+        (VecRef
+          (VecRef
+            (VecRef
+              (VecRef
+                (VecRef
+                  (VecRef
+                    (Apply
+                      (FunRef (Label e) 2)
+                      ((Int 20)
+                       (Apply
+                         (FunRef (Label f) 2)
+                         ((Int 20)
+                          (Apply
+                            (FunRef (Label h) 2)
+                            ((Int 20)
+                             (Apply
+                               (FunRef (Label t) 2)
+                               ((Int 20)
+                                (Apply
+                                  (FunRef (Label o) 2)
+                                  ((Int 20)
+                                   (Apply (FunRef (Label z) 1) ((Int 20)))))))))))))
+                    0)
+                  0)
+                0)
+              0)
+            0)
+          0))))
+   (Def
+     (Label minus)
+     ((args ((m.1 Integer) (n.1 Integer)))
+      (ret Integer)
+      (body
+        (Prim
+          Add
+          ((Var m.1) (Prim Negate ((Var n.1))))))))
+   (Def
+     (Label z)
+     ((args ((i.1 Integer)))
+      (ret (Vector (Integer)))
+      (body
+        (If
+          (Prim Eq ((Var i.1) (Int 0)))
+          (Let
+            _.2
+            (If
+              (Prim
+                Lt
+                ((Prim
+                   Add
+                   ((GlobalVal free_ptr) (Int 16)))
+                 (GlobalVal fromspace_end)))
+              Void
+              (Collect 16))
+            (Let
+              $ea.1
+              (Allocate 1 (Vector (Integer)))
+              (Let
+                _.1
+                (VecSet (Var $ea.1) 0 (Int 42))
+                (Var $ea.1))))
+          (Let
+            junk.1
+            (Let
+              $ea.7
+              (Let
+                _.4
+                (If
+                  (Prim
+                    Lt
+                    ((Prim
+                       Add
+                       ((GlobalVal free_ptr) (Int 16)))
+                     (GlobalVal fromspace_end)))
+                  Void
+                  (Collect 16))
+                (Let
+                  $ea.2
+                  (Allocate 1 (Vector (Integer)))
+                  (Let
+                    _.3
+                    (VecSet (Var $ea.2) 0 (Int 1))
+                    (Var $ea.2))))
+              (Let
+                $ea.8
+                (Let
+                  _.6
+                  (If
+                    (Prim
+                      Lt
+                      ((Prim
+                         Add
+                         ((GlobalVal free_ptr) (Int 16)))
+                       (GlobalVal fromspace_end)))
+                    Void
+                    (Collect 16))
+                  (Let
+                    $ea.3
+                    (Allocate 1 (Vector (Integer)))
+                    (Let
+                      _.5
+                      (VecSet (Var $ea.3) 0 (Int 2))
+                      (Var $ea.3))))
+                (Let
+                  $ea.9
+                  (Let
+                    _.8
+                    (If
+                      (Prim
+                        Lt
+                        ((Prim
+                           Add
+                           ((GlobalVal free_ptr) (Int 16)))
+                         (GlobalVal fromspace_end)))
+                      Void
+                      (Collect 16))
+                    (Let
+                      $ea.4
+                      (Allocate 1 (Vector (Integer)))
+                      (Let
+                        _.7
+                        (VecSet (Var $ea.4) 0 (Int 3))
+                        (Var $ea.4))))
+                  (Let
+                    $ea.10
+                    (Let
+                      _.10
+                      (If
+                        (Prim
+                          Lt
+                          ((Prim
+                             Add
+                             ((GlobalVal free_ptr) (Int 16)))
+                           (GlobalVal fromspace_end)))
+                        Void
+                        (Collect 16))
+                      (Let
+                        $ea.5
+                        (Allocate 1 (Vector (Integer)))
+                        (Let
+                          _.9
+                          (VecSet (Var $ea.5) 0 (Int 4))
+                          (Var $ea.5))))
+                    (Let
+                      $ea.11
+                      (Let
+                        _.12
+                        (If
+                          (Prim
+                            Lt
+                            ((Prim
+                               Add
+                               ((GlobalVal free_ptr) (Int 16)))
+                             (GlobalVal fromspace_end)))
+                          Void
+                          (Collect 16))
+                        (Let
+                          $ea.6
+                          (Allocate 1 (Vector (Integer)))
+                          (Let
+                            _.11
+                            (VecSet (Var $ea.6) 0 (Int 5))
+                            (Var $ea.6))))
+                      (Let
+                        _.18
+                        (If
+                          (Prim
+                            Lt
+                            ((Prim
+                               Add
+                               ((GlobalVal free_ptr) (Int 48)))
+                             (GlobalVal fromspace_end)))
+                          Void
+                          (Collect 48))
+                        (Let
+                          $ea.12
+                          (Allocate
+                            5
+                            (Vector
+                              ((Vector (Integer))
+                               (Vector (Integer))
+                               (Vector (Integer))
+                               (Vector (Integer))
+                               (Vector (Integer)))))
+                          (Let
+                            _.17
+                            (VecSet (Var $ea.12) 0 (Var $ea.7))
+                            (Let
+                              _.16
+                              (VecSet (Var $ea.12) 1 (Var $ea.8))
+                              (Let
+                                _.15
+                                (VecSet (Var $ea.12) 2 (Var $ea.9))
+                                (Let
+                                  _.14
+                                  (VecSet (Var $ea.12) 3 (Var $ea.10))
+                                  (Let
+                                    _.13
+                                    (VecSet (Var $ea.12) 4 (Var $ea.11))
+                                    (Var $ea.12)))))))))))))
+            (Let
+              garbage.1
+              (Let
+                _.36
+                (If
+                  (Prim
+                    Lt
+                    ((Prim
+                       Add
+                       ((GlobalVal free_ptr) (Int 144)))
+                     (GlobalVal fromspace_end)))
+                  Void
+                  (Collect 144))
+                (Let
+                  $ea.13
+                  (Allocate
+                    17
+                    (Vector
+                      (Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer)))
+                  (Let
+                    _.35
+                    (VecSet (Var $ea.13) 0 (Int -1))
+                    (Let
+                      _.34
+                      (VecSet (Var $ea.13) 1 (Int -1))
+                      (Let
+                        _.33
+                        (VecSet (Var $ea.13) 2 (Int -1))
+                        (Let
+                          _.32
+                          (VecSet (Var $ea.13) 3 (Int -1))
+                          (Let
+                            _.31
+                            (VecSet (Var $ea.13) 4 (Int -1))
+                            (Let
+                              _.30
+                              (VecSet (Var $ea.13) 5 (Int -1))
+                              (Let
+                                _.29
+                                (VecSet (Var $ea.13) 6 (Int -1))
+                                (Let
+                                  _.28
+                                  (VecSet (Var $ea.13) 7 (Int -1))
+                                  (Let
+                                    _.27
+                                    (VecSet (Var $ea.13) 8 (Int -1))
+                                    (Let
+                                      _.26
+                                      (VecSet (Var $ea.13) 9 (Int -1))
+                                      (Let
+                                        _.25
+                                        (VecSet (Var $ea.13) 10 (Int -1))
+                                        (Let
+                                          _.24
+                                          (VecSet (Var $ea.13) 11 (Int -1))
+                                          (Let
+                                            _.23
+                                            (VecSet (Var $ea.13) 12 (Int -1))
+                                            (Let
+                                              _.22
+                                              (VecSet (Var $ea.13) 13 (Int -1))
+                                              (Let
+                                                _.21
+                                                (VecSet (Var $ea.13) 14 (Int -1))
+                                                (Let
+                                                  _.20
+                                                  (VecSet (Var $ea.13) 15 (Int -1))
+                                                  (Let
+                                                    _.19
+                                                    (VecSet (Var $ea.13) 16 (Int -1))
+                                                    (Var $ea.13))))))))))))))))))))
+              (Let
+                more.1
+                (Let
+                  _.45
+                  (If
+                    (Prim
+                      Lt
+                      ((Prim
+                         Add
+                         ((GlobalVal free_ptr) (Int 72)))
+                       (GlobalVal fromspace_end)))
+                    Void
+                    (Collect 72))
+                  (Let
+                    $ea.14
+                    (Allocate
+                      8
+                      (Vector
+                        ((Vector
+                           ((Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))))
+                         (Vector
+                           (Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer))
+                         (Vector
+                           ((Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))))
+                         (Vector
+                           (Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer))
+                         (Vector
+                           ((Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))))
+                         (Vector
+                           (Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer))
+                         (Vector
+                           ((Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))))
+                         (Vector
+                           (Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer)))))
+                    (Let
+                      _.44
+                      (VecSet (Var $ea.14) 0 (Var junk.1))
+                      (Let
+                        _.43
+                        (VecSet (Var $ea.14) 1 (Var garbage.1))
+                        (Let
+                          _.42
+                          (VecSet (Var $ea.14) 2 (Var junk.1))
+                          (Let
+                            _.41
+                            (VecSet (Var $ea.14) 3 (Var garbage.1))
+                            (Let
+                              _.40
+                              (VecSet (Var $ea.14) 4 (Var junk.1))
+                              (Let
+                                _.39
+                                (VecSet (Var $ea.14) 5 (Var garbage.1))
+                                (Let
+                                  _.38
+                                  (VecSet (Var $ea.14) 6 (Var junk.1))
+                                  (Let
+                                    _.37
+                                    (VecSet (Var $ea.14) 7 (Var garbage.1))
+                                    (Var $ea.14)))))))))))
+                (Apply
+                  (FunRef (Label z) 1)
+                  ((Apply
+                     (FunRef (Label minus) 2)
+                     ((Var i.1) (Int 1))))))))))))
+   (Def
+     (Label o)
+     ((args
+        ((i.2 Integer) (v.1 (Vector (Integer)))))
+      (ret (Vector ((Vector (Integer)))))
+      (body
+        (If
+          (Prim Eq ((Var i.2) (Int 0)))
+          (Let
+            _.47
+            (If
+              (Prim
+                Lt
+                ((Prim
+                   Add
+                   ((GlobalVal free_ptr) (Int 16)))
+                 (GlobalVal fromspace_end)))
+              Void
+              (Collect 16))
+            (Let
+              $ea.15
+              (Allocate
+                1
+                (Vector ((Vector (Integer)))))
+              (Let
+                _.46
+                (VecSet (Var $ea.15) 0 (Var v.1))
+                (Var $ea.15))))
+          (Let
+            junk.2
+            (Let
+              $ea.21
+              (Let
+                _.49
+                (If
+                  (Prim
+                    Lt
+                    ((Prim
+                       Add
+                       ((GlobalVal free_ptr) (Int 16)))
+                     (GlobalVal fromspace_end)))
+                  Void
+                  (Collect 16))
+                (Let
+                  $ea.16
+                  (Allocate 1 (Vector (Integer)))
+                  (Let
+                    _.48
+                    (VecSet (Var $ea.16) 0 (Int 1))
+                    (Var $ea.16))))
+              (Let
+                $ea.22
+                (Let
+                  _.51
+                  (If
+                    (Prim
+                      Lt
+                      ((Prim
+                         Add
+                         ((GlobalVal free_ptr) (Int 16)))
+                       (GlobalVal fromspace_end)))
+                    Void
+                    (Collect 16))
+                  (Let
+                    $ea.17
+                    (Allocate 1 (Vector (Integer)))
+                    (Let
+                      _.50
+                      (VecSet (Var $ea.17) 0 (Int 2))
+                      (Var $ea.17))))
+                (Let
+                  $ea.23
+                  (Let
+                    _.53
+                    (If
+                      (Prim
+                        Lt
+                        ((Prim
+                           Add
+                           ((GlobalVal free_ptr) (Int 16)))
+                         (GlobalVal fromspace_end)))
+                      Void
+                      (Collect 16))
+                    (Let
+                      $ea.18
+                      (Allocate 1 (Vector (Integer)))
+                      (Let
+                        _.52
+                        (VecSet (Var $ea.18) 0 (Int 3))
+                        (Var $ea.18))))
+                  (Let
+                    $ea.24
+                    (Let
+                      _.55
+                      (If
+                        (Prim
+                          Lt
+                          ((Prim
+                             Add
+                             ((GlobalVal free_ptr) (Int 16)))
+                           (GlobalVal fromspace_end)))
+                        Void
+                        (Collect 16))
+                      (Let
+                        $ea.19
+                        (Allocate 1 (Vector (Integer)))
+                        (Let
+                          _.54
+                          (VecSet (Var $ea.19) 0 (Int 4))
+                          (Var $ea.19))))
+                    (Let
+                      $ea.25
+                      (Let
+                        _.57
+                        (If
+                          (Prim
+                            Lt
+                            ((Prim
+                               Add
+                               ((GlobalVal free_ptr) (Int 16)))
+                             (GlobalVal fromspace_end)))
+                          Void
+                          (Collect 16))
+                        (Let
+                          $ea.20
+                          (Allocate 1 (Vector (Integer)))
+                          (Let
+                            _.56
+                            (VecSet (Var $ea.20) 0 (Int 5))
+                            (Var $ea.20))))
+                      (Let
+                        _.63
+                        (If
+                          (Prim
+                            Lt
+                            ((Prim
+                               Add
+                               ((GlobalVal free_ptr) (Int 48)))
+                             (GlobalVal fromspace_end)))
+                          Void
+                          (Collect 48))
+                        (Let
+                          $ea.26
+                          (Allocate
+                            5
+                            (Vector
+                              ((Vector (Integer))
+                               (Vector (Integer))
+                               (Vector (Integer))
+                               (Vector (Integer))
+                               (Vector (Integer)))))
+                          (Let
+                            _.62
+                            (VecSet (Var $ea.26) 0 (Var $ea.21))
+                            (Let
+                              _.61
+                              (VecSet (Var $ea.26) 1 (Var $ea.22))
+                              (Let
+                                _.60
+                                (VecSet (Var $ea.26) 2 (Var $ea.23))
+                                (Let
+                                  _.59
+                                  (VecSet (Var $ea.26) 3 (Var $ea.24))
+                                  (Let
+                                    _.58
+                                    (VecSet (Var $ea.26) 4 (Var $ea.25))
+                                    (Var $ea.26)))))))))))))
+            (Let
+              garbage.2
+              (Let
+                _.81
+                (If
+                  (Prim
+                    Lt
+                    ((Prim
+                       Add
+                       ((GlobalVal free_ptr) (Int 144)))
+                     (GlobalVal fromspace_end)))
+                  Void
+                  (Collect 144))
+                (Let
+                  $ea.27
+                  (Allocate
+                    17
+                    (Vector
+                      (Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer)))
+                  (Let
+                    _.80
+                    (VecSet (Var $ea.27) 0 (Int -1))
+                    (Let
+                      _.79
+                      (VecSet (Var $ea.27) 1 (Int -1))
+                      (Let
+                        _.78
+                        (VecSet (Var $ea.27) 2 (Int -1))
+                        (Let
+                          _.77
+                          (VecSet (Var $ea.27) 3 (Int -1))
+                          (Let
+                            _.76
+                            (VecSet (Var $ea.27) 4 (Int -1))
+                            (Let
+                              _.75
+                              (VecSet (Var $ea.27) 5 (Int -1))
+                              (Let
+                                _.74
+                                (VecSet (Var $ea.27) 6 (Int -1))
+                                (Let
+                                  _.73
+                                  (VecSet (Var $ea.27) 7 (Int -1))
+                                  (Let
+                                    _.72
+                                    (VecSet (Var $ea.27) 8 (Int -1))
+                                    (Let
+                                      _.71
+                                      (VecSet (Var $ea.27) 9 (Int -1))
+                                      (Let
+                                        _.70
+                                        (VecSet (Var $ea.27) 10 (Int -1))
+                                        (Let
+                                          _.69
+                                          (VecSet (Var $ea.27) 11 (Int -1))
+                                          (Let
+                                            _.68
+                                            (VecSet (Var $ea.27) 12 (Int -1))
+                                            (Let
+                                              _.67
+                                              (VecSet (Var $ea.27) 13 (Int -1))
+                                              (Let
+                                                _.66
+                                                (VecSet (Var $ea.27) 14 (Int -1))
+                                                (Let
+                                                  _.65
+                                                  (VecSet (Var $ea.27) 15 (Int -1))
+                                                  (Let
+                                                    _.64
+                                                    (VecSet (Var $ea.27) 16 (Int -1))
+                                                    (Var $ea.27))))))))))))))))))))
+              (Let
+                more.2
+                (Let
+                  _.90
+                  (If
+                    (Prim
+                      Lt
+                      ((Prim
+                         Add
+                         ((GlobalVal free_ptr) (Int 72)))
+                       (GlobalVal fromspace_end)))
+                    Void
+                    (Collect 72))
+                  (Let
+                    $ea.28
+                    (Allocate
+                      8
+                      (Vector
+                        ((Vector
+                           ((Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))))
+                         (Vector
+                           (Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer))
+                         (Vector
+                           ((Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))))
+                         (Vector
+                           (Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer))
+                         (Vector
+                           ((Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))))
+                         (Vector
+                           (Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer))
+                         (Vector
+                           ((Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))))
+                         (Vector
+                           (Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer)))))
+                    (Let
+                      _.89
+                      (VecSet (Var $ea.28) 0 (Var junk.2))
+                      (Let
+                        _.88
+                        (VecSet (Var $ea.28) 1 (Var garbage.2))
+                        (Let
+                          _.87
+                          (VecSet (Var $ea.28) 2 (Var junk.2))
+                          (Let
+                            _.86
+                            (VecSet (Var $ea.28) 3 (Var garbage.2))
+                            (Let
+                              _.85
+                              (VecSet (Var $ea.28) 4 (Var junk.2))
+                              (Let
+                                _.84
+                                (VecSet (Var $ea.28) 5 (Var garbage.2))
+                                (Let
+                                  _.83
+                                  (VecSet (Var $ea.28) 6 (Var junk.2))
+                                  (Let
+                                    _.82
+                                    (VecSet (Var $ea.28) 7 (Var garbage.2))
+                                    (Var $ea.28)))))))))))
+                (Apply
+                  (FunRef (Label o) 2)
+                  ((Apply
+                     (FunRef (Label minus) 2)
+                     ((Var i.2) (Int 1)))
+                   (Var v.1))))))))))
+   (Def
+     (Label t)
+     ((args
+        ((i.3 Integer)
+         (v.2 (Vector ((Vector (Integer)))))))
+      (ret
+        (Vector ((Vector ((Vector (Integer)))))))
+      (body
+        (If
+          (Prim Eq ((Var i.3) (Int 0)))
+          (Let
+            _.92
+            (If
+              (Prim
+                Lt
+                ((Prim
+                   Add
+                   ((GlobalVal free_ptr) (Int 16)))
+                 (GlobalVal fromspace_end)))
+              Void
+              (Collect 16))
+            (Let
+              $ea.29
+              (Allocate
+                1
+                (Vector ((Vector ((Vector (Integer)))))))
+              (Let
+                _.91
+                (VecSet (Var $ea.29) 0 (Var v.2))
+                (Var $ea.29))))
+          (Let
+            junk.3
+            (Let
+              $ea.35
+              (Let
+                _.94
+                (If
+                  (Prim
+                    Lt
+                    ((Prim
+                       Add
+                       ((GlobalVal free_ptr) (Int 16)))
+                     (GlobalVal fromspace_end)))
+                  Void
+                  (Collect 16))
+                (Let
+                  $ea.30
+                  (Allocate 1 (Vector (Integer)))
+                  (Let
+                    _.93
+                    (VecSet (Var $ea.30) 0 (Int 1))
+                    (Var $ea.30))))
+              (Let
+                $ea.36
+                (Let
+                  _.96
+                  (If
+                    (Prim
+                      Lt
+                      ((Prim
+                         Add
+                         ((GlobalVal free_ptr) (Int 16)))
+                       (GlobalVal fromspace_end)))
+                    Void
+                    (Collect 16))
+                  (Let
+                    $ea.31
+                    (Allocate 1 (Vector (Integer)))
+                    (Let
+                      _.95
+                      (VecSet (Var $ea.31) 0 (Int 2))
+                      (Var $ea.31))))
+                (Let
+                  $ea.37
+                  (Let
+                    _.98
+                    (If
+                      (Prim
+                        Lt
+                        ((Prim
+                           Add
+                           ((GlobalVal free_ptr) (Int 16)))
+                         (GlobalVal fromspace_end)))
+                      Void
+                      (Collect 16))
+                    (Let
+                      $ea.32
+                      (Allocate 1 (Vector (Integer)))
+                      (Let
+                        _.97
+                        (VecSet (Var $ea.32) 0 (Int 3))
+                        (Var $ea.32))))
+                  (Let
+                    $ea.38
+                    (Let
+                      _.100
+                      (If
+                        (Prim
+                          Lt
+                          ((Prim
+                             Add
+                             ((GlobalVal free_ptr) (Int 16)))
+                           (GlobalVal fromspace_end)))
+                        Void
+                        (Collect 16))
+                      (Let
+                        $ea.33
+                        (Allocate 1 (Vector (Integer)))
+                        (Let
+                          _.99
+                          (VecSet (Var $ea.33) 0 (Int 4))
+                          (Var $ea.33))))
+                    (Let
+                      $ea.39
+                      (Let
+                        _.102
+                        (If
+                          (Prim
+                            Lt
+                            ((Prim
+                               Add
+                               ((GlobalVal free_ptr) (Int 16)))
+                             (GlobalVal fromspace_end)))
+                          Void
+                          (Collect 16))
+                        (Let
+                          $ea.34
+                          (Allocate 1 (Vector (Integer)))
+                          (Let
+                            _.101
+                            (VecSet (Var $ea.34) 0 (Int 5))
+                            (Var $ea.34))))
+                      (Let
+                        _.108
+                        (If
+                          (Prim
+                            Lt
+                            ((Prim
+                               Add
+                               ((GlobalVal free_ptr) (Int 48)))
+                             (GlobalVal fromspace_end)))
+                          Void
+                          (Collect 48))
+                        (Let
+                          $ea.40
+                          (Allocate
+                            5
+                            (Vector
+                              ((Vector (Integer))
+                               (Vector (Integer))
+                               (Vector (Integer))
+                               (Vector (Integer))
+                               (Vector (Integer)))))
+                          (Let
+                            _.107
+                            (VecSet (Var $ea.40) 0 (Var $ea.35))
+                            (Let
+                              _.106
+                              (VecSet (Var $ea.40) 1 (Var $ea.36))
+                              (Let
+                                _.105
+                                (VecSet (Var $ea.40) 2 (Var $ea.37))
+                                (Let
+                                  _.104
+                                  (VecSet (Var $ea.40) 3 (Var $ea.38))
+                                  (Let
+                                    _.103
+                                    (VecSet (Var $ea.40) 4 (Var $ea.39))
+                                    (Var $ea.40)))))))))))))
+            (Let
+              garbage.3
+              (Let
+                _.126
+                (If
+                  (Prim
+                    Lt
+                    ((Prim
+                       Add
+                       ((GlobalVal free_ptr) (Int 144)))
+                     (GlobalVal fromspace_end)))
+                  Void
+                  (Collect 144))
+                (Let
+                  $ea.41
+                  (Allocate
+                    17
+                    (Vector
+                      (Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer)))
+                  (Let
+                    _.125
+                    (VecSet (Var $ea.41) 0 (Int -1))
+                    (Let
+                      _.124
+                      (VecSet (Var $ea.41) 1 (Int -1))
+                      (Let
+                        _.123
+                        (VecSet (Var $ea.41) 2 (Int -1))
+                        (Let
+                          _.122
+                          (VecSet (Var $ea.41) 3 (Int -1))
+                          (Let
+                            _.121
+                            (VecSet (Var $ea.41) 4 (Int -1))
+                            (Let
+                              _.120
+                              (VecSet (Var $ea.41) 5 (Int -1))
+                              (Let
+                                _.119
+                                (VecSet (Var $ea.41) 6 (Int -1))
+                                (Let
+                                  _.118
+                                  (VecSet (Var $ea.41) 7 (Int -1))
+                                  (Let
+                                    _.117
+                                    (VecSet (Var $ea.41) 8 (Int -1))
+                                    (Let
+                                      _.116
+                                      (VecSet (Var $ea.41) 9 (Int -1))
+                                      (Let
+                                        _.115
+                                        (VecSet (Var $ea.41) 10 (Int -1))
+                                        (Let
+                                          _.114
+                                          (VecSet (Var $ea.41) 11 (Int -1))
+                                          (Let
+                                            _.113
+                                            (VecSet (Var $ea.41) 12 (Int -1))
+                                            (Let
+                                              _.112
+                                              (VecSet (Var $ea.41) 13 (Int -1))
+                                              (Let
+                                                _.111
+                                                (VecSet (Var $ea.41) 14 (Int -1))
+                                                (Let
+                                                  _.110
+                                                  (VecSet (Var $ea.41) 15 (Int -1))
+                                                  (Let
+                                                    _.109
+                                                    (VecSet (Var $ea.41) 16 (Int -1))
+                                                    (Var $ea.41))))))))))))))))))))
+              (Let
+                more.3
+                (Let
+                  _.135
+                  (If
+                    (Prim
+                      Lt
+                      ((Prim
+                         Add
+                         ((GlobalVal free_ptr) (Int 72)))
+                       (GlobalVal fromspace_end)))
+                    Void
+                    (Collect 72))
+                  (Let
+                    $ea.42
+                    (Allocate
+                      8
+                      (Vector
+                        ((Vector
+                           ((Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))))
+                         (Vector
+                           (Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer))
+                         (Vector
+                           ((Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))))
+                         (Vector
+                           (Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer))
+                         (Vector
+                           ((Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))))
+                         (Vector
+                           (Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer))
+                         (Vector
+                           ((Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))))
+                         (Vector
+                           (Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer)))))
+                    (Let
+                      _.134
+                      (VecSet (Var $ea.42) 0 (Var junk.3))
+                      (Let
+                        _.133
+                        (VecSet (Var $ea.42) 1 (Var garbage.3))
+                        (Let
+                          _.132
+                          (VecSet (Var $ea.42) 2 (Var junk.3))
+                          (Let
+                            _.131
+                            (VecSet (Var $ea.42) 3 (Var garbage.3))
+                            (Let
+                              _.130
+                              (VecSet (Var $ea.42) 4 (Var junk.3))
+                              (Let
+                                _.129
+                                (VecSet (Var $ea.42) 5 (Var garbage.3))
+                                (Let
+                                  _.128
+                                  (VecSet (Var $ea.42) 6 (Var junk.3))
+                                  (Let
+                                    _.127
+                                    (VecSet (Var $ea.42) 7 (Var garbage.3))
+                                    (Var $ea.42)))))))))))
+                (Apply
+                  (FunRef (Label t) 2)
+                  ((Apply
+                     (FunRef (Label minus) 2)
+                     ((Var i.3) (Int 1)))
+                   (Var v.2))))))))))
+   (Def
+     (Label h)
+     ((args
+        ((i.4 Integer)
+         (v.3
+           (Vector ((Vector ((Vector (Integer)))))))))
+      (ret
+        (Vector
+          ((Vector ((Vector ((Vector (Integer)))))))))
+      (body
+        (If
+          (Prim Eq ((Var i.4) (Int 0)))
+          (Let
+            _.137
+            (If
+              (Prim
+                Lt
+                ((Prim
+                   Add
+                   ((GlobalVal free_ptr) (Int 16)))
+                 (GlobalVal fromspace_end)))
+              Void
+              (Collect 16))
+            (Let
+              $ea.43
+              (Allocate
+                1
+                (Vector
+                  ((Vector ((Vector ((Vector (Integer)))))))))
+              (Let
+                _.136
+                (VecSet (Var $ea.43) 0 (Var v.3))
+                (Var $ea.43))))
+          (Let
+            junk.4
+            (Let
+              $ea.49
+              (Let
+                _.139
+                (If
+                  (Prim
+                    Lt
+                    ((Prim
+                       Add
+                       ((GlobalVal free_ptr) (Int 16)))
+                     (GlobalVal fromspace_end)))
+                  Void
+                  (Collect 16))
+                (Let
+                  $ea.44
+                  (Allocate 1 (Vector (Integer)))
+                  (Let
+                    _.138
+                    (VecSet (Var $ea.44) 0 (Int 1))
+                    (Var $ea.44))))
+              (Let
+                $ea.50
+                (Let
+                  _.141
+                  (If
+                    (Prim
+                      Lt
+                      ((Prim
+                         Add
+                         ((GlobalVal free_ptr) (Int 16)))
+                       (GlobalVal fromspace_end)))
+                    Void
+                    (Collect 16))
+                  (Let
+                    $ea.45
+                    (Allocate 1 (Vector (Integer)))
+                    (Let
+                      _.140
+                      (VecSet (Var $ea.45) 0 (Int 2))
+                      (Var $ea.45))))
+                (Let
+                  $ea.51
+                  (Let
+                    _.143
+                    (If
+                      (Prim
+                        Lt
+                        ((Prim
+                           Add
+                           ((GlobalVal free_ptr) (Int 16)))
+                         (GlobalVal fromspace_end)))
+                      Void
+                      (Collect 16))
+                    (Let
+                      $ea.46
+                      (Allocate 1 (Vector (Integer)))
+                      (Let
+                        _.142
+                        (VecSet (Var $ea.46) 0 (Int 3))
+                        (Var $ea.46))))
+                  (Let
+                    $ea.52
+                    (Let
+                      _.145
+                      (If
+                        (Prim
+                          Lt
+                          ((Prim
+                             Add
+                             ((GlobalVal free_ptr) (Int 16)))
+                           (GlobalVal fromspace_end)))
+                        Void
+                        (Collect 16))
+                      (Let
+                        $ea.47
+                        (Allocate 1 (Vector (Integer)))
+                        (Let
+                          _.144
+                          (VecSet (Var $ea.47) 0 (Int 4))
+                          (Var $ea.47))))
+                    (Let
+                      $ea.53
+                      (Let
+                        _.147
+                        (If
+                          (Prim
+                            Lt
+                            ((Prim
+                               Add
+                               ((GlobalVal free_ptr) (Int 16)))
+                             (GlobalVal fromspace_end)))
+                          Void
+                          (Collect 16))
+                        (Let
+                          $ea.48
+                          (Allocate 1 (Vector (Integer)))
+                          (Let
+                            _.146
+                            (VecSet (Var $ea.48) 0 (Int 5))
+                            (Var $ea.48))))
+                      (Let
+                        _.153
+                        (If
+                          (Prim
+                            Lt
+                            ((Prim
+                               Add
+                               ((GlobalVal free_ptr) (Int 48)))
+                             (GlobalVal fromspace_end)))
+                          Void
+                          (Collect 48))
+                        (Let
+                          $ea.54
+                          (Allocate
+                            5
+                            (Vector
+                              ((Vector (Integer))
+                               (Vector (Integer))
+                               (Vector (Integer))
+                               (Vector (Integer))
+                               (Vector (Integer)))))
+                          (Let
+                            _.152
+                            (VecSet (Var $ea.54) 0 (Var $ea.49))
+                            (Let
+                              _.151
+                              (VecSet (Var $ea.54) 1 (Var $ea.50))
+                              (Let
+                                _.150
+                                (VecSet (Var $ea.54) 2 (Var $ea.51))
+                                (Let
+                                  _.149
+                                  (VecSet (Var $ea.54) 3 (Var $ea.52))
+                                  (Let
+                                    _.148
+                                    (VecSet (Var $ea.54) 4 (Var $ea.53))
+                                    (Var $ea.54)))))))))))))
+            (Let
+              garbage.4
+              (Let
+                _.171
+                (If
+                  (Prim
+                    Lt
+                    ((Prim
+                       Add
+                       ((GlobalVal free_ptr) (Int 144)))
+                     (GlobalVal fromspace_end)))
+                  Void
+                  (Collect 144))
+                (Let
+                  $ea.55
+                  (Allocate
+                    17
+                    (Vector
+                      (Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer)))
+                  (Let
+                    _.170
+                    (VecSet (Var $ea.55) 0 (Int -1))
+                    (Let
+                      _.169
+                      (VecSet (Var $ea.55) 1 (Int -1))
+                      (Let
+                        _.168
+                        (VecSet (Var $ea.55) 2 (Int -1))
+                        (Let
+                          _.167
+                          (VecSet (Var $ea.55) 3 (Int -1))
+                          (Let
+                            _.166
+                            (VecSet (Var $ea.55) 4 (Int -1))
+                            (Let
+                              _.165
+                              (VecSet (Var $ea.55) 5 (Int -1))
+                              (Let
+                                _.164
+                                (VecSet (Var $ea.55) 6 (Int -1))
+                                (Let
+                                  _.163
+                                  (VecSet (Var $ea.55) 7 (Int -1))
+                                  (Let
+                                    _.162
+                                    (VecSet (Var $ea.55) 8 (Int -1))
+                                    (Let
+                                      _.161
+                                      (VecSet (Var $ea.55) 9 (Int -1))
+                                      (Let
+                                        _.160
+                                        (VecSet (Var $ea.55) 10 (Int -1))
+                                        (Let
+                                          _.159
+                                          (VecSet (Var $ea.55) 11 (Int -1))
+                                          (Let
+                                            _.158
+                                            (VecSet (Var $ea.55) 12 (Int -1))
+                                            (Let
+                                              _.157
+                                              (VecSet (Var $ea.55) 13 (Int -1))
+                                              (Let
+                                                _.156
+                                                (VecSet (Var $ea.55) 14 (Int -1))
+                                                (Let
+                                                  _.155
+                                                  (VecSet (Var $ea.55) 15 (Int -1))
+                                                  (Let
+                                                    _.154
+                                                    (VecSet (Var $ea.55) 16 (Int -1))
+                                                    (Var $ea.55))))))))))))))))))))
+              (Let
+                more.4
+                (Let
+                  _.180
+                  (If
+                    (Prim
+                      Lt
+                      ((Prim
+                         Add
+                         ((GlobalVal free_ptr) (Int 72)))
+                       (GlobalVal fromspace_end)))
+                    Void
+                    (Collect 72))
+                  (Let
+                    $ea.56
+                    (Allocate
+                      8
+                      (Vector
+                        ((Vector
+                           ((Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))))
+                         (Vector
+                           (Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer))
+                         (Vector
+                           ((Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))))
+                         (Vector
+                           (Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer))
+                         (Vector
+                           ((Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))))
+                         (Vector
+                           (Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer))
+                         (Vector
+                           ((Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))))
+                         (Vector
+                           (Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer)))))
+                    (Let
+                      _.179
+                      (VecSet (Var $ea.56) 0 (Var junk.4))
+                      (Let
+                        _.178
+                        (VecSet (Var $ea.56) 1 (Var garbage.4))
+                        (Let
+                          _.177
+                          (VecSet (Var $ea.56) 2 (Var junk.4))
+                          (Let
+                            _.176
+                            (VecSet (Var $ea.56) 3 (Var garbage.4))
+                            (Let
+                              _.175
+                              (VecSet (Var $ea.56) 4 (Var junk.4))
+                              (Let
+                                _.174
+                                (VecSet (Var $ea.56) 5 (Var garbage.4))
+                                (Let
+                                  _.173
+                                  (VecSet (Var $ea.56) 6 (Var junk.4))
+                                  (Let
+                                    _.172
+                                    (VecSet (Var $ea.56) 7 (Var garbage.4))
+                                    (Var $ea.56)))))))))))
+                (Apply
+                  (FunRef (Label h) 2)
+                  ((Apply
+                     (FunRef (Label minus) 2)
+                     ((Var i.4) (Int 1)))
+                   (Var v.3))))))))))
+   (Def
+     (Label f)
+     ((args
+        ((i.5 Integer)
+         (v.4
+           (Vector
+             ((Vector ((Vector ((Vector (Integer)))))))))))
+      (ret
+        (Vector
+          ((Vector
+             ((Vector ((Vector ((Vector (Integer)))))))))))
+      (body
+        (If
+          (Prim Eq ((Var i.5) (Int 0)))
+          (Let
+            _.182
+            (If
+              (Prim
+                Lt
+                ((Prim
+                   Add
+                   ((GlobalVal free_ptr) (Int 16)))
+                 (GlobalVal fromspace_end)))
+              Void
+              (Collect 16))
+            (Let
+              $ea.57
+              (Allocate
+                1
+                (Vector
+                  ((Vector
+                     ((Vector ((Vector ((Vector (Integer)))))))))))
+              (Let
+                _.181
+                (VecSet (Var $ea.57) 0 (Var v.4))
+                (Var $ea.57))))
+          (Let
+            junk.5
+            (Let
+              $ea.63
+              (Let
+                _.184
+                (If
+                  (Prim
+                    Lt
+                    ((Prim
+                       Add
+                       ((GlobalVal free_ptr) (Int 16)))
+                     (GlobalVal fromspace_end)))
+                  Void
+                  (Collect 16))
+                (Let
+                  $ea.58
+                  (Allocate 1 (Vector (Integer)))
+                  (Let
+                    _.183
+                    (VecSet (Var $ea.58) 0 (Int 1))
+                    (Var $ea.58))))
+              (Let
+                $ea.64
+                (Let
+                  _.186
+                  (If
+                    (Prim
+                      Lt
+                      ((Prim
+                         Add
+                         ((GlobalVal free_ptr) (Int 16)))
+                       (GlobalVal fromspace_end)))
+                    Void
+                    (Collect 16))
+                  (Let
+                    $ea.59
+                    (Allocate 1 (Vector (Integer)))
+                    (Let
+                      _.185
+                      (VecSet (Var $ea.59) 0 (Int 2))
+                      (Var $ea.59))))
+                (Let
+                  $ea.65
+                  (Let
+                    _.188
+                    (If
+                      (Prim
+                        Lt
+                        ((Prim
+                           Add
+                           ((GlobalVal free_ptr) (Int 16)))
+                         (GlobalVal fromspace_end)))
+                      Void
+                      (Collect 16))
+                    (Let
+                      $ea.60
+                      (Allocate 1 (Vector (Integer)))
+                      (Let
+                        _.187
+                        (VecSet (Var $ea.60) 0 (Int 3))
+                        (Var $ea.60))))
+                  (Let
+                    $ea.66
+                    (Let
+                      _.190
+                      (If
+                        (Prim
+                          Lt
+                          ((Prim
+                             Add
+                             ((GlobalVal free_ptr) (Int 16)))
+                           (GlobalVal fromspace_end)))
+                        Void
+                        (Collect 16))
+                      (Let
+                        $ea.61
+                        (Allocate 1 (Vector (Integer)))
+                        (Let
+                          _.189
+                          (VecSet (Var $ea.61) 0 (Int 4))
+                          (Var $ea.61))))
+                    (Let
+                      $ea.67
+                      (Let
+                        _.192
+                        (If
+                          (Prim
+                            Lt
+                            ((Prim
+                               Add
+                               ((GlobalVal free_ptr) (Int 16)))
+                             (GlobalVal fromspace_end)))
+                          Void
+                          (Collect 16))
+                        (Let
+                          $ea.62
+                          (Allocate 1 (Vector (Integer)))
+                          (Let
+                            _.191
+                            (VecSet (Var $ea.62) 0 (Int 5))
+                            (Var $ea.62))))
+                      (Let
+                        _.198
+                        (If
+                          (Prim
+                            Lt
+                            ((Prim
+                               Add
+                               ((GlobalVal free_ptr) (Int 48)))
+                             (GlobalVal fromspace_end)))
+                          Void
+                          (Collect 48))
+                        (Let
+                          $ea.68
+                          (Allocate
+                            5
+                            (Vector
+                              ((Vector (Integer))
+                               (Vector (Integer))
+                               (Vector (Integer))
+                               (Vector (Integer))
+                               (Vector (Integer)))))
+                          (Let
+                            _.197
+                            (VecSet (Var $ea.68) 0 (Var $ea.63))
+                            (Let
+                              _.196
+                              (VecSet (Var $ea.68) 1 (Var $ea.64))
+                              (Let
+                                _.195
+                                (VecSet (Var $ea.68) 2 (Var $ea.65))
+                                (Let
+                                  _.194
+                                  (VecSet (Var $ea.68) 3 (Var $ea.66))
+                                  (Let
+                                    _.193
+                                    (VecSet (Var $ea.68) 4 (Var $ea.67))
+                                    (Var $ea.68)))))))))))))
+            (Let
+              garbage.5
+              (Let
+                _.216
+                (If
+                  (Prim
+                    Lt
+                    ((Prim
+                       Add
+                       ((GlobalVal free_ptr) (Int 144)))
+                     (GlobalVal fromspace_end)))
+                  Void
+                  (Collect 144))
+                (Let
+                  $ea.69
+                  (Allocate
+                    17
+                    (Vector
+                      (Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer)))
+                  (Let
+                    _.215
+                    (VecSet (Var $ea.69) 0 (Int -1))
+                    (Let
+                      _.214
+                      (VecSet (Var $ea.69) 1 (Int -1))
+                      (Let
+                        _.213
+                        (VecSet (Var $ea.69) 2 (Int -1))
+                        (Let
+                          _.212
+                          (VecSet (Var $ea.69) 3 (Int -1))
+                          (Let
+                            _.211
+                            (VecSet (Var $ea.69) 4 (Int -1))
+                            (Let
+                              _.210
+                              (VecSet (Var $ea.69) 5 (Int -1))
+                              (Let
+                                _.209
+                                (VecSet (Var $ea.69) 6 (Int -1))
+                                (Let
+                                  _.208
+                                  (VecSet (Var $ea.69) 7 (Int -1))
+                                  (Let
+                                    _.207
+                                    (VecSet (Var $ea.69) 8 (Int -1))
+                                    (Let
+                                      _.206
+                                      (VecSet (Var $ea.69) 9 (Int -1))
+                                      (Let
+                                        _.205
+                                        (VecSet (Var $ea.69) 10 (Int -1))
+                                        (Let
+                                          _.204
+                                          (VecSet (Var $ea.69) 11 (Int -1))
+                                          (Let
+                                            _.203
+                                            (VecSet (Var $ea.69) 12 (Int -1))
+                                            (Let
+                                              _.202
+                                              (VecSet (Var $ea.69) 13 (Int -1))
+                                              (Let
+                                                _.201
+                                                (VecSet (Var $ea.69) 14 (Int -1))
+                                                (Let
+                                                  _.200
+                                                  (VecSet (Var $ea.69) 15 (Int -1))
+                                                  (Let
+                                                    _.199
+                                                    (VecSet (Var $ea.69) 16 (Int -1))
+                                                    (Var $ea.69))))))))))))))))))))
+              (Let
+                more.5
+                (Let
+                  _.225
+                  (If
+                    (Prim
+                      Lt
+                      ((Prim
+                         Add
+                         ((GlobalVal free_ptr) (Int 72)))
+                       (GlobalVal fromspace_end)))
+                    Void
+                    (Collect 72))
+                  (Let
+                    $ea.70
+                    (Allocate
+                      8
+                      (Vector
+                        ((Vector
+                           ((Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))))
+                         (Vector
+                           (Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer))
+                         (Vector
+                           ((Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))))
+                         (Vector
+                           (Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer))
+                         (Vector
+                           ((Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))))
+                         (Vector
+                           (Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer))
+                         (Vector
+                           ((Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))))
+                         (Vector
+                           (Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer)))))
+                    (Let
+                      _.224
+                      (VecSet (Var $ea.70) 0 (Var junk.5))
+                      (Let
+                        _.223
+                        (VecSet (Var $ea.70) 1 (Var garbage.5))
+                        (Let
+                          _.222
+                          (VecSet (Var $ea.70) 2 (Var junk.5))
+                          (Let
+                            _.221
+                            (VecSet (Var $ea.70) 3 (Var garbage.5))
+                            (Let
+                              _.220
+                              (VecSet (Var $ea.70) 4 (Var junk.5))
+                              (Let
+                                _.219
+                                (VecSet (Var $ea.70) 5 (Var garbage.5))
+                                (Let
+                                  _.218
+                                  (VecSet (Var $ea.70) 6 (Var junk.5))
+                                  (Let
+                                    _.217
+                                    (VecSet (Var $ea.70) 7 (Var garbage.5))
+                                    (Var $ea.70)))))))))))
+                (Apply
+                  (FunRef (Label f) 2)
+                  ((Apply
+                     (FunRef (Label minus) 2)
+                     ((Var i.5) (Int 1)))
+                   (Var v.4))))))))))
+   (Def
+     (Label e)
+     ((args
+        ((i.6 Integer)
+         (v.5
+           (Vector
+             ((Vector
+                ((Vector ((Vector ((Vector (Integer)))))))))))))
+      (ret
+        (Vector
+          ((Vector
+             ((Vector
+                ((Vector ((Vector ((Vector (Integer)))))))))))))
+      (body
+        (If
+          (Prim Eq ((Var i.6) (Int 0)))
+          (Let
+            _.227
+            (If
+              (Prim
+                Lt
+                ((Prim
+                   Add
+                   ((GlobalVal free_ptr) (Int 16)))
+                 (GlobalVal fromspace_end)))
+              Void
+              (Collect 16))
+            (Let
+              $ea.71
+              (Allocate
+                1
+                (Vector
+                  ((Vector
+                     ((Vector
+                        ((Vector ((Vector ((Vector (Integer)))))))))))))
+              (Let
+                _.226
+                (VecSet (Var $ea.71) 0 (Var v.5))
+                (Var $ea.71))))
+          (Let
+            junk.6
+            (Let
+              $ea.77
+              (Let
+                _.229
+                (If
+                  (Prim
+                    Lt
+                    ((Prim
+                       Add
+                       ((GlobalVal free_ptr) (Int 16)))
+                     (GlobalVal fromspace_end)))
+                  Void
+                  (Collect 16))
+                (Let
+                  $ea.72
+                  (Allocate 1 (Vector (Integer)))
+                  (Let
+                    _.228
+                    (VecSet (Var $ea.72) 0 (Int 1))
+                    (Var $ea.72))))
+              (Let
+                $ea.78
+                (Let
+                  _.231
+                  (If
+                    (Prim
+                      Lt
+                      ((Prim
+                         Add
+                         ((GlobalVal free_ptr) (Int 16)))
+                       (GlobalVal fromspace_end)))
+                    Void
+                    (Collect 16))
+                  (Let
+                    $ea.73
+                    (Allocate 1 (Vector (Integer)))
+                    (Let
+                      _.230
+                      (VecSet (Var $ea.73) 0 (Int 2))
+                      (Var $ea.73))))
+                (Let
+                  $ea.79
+                  (Let
+                    _.233
+                    (If
+                      (Prim
+                        Lt
+                        ((Prim
+                           Add
+                           ((GlobalVal free_ptr) (Int 16)))
+                         (GlobalVal fromspace_end)))
+                      Void
+                      (Collect 16))
+                    (Let
+                      $ea.74
+                      (Allocate 1 (Vector (Integer)))
+                      (Let
+                        _.232
+                        (VecSet (Var $ea.74) 0 (Int 3))
+                        (Var $ea.74))))
+                  (Let
+                    $ea.80
+                    (Let
+                      _.235
+                      (If
+                        (Prim
+                          Lt
+                          ((Prim
+                             Add
+                             ((GlobalVal free_ptr) (Int 16)))
+                           (GlobalVal fromspace_end)))
+                        Void
+                        (Collect 16))
+                      (Let
+                        $ea.75
+                        (Allocate 1 (Vector (Integer)))
+                        (Let
+                          _.234
+                          (VecSet (Var $ea.75) 0 (Int 4))
+                          (Var $ea.75))))
+                    (Let
+                      $ea.81
+                      (Let
+                        _.237
+                        (If
+                          (Prim
+                            Lt
+                            ((Prim
+                               Add
+                               ((GlobalVal free_ptr) (Int 16)))
+                             (GlobalVal fromspace_end)))
+                          Void
+                          (Collect 16))
+                        (Let
+                          $ea.76
+                          (Allocate 1 (Vector (Integer)))
+                          (Let
+                            _.236
+                            (VecSet (Var $ea.76) 0 (Int 5))
+                            (Var $ea.76))))
+                      (Let
+                        _.243
+                        (If
+                          (Prim
+                            Lt
+                            ((Prim
+                               Add
+                               ((GlobalVal free_ptr) (Int 48)))
+                             (GlobalVal fromspace_end)))
+                          Void
+                          (Collect 48))
+                        (Let
+                          $ea.82
+                          (Allocate
+                            5
+                            (Vector
+                              ((Vector (Integer))
+                               (Vector (Integer))
+                               (Vector (Integer))
+                               (Vector (Integer))
+                               (Vector (Integer)))))
+                          (Let
+                            _.242
+                            (VecSet (Var $ea.82) 0 (Var $ea.77))
+                            (Let
+                              _.241
+                              (VecSet (Var $ea.82) 1 (Var $ea.78))
+                              (Let
+                                _.240
+                                (VecSet (Var $ea.82) 2 (Var $ea.79))
+                                (Let
+                                  _.239
+                                  (VecSet (Var $ea.82) 3 (Var $ea.80))
+                                  (Let
+                                    _.238
+                                    (VecSet (Var $ea.82) 4 (Var $ea.81))
+                                    (Var $ea.82)))))))))))))
+            (Let
+              garbage.6
+              (Let
+                _.261
+                (If
+                  (Prim
+                    Lt
+                    ((Prim
+                       Add
+                       ((GlobalVal free_ptr) (Int 144)))
+                     (GlobalVal fromspace_end)))
+                  Void
+                  (Collect 144))
+                (Let
+                  $ea.83
+                  (Allocate
+                    17
+                    (Vector
+                      (Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer
+                        Integer)))
+                  (Let
+                    _.260
+                    (VecSet (Var $ea.83) 0 (Int -1))
+                    (Let
+                      _.259
+                      (VecSet (Var $ea.83) 1 (Int -1))
+                      (Let
+                        _.258
+                        (VecSet (Var $ea.83) 2 (Int -1))
+                        (Let
+                          _.257
+                          (VecSet (Var $ea.83) 3 (Int -1))
+                          (Let
+                            _.256
+                            (VecSet (Var $ea.83) 4 (Int -1))
+                            (Let
+                              _.255
+                              (VecSet (Var $ea.83) 5 (Int -1))
+                              (Let
+                                _.254
+                                (VecSet (Var $ea.83) 6 (Int -1))
+                                (Let
+                                  _.253
+                                  (VecSet (Var $ea.83) 7 (Int -1))
+                                  (Let
+                                    _.252
+                                    (VecSet (Var $ea.83) 8 (Int -1))
+                                    (Let
+                                      _.251
+                                      (VecSet (Var $ea.83) 9 (Int -1))
+                                      (Let
+                                        _.250
+                                        (VecSet (Var $ea.83) 10 (Int -1))
+                                        (Let
+                                          _.249
+                                          (VecSet (Var $ea.83) 11 (Int -1))
+                                          (Let
+                                            _.248
+                                            (VecSet (Var $ea.83) 12 (Int -1))
+                                            (Let
+                                              _.247
+                                              (VecSet (Var $ea.83) 13 (Int -1))
+                                              (Let
+                                                _.246
+                                                (VecSet (Var $ea.83) 14 (Int -1))
+                                                (Let
+                                                  _.245
+                                                  (VecSet (Var $ea.83) 15 (Int -1))
+                                                  (Let
+                                                    _.244
+                                                    (VecSet (Var $ea.83) 16 (Int -1))
+                                                    (Var $ea.83))))))))))))))))))))
+              (Let
+                more.6
+                (Let
+                  _.270
+                  (If
+                    (Prim
+                      Lt
+                      ((Prim
+                         Add
+                         ((GlobalVal free_ptr) (Int 72)))
+                       (GlobalVal fromspace_end)))
+                    Void
+                    (Collect 72))
+                  (Let
+                    $ea.84
+                    (Allocate
+                      8
+                      (Vector
+                        ((Vector
+                           ((Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))))
+                         (Vector
+                           (Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer))
+                         (Vector
+                           ((Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))))
+                         (Vector
+                           (Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer))
+                         (Vector
+                           ((Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))))
+                         (Vector
+                           (Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer))
+                         (Vector
+                           ((Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))
+                            (Vector (Integer))))
+                         (Vector
+                           (Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer
+                             Integer)))))
+                    (Let
+                      _.269
+                      (VecSet (Var $ea.84) 0 (Var junk.6))
+                      (Let
+                        _.268
+                        (VecSet (Var $ea.84) 1 (Var garbage.6))
+                        (Let
+                          _.267
+                          (VecSet (Var $ea.84) 2 (Var junk.6))
+                          (Let
+                            _.266
+                            (VecSet (Var $ea.84) 3 (Var garbage.6))
+                            (Let
+                              _.265
+                              (VecSet (Var $ea.84) 4 (Var junk.6))
+                              (Let
+                                _.264
+                                (VecSet (Var $ea.84) 5 (Var garbage.6))
+                                (Let
+                                  _.263
+                                  (VecSet (Var $ea.84) 6 (Var junk.6))
+                                  (Let
+                                    _.262
+                                    (VecSet (Var $ea.84) 7 (Var garbage.6))
+                                    (Var $ea.84)))))))))))
+                (Apply
+                  (FunRef (Label e) 2)
+                  ((Apply
+                     (FunRef (Label minus) 2)
+                     ((Var i.6) (Int 1)))
+                   (Var v.5))))))))))))

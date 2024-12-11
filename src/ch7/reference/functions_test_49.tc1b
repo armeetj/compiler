@@ -1,0 +1,32 @@
+(Program
+  ((Def
+     (Label main)
+     ((args ())
+      (ret Integer)
+      (body
+        (If
+          (Apply (FunRef (Label g) 0) ())
+          (Apply (FunRef (Label h) 0) ())
+          (Apply
+            (FunRef (Label l) 1)
+            ((Apply (FunRef (Label k) 0) ())))))))
+   (Def
+     (Label g)
+     ((args ())
+      (ret Boolean)
+      (body (Bool false))))
+   (Def
+     (Label h)
+     ((args ())
+      (ret Integer)
+      (body (Int 777))))
+   (Def
+     (Label k)
+     ((args ())
+      (ret Integer)
+      (body (Int 41))))
+   (Def
+     (Label l)
+     ((args ((y.1 Integer)))
+      (ret Integer)
+      (body (Prim Add ((Var y.1) (Int 1))))))))

@@ -1,0 +1,60 @@
+(Program
+  ((Def
+     (Label main)
+     ((args ())
+      (ret Integer)
+      (body
+        (Let
+          $tmp.3
+          (FunRef (Label ack) 2)
+          (Let
+            $tmp.1
+            (Prim Read ())
+            (Let
+              $tmp.2
+              (Prim Read ())
+              (Let
+                $tmp.4
+                (Apply
+                  (Var $tmp.3)
+                  ((Var $tmp.1) (Var $tmp.2)))
+                (Prim Add ((Var $tmp.4) (Int 41))))))))))
+   (Def
+     (Label ack)
+     ((args ((m.1 Integer) (n.1 Integer)))
+      (ret Integer)
+      (body
+        (If
+          (Prim Eq ((Var m.1) (Int 0)))
+          (Prim Add ((Int 1) (Var n.1)))
+          (If
+            (Prim Eq ((Var n.1) (Int 0)))
+            (Let
+              $tmp.6
+              (FunRef (Label ack) 2)
+              (Let
+                $tmp.5
+                (Prim Sub ((Var m.1) (Int 1)))
+                (Apply
+                  (Var $tmp.6)
+                  ((Var $tmp.5) (Int 1)))))
+            (Let
+              $tmp.11
+              (FunRef (Label ack) 2)
+              (Let
+                $tmp.7
+                (Prim Sub ((Var m.1) (Int 1)))
+                (Let
+                  $tmp.9
+                  (FunRef (Label ack) 2)
+                  (Let
+                    $tmp.8
+                    (Prim Sub ((Var n.1) (Int 1)))
+                    (Let
+                      $tmp.10
+                      (Apply
+                        (Var $tmp.9)
+                        ((Var m.1) (Var $tmp.8)))
+                      (Apply
+                        (Var $tmp.11)
+                        ((Var $tmp.7) (Var $tmp.10)))))))))))))))

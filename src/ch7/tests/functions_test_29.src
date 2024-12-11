@@ -1,0 +1,6 @@
+;; OUTPUT: 43
+
+(define (id (x : Integer)) : Integer
+  (+ x 1))
+
+(id 42)

@@ -1,0 +1,5 @@
+(define (uhoh (x : Integer)) : Integer
+  (if (= x 0)
+      (uhoh x)
+      x))
+(uhoh 42)

@@ -1,0 +1,25 @@
+(Program
+  ((Def
+     main
+     ((args ())
+      (ret Integer)
+      (body
+        (Apply
+          (Var f)
+          ((Int 0)
+           (Vec ((Int 42)) ((Vector (Integer)))))))))
+   (Def
+     f
+     ((args
+        ((n.1 Integer) (v.1 (Vector (Integer)))))
+      (ret Integer)
+      (body
+        (If
+          (Prim Eq ((Var n.1) (Int 100)))
+          (VecRef (Var v.1) 0)
+          (Apply
+            (Var f)
+            ((Prim Add ((Var n.1) (Int 1)))
+             (Vec
+               ((VecRef (Var v.1) 0))
+               ((Vector (Integer))))))))))))

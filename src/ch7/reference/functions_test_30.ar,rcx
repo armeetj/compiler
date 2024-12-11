@@ -1,0 +1,59 @@
+(X86Program
+  ((Def
+     (Label main)
+     (Finfo3
+       (num_spilled 2)
+       (num_spilled_root 0)
+       (used_callee ()))
+     ((nparams 0)
+      (locals
+        (($tmp.1 (Function (Integer) Integer))
+         ($tmp.2 Integer)
+         ($tmp.3 (Function (Integer) Integer))
+         (id (Function (Integer) Integer))
+         (id2 (Function (Integer) Integer))))
+      (body
+        (((Label main_start)
+          (Block
+            Binfo1
+            ((Leaq
+               (GlobalArg (Label id2))
+               (Deref Rbp -16))
+             (Leaq
+               (GlobalArg (Label id))
+               (Deref Rbp -8))
+             (Movq (Imm 42) (Reg Rdi))
+             (IndirectCallq (Deref Rbp -8) 1)
+             (Movq (Reg Rax) (Reg Rcx))
+             (Movq (Reg Rcx) (Reg Rdi))
+             (TailJmp (Deref Rbp -16) 1))))))))
+   (Def
+     (Label id)
+     (Finfo3
+       (num_spilled 0)
+       (num_spilled_root 0)
+       (used_callee ()))
+     ((nparams 1)
+      (locals ((x.1 Integer) (x.1 Integer)))
+      (body
+        (((Label id_start)
+          (Block
+            Binfo1
+            ((Movq (Reg Rdi) (Reg Rcx))
+             (Movq (Reg Rcx) (Reg Rax))
+             (Jmp (Label id_conclusion)))))))))
+   (Def
+     (Label id2)
+     (Finfo3
+       (num_spilled 0)
+       (num_spilled_root 0)
+       (used_callee ()))
+     ((nparams 1)
+      (locals ((y.1 Integer) (y.1 Integer)))
+      (body
+        (((Label id2_start)
+          (Block
+            Binfo1
+            ((Movq (Reg Rdi) (Reg Rcx))
+             (Movq (Reg Rcx) (Reg Rax))
+             (Jmp (Label id2_conclusion)))))))))))

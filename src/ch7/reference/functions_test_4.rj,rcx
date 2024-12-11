@@ -1,0 +1,79 @@
+(X86Program
+  ((Def
+     (Label main)
+     (Finfo3
+       (num_spilled 1)
+       (num_spilled_root 0)
+       (used_callee ()))
+     ((nparams 0)
+      (locals
+        (($tmp.1 (Function (Integer) Integer))
+         ($tmp.2 Integer)
+         (sum (Function (Integer) Integer))))
+      (body
+        (((Label block_1)
+          (Block
+            Binfo1
+            ((Movq (Imm 42) (Reg Rax))
+             (Jmp (Label main_conclusion)))))
+         ((Label block_2)
+          (Block
+            Binfo1
+            ((Movq (Imm 777) (Reg Rax))
+             (Jmp (Label main_conclusion)))))
+         ((Label main_start)
+          (Block
+            Binfo1
+            ((Leaq
+               (GlobalArg (Label sum))
+               (Deref Rbp -8))
+             (Movq (Imm 3) (Reg Rdi))
+             (IndirectCallq (Deref Rbp -8) 1)
+             (Movq (Reg Rax) (Reg Rcx))
+             (Cmpq (Imm 6) (Reg Rcx))
+             (JmpIf CC_e (Label block_1))
+             (Jmp (Label block_2)))))))))
+   (Def
+     (Label sum)
+     (Finfo3
+       (num_spilled 3)
+       (num_spilled_root 0)
+       (used_callee ()))
+     ((nparams 1)
+      (locals
+        ((x.1 Integer)
+         ($tmp.3 Integer)
+         ($tmp.4 Integer)
+         ($tmp.5 (Function (Integer) Integer))
+         ($tmp.6 Integer)
+         (sum (Function (Integer) Integer))
+         (x.1 Integer)))
+      (body
+        (((Label block_3)
+          (Block
+            Binfo1
+            ((Movq (Imm 1) (Reg Rax))
+             (Jmp (Label sum_conclusion)))))
+         ((Label block_4)
+          (Block
+            Binfo1
+            ((Leaq
+               (GlobalArg (Label sum))
+               (Deref Rbp -16))
+             (Movq (Imm 1) (Reg Rcx))
+             (Negq (Reg Rcx))
+             (Movq (Deref Rbp -24) (Deref Rbp -8))
+             (Addq (Reg Rcx) (Deref Rbp -8))
+             (Movq (Deref Rbp -8) (Reg Rdi))
+             (IndirectCallq (Deref Rbp -16) 1)
+             (Movq (Reg Rax) (Reg Rcx))
+             (Movq (Deref Rbp -24) (Reg Rax))
+             (Addq (Reg Rcx) (Reg Rax))
+             (Jmp (Label sum_conclusion)))))
+         ((Label sum_start)
+          (Block
+            Binfo1
+            ((Movq (Reg Rdi) (Deref Rbp -24))
+             (Cmpq (Imm 1) (Deref Rbp -24))
+             (JmpIf CC_e (Label block_3))
+             (Jmp (Label block_4)))))))))))

@@ -1,0 +1,178 @@
+(Program
+  ((Def
+     (Label main)
+     ((args ())
+      (ret Integer)
+      (body
+        (Let
+          a.1
+          (Apply
+            (FunRef (Label big) 10)
+            ((Int 1)
+             (Int 2)
+             (Int 3)
+             (Int 0)
+             (Int 5)
+             (Int 6)
+             (Int 7)
+             (Int 8)
+             (Int 9)
+             (Int 1)))
+          (Let
+            b.1
+            (Int 1)
+            (Let
+              c.1
+              (Int 1)
+              (Let
+                d.1
+                (Int 1)
+                (Let
+                  e.1
+                  (Int 1)
+                  (Let
+                    f.1
+                    (Int 1)
+                    (Let
+                      g.1
+                      (Int 1)
+                      (Let
+                        h.1
+                        (Int 1)
+                        (Let
+                          i.1
+                          (Int 1)
+                          (Let
+                            j.1
+                            (Int 1)
+                            (Let
+                              k.1
+                              (Int 1)
+                              (Let
+                                l.1
+                                (Int 1)
+                                (Let
+                                  m.1
+                                  (Int 1)
+                                  (Let
+                                    n.1
+                                    (Int 1)
+                                    (Let
+                                      o.1
+                                      (Int 1)
+                                      (Let
+                                        p.1
+                                        (Int 1)
+                                        (Let
+                                          q.1
+                                          (Int 1)
+                                          (Let
+                                            r.1
+                                            (Int 1)
+                                            (Let
+                                              s.1
+                                              (Apply
+                                                (FunRef (Label big2) 8)
+                                                ((Int 1)
+                                                 (Int 2)
+                                                 (Int 3)
+                                                 (Int 1)
+                                                 (Int 5)
+                                                 (Int 6)
+                                                 (Int 7)
+                                                 (Int 0)))
+                                              (Let
+                                                t.1
+                                                (Int 1)
+                                                (Let
+                                                  u.1
+                                                  (Int 1)
+                                                  (Prim
+                                                    Add
+                                                    ((Var a.1)
+                                                     (Prim
+                                                       Add
+                                                       ((Var b.1)
+                                                        (Prim
+                                                          Add
+                                                          ((Var c.1)
+                                                           (Prim
+                                                             Add
+                                                             ((Var d.1)
+                                                              (Prim
+                                                                Add
+                                                                ((Var e.1)
+                                                                 (Prim
+                                                                   Add
+                                                                   ((Var f.1)
+                                                                    (Prim
+                                                                      Add
+                                                                      ((Var g.1)
+                                                                       (Prim
+                                                                         Add
+                                                                         ((Var h.1)
+                                                                          (Prim
+                                                                            Add
+                                                                            ((Var i.1)
+                                                                             (Prim
+                                                                               Add
+                                                                               ((Var j.1)
+                                                                                (Prim
+                                                                                  Add
+                                                                                  ((Var k.1)
+                                                                                   (Prim
+                                                                                     Add
+                                                                                     ((Var l.1)
+                                                                                      (Prim
+                                                                                        Add
+                                                                                        ((Var m.1)
+                                                                                         (Prim
+                                                                                           Add
+                                                                                           ((Var n.1)
+                                                                                            (Prim
+                                                                                              Add
+                                                                                              ((Var o.1)
+                                                                                               (Prim
+                                                                                                 Add
+                                                                                                 ((Var p.1)
+                                                                                                  (Prim
+                                                                                                    Add
+                                                                                                    ((Var q.1)
+                                                                                                     (Prim
+                                                                                                       Add
+                                                                                                       ((Var r.1)
+                                                                                                        (Prim
+                                                                                                          Add
+                                                                                                          ((Var s.1)
+                                                                                                           (Prim
+                                                                                                             Add
+                                                                                                             ((Var t.1)
+                                                                                                              (Prim Add ((Var u.1) (Int 21)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))
+   (Def
+     (Label big)
+     ((args
+        ((a.2 Integer)
+         (b.2 Integer)
+         (c.2 Integer)
+         (d.2 Integer)
+         (e.2 Integer)
+         (f.2 Integer)
+         (g.2 Integer)
+         (h.2 Integer)
+         (i.2 Integer)
+         (j.2 Integer)))
+      (ret Integer)
+      (body (Prim Add ((Var d.2) (Var j.2))))))
+   (Def
+     (Label big2)
+     ((args
+        ((a.3 Integer)
+         (b.3 Integer)
+         (c.3 Integer)
+         (d.3 Integer)
+         (e.3 Integer)
+         (f.3 Integer)
+         (g.3 Integer)
+         (h.3 Integer)))
+      (ret Integer)
+      (body (Prim Add ((Var d.3) (Var h.3))))))))

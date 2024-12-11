@@ -1,0 +1,73 @@
+(X86Program
+  ((Def
+     (Label main)
+     Finfo1
+     ((nparams 0)
+      (locals
+        (($tmp.1 (Function (Integer) Integer))
+         ($tmp.2 Integer)
+         (sum (Function (Integer) Integer))))
+      (body
+        (((Label block_1)
+          (Block
+            Binfo1
+            ((Movq (Imm 42) (Reg Rax))
+             (Jmp (Label main_conclusion)))))
+         ((Label block_2)
+          (Block
+            Binfo1
+            ((Movq (Imm 777) (Reg Rax))
+             (Jmp (Label main_conclusion)))))
+         ((Label main_start)
+          (Block
+            Binfo1
+            ((Leaq
+               (GlobalArg (Label sum))
+               (Var $tmp.1))
+             (Movq (Imm 3) (Reg Rdi))
+             (IndirectCallq (Var $tmp.1) 1)
+             (Movq (Reg Rax) (Var $tmp.2))
+             (Cmpq (Imm 6) (Var $tmp.2))
+             (JmpIf CC_e (Label block_1))
+             (Jmp (Label block_2)))))))))
+   (Def
+     (Label sum)
+     Finfo1
+     ((nparams 1)
+      (locals
+        ((x.1 Integer)
+         ($tmp.3 Integer)
+         ($tmp.4 Integer)
+         ($tmp.5 (Function (Integer) Integer))
+         ($tmp.6 Integer)
+         (sum (Function (Integer) Integer))
+         (x.1 Integer)))
+      (body
+        (((Label block_3)
+          (Block
+            Binfo1
+            ((Movq (Imm 1) (Reg Rax))
+             (Jmp (Label sum_conclusion)))))
+         ((Label block_4)
+          (Block
+            Binfo1
+            ((Leaq
+               (GlobalArg (Label sum))
+               (Var $tmp.5))
+             (Movq (Imm 1) (Var $tmp.3))
+             (Negq (Var $tmp.3))
+             (Movq (Var x.1) (Var $tmp.4))
+             (Addq (Var $tmp.3) (Var $tmp.4))
+             (Movq (Var $tmp.4) (Reg Rdi))
+             (IndirectCallq (Var $tmp.5) 1)
+             (Movq (Reg Rax) (Var $tmp.6))
+             (Movq (Var x.1) (Reg Rax))
+             (Addq (Var $tmp.6) (Reg Rax))
+             (Jmp (Label sum_conclusion)))))
+         ((Label sum_start)
+          (Block
+            Binfo1
+            ((Movq (Reg Rdi) (Var x.1))
+             (Cmpq (Imm 1) (Var x.1))
+             (JmpIf CC_e (Label block_3))
+             (Jmp (Label block_4)))))))))))

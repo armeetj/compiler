@@ -1,0 +1,28 @@
+(Program
+  ((Def
+     main
+     ((args ())
+      (ret Integer)
+      (body
+        (If
+          (Prim
+            Eq
+            ((Apply (Var sum) ((Int 3))) (Int 6)))
+          (Int 42)
+          (Int 777)))))
+   (Def
+     sum
+     ((args ((x.1 Integer)))
+      (ret Integer)
+      (body
+        (If
+          (Prim Eq ((Var x.1) (Int 1)))
+          (Int 1)
+          (Prim
+            Add
+            ((Var x.1)
+             (Apply
+               (Var sum)
+               ((Prim
+                  Add
+                  ((Var x.1) (Prim Negate ((Int 1)))))))))))))))

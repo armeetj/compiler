@@ -1,0 +1,114 @@
+(Program
+  ((Def
+     (Label main)
+     ((args ())
+      (ret Integer)
+      (body
+        (Let
+          $tmp.1
+          (FunRef (Label factorial) 1)
+          (Let
+            $tmp.2
+            (Apply (Var $tmp.1) ((Int 0)))
+            (Let
+              $tmp.3
+              (FunRef (Label factorial) 1)
+              (Let
+                $tmp.4
+                (Apply (Var $tmp.3) ((Int 1)))
+                (Let
+                  $tmp.5
+                  (FunRef (Label factorial) 1)
+                  (Let
+                    $tmp.6
+                    (Apply (Var $tmp.5) ((Int 2)))
+                    (Let
+                      $tmp.7
+                      (FunRef (Label factorial) 1)
+                      (Let
+                        $tmp.8
+                        (Apply (Var $tmp.7) ((Int 3)))
+                        (Let
+                          $tmp.9
+                          (FunRef (Label factorial) 1)
+                          (Let
+                            $tmp.10
+                            (Apply (Var $tmp.9) ((Int 4)))
+                            (Let
+                              $tmp.11
+                              (FunRef (Label factorial) 1)
+                              (Let
+                                $tmp.12
+                                (Apply (Var $tmp.11) ((Int 5)))
+                                (Let
+                                  $tmp.13
+                                  (Prim Add ((Var $tmp.10) (Var $tmp.12)))
+                                  (Let
+                                    $tmp.14
+                                    (Prim Add ((Var $tmp.8) (Var $tmp.13)))
+                                    (Let
+                                      $tmp.15
+                                      (Prim Add ((Var $tmp.6) (Var $tmp.14)))
+                                      (Let
+                                        $tmp.16
+                                        (Prim Add ((Var $tmp.4) (Var $tmp.15)))
+                                        (Prim Add ((Var $tmp.2) (Var $tmp.16))))))))))))))))))))))
+   (Def
+     (Label mult)
+     ((args ((x.1 Integer) (y.1 Integer)))
+      (ret Integer)
+      (body
+        (If
+          (Prim Eq ((Int 0) (Var x.1)))
+          (Atm (Int 0))
+          (Let
+            $tmp.19
+            (FunRef (Label mult) 2)
+            (Let
+              $tmp.17
+              (Prim Negate ((Int 1)))
+              (Let
+                $tmp.18
+                (Prim Add ((Var $tmp.17) (Var x.1)))
+                (Let
+                  $tmp.20
+                  (Apply
+                    (Var $tmp.19)
+                    ((Var $tmp.18) (Var y.1)))
+                  (Prim Add ((Var y.1) (Var $tmp.20)))))))))))
+   (Def
+     (Label factorial_iter)
+     ((args ((n.1 Integer) (r.1 Integer)))
+      (ret Integer)
+      (body
+        (If
+          (Prim Eq ((Var n.1) (Int 0)))
+          (Atm (Var r.1))
+          (Let
+            $tmp.24
+            (FunRef (Label factorial_iter) 2)
+            (Let
+              $tmp.21
+              (Prim Sub ((Var n.1) (Int 1)))
+              (Let
+                $tmp.22
+                (FunRef (Label mult) 2)
+                (Let
+                  $tmp.23
+                  (Apply
+                    (Var $tmp.22)
+                    ((Var n.1) (Var r.1)))
+                  (Apply
+                    (Var $tmp.24)
+                    ((Var $tmp.21) (Var $tmp.23)))))))))))
+   (Def
+     (Label factorial)
+     ((args ((n.2 Integer)))
+      (ret Integer)
+      (body
+        (Let
+          $tmp.25
+          (FunRef (Label factorial_iter) 2)
+          (Apply
+            (Var $tmp.25)
+            ((Var n.2) (Int 1)))))))))

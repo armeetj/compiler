@@ -1,0 +1,14 @@
+(Program
+  ((Def
+     (Label main)
+     ((args ())
+      (ret Integer)
+      (body
+        (Apply
+          (FunRef (Label f) 1)
+          ((Vec ((Int 42)) ((Vector (Integer)))))))))
+   (Def
+     (Label f)
+     ((args ((v.1 (Vector (Integer)))))
+      (ret Integer)
+      (body (VecRef (Var v.1) 0))))))

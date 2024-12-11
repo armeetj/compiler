@@ -1,0 +1,80 @@
+(X86Program
+  ((Def
+     (Label main)
+     (Finfo3
+       (num_spilled 0)
+       (num_spilled_root 0)
+       (used_callee (Rbx R12)))
+     ((nparams 0)
+      (locals
+        (($tmp.1 (Function (Integer) Integer))
+         ($tmp.2 Integer)
+         ($tmp.3
+           (Function
+             ((Function (Integer) Integer) Integer)
+             Integer))
+         (add1 (Function (Integer) Integer))
+         (twice
+           (Function
+             ((Function (Integer) Integer) Integer)
+             Integer))))
+      (body
+        (((Label main_start)
+          (Block
+            Binfo1
+            ((Leaq
+               (GlobalArg (Label twice))
+               (Reg R12))
+             (Leaq
+               (GlobalArg (Label add1))
+               (Reg Rbx))
+             (Callq (Label read_int) 0)
+             (Movq (Reg Rax) (Reg Rcx))
+             (Movq (Reg Rbx) (Reg Rdi))
+             (Movq (Reg Rcx) (Reg Rsi))
+             (TailJmp (Reg R12) 2))))))))
+   (Def
+     (Label add1)
+     (Finfo3
+       (num_spilled 0)
+       (num_spilled_root 0)
+       (used_callee ()))
+     ((nparams 1)
+      (locals ((y.1 Integer) (y.1 Integer)))
+      (body
+        (((Label add1_start)
+          (Block
+            Binfo1
+            ((Movq (Reg Rdi) (Reg Rcx))
+             (Movq (Imm 1) (Reg Rax))
+             (Addq (Reg Rcx) (Reg Rax))
+             (Jmp (Label add1_conclusion)))))))))
+   (Def
+     (Label twice)
+     (Finfo3
+       (num_spilled 0)
+       (num_spilled_root 0)
+       (used_callee (Rbx R12 R13)))
+     ((nparams 2)
+      (locals
+        ((f.1 (Function (Integer) Integer))
+         (x.1 Integer)
+         ($tmp.4 Integer)
+         ($tmp.5 Integer)
+         (f.1 (Function (Integer) Integer))
+         (x.1 Integer)))
+      (body
+        (((Label twice_start)
+          (Block
+            Binfo1
+            ((Movq (Reg Rdi) (Reg R12))
+             (Movq (Reg Rsi) (Reg R13))
+             (Movq (Reg R13) (Reg Rdi))
+             (IndirectCallq (Reg R12) 1)
+             (Movq (Reg Rax) (Reg Rbx))
+             (Movq (Reg R13) (Reg Rdi))
+             (IndirectCallq (Reg R12) 1)
+             (Movq (Reg Rax) (Reg Rcx))
+             (Movq (Reg Rbx) (Reg Rax))
+             (Addq (Reg Rcx) (Reg Rax))
+             (Jmp (Label twice_conclusion)))))))))))

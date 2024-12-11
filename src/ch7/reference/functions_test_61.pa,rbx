@@ -1,0 +1,109 @@
+block_1:
+    movq free_ptr(%rip), %r11
+    addq $24, free_ptr(%rip)
+    movq $5, 0(%r11)
+    movq %r11, -8(%r15)
+    movq $1, 8(%r11)
+    movq $0, -16(%rbp)
+    movq -8(%r15), %r11
+    movq $0, 16(%r11)
+    movq $0, -16(%rbp)
+    movq $0, %rdi
+    movq $0, %rsi
+    movq $0, %rdx
+    movq $0, %rcx
+    movq $0, %r8
+    movq -8(%r15), %r9
+    movq %rbx, %rax
+    subq $8, %r15
+    addq $24, %rsp
+    popq %rbx
+    popq %rbp
+    jmp *%rax
+
+block_2:
+    movq $0, -8(%r15)
+    jmp block_1
+
+block_3:
+    movq %r15, %rdi
+    movq $24, %rsi
+    callq collect
+    jmp block_1
+
+main_start:
+    leaq h(%rip), %rbx
+    movq free_ptr(%rip), %rax
+    movq %rax, -16(%rbp)
+    addq $24, -16(%rbp)
+    movq fromspace_end(%rip), %rax
+    movq %rax, -24(%rbp)
+    cmpq %rax, -16(%rbp)
+    jl block_2
+    jmp block_3
+
+    .globl main
+    .align 8
+
+main:
+    pushq %rbp
+    movq %rsp, %rbp
+    pushq %rbx
+    subq $24, %rsp
+    movq $65536, %rdi
+    movq $65536, %rsi
+    callq initialize
+    movq rootstack_begin(%rip), %r15
+    movq $0, 0(%r15)
+    addq $8, %r15
+    jmp main_start
+
+main_conclusion:
+    subq $8, %r15
+    addq $24, %rsp
+    popq %rbx
+    popq %rbp
+    retq
+
+h_start:
+    movq %rdi, -24(%rbp)
+    movq %rsi, -32(%rbp)
+    movq %rdx, -40(%rbp)
+    movq %rcx, -48(%rbp)
+    movq %r8, -56(%rbp)
+    movq %r9, -16(%rbp)
+    movq -16(%rbp), %r11
+    movq 8(%r11), %rbx
+    movq -16(%rbp), %r11
+    movq 16(%r11), %rax
+    movq %rax, -16(%rbp)
+    addq -16(%rbp), %rbx
+    movq -56(%rbp), %rax
+    movq %rax, -16(%rbp)
+    addq %rbx, -16(%rbp)
+    movq -48(%rbp), %rbx
+    addq -16(%rbp), %rbx
+    movq -40(%rbp), %rax
+    movq %rax, -16(%rbp)
+    addq %rbx, -16(%rbp)
+    movq -32(%rbp), %rbx
+    addq -16(%rbp), %rbx
+    movq -24(%rbp), %rax
+    addq %rbx, %rax
+    jmp h_conclusion
+
+    .globl h
+    .align 8
+
+h:
+    pushq %rbp
+    movq %rsp, %rbp
+    pushq %rbx
+    subq $56, %rsp
+    jmp h_start
+
+h_conclusion:
+    addq $56, %rsp
+    popq %rbx
+    popq %rbp
+    retq

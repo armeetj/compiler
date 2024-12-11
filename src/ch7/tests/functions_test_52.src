@@ -1,0 +1,8 @@
+;; INPUT: 0 ; 1 ; 10
+;; OUTPUT: 42 ; 43 ; 52
+
+(define (add1 (x : Integer)) : Integer (+ x 1))
+
+(let (v (vector 41))
+  (+ (add1 (read))
+     (vector-ref v 0)))

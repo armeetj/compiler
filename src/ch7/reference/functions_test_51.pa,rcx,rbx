@@ -1,0 +1,136 @@
+main_start:
+    leaq g(%rip), %rbx
+    leaq sum_eight(%rip), %rcx
+    movq %rcx, %rdi
+    callq *%rbx
+    movq %rax, %rcx
+    movq $6, %rax
+    addq %rcx, %rax
+    jmp main_conclusion
+
+    .globl main
+    .align 8
+
+main:
+    pushq %rbp
+    movq %rsp, %rbp
+    pushq %rbx
+    subq $8, %rsp
+    movq $65536, %rdi
+    movq $65536, %rsi
+    callq initialize
+    movq rootstack_begin(%rip), %r15
+    jmp main_start
+
+main_conclusion:
+    addq $8, %rsp
+    popq %rbx
+    popq %rbp
+    retq
+
+sum_eight_start:
+    movq %rdi, -16(%rbp)
+    movq %rsi, %rbx
+    movq %rdx, -32(%rbp)
+    movq %rcx, -40(%rbp)
+    movq %r8, -24(%rbp)
+    movq %r9, %rcx
+    addq %rbx, -16(%rbp)
+    movq -32(%rbp), %rbx
+    addq -40(%rbp), %rbx
+    addq %rbx, -16(%rbp)
+    movq %rcx, %r11
+    movq 8(%r11), %rbx
+    addq %rbx, -24(%rbp)
+    movq %rcx, %r11
+    movq 16(%r11), %rbx
+    movq %rcx, %r11
+    movq 24(%r11), %rcx
+    addq %rcx, %rbx
+    movq -24(%rbp), %rcx
+    addq %rbx, %rcx
+    movq -16(%rbp), %rax
+    addq %rcx, %rax
+    jmp sum_eight_conclusion
+
+    .globl sum_eight
+    .align 8
+
+sum_eight:
+    pushq %rbp
+    movq %rsp, %rbp
+    pushq %rbx
+    subq $40, %rsp
+    jmp sum_eight_start
+
+sum_eight_conclusion:
+    addq $40, %rsp
+    popq %rbx
+    popq %rbp
+    retq
+
+block_1:
+    movq free_ptr(%rip), %r11
+    addq $32, free_ptr(%rip)
+    movq $7, 0(%r11)
+    movq %r11, -8(%r15)
+    movq $6, 8(%r11)
+    movq $0, %rcx
+    movq -8(%r15), %r11
+    movq $7, 16(%r11)
+    movq $0, %rcx
+    movq -8(%r15), %r11
+    movq $8, 24(%r11)
+    movq $0, %rcx
+    movq $1, %rdi
+    movq $2, %rsi
+    movq $3, %rdx
+    movq $4, %rcx
+    movq $5, %r8
+    movq -8(%r15), %r9
+    movq %rbx, %rax
+    subq $8, %r15
+    addq $8, %rsp
+    popq %rbx
+    popq %rbp
+    jmp *%rax
+
+block_2:
+    movq $0, %rcx
+    jmp block_1
+
+block_3:
+    movq %r15, %rdi
+    movq $32, %rsi
+    callq collect
+    jmp block_1
+
+g_start:
+    movq %rdi, %rbx
+    movq free_ptr(%rip), %rax
+    movq %rax, -8(%r15)
+    addq $32, -8(%r15)
+    movq fromspace_end(%rip), %rax
+    movq %rax, -16(%rbp)
+    cmpq %rax, -8(%r15)
+    jl block_2
+    jmp block_3
+
+    .globl g
+    .align 8
+
+g:
+    pushq %rbp
+    movq %rsp, %rbp
+    pushq %rbx
+    subq $8, %rsp
+    movq $0, 0(%r15)
+    addq $8, %r15
+    jmp g_start
+
+g_conclusion:
+    subq $8, %r15
+    addq $8, %rsp
+    popq %rbx
+    popq %rbp
+    retq

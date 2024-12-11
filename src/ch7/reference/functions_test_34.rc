@@ -1,0 +1,84 @@
+(Program
+  ((Def
+     (Label main)
+     ((args ())
+      (ret Integer)
+      (body
+        (Let
+          vec.1
+          (Let
+            $ea.1
+            (FunRef (Label odd?) 1)
+            (Let
+              _.2
+              (If
+                (Let
+                  $tmp.1
+                  (GlobalVal free_ptr)
+                  (Let
+                    $tmp.2
+                    (Prim Add ((Var $tmp.1) (Int 16)))
+                    (Let
+                      $tmp.3
+                      (GlobalVal fromspace_end)
+                      (Prim Lt ((Var $tmp.2) (Var $tmp.3))))))
+                (Atm Void)
+                (Collect 16))
+              (Let
+                $ea.2
+                (Allocate
+                  1
+                  (Vector ((Function (Integer) Boolean))))
+                (Let
+                  _.1
+                  (VecSet (Var $ea.2) 0 (Var $ea.1))
+                  (Atm (Var $ea.2))))))
+          (Let
+            dummy.1
+            (Let
+              $tmp.4
+              (FunRef (Label even?) 1)
+              (VecSet (Var vec.1) 0 (Var $tmp.4)))
+            (If
+              (Let
+                $tmp.5
+                (VecRef (Var vec.1) 0)
+                (Apply (Var $tmp.5) ((Int 21))))
+              (Atm (Int 999))
+              (Atm (Int 42))))))))
+   (Def
+     (Label even?)
+     ((args ((x.1 Integer)))
+      (ret Boolean)
+      (body
+        (If
+          (Prim Eq ((Var x.1) (Int 0)))
+          (Atm (Bool true))
+          (Let
+            $tmp.8
+            (FunRef (Label odd?) 1)
+            (Let
+              $tmp.6
+              (Prim Negate ((Int 1)))
+              (Let
+                $tmp.7
+                (Prim Add ((Var $tmp.6) (Var x.1)))
+                (Apply (Var $tmp.8) ((Var $tmp.7))))))))))
+   (Def
+     (Label odd?)
+     ((args ((x.2 Integer)))
+      (ret Boolean)
+      (body
+        (If
+          (Prim Eq ((Var x.2) (Int 0)))
+          (Atm (Bool false))
+          (Let
+            $tmp.11
+            (FunRef (Label even?) 1)
+            (Let
+              $tmp.9
+              (Prim Negate ((Int 1)))
+              (Let
+                $tmp.10
+                (Prim Add ((Var $tmp.9) (Var x.2)))
+                (Apply (Var $tmp.11) ((Var $tmp.10))))))))))))

@@ -1,0 +1,12 @@
+(Program
+  ((Def
+     (Label main)
+     ((args ())
+      (ret Integer)
+      (body (Int 42))))
+   (Def
+     (Label bluh)
+     ((args ())
+      (ret (Function (Integer) Integer))
+      (body
+        (Apply (FunRef (Label bluh) 0) ()))))))

@@ -1,0 +1,7 @@
+(Program
+  ((Def
+     add
+     ((args ((x Integer) (y Integer)))
+      (ret Integer)
+      (body (Prim Add ((Var x) (Var y)))))))
+  (Apply (Var add) ((Int 20) (Int 22))))

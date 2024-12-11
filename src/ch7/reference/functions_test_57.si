@@ -1,0 +1,194 @@
+(X86Program
+  ((Def
+     (Label main)
+     Finfo1
+     ((nparams 0)
+      (locals
+        (($tmp.1 (Function (Integer) Integer))
+         ($tmp.10 Integer)
+         ($tmp.11 (Function (Integer) Integer))
+         ($tmp.12 Integer)
+         ($tmp.13 Integer)
+         ($tmp.14 Integer)
+         ($tmp.15 Integer)
+         ($tmp.16 Integer)
+         ($tmp.2 Integer)
+         ($tmp.3 (Function (Integer) Integer))
+         ($tmp.4 Integer)
+         ($tmp.5 (Function (Integer) Integer))
+         ($tmp.6 Integer)
+         ($tmp.7 (Function (Integer) Integer))
+         ($tmp.8 Integer)
+         ($tmp.9 (Function (Integer) Integer))
+         (factorial (Function (Integer) Integer))))
+      (body
+        (((Label main_start)
+          (Block
+            Binfo1
+            ((Leaq
+               (GlobalArg (Label factorial))
+               (Var $tmp.1))
+             (Movq (Imm 0) (Reg Rdi))
+             (IndirectCallq (Var $tmp.1) 1)
+             (Movq (Reg Rax) (Var $tmp.2))
+             (Leaq
+               (GlobalArg (Label factorial))
+               (Var $tmp.3))
+             (Movq (Imm 1) (Reg Rdi))
+             (IndirectCallq (Var $tmp.3) 1)
+             (Movq (Reg Rax) (Var $tmp.4))
+             (Leaq
+               (GlobalArg (Label factorial))
+               (Var $tmp.5))
+             (Movq (Imm 2) (Reg Rdi))
+             (IndirectCallq (Var $tmp.5) 1)
+             (Movq (Reg Rax) (Var $tmp.6))
+             (Leaq
+               (GlobalArg (Label factorial))
+               (Var $tmp.7))
+             (Movq (Imm 3) (Reg Rdi))
+             (IndirectCallq (Var $tmp.7) 1)
+             (Movq (Reg Rax) (Var $tmp.8))
+             (Leaq
+               (GlobalArg (Label factorial))
+               (Var $tmp.9))
+             (Movq (Imm 4) (Reg Rdi))
+             (IndirectCallq (Var $tmp.9) 1)
+             (Movq (Reg Rax) (Var $tmp.10))
+             (Leaq
+               (GlobalArg (Label factorial))
+               (Var $tmp.11))
+             (Movq (Imm 5) (Reg Rdi))
+             (IndirectCallq (Var $tmp.11) 1)
+             (Movq (Reg Rax) (Var $tmp.12))
+             (Movq (Var $tmp.10) (Var $tmp.13))
+             (Addq (Var $tmp.12) (Var $tmp.13))
+             (Movq (Var $tmp.8) (Var $tmp.14))
+             (Addq (Var $tmp.13) (Var $tmp.14))
+             (Movq (Var $tmp.6) (Var $tmp.15))
+             (Addq (Var $tmp.14) (Var $tmp.15))
+             (Movq (Var $tmp.4) (Var $tmp.16))
+             (Addq (Var $tmp.15) (Var $tmp.16))
+             (Movq (Var $tmp.2) (Reg Rax))
+             (Addq (Var $tmp.16) (Reg Rax))
+             (Jmp (Label main_conclusion)))))))))
+   (Def
+     (Label mult)
+     Finfo1
+     ((nparams 2)
+      (locals
+        ((x.1 Integer)
+         (y.1 Integer)
+         ($tmp.17 Integer)
+         ($tmp.18 Integer)
+         ($tmp.19
+           (Function (Integer Integer) Integer))
+         ($tmp.20 Integer)
+         (mult
+           (Function (Integer Integer) Integer))
+         (x.1 Integer)
+         (y.1 Integer)))
+      (body
+        (((Label block_1)
+          (Block
+            Binfo1
+            ((Movq (Imm 0) (Reg Rax))
+             (Jmp (Label mult_conclusion)))))
+         ((Label block_2)
+          (Block
+            Binfo1
+            ((Leaq
+               (GlobalArg (Label mult))
+               (Var $tmp.19))
+             (Movq (Imm 1) (Var $tmp.17))
+             (Negq (Var $tmp.17))
+             (Movq (Var $tmp.17) (Var $tmp.18))
+             (Addq (Var x.1) (Var $tmp.18))
+             (Movq (Var $tmp.18) (Reg Rdi))
+             (Movq (Var y.1) (Reg Rsi))
+             (IndirectCallq (Var $tmp.19) 2)
+             (Movq (Reg Rax) (Var $tmp.20))
+             (Movq (Var y.1) (Reg Rax))
+             (Addq (Var $tmp.20) (Reg Rax))
+             (Jmp (Label mult_conclusion)))))
+         ((Label mult_start)
+          (Block
+            Binfo1
+            ((Movq (Reg Rdi) (Var x.1))
+             (Movq (Reg Rsi) (Var y.1))
+             (Cmpq (Var x.1) (Imm 0))
+             (JmpIf CC_e (Label block_1))
+             (Jmp (Label block_2)))))))))
+   (Def
+     (Label factorial_iter)
+     Finfo1
+     ((nparams 2)
+      (locals
+        ((n.1 Integer)
+         (r.1 Integer)
+         ($tmp.21 Integer)
+         ($tmp.22
+           (Function (Integer Integer) Integer))
+         ($tmp.23 Integer)
+         ($tmp.24
+           (Function (Integer Integer) Integer))
+         (factorial_iter
+           (Function (Integer Integer) Integer))
+         (mult
+           (Function (Integer Integer) Integer))
+         (n.1 Integer)
+         (r.1 Integer)))
+      (body
+        (((Label block_3)
+          (Block
+            Binfo1
+            ((Movq (Var r.1) (Reg Rax))
+             (Jmp (Label factorial_iter_conclusion)))))
+         ((Label block_4)
+          (Block
+            Binfo1
+            ((Leaq
+               (GlobalArg (Label factorial_iter))
+               (Var $tmp.24))
+             (Movq (Var n.1) (Var $tmp.21))
+             (Subq (Imm 1) (Var $tmp.21))
+             (Leaq
+               (GlobalArg (Label mult))
+               (Var $tmp.22))
+             (Movq (Var n.1) (Reg Rdi))
+             (Movq (Var r.1) (Reg Rsi))
+             (IndirectCallq (Var $tmp.22) 2)
+             (Movq (Reg Rax) (Var $tmp.23))
+             (Movq (Var $tmp.21) (Reg Rdi))
+             (Movq (Var $tmp.23) (Reg Rsi))
+             (TailJmp (Var $tmp.24) 2))))
+         ((Label factorial_iter_start)
+          (Block
+            Binfo1
+            ((Movq (Reg Rdi) (Var n.1))
+             (Movq (Reg Rsi) (Var r.1))
+             (Cmpq (Imm 0) (Var n.1))
+             (JmpIf CC_e (Label block_3))
+             (Jmp (Label block_4)))))))))
+   (Def
+     (Label factorial)
+     Finfo1
+     ((nparams 1)
+      (locals
+        ((n.2 Integer)
+         ($tmp.25
+           (Function (Integer Integer) Integer))
+         (factorial_iter
+           (Function (Integer Integer) Integer))
+         (n.2 Integer)))
+      (body
+        (((Label factorial_start)
+          (Block
+            Binfo1
+            ((Movq (Reg Rdi) (Var n.2))
+             (Leaq
+               (GlobalArg (Label factorial_iter))
+               (Var $tmp.25))
+             (Movq (Var n.2) (Reg Rdi))
+             (Movq (Imm 1) (Reg Rsi))
+             (TailJmp (Var $tmp.25) 2))))))))))

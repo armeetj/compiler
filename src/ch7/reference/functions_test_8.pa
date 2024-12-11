@@ -1,0 +1,96 @@
+block_1:
+    movq $42, %rax
+    jmp main_conclusion
+
+block_2:
+    movq $0, %rax
+    jmp main_conclusion
+
+main_start:
+    leaq even(%rip), %rcx
+    movq $2, %rdi
+    callq *%rcx
+    movq %rax, %rcx
+    cmpq $1, %rcx
+    je block_1
+    jmp block_2
+
+    .globl main
+    .align 8
+
+main:
+    pushq %rbp
+    movq %rsp, %rbp
+    movq $65536, %rdi
+    movq $65536, %rsi
+    callq initialize
+    movq rootstack_begin(%rip), %r15
+    jmp main_start
+
+main_conclusion:
+    popq %rbp
+    retq
+
+block_3:
+    movq $1, %rax
+    jmp even_conclusion
+
+block_4:
+    leaq odd(%rip), %rdx
+    movq $1, %rsi
+    negq %rsi
+    addq %rsi, %rcx
+    movq %rcx, %rdi
+    movq %rdx, %rax
+    popq %rbp
+    jmp *%rax
+
+even_start:
+    movq %rdi, %rcx
+    cmpq $0, %rcx
+    je block_3
+    jmp block_4
+
+    .globl even
+    .align 8
+
+even:
+    pushq %rbp
+    movq %rsp, %rbp
+    jmp even_start
+
+even_conclusion:
+    popq %rbp
+    retq
+
+block_5:
+    movq $0, %rax
+    jmp odd_conclusion
+
+block_6:
+    leaq even(%rip), %rdx
+    movq $1, %rsi
+    negq %rsi
+    addq %rsi, %rcx
+    movq %rcx, %rdi
+    movq %rdx, %rax
+    popq %rbp
+    jmp *%rax
+
+odd_start:
+    movq %rdi, %rcx
+    cmpq $0, %rcx
+    je block_5
+    jmp block_6
+
+    .globl odd
+    .align 8
+
+odd:
+    pushq %rbp
+    movq %rsp, %rbp
+    jmp odd_start
+
+odd_conclusion:
+    popq %rbp
+    retq

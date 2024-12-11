@@ -1,0 +1,125 @@
+(Program
+  ((Def
+     (Label main)
+     ((args ())
+      (ret Integer)
+      (body
+        (Let
+          vec.1
+          (Let
+            _.4
+            (If
+              (Let
+                $tmp.1
+                (GlobalVal free_ptr)
+                (Let
+                  $tmp.2
+                  (Prim Add ((Var $tmp.1) (Int 32)))
+                  (Let
+                    $tmp.3
+                    (GlobalVal fromspace_end)
+                    (Prim Lt ((Var $tmp.2) (Var $tmp.3))))))
+              (Atm Void)
+              (Collect 32))
+            (Let
+              $ea.1
+              (Allocate
+                3
+                (Vector (Integer Integer Integer)))
+              (Let
+                _.3
+                (VecSet (Var $ea.1) 0 (Int 1))
+                (Let
+                  _.2
+                  (VecSet (Var $ea.1) 1 (Int 2))
+                  (Let
+                    _.1
+                    (VecSet (Var $ea.1) 2 (Int 3))
+                    (Atm (Var $ea.1)))))))
+          (Let
+            vec2.1
+            (Let
+              $tmp.5
+              (FunRef (Label mapint) 2)
+              (Let
+                $tmp.4
+                (FunRef (Label add1) 1)
+                (Apply
+                  (Var $tmp.5)
+                  ((Var $tmp.4) (Var vec.1)))))
+            (Let
+              $tmp.6
+              (VecRef (Var vec2.1) 0)
+              (Let
+                $tmp.7
+                (VecRef (Var vec2.1) 1)
+                (Let
+                  $tmp.8
+                  (VecRef (Var vec2.1) 2)
+                  (Let
+                    $tmp.9
+                    (Prim Add ((Var $tmp.8) (Int 33)))
+                    (Let
+                      $tmp.10
+                      (Prim Add ((Var $tmp.7) (Var $tmp.9)))
+                      (Prim Add ((Var $tmp.6) (Var $tmp.10)))))))))))))
+   (Def
+     (Label mapint)
+     ((args
+        ((fun.1 (Function (Integer) Integer))
+         (v.1 (Vector (Integer Integer Integer)))))
+      (ret (Vector (Integer Integer Integer)))
+      (body
+        (Let
+          $ea.2
+          (Let
+            $tmp.11
+            (VecRef (Var v.1) 0)
+            (Apply (Var fun.1) ((Var $tmp.11))))
+          (Let
+            $ea.3
+            (Let
+              $tmp.12
+              (VecRef (Var v.1) 1)
+              (Apply (Var fun.1) ((Var $tmp.12))))
+            (Let
+              $ea.4
+              (Let
+                $tmp.13
+                (VecRef (Var v.1) 2)
+                (Apply (Var fun.1) ((Var $tmp.13))))
+              (Let
+                _.8
+                (If
+                  (Let
+                    $tmp.14
+                    (GlobalVal free_ptr)
+                    (Let
+                      $tmp.15
+                      (Prim Add ((Var $tmp.14) (Int 32)))
+                      (Let
+                        $tmp.16
+                        (GlobalVal fromspace_end)
+                        (Prim Lt ((Var $tmp.15) (Var $tmp.16))))))
+                  (Atm Void)
+                  (Collect 32))
+                (Let
+                  $ea.5
+                  (Allocate
+                    3
+                    (Vector (Integer Integer Integer)))
+                  (Let
+                    _.7
+                    (VecSet (Var $ea.5) 0 (Var $ea.2))
+                    (Let
+                      _.6
+                      (VecSet (Var $ea.5) 1 (Var $ea.3))
+                      (Let
+                        _.5
+                        (VecSet (Var $ea.5) 2 (Var $ea.4))
+                        (Atm (Var $ea.5)))))))))))))
+   (Def
+     (Label add1)
+     ((args ((x.1 Integer)))
+      (ret Integer)
+      (body (Prim Add ((Var x.1) (Int 1))))))))

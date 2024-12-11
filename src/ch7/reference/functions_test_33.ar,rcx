@@ -1,0 +1,116 @@
+(X86Program
+  ((Def
+     (Label main)
+     (Finfo3
+       (num_spilled 1)
+       (num_spilled_root 0)
+       (used_callee ()))
+     ((nparams 0)
+      (locals
+        (($tmp.1 Integer)
+         ($tmp.2 (Function (Integer) Boolean))
+         (apply_1 Boolean)
+         (even? (Function (Integer) Boolean))))
+      (body
+        (((Label block_1)
+          (Block
+            Binfo1
+            ((Movq (Imm 999) (Reg Rax))
+             (Jmp (Label main_conclusion)))))
+         ((Label block_2)
+          (Block
+            Binfo1
+            ((Movq (Imm 42) (Reg Rax))
+             (Jmp (Label main_conclusion)))))
+         ((Label main_start)
+          (Block
+            Binfo1
+            ((Leaq
+               (GlobalArg (Label even?))
+               (Deref Rbp -8))
+             (Callq (Label read_int) 0)
+             (Movq (Reg Rax) (Reg Rcx))
+             (Movq (Reg Rcx) (Reg Rdi))
+             (IndirectCallq (Deref Rbp -8) 1)
+             (Movq (Reg Rax) (Reg Rcx))
+             (Cmpq (Imm 1) (Reg Rcx))
+             (JmpIf CC_e (Label block_1))
+             (Jmp (Label block_2)))))))))
+   (Def
+     (Label even?)
+     (Finfo3
+       (num_spilled 2)
+       (num_spilled_root 0)
+       (used_callee ()))
+     ((nparams 1)
+      (locals
+        ((x.1 Integer)
+         ($tmp.3 Integer)
+         ($tmp.4 Integer)
+         ($tmp.5 (Function (Integer) Boolean))
+         (odd? (Function (Integer) Boolean))
+         (x.1 Integer)))
+      (body
+        (((Label block_3)
+          (Block
+            Binfo1
+            ((Movq (Imm 1) (Reg Rax))
+             (Jmp (Label even?_conclusion)))))
+         ((Label block_4)
+          (Block
+            Binfo1
+            ((Leaq
+               (GlobalArg (Label odd?))
+               (Deref Rbp -16))
+             (Movq (Imm 1) (Deref Rbp -8))
+             (Negq (Deref Rbp -8))
+             (Movq (Deref Rbp -8) (Deref Rbp -8))
+             (Addq (Reg Rcx) (Deref Rbp -8))
+             (Movq (Deref Rbp -8) (Reg Rdi))
+             (TailJmp (Deref Rbp -16) 1))))
+         ((Label even?_start)
+          (Block
+            Binfo1
+            ((Movq (Reg Rdi) (Reg Rcx))
+             (Cmpq (Imm 0) (Reg Rcx))
+             (JmpIf CC_e (Label block_3))
+             (Jmp (Label block_4)))))))))
+   (Def
+     (Label odd?)
+     (Finfo3
+       (num_spilled 2)
+       (num_spilled_root 0)
+       (used_callee ()))
+     ((nparams 1)
+      (locals
+        ((x.2 Integer)
+         ($tmp.6 Integer)
+         ($tmp.7 Integer)
+         ($tmp.8 (Function (Integer) Boolean))
+         (even? (Function (Integer) Boolean))
+         (x.2 Integer)))
+      (body
+        (((Label block_5)
+          (Block
+            Binfo1
+            ((Movq (Imm 0) (Reg Rax))
+             (Jmp (Label odd?_conclusion)))))
+         ((Label block_6)
+          (Block
+            Binfo1
+            ((Leaq
+               (GlobalArg (Label even?))
+               (Deref Rbp -16))
+             (Movq (Imm 1) (Deref Rbp -8))
+             (Negq (Deref Rbp -8))
+             (Movq (Deref Rbp -8) (Deref Rbp -8))
+             (Addq (Reg Rcx) (Deref Rbp -8))
+             (Movq (Deref Rbp -8) (Reg Rdi))
+             (TailJmp (Deref Rbp -16) 1))))
+         ((Label odd?_start)
+          (Block
+            Binfo1
+            ((Movq (Reg Rdi) (Reg Rcx))
+             (Cmpq (Imm 0) (Reg Rcx))
+             (JmpIf CC_e (Label block_5))
+             (Jmp (Label block_6)))))))))))

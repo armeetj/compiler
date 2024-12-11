@@ -1,0 +1,13 @@
+;; OUTPUT: 42
+
+(define (sum (x : Integer)) : Integer
+  (let (x-vec (vector x))
+    (let (one (vector 1))
+      (let (neg-one (vector (- 1)))
+        (if (= (vector-ref x-vec 0) 1)
+            (vector-ref one 0)
+            (+ x (sum (+ x (vector-ref neg-one 0)))))))))
+
+(if (= (sum 3) 6)
+    42
+    777)

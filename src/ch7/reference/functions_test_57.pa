@@ -1,0 +1,168 @@
+main_start:
+    leaq factorial(%rip), %rcx
+    movq $0, %rdi
+    callq *%rcx
+    movq %rax, %r12
+    leaq factorial(%rip), %rcx
+    movq $1, %rdi
+    callq *%rcx
+    movq %rax, %r13
+    leaq factorial(%rip), %rcx
+    movq $2, %rdi
+    callq *%rcx
+    movq %rax, %r14
+    leaq factorial(%rip), %rcx
+    movq $3, %rdi
+    callq *%rcx
+    movq %rax, -40(%rbp)
+    leaq factorial(%rip), %rcx
+    movq $4, %rdi
+    callq *%rcx
+    movq %rax, %rbx
+    leaq factorial(%rip), %rcx
+    movq $5, %rdi
+    callq *%rcx
+    movq %rax, %rcx
+    movq %rbx, %rdx
+    addq %rcx, %rdx
+    movq -40(%rbp), %rcx
+    addq %rdx, %rcx
+    movq %r14, %rdx
+    addq %rcx, %rdx
+    movq %r13, %rcx
+    addq %rdx, %rcx
+    movq %r12, %rax
+    addq %rcx, %rax
+    jmp main_conclusion
+
+    .globl main
+    .align 8
+
+main:
+    pushq %rbp
+    movq %rsp, %rbp
+    pushq %rbx
+    pushq %r12
+    pushq %r13
+    pushq %r14
+    subq $16, %rsp
+    movq $65536, %rdi
+    movq $65536, %rsi
+    callq initialize
+    movq rootstack_begin(%rip), %r15
+    jmp main_start
+
+main_conclusion:
+    addq $16, %rsp
+    popq %r14
+    popq %r13
+    popq %r12
+    popq %rbx
+    popq %rbp
+    retq
+
+block_1:
+    movq $0, %rax
+    jmp mult_conclusion
+
+block_2:
+    leaq mult(%rip), %rcx
+    movq $1, %rsi
+    negq %rsi
+    addq %rdx, %rsi
+    movq %rsi, %rdi
+    movq %rbx, %rsi
+    callq *%rcx
+    movq %rax, %rcx
+    movq %rbx, %rax
+    addq %rcx, %rax
+    jmp mult_conclusion
+
+mult_start:
+    movq %rdi, %rdx
+    movq %rsi, %rbx
+    movq $0, %rax
+    cmpq %rdx, %rax
+    je block_1
+    jmp block_2
+
+    .globl mult
+    .align 8
+
+mult:
+    pushq %rbp
+    movq %rsp, %rbp
+    pushq %rbx
+    subq $8, %rsp
+    jmp mult_start
+
+mult_conclusion:
+    addq $8, %rsp
+    popq %rbx
+    popq %rbp
+    retq
+
+block_3:
+    movq %rdx, %rax
+    jmp factorial_iter_conclusion
+
+block_4:
+    leaq factorial_iter(%rip), %r12
+    movq %rcx, %rbx
+    subq $1, %rbx
+    leaq mult(%rip), %r8
+    movq %rcx, %rdi
+    movq %rdx, %rsi
+    callq *%r8
+    movq %rax, %rcx
+    movq %rbx, %rdi
+    movq %rcx, %rsi
+    movq %r12, %rax
+    popq %r12
+    popq %rbx
+    popq %rbp
+    jmp *%rax
+
+factorial_iter_start:
+    movq %rdi, %rcx
+    movq %rsi, %rdx
+    cmpq $0, %rcx
+    je block_3
+    jmp block_4
+
+    .globl factorial_iter
+    .align 8
+
+factorial_iter:
+    pushq %rbp
+    movq %rsp, %rbp
+    pushq %rbx
+    pushq %r12
+    jmp factorial_iter_start
+
+factorial_iter_conclusion:
+    popq %r12
+    popq %rbx
+    popq %rbp
+    retq
+
+factorial_start:
+    movq %rdi, %rdx
+    leaq factorial_iter(%rip), %rcx
+    movq %rdx, %rdi
+    movq $1, %rsi
+    movq %rcx, %rax
+    popq %rbp
+    jmp *%rax
+
+    .globl factorial
+    .align 8
+
+factorial:
+    pushq %rbp
+    movq %rsp, %rbp
+    jmp factorial_start
+
+factorial_conclusion:
+    popq %rbp
+    retq

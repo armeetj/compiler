@@ -1,0 +1,6 @@
+;; OUTPUT: 42
+
+(define (f (v : (Vector Integer))) : Integer
+  (vector-ref v 0))
+
+(f (vector 42))

@@ -1,0 +1,20 @@
+(Program
+  ((Def
+     (Label main)
+     ((args ())
+      (ret Integer)
+      (body
+        (Apply
+          (FunRef (Label uhoh) 1)
+          ((Int 42))))))
+   (Def
+     (Label uhoh)
+     ((args ((x.1 Integer)))
+      (ret Integer)
+      (body
+        (If
+          (Prim Eq ((Var x.1) (Int 0)))
+          (Apply
+            (FunRef (Label uhoh) 1)
+            ((Var x.1)))
+          (Var x.1)))))))

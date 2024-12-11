@@ -1,0 +1,20 @@
+(Program
+  ((Def
+     (Label main)
+     ((args ())
+      (ret Integer)
+      (body
+        (Let
+          v.1
+          (Vec ((Int 41)) ((Vector (Integer))))
+          (Prim
+            Add
+            ((Apply
+               (FunRef (Label add1) 1)
+               ((Prim Read ())))
+             (VecRef (Var v.1) 0)))))))
+   (Def
+     (Label add1)
+     ((args ((x.1 Integer)))
+      (ret Integer)
+      (body (Prim Add ((Var x.1) (Int 1))))))))

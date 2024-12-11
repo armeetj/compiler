@@ -1,0 +1,30 @@
+(Program
+  ((Def
+     (Label main)
+     ((args ())
+      (ret Integer)
+      (body
+        (Apply
+          (FunRef (Label m) 6)
+          ((Int 777)
+           (Int 776)
+           (Int 775)
+           (Int 774)
+           (Int 773)
+           (Vec
+             ((Int 772) (Int 771) (Int 770) (Int 42))
+             ((Vector
+                (Integer Integer Integer Integer)))))))))
+   (Def
+     (Label m)
+     ((args
+        ((a.1 Integer)
+         (b.1 Integer)
+         (c.1 Integer)
+         (d.1 Integer)
+         (e.1 Integer)
+         ($tup.1
+           (Vector
+             (Integer Integer Integer Integer)))))
+      (ret Integer)
+      (body (VecRef (Var $tup.1) 3))))))

@@ -1,0 +1,55 @@
+main_start:
+    leaq uhoh(%rip), %rcx
+    movq $42, %rdi
+    movq %rcx, %rax
+    popq %rbp
+    jmp *%rax
+
+    .globl main
+    .align 8
+
+main:
+    pushq %rbp
+    movq %rsp, %rbp
+    movq $65536, %rdi
+    movq $65536, %rsi
+    callq initialize
+    movq rootstack_begin(%rip), %r15
+    jmp main_start
+
+main_conclusion:
+    popq %rbp
+    retq
+
+block_1:
+    leaq uhoh(%rip), %rax
+    movq %rax, -8(%rbp)
+    movq %rcx, %rdi
+    movq -8(%rbp), %rax
+    addq $16, %rsp
+    popq %rbp
+    jmp *%rax
+
+block_2:
+    movq %rcx, %rax
+    jmp uhoh_conclusion
+
+uhoh_start:
+    movq %rdi, %rcx
+    cmpq $0, %rcx
+    je block_1
+    jmp block_2
+
+    .globl uhoh
+    .align 8
+
+uhoh:
+    pushq %rbp
+    movq %rsp, %rbp
+    subq $16, %rsp
+    jmp uhoh_start
+
+uhoh_conclusion:
+    addq $16, %rsp
+    popq %rbp
+    retq

@@ -1,0 +1,9 @@
+(define (f (x : Integer) (y : Integer)) : Integer
+  (+ x y))
+
+;; This should generate an error due to the repeated function name.
+(define (f (x : Integer) (y : Integer)) : Integer
+  (- x y))
+
+(+ 10 20)
+

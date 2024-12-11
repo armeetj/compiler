@@ -1,0 +1,60 @@
+(X86Program
+  ((Def
+     (Label main)
+     (Finfo
+       (num_spilled 1)
+       (num_spilled_root 0)
+       (used_callee ()))
+     ((nparams 0)
+      (locals
+        (($tmp.1
+           (Function
+             ()
+             (Function (Integer) Integer)))
+         ($tmp.2 (Function (Integer) Integer))
+         (give_me_add1
+           (Function
+             ()
+             (Function (Integer) Integer)))))
+      (body
+        (((Label main_start)
+          (Block
+            ((Leaq
+               (GlobalArg (Label give_me_add1))
+               (Reg Rcx))
+             (IndirectCallq (Reg Rcx) 0)
+             (Movq (Reg Rax) (Deref Rbp -8))
+             (Movq (Imm 41) (Reg Rdi))
+             (Movq (Deref Rbp -8) (Reg Rax))
+             (TailJmp (Reg Rax) 1))))))))
+   (Def
+     (Label add1)
+     (Finfo
+       (num_spilled 0)
+       (num_spilled_root 0)
+       (used_callee ()))
+     ((nparams 1)
+      (locals ((x.1 Integer) (x.1 Integer)))
+      (body
+        (((Label add1_start)
+          (Block
+            ((Movq (Reg Rdi) (Reg Rcx))
+             (Movq (Reg Rcx) (Reg Rax))
+             (Addq (Imm 1) (Reg Rax))
+             (Jmp (Label add1_conclusion)))))))))
+   (Def
+     (Label give_me_add1)
+     (Finfo
+       (num_spilled 0)
+       (num_spilled_root 0)
+       (used_callee ()))
+     ((nparams 0)
+      (locals
+        ((add1 (Function (Integer) Integer))))
+      (body
+        (((Label give_me_add1_start)
+          (Block
+            ((Leaq
+               (GlobalArg (Label add1))
+               (Reg Rax))
+             (Jmp (Label give_me_add1_conclusion)))))))))))

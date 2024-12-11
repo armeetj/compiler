@@ -1,0 +1,17 @@
+;; OUTPUT: 42
+
+(define (g) : Boolean
+  #f)
+
+(define (h) : Integer
+  777)
+
+(define (k) : Integer
+  41)
+
+(define (l (y : Integer)) : Integer
+  (+ y 1))
+
+(if (g)
+    (h)
+    (l (k)))

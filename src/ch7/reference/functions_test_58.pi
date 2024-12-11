@@ -1,0 +1,126 @@
+(X86Program
+  ((Def
+     (Label main)
+     (Finfo
+       (num_spilled 0)
+       (num_spilled_root 0)
+       (used_callee ()))
+     ((nparams 0)
+      (locals
+        (($tmp.1
+           (Function
+             (Integer)
+             (Function
+               (Integer)
+               (Function
+                 (Integer)
+                 (Function (Integer) Integer)))))
+         ($tmp.2
+           (Function
+             (Integer)
+             (Function
+               (Integer)
+               (Function (Integer) Integer))))
+         ($tmp.3
+           (Function
+             (Integer)
+             (Function (Integer) Integer)))
+         ($tmp.4 (Function (Integer) Integer))
+         (rrrid
+           (Function
+             (Integer)
+             (Function
+               (Integer)
+               (Function
+                 (Integer)
+                 (Function (Integer) Integer)))))))
+      (body
+        (((Label main_start)
+          (Block
+            ((Leaq
+               (GlobalArg (Label rrrid))
+               (Reg Rcx))
+             (Movq (Imm 0) (Reg Rdi))
+             (IndirectCallq (Reg Rcx) 1)
+             (Movq (Reg Rax) (Reg Rcx))
+             (Movq (Imm 0) (Reg Rdi))
+             (IndirectCallq (Reg Rcx) 1)
+             (Movq (Reg Rax) (Reg Rcx))
+             (Movq (Imm 0) (Reg Rdi))
+             (IndirectCallq (Reg Rcx) 1)
+             (Movq (Reg Rax) (Reg Rcx))
+             (Movq (Imm 42) (Reg Rdi))
+             (Movq (Reg Rcx) (Reg Rax))
+             (TailJmp (Reg Rax) 1))))))))
+   (Def
+     (Label id)
+     (Finfo
+       (num_spilled 0)
+       (num_spilled_root 0)
+       (used_callee ()))
+     ((nparams 1)
+      (locals ((x.1 Integer) (x.1 Integer)))
+      (body
+        (((Label id_start)
+          (Block
+            ((Movq (Reg Rdi) (Reg Rcx))
+             (Movq (Reg Rcx) (Reg Rax))
+             (Jmp (Label id_conclusion)))))))))
+   (Def
+     (Label rid)
+     (Finfo
+       (num_spilled 0)
+       (num_spilled_root 0)
+       (used_callee ()))
+     ((nparams 1)
+      (locals
+        ((x.2 Integer)
+         (id (Function (Integer) Integer))))
+      (body
+        (((Label rid_start)
+          (Block
+            ((Movq (Reg Rdi) (Reg Rcx))
+             (Leaq (GlobalArg (Label id)) (Reg Rax))
+             (Jmp (Label rid_conclusion)))))))))
+   (Def
+     (Label rrid)
+     (Finfo
+       (num_spilled 0)
+       (num_spilled_root 0)
+       (used_callee ()))
+     ((nparams 1)
+      (locals
+        ((x.3 Integer)
+         (rid
+           (Function
+             (Integer)
+             (Function (Integer) Integer)))))
+      (body
+        (((Label rrid_start)
+          (Block
+            ((Movq (Reg Rdi) (Reg Rcx))
+             (Leaq (GlobalArg (Label rid)) (Reg Rax))
+             (Jmp (Label rrid_conclusion)))))))))
+   (Def
+     (Label rrrid)
+     (Finfo
+       (num_spilled 0)
+       (num_spilled_root 0)
+       (used_callee ()))
+     ((nparams 1)
+      (locals
+        ((x.4 Integer)
+         (rrid
+           (Function
+             (Integer)
+             (Function
+               (Integer)
+               (Function (Integer) Integer))))))
+      (body
+        (((Label rrrid_start)
+          (Block
+            ((Movq (Reg Rdi) (Reg Rcx))
+             (Leaq
+               (GlobalArg (Label rrid))
+               (Reg Rax))
+             (Jmp (Label rrrid_conclusion)))))))))))

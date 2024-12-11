@@ -1,0 +1,37 @@
+(Program
+  ((Def
+     (Label main)
+     ((args ())
+      (ret Integer)
+      (body
+        (If
+          (Let
+            $tmp.1
+            (FunRef (Label sum) 1)
+            (Let
+              $tmp.2
+              (Apply (Var $tmp.1) ((Int 3)))
+              (Prim Eq ((Var $tmp.2) (Int 6)))))
+          (Atm (Int 42))
+          (Atm (Int 777))))))
+   (Def
+     (Label sum)
+     ((args ((x.1 Integer)))
+      (ret Integer)
+      (body
+        (If
+          (Prim Eq ((Var x.1) (Int 1)))
+          (Atm (Int 1))
+          (Let
+            $tmp.5
+            (FunRef (Label sum) 1)
+            (Let
+              $tmp.3
+              (Prim Negate ((Int 1)))
+              (Let
+                $tmp.4
+                (Prim Add ((Var x.1) (Var $tmp.3)))
+                (Let
+                  $tmp.6
+                  (Apply (Var $tmp.5) ((Var $tmp.4)))
+                  (Prim Add ((Var x.1) (Var $tmp.6)))))))))))))

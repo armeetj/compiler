@@ -1,0 +1,7 @@
+(Program
+  ((Def
+     sub1
+     ((args ((x Integer)))
+      (ret Integer)
+      (body (Prim Sub ((Var x) (Int 1)))))))
+  (Apply (Var sub1) ((Int 43))))

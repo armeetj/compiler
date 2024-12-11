@@ -1,0 +1,22 @@
+;; OUTPUT: 154
+
+(define (mult (x : Integer) (y : Integer)) : Integer
+  (if (= 0 x)
+      0
+      (+ y (mult (+ (- 1) x) y))))
+
+;; Tail-recursive factorial.
+(define (factorial_iter (n : Integer) (r : Integer)) : Integer
+  (if (= n 0)
+      r
+      (factorial_iter (- n 1) (mult n r))))
+
+(define (factorial (n : Integer)) : Integer
+  (factorial_iter n 1))
+
+(+ (factorial 0)
+   (+ (factorial 1)
+      (+ (factorial 2)
+         (+ (factorial 3)
+            (+ (factorial 4)
+               (factorial 5))))))

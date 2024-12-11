@@ -1,0 +1,13 @@
+;; INPUT:  0 0 ; 0 1 ; 0 2 ; 1 0 ; 1 2 ; 3 4
+;; OUTPUT: 42 ; 43 ; 44 ; 43 ; 45 ; 166
+
+;; 2-ary Ackermann function.
+;; See: https://en.wikipedia.org/wiki/Ackermann_function
+(define (ack (m : Integer) (n : Integer)) : Integer
+  (if (= m 0)
+      (+ 1 n)
+      (if (= n 0)
+          (ack (- m 1) 1)
+          (ack (- m 1) (ack m (- n 1))))))
+
+(+ (ack (read) (read)) 41)

@@ -1,0 +1,124 @@
+(X86Program
+  ((Def
+     (Label main)
+     Finfo1
+     ((nparams 0)
+      (locals
+        (($tmp.1 (Function () Boolean))
+         ($tmp.2 (Function () Integer))
+         ($tmp.3 (Function () Integer))
+         ($tmp.4 Integer)
+         ($tmp.5 (Function (Integer) Integer))
+         (apply_1 Boolean)
+         (g (Function () Boolean))
+         (h (Function () Integer))
+         (k (Function () Integer))
+         (l (Function (Integer) Integer))))
+      (body
+        (((Label block_1)
+          (Block
+            (Binfo2
+              ((initial ())
+               (afters (((VarL $tmp.2)) ()))))
+            ((Leaq
+               (GlobalArg (Label h))
+               (Var $tmp.2))
+             (TailJmp (Var $tmp.2) 0))))
+         ((Label block_2)
+          (Block
+            (Binfo2
+              ((initial ())
+               (afters
+                 (((VarL $tmp.5))
+                  ((VarL $tmp.3) (VarL $tmp.5))
+                  ((VarL $tmp.5) (RegL Rax))
+                  ((VarL $tmp.4) (VarL $tmp.5))
+                  ((VarL $tmp.5) (RegL Rdi))
+                  ()))))
+            ((Leaq
+               (GlobalArg (Label l))
+               (Var $tmp.5))
+             (Leaq
+               (GlobalArg (Label k))
+               (Var $tmp.3))
+             (IndirectCallq (Var $tmp.3) 0)
+             (Movq (Reg Rax) (Var $tmp.4))
+             (Movq (Var $tmp.4) (Reg Rdi))
+             (TailJmp (Var $tmp.5) 1))))
+         ((Label main_start)
+          (Block
+            (Binfo2
+              ((initial ())
+               (afters
+                 (((VarL $tmp.1))
+                  ((RegL Rax))
+                  ((VarL apply_1))
+                  ((RegL Rflags))
+                  ()
+                  ()))))
+            ((Leaq
+               (GlobalArg (Label g))
+               (Var $tmp.1))
+             (IndirectCallq (Var $tmp.1) 0)
+             (Movq (Reg Rax) (Var apply_1))
+             (Cmpq (Imm 1) (Var apply_1))
+             (JmpIf CC_e (Label block_1))
+             (Jmp (Label block_2)))))))))
+   (Def
+     (Label g)
+     Finfo1
+     ((nparams 0)
+      (locals ())
+      (body
+        (((Label g_start)
+          (Block
+            (Binfo2
+              ((initial ((RegL Rsp)))
+               (afters (((RegL Rsp) (RegL Rax)) ()))))
+            ((Movq (Imm 0) (Reg Rax))
+             (Jmp (Label g_conclusion)))))))))
+   (Def
+     (Label h)
+     Finfo1
+     ((nparams 0)
+      (locals ())
+      (body
+        (((Label h_start)
+          (Block
+            (Binfo2
+              ((initial ((RegL Rsp)))
+               (afters (((RegL Rsp) (RegL Rax)) ()))))
+            ((Movq (Imm 777) (Reg Rax))
+             (Jmp (Label h_conclusion)))))))))
+   (Def
+     (Label k)
+     Finfo1
+     ((nparams 0)
+      (locals ())
+      (body
+        (((Label k_start)
+          (Block
+            (Binfo2
+              ((initial ((RegL Rsp)))
+               (afters (((RegL Rsp) (RegL Rax)) ()))))
+            ((Movq (Imm 41) (Reg Rax))
+             (Jmp (Label k_conclusion)))))))))
+   (Def
+     (Label l)
+     Finfo1
+     ((nparams 1)
+      (locals ((y.1 Integer) (y.1 Integer)))
+      (body
+        (((Label l_start)
+          (Block
+            (Binfo2
+              ((initial ((RegL Rsp) (RegL Rdi)))
+               (afters
+                 (((VarL y.1) (RegL Rsp))
+                  ((RegL Rsp) (RegL Rax))
+                  ((RegL Rsp) (RegL Rax))
+                  ()))))
+            ((Movq (Reg Rdi) (Var y.1))
+             (Movq (Var y.1) (Reg Rax))
+             (Addq (Imm 1) (Reg Rax))
+             (Jmp (Label l_conclusion)))))))))))

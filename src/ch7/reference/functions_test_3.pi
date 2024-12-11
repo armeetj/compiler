@@ -1,0 +1,137 @@
+(X86Program
+  ((Def
+     (Label main)
+     (Finfo
+       (num_spilled 0)
+       (num_spilled_root 0)
+       (used_callee (Rbx)))
+     ((nparams 0)
+      (locals
+        (($ea.1
+           (Vector (Integer Integer Integer)))
+         ($tmp.1 Integer)
+         ($tmp.2 Integer)
+         ($tmp.3 Integer)
+         ($tmp.4
+           (Function
+             (Integer
+               Integer
+               Integer
+               Integer
+               Integer
+               (Vector (Integer Integer Integer)))
+             Integer))
+         (_.1 Unit)
+         (_.2 Unit)
+         (_.3 Unit)
+         (_.4 Unit)
+         (fun
+           (Function
+             (Integer
+               Integer
+               Integer
+               Integer
+               Integer
+               (Vector (Integer Integer Integer)))
+             Integer))))
+      (body
+        (((Label block_1)
+          (Block
+            ((Movq
+               (GlobalArg (Label free_ptr))
+               (Reg R11))
+             (Addq
+               (Imm 32)
+               (GlobalArg (Label free_ptr)))
+             (Movq (Imm 7) (Deref R11 0))
+             (Movq (Reg R11) (Reg R9))
+             (Movq (Reg R9) (Reg R11))
+             (Movq (Imm 5) (Deref R11 8))
+             (Movq (Imm 0) (Reg Rcx))
+             (Movq (Reg R9) (Reg R11))
+             (Movq (Imm 5) (Deref R11 16))
+             (Movq (Imm 0) (Reg Rcx))
+             (Movq (Reg R9) (Reg R11))
+             (Movq (Imm 7) (Deref R11 24))
+             (Movq (Imm 0) (Reg Rcx))
+             (Movq (Imm 5) (Reg Rdi))
+             (Movq (Imm 5) (Reg Rsi))
+             (Movq (Imm 5) (Reg Rdx))
+             (Movq (Imm 5) (Reg Rcx))
+             (Movq (Imm 5) (Reg R8))
+             (Movq (Reg Rbx) (Reg Rax))
+             (TailJmp (Reg Rax) 6))))
+         ((Label block_2)
+          (Block
+            ((Movq (Imm 0) (Reg Rcx))
+             (Jmp (Label block_1)))))
+         ((Label block_3)
+          (Block
+            ((Movq (Reg R15) (Reg Rdi))
+             (Movq (Imm 32) (Reg Rsi))
+             (Callq (Label collect) 2)
+             (Jmp (Label block_1)))))
+         ((Label main_start)
+          (Block
+            ((Leaq (GlobalArg (Label fun)) (Reg Rbx))
+             (Movq
+               (GlobalArg (Label free_ptr))
+               (Reg Rdx))
+             (Addq (Imm 32) (Reg Rdx))
+             (Movq
+               (GlobalArg (Label fromspace_end))
+               (Reg Rsi))
+             (Cmpq (Reg Rsi) (Reg Rdx))
+             (JmpIf CC_l (Label block_2))
+             (Jmp (Label block_3)))))))))
+   (Def
+     (Label fun)
+     (Finfo
+       (num_spilled 0)
+       (num_spilled_root 0)
+       (used_callee (Rbx)))
+     ((nparams 6)
+      (locals
+        ((x1.1 Integer)
+         (x2.1 Integer)
+         (x3.1 Integer)
+         (x4.1 Integer)
+         (x5.1 Integer)
+         ($tup.1
+           (Vector (Integer Integer Integer)))
+         ($tmp.10 Integer)
+         ($tmp.11 Integer)
+         ($tmp.12 Integer)
+         ($tmp.13 Integer)
+         ($tmp.5 Integer)
+         ($tmp.6 Integer)
+         ($tmp.7 Integer)
+         ($tmp.8 Integer)
+         ($tmp.9 Integer)
+         ($tup.1
+           (Vector (Integer Integer Integer)))
+         (x1.1 Integer)
+         (x2.1 Integer)
+         (x3.1 Integer)
+         (x4.1 Integer)
+         (x5.1 Integer)))
+      (body
+        (((Label fun_start)
+          (Block
+            ((Movq (Reg R9) (Reg Rbx))
+             (Movq (Reg Rbx) (Reg R11))
+             (Movq (Deref R11 8) (Reg R9))
+             (Movq (Reg Rbx) (Reg R11))
+             (Movq (Deref R11 16) (Reg R10))
+             (Movq (Reg Rbx) (Reg R11))
+             (Movq (Deref R11 24) (Reg Rbx))
+             (Addq (Reg Rbx) (Reg R10))
+             (Addq (Reg R10) (Reg R9))
+             (Addq (Reg R9) (Reg R8))
+             (Addq (Reg R8) (Reg Rcx))
+             (Addq (Reg Rcx) (Reg Rdx))
+             (Movq (Reg Rsi) (Reg Rcx))
+             (Addq (Reg Rdx) (Reg Rcx))
+             (Movq (Reg Rdi) (Reg Rax))
+             (Addq (Reg Rcx) (Reg Rax))
+             (Jmp (Label fun_conclusion)))))))))))

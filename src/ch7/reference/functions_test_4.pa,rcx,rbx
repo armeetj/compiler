@@ -1,0 +1,76 @@
+block_1:
+    movq $42, %rax
+    jmp main_conclusion
+
+block_2:
+    movq $777, %rax
+    jmp main_conclusion
+
+main_start:
+    leaq sum(%rip), %rbx
+    movq $3, %rdi
+    callq *%rbx
+    movq %rax, %rcx
+    cmpq $6, %rcx
+    je block_1
+    jmp block_2
+
+    .globl main
+    .align 8
+
+main:
+    pushq %rbp
+    movq %rsp, %rbp
+    pushq %rbx
+    subq $8, %rsp
+    movq $65536, %rdi
+    movq $65536, %rsi
+    callq initialize
+    movq rootstack_begin(%rip), %r15
+    jmp main_start
+
+main_conclusion:
+    addq $8, %rsp
+    popq %rbx
+    popq %rbp
+    retq
+
+block_3:
+    movq $1, %rax
+    jmp sum_conclusion
+
+block_4:
+    leaq sum(%rip), %rax
+    movq %rax, -24(%rbp)
+    movq $1, %rcx
+    negq %rcx
+    movq %rbx, -16(%rbp)
+    addq %rcx, -16(%rbp)
+    movq -16(%rbp), %rdi
+    callq *-24(%rbp)
+    movq %rax, %rcx
+    movq %rbx, %rax
+    addq %rcx, %rax
+    jmp sum_conclusion
+
+sum_start:
+    movq %rdi, %rbx
+    cmpq $1, %rbx
+    je block_3
+    jmp block_4
+
+    .globl sum
+    .align 8
+
+sum:
+    pushq %rbp
+    movq %rsp, %rbp
+    pushq %rbx
+    subq $24, %rsp
+    jmp sum_start
+
+sum_conclusion:
+    addq $24, %rsp
+    popq %rbx
+    popq %rbp
+    retq

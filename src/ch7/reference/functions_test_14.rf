@@ -1,0 +1,162 @@
+(Program
+  ((Def
+     (Label main)
+     ((args ())
+      (ret Integer)
+      (body
+        (VecRef
+          (VecRef
+            (VecRef
+              (VecRef
+                (Vec
+                  ((Apply
+                     (FunRef (Label zero) 1)
+                     ((Int 20)))
+                   (Int 42)
+                   (Apply
+                     (FunRef (Label one) 1)
+                     ((Int 20)))
+                   (Apply
+                     (FunRef (Label two) 1)
+                     ((Int 20)))
+                   (Apply
+                     (FunRef (Label three) 1)
+                     ((Int 20))))
+                  ((Vector
+                     ((Vector ())
+                      Integer
+                      (Vector ((Vector ()) Integer))
+                      (Vector
+                        ((Vector ())
+                         Integer
+                         (Vector ((Vector ()) Integer))))
+                      (Vector
+                        ((Vector ())
+                         Integer
+                         (Vector ((Vector ()) Integer))
+                         (Vector
+                           ((Vector ())
+                            Integer
+                            (Vector ((Vector ()) Integer))))))))))
+                4)
+              3)
+            2)
+          1))))
+   (Def
+     (Label minus)
+     ((args ((n.1 Integer) (m.1 Integer)))
+      (ret Integer)
+      (body
+        (Prim
+          Add
+          ((Var n.1) (Prim Negate ((Var m.1))))))))
+   (Def
+     (Label zero)
+     ((args ((x.1 Integer)))
+      (ret (Vector ()))
+      (body
+        (If
+          (Prim Eq ((Var x.1) (Int 0)))
+          (Vec () ((Vector ())))
+          (Apply
+            (FunRef (Label zero) 1)
+            ((Apply
+               (FunRef (Label minus) 2)
+               ((VecRef
+                  (Vec ((Var x.1)) ((Vector (Integer))))
+                  0)
+                (Int 1)))))))))
+   (Def
+     (Label one)
+     ((args ((x.2 Integer)))
+      (ret (Vector ((Vector ()) Integer)))
+      (body
+        (If
+          (Prim Eq ((Var x.2) (Int 0)))
+          (Vec
+            ((Apply
+               (FunRef (Label zero) 1)
+               ((Int 20)))
+             (Int 42))
+            ((Vector ((Vector ()) Integer))))
+          (Apply
+            (FunRef (Label one) 1)
+            ((Apply
+               (FunRef (Label minus) 2)
+               ((VecRef
+                  (Vec ((Var x.2)) ((Vector (Integer))))
+                  0)
+                (Int 1)))))))))
+   (Def
+     (Label two)
+     ((args ((x.3 Integer)))
+      (ret
+        (Vector
+          ((Vector ())
+           Integer
+           (Vector ((Vector ()) Integer)))))
+      (body
+        (If
+          (Prim Eq ((Var x.3) (Int 0)))
+          (Vec
+            ((Apply
+               (FunRef (Label zero) 1)
+               ((Int 20)))
+             (Int 42)
+             (Apply
+               (FunRef (Label one) 1)
+               ((Int 20))))
+            ((Vector
+               ((Vector ())
+                Integer
+                (Vector ((Vector ()) Integer))))))
+          (Apply
+            (FunRef (Label two) 1)
+            ((Apply
+               (FunRef (Label minus) 2)
+               ((VecRef
+                  (Vec ((Var x.3)) ((Vector (Integer))))
+                  0)
+                (Int 1)))))))))
+   (Def
+     (Label three)
+     ((args ((x.4 Integer)))
+      (ret
+        (Vector
+          ((Vector ())
+           Integer
+           (Vector ((Vector ()) Integer))
+           (Vector
+             ((Vector ())
+              Integer
+              (Vector ((Vector ()) Integer)))))))
+      (body
+        (If
+          (Prim Eq ((Var x.4) (Int 0)))
+          (Vec
+            ((Apply
+               (FunRef (Label zero) 1)
+               ((Int 20)))
+             (Int 42)
+             (Apply
+               (FunRef (Label one) 1)
+               ((Int 20)))
+             (Apply
+               (FunRef (Label two) 1)
+               ((Int 20))))
+            ((Vector
+               ((Vector ())
+                Integer
+                (Vector ((Vector ()) Integer))
+                (Vector
+                  ((Vector ())
+                   Integer
+                   (Vector ((Vector ()) Integer))))))))
+          (Apply
+            (FunRef (Label three) 1)
+            ((Apply
+               (FunRef (Label minus) 2)
+               ((VecRef
+                  (Vec ((Var x.4)) ((Vector (Integer))))
+                  0)
+                (Int 1)))))))))))

@@ -1,0 +1,59 @@
+(Program
+  ((Def
+     main
+     ((args ())
+      (ret Integer)
+      (body
+        (Prim
+          Add
+          ((Apply (Var factorial) ((Int 0)))
+           (Prim
+             Add
+             ((Apply (Var factorial) ((Int 1)))
+              (Prim
+                Add
+                ((Apply (Var factorial) ((Int 2)))
+                 (Prim
+                   Add
+                   ((Apply (Var factorial) ((Int 3)))
+                    (Prim
+                      Add
+                      ((Apply (Var factorial) ((Int 4)))
+                       (Apply (Var factorial) ((Int 5))))))))))))))))
+   (Def
+     mult
+     ((args ((x.1 Integer) (y.1 Integer)))
+      (ret Integer)
+      (body
+        (If
+          (Prim Eq ((Int 0) (Var x.1)))
+          (Int 0)
+          (Prim
+            Add
+            ((Var y.1)
+             (Apply
+               (Var mult)
+               ((Prim
+                  Add
+                  ((Prim Negate ((Int 1))) (Var x.1)))
+                (Var y.1)))))))))
+   (Def
+     factorial_iter
+     ((args ((n.1 Integer) (r.1 Integer)))
+      (ret Integer)
+      (body
+        (If
+          (Prim Eq ((Var n.1) (Int 0)))
+          (Var r.1)
+          (Apply
+            (Var factorial_iter)
+            ((Prim Sub ((Var n.1) (Int 1)))
+             (Apply (Var mult) ((Var n.1) (Var r.1)))))))))
+   (Def
+     factorial
+     ((args ((n.2 Integer)))
+      (ret Integer)
+      (body
+        (Apply
+          (Var factorial_iter)
+          ((Var n.2) (Int 1))))))))

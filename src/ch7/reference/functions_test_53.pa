@@ -1,0 +1,94 @@
+main_start:
+    leaq ack(%rip), %r12
+    callq read_int
+    movq %rax, %rbx
+    callq read_int
+    movq %rax, %rcx
+    movq %rbx, %rdi
+    movq %rcx, %rsi
+    callq *%r12
+    movq %rax, %rcx
+    addq $41, %rax
+    jmp main_conclusion
+
+    .globl main
+    .align 8
+
+main:
+    pushq %rbp
+    movq %rsp, %rbp
+    pushq %rbx
+    pushq %r12
+    movq $65536, %rdi
+    movq $65536, %rsi
+    callq initialize
+    movq rootstack_begin(%rip), %r15
+    jmp main_start
+
+main_conclusion:
+    popq %r12
+    popq %rbx
+    popq %rbp
+    retq
+
+ack_start:
+    movq %rdi, %rcx
+    movq %rsi, %rdx
+    cmpq $0, %rcx
+    je block_3
+    jmp block_4
+
+block_1:
+    leaq ack(%rip), %rdx
+    subq $1, %rcx
+    movq %rcx, %rdi
+    movq $1, %rsi
+    movq %rdx, %rax
+    popq %r12
+    popq %rbx
+    popq %rbp
+    jmp *%rax
+
+block_2:
+    leaq ack(%rip), %rbx
+    movq %rcx, %r12
+    subq $1, %r12
+    leaq ack(%rip), %r8
+    subq $1, %rdx
+    movq %rcx, %rdi
+    movq %rdx, %rsi
+    callq *%r8
+    movq %rax, %rcx
+    movq %r12, %rdi
+    movq %rcx, %rsi
+    movq %rbx, %rax
+    popq %r12
+    popq %rbx
+    popq %rbp
+    jmp *%rax
+
+block_3:
+    movq $1, %rax
+    addq %rdx, %rax
+    jmp ack_conclusion
+
+block_4:
+    cmpq $0, %rdx
+    je block_1
+    jmp block_2
+
+    .globl ack
+    .align 8
+
+ack:
+    pushq %rbp
+    movq %rsp, %rbp
+    pushq %rbx
+    pushq %r12
+    jmp ack_start
+
+ack_conclusion:
+    popq %r12
+    popq %rbx
+    popq %rbp
+    retq

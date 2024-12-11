@@ -1,0 +1,75 @@
+(Program
+  ((Def
+     (Label main)
+     ((args ())
+      (ret Integer)
+      (body
+        (Let
+          $tmp.4
+          (FunRef (Label f) 2)
+          (Let
+            _.2
+            (If
+              (Let
+                $tmp.1
+                (GlobalVal free_ptr)
+                (Let
+                  $tmp.2
+                  (Prim Add ((Var $tmp.1) (Int 16)))
+                  (Let
+                    $tmp.3
+                    (GlobalVal fromspace_end)
+                    (Prim Lt ((Var $tmp.2) (Var $tmp.3))))))
+              (Atm Void)
+              (Collect 16))
+            (Let
+              $ea.1
+              (Allocate 1 (Vector (Integer)))
+              (Let
+                _.1
+                (VecSet (Var $ea.1) 0 (Int 42))
+                (Apply
+                  (Var $tmp.4)
+                  ((Int 0) (Var $ea.1))))))))))
+   (Def
+     (Label f)
+     ((args
+        ((n.1 Integer) (v.1 (Vector (Integer)))))
+      (ret Integer)
+      (body
+        (If
+          (Prim Eq ((Var n.1) (Int 100)))
+          (VecRef (Var v.1) 0)
+          (Let
+            $tmp.9
+            (FunRef (Label f) 2)
+            (Let
+              $tmp.5
+              (Prim Add ((Var n.1) (Int 1)))
+              (Let
+                $ea.2
+                (VecRef (Var v.1) 0)
+                (Let
+                  _.4
+                  (If
+                    (Let
+                      $tmp.6
+                      (GlobalVal free_ptr)
+                      (Let
+                        $tmp.7
+                        (Prim Add ((Var $tmp.6) (Int 16)))
+                        (Let
+                          $tmp.8
+                          (GlobalVal fromspace_end)
+                          (Prim Lt ((Var $tmp.7) (Var $tmp.8))))))
+                    (Atm Void)
+                    (Collect 16))
+                  (Let
+                    $ea.3
+                    (Allocate 1 (Vector (Integer)))
+                    (Let
+                      _.3
+                      (VecSet (Var $ea.3) 0 (Var $ea.2))
+                      (Apply
+                        (Var $tmp.9)
+                        ((Var $tmp.5) (Var $ea.3)))))))))))))))

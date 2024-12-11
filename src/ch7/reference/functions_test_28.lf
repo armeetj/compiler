@@ -1,0 +1,16 @@
+(Program
+  ((Def
+     (Label main)
+     ((args ())
+      (ret Integer)
+      (body
+        (Apply (FunRef (Label id) 1) ((Int 0))))))
+   (Def
+     (Label id)
+     ((args ((x.1 Integer)))
+      (ret Integer)
+      (body
+        (If
+          (Prim Eq ((Var x.1) (Int 0)))
+          (Int 0)
+          (Int 42)))))))

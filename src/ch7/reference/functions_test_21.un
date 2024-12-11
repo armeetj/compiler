@@ -1,0 +1,22 @@
+(Program
+  ((Def
+     main
+     ((args ())
+      (ret Integer)
+      (body
+        (Prim
+          Add
+          ((Apply (Var tail_sum) ((Int 5) (Int 0)))
+           (Int 27))))))
+   (Def
+     tail_sum
+     ((args ((n.1 Integer) (r.1 Integer)))
+      (ret Integer)
+      (body
+        (If
+          (Prim Eq ((Var n.1) (Int 0)))
+          (Var r.1)
+          (Apply
+            (Var tail_sum)
+            ((Prim Sub ((Var n.1) (Int 1)))
+             (Prim Add ((Var n.1) (Var r.1)))))))))))

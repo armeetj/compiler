@@ -1,0 +1,22 @@
+(Program
+  ((Def
+     (Label main)
+     ((args ())
+      (ret Integer)
+      (body
+        (Apply
+          (Apply
+            (FunRef (Label id) 1)
+            ((FunRef (Label inc) 1)))
+          ((Int 41))))))
+   (Def
+     (Label id)
+     ((args
+        ((f.1 (Function (Integer) Integer))))
+      (ret (Function (Integer) Integer))
+      (body (Var f.1))))
+   (Def
+     (Label inc)
+     ((args ((x.1 Integer)))
+      (ret Integer)
+      (body (Prim Add ((Var x.1) (Int 1))))))))

@@ -1,0 +1,7 @@
+(Program
+  ((Def
+     f
+     ((args ((v (Vector (Integer)))))
+      (ret Integer)
+      (body (VecRef (Var v) 0)))))
+  (Apply (Var f) ((Vec ((Int 42)) ()))))

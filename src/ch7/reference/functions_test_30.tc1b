@@ -1,0 +1,19 @@
+(Program
+  ((Def
+     (Label main)
+     ((args ())
+      (ret Integer)
+      (body
+        (Apply
+          (FunRef (Label id2) 1)
+          ((Apply (FunRef (Label id) 1) ((Int 42))))))))
+   (Def
+     (Label id)
+     ((args ((x.1 Integer)))
+      (ret Integer)
+      (body (Var x.1))))
+   (Def
+     (Label id2)
+     ((args ((y.1 Integer)))
+      (ret Integer)
+      (body (Var y.1))))))

@@ -1,0 +1,56 @@
+main_start:
+    leaq tail_sum(%rip), %rcx
+    movq $5, %rdi
+    movq $0, %rsi
+    callq *%rcx
+    movq %rax, %rcx
+    addq $27, %rax
+    jmp main_conclusion
+
+    .globl main
+    .align 8
+
+main:
+    pushq %rbp
+    movq %rsp, %rbp
+    movq $65536, %rdi
+    movq $65536, %rsi
+    callq initialize
+    movq rootstack_begin(%rip), %r15
+    jmp main_start
+
+main_conclusion:
+    popq %rbp
+    retq
+
+block_1:
+    movq %rsi, %rax
+    jmp tail_sum_conclusion
+
+block_2:
+    leaq tail_sum(%rip), %rdx
+    movq %rcx, %rdi
+    subq $1, %rdi
+    addq %rsi, %rcx
+    movq %rcx, %rsi
+    movq %rdx, %rax
+    popq %rbp
+    jmp *%rax
+
+tail_sum_start:
+    movq %rdi, %rcx
+    cmpq $0, %rcx
+    je block_1
+    jmp block_2
+
+    .globl tail_sum
+    .align 8
+
+tail_sum:
+    pushq %rbp
+    movq %rsp, %rbp
+    jmp tail_sum_start
+
+tail_sum_conclusion:
+    popq %rbp
+    retq

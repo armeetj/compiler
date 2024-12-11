@@ -1,0 +1,24 @@
+(Program
+  ((Def
+     (Label main)
+     ((args ())
+      (ret Integer)
+      (body
+        (Prim
+          Add
+          ((Apply
+             (FunRef (Label tail_sum) 2)
+             ((Int 5) (Int 0)))
+           (Int 27))))))
+   (Def
+     (Label tail_sum)
+     ((args ((n.1 Integer) (r.1 Integer)))
+      (ret Integer)
+      (body
+        (If
+          (Prim Eq ((Var n.1) (Int 0)))
+          (Var r.1)
+          (Apply
+            (FunRef (Label tail_sum) 2)
+            ((Prim Sub ((Var n.1) (Int 1)))
+             (Prim Add ((Var n.1) (Var r.1)))))))))))

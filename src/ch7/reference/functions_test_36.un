@@ -1,0 +1,15 @@
+(Program
+  ((Def
+     main
+     ((args ())
+      (ret Integer)
+      (body (Apply (Var uhoh) ((Int 42))))))
+   (Def
+     uhoh
+     ((args ((x.1 Integer)))
+      (ret Integer)
+      (body
+        (If
+          (Prim Eq ((Var x.1) (Int 0)))
+          (Apply (Var uhoh) ((Var x.1)))
+          (Var x.1)))))))

@@ -1,0 +1,31 @@
+(Program
+  ((Def
+     (Label main)
+     ((args ())
+      (ret Integer)
+      (body
+        (Apply
+          (FunRef (Label m) 9)
+          ((Int 777)
+           (Int 776)
+           (Int 775)
+           (Int 774)
+           (Int 773)
+           (Int 772)
+           (Int 771)
+           (Int 770)
+           (Int 42))))))
+   (Def
+     (Label m)
+     ((args
+        ((a.1 Integer)
+         (b.1 Integer)
+         (c.1 Integer)
+         (d.1 Integer)
+         (e.1 Integer)
+         (f.1 Integer)
+         (g.1 Integer)
+         (h.1 Integer)
+         (i.1 Integer)))
+      (ret Integer)
+      (body (Var i.1))))))

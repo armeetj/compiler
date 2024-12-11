@@ -1,0 +1,25 @@
+(Program
+  ((Def
+     (Label main)
+     ((args ())
+      (ret Integer)
+      (body
+        (Apply
+          (FunRef (Label twice) 2)
+          ((FunRef (Label add1) 1) (Prim Read ()))))))
+   (Def
+     (Label add1)
+     ((args ((y.1 Integer)))
+      (ret Integer)
+      (body (Prim Add ((Int 1) (Var y.1))))))
+   (Def
+     (Label twice)
+     ((args
+        ((f.1 (Function (Integer) Integer))
+         (x.1 Integer)))
+      (ret Integer)
+      (body
+        (Prim
+          Add
+          ((Apply (Var f.1) ((Var x.1)))
+           (Apply (Var f.1) ((Var x.1))))))))))

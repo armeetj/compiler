@@ -1,0 +1,7 @@
+;; OUTPUT: 1
+
+(define (h (a : Integer) (b : Integer) (c : Integer) (d : Integer)
+           (e : Integer) (f : Integer) (g : Integer)) : Integer
+  (+ a (+ b (+ c (+ d (+ e (+ f g)))))))
+
+(h 0 0 0 0 0 1 0)

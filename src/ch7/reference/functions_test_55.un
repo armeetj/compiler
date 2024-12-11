@@ -1,0 +1,18 @@
+(Program
+  ((Def
+     main
+     ((args ())
+      (ret Integer)
+      (body
+        (Let
+          y.1
+          (Int 42)
+          (Begin
+            ((Apply (Var f) ((Var y.1))))
+            (Var y.1))))))
+   (Def
+     f
+     ((args ((x.1 Integer)))
+      (ret Unit)
+      (body
+        (Begin ((SetBang x.1 (Int 0))) Void))))))

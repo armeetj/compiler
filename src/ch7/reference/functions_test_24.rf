@@ -1,0 +1,44 @@
+(Program
+  ((Def
+     (Label main)
+     ((args ())
+      (ret Integer)
+      (body
+        (Prim
+          Add
+          ((Int 42)
+           (Apply
+             (FunRef (Label big) 3)
+             ((Prim Read ())
+              (Prim Read ())
+              (Prim Read ()))))))))
+   (Def
+     (Label big)
+     ((args
+        ((x.1 Integer)
+         (y.1 Integer)
+         (z.1 Integer)))
+      (ret Integer)
+      (body
+        (Prim
+          Add
+          ((Prim
+             Add
+             ((Prim
+                Add
+                ((Prim Add ((Var x.1) (Var y.1)))
+                 (Prim Add ((Var x.1) (Var z.1)))))
+              (Prim
+                Add
+                ((Prim Add ((Var z.1) (Var x.1)))
+                 (Prim Add ((Var z.1) (Var y.1)))))))
+           (Prim
+             Add
+             ((Prim
+                Add
+                ((Prim Add ((Var y.1) (Var y.1)))
+                 (Prim Add ((Var y.1) (Var x.1)))))
+              (Prim
+                Add
+                ((Prim Add ((Var z.1) (Var x.1)))
+                 (Prim Add ((Var z.1) (Var z.1))))))))))))))

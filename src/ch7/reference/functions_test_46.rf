@@ -1,0 +1,14 @@
+(Program
+  ((Def
+     (Label main)
+     ((args ())
+      (ret Integer)
+      (body
+        (Apply
+          (FunRef (Label sub1) 1)
+          ((Int 43))))))
+   (Def
+     (Label sub1)
+     ((args ((x.1 Integer)))
+      (ret Integer)
+      (body (Prim Sub ((Var x.1) (Int 1))))))))

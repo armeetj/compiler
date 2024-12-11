@@ -1,0 +1,92 @@
+(X86Program
+  ((Def
+     (Label main)
+     Finfo1
+     ((nparams 0)
+      (locals
+        (($tmp.1 (Function (Integer) Integer))
+         ($tmp.2 Integer)
+         ($tmp.3
+           (Function
+             ((Function (Integer) Integer) Integer)
+             Integer))
+         (apply
+           (Function
+             ((Function (Integer) Integer) Integer)
+             Integer))
+         (inc (Function (Integer) Integer))))
+      (body
+        (((Label main_start)
+          (Block
+            (Binfo2
+              ((initial ())
+               (afters
+                 (((VarL $tmp.3))
+                  ((VarL $tmp.1) (VarL $tmp.3))
+                  ((VarL $tmp.1) (VarL $tmp.3) (RegL Rax))
+                  ((VarL $tmp.1)
+                   (VarL $tmp.2)
+                   (VarL $tmp.3))
+                  ((VarL $tmp.2) (VarL $tmp.3) (RegL Rdi))
+                  ((VarL $tmp.3) (RegL Rsi) (RegL Rdi))
+                  ()))))
+            ((Leaq
+               (GlobalArg (Label apply))
+               (Var $tmp.3))
+             (Leaq
+               (GlobalArg (Label inc))
+               (Var $tmp.1))
+             (Callq (Label read_int) 0)
+             (Movq (Reg Rax) (Var $tmp.2))
+             (Movq (Var $tmp.1) (Reg Rdi))
+             (Movq (Var $tmp.2) (Reg Rsi))
+             (TailJmp (Var $tmp.3) 2))))))))
+   (Def
+     (Label apply)
+     Finfo1
+     ((nparams 2)
+      (locals
+        ((f.1 (Function (Integer) Integer))
+         (x.1 Integer)
+         ($tmp.4 Integer)
+         (f.1 (Function (Integer) Integer))
+         (x.1 Integer)))
+      (body
+        (((Label apply_start)
+          (Block
+            (Binfo2
+              ((initial ((RegL Rsi) (RegL Rdi)))
+               (afters
+                 (((VarL f.1) (RegL Rsi))
+                  ((VarL f.1) (VarL x.1))
+                  ((VarL f.1) (RegL Rdi))
+                  ((VarL f.1) (RegL Rax))
+                  ((VarL $tmp.4) (VarL f.1))
+                  ((VarL f.1) (RegL Rdi))
+                  ()))))
+            ((Movq (Reg Rdi) (Var f.1))
+             (Movq (Reg Rsi) (Var x.1))
+             (Movq (Var x.1) (Reg Rdi))
+             (IndirectCallq (Var f.1) 1)
+             (Movq (Reg Rax) (Var $tmp.4))
+             (Movq (Var $tmp.4) (Reg Rdi))
+             (TailJmp (Var f.1) 1))))))))
+   (Def
+     (Label inc)
+     Finfo1
+     ((nparams 1)
+      (locals ((x.2 Integer) (x.2 Integer)))
+      (body
+        (((Label inc_start)
+          (Block
+            (Binfo2
+              ((initial ((RegL Rsp) (RegL Rdi)))
+               (afters
+                 (((VarL x.2) (RegL Rsp))
+                  ((RegL Rsp) (RegL Rax))
+                  ((RegL Rsp) (RegL Rax))
+                  ()))))
+            ((Movq (Reg Rdi) (Var x.2))
+             (Movq (Var x.2) (Reg Rax))
+             (Addq (Imm 1) (Reg Rax))
+             (Jmp (Label inc_conclusion)))))))))))

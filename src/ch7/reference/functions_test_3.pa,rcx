@@ -1,0 +1,112 @@
+block_1:
+    movq free_ptr(%rip), %r11
+    addq $32, free_ptr(%rip)
+    movq $7, 0(%r11)
+    movq %r11, -8(%r15)
+    movq $5, 8(%r11)
+    movq $0, %rcx
+    movq -8(%r15), %r11
+    movq $5, 16(%r11)
+    movq $0, %rcx
+    movq -8(%r15), %r11
+    movq $7, 24(%r11)
+    movq $0, %rcx
+    movq $5, %rdi
+    movq $5, %rsi
+    movq $5, %rdx
+    movq $5, %rcx
+    movq $5, %r8
+    movq -8(%r15), %r9
+    movq -16(%rbp), %rax
+    subq $8, %r15
+    addq $16, %rsp
+    popq %rbp
+    jmp *%rax
+
+block_2:
+    movq $0, %rcx
+    jmp block_1
+
+block_3:
+    movq %r15, %rdi
+    movq $32, %rsi
+    callq collect
+    jmp block_1
+
+main_start:
+    leaq fun(%rip), %rax
+    movq %rax, -16(%rbp)
+    movq free_ptr(%rip), %rax
+    movq %rax, -8(%r15)
+    addq $32, -8(%r15)
+    movq fromspace_end(%rip), %rax
+    movq %rax, -8(%rbp)
+    cmpq %rax, -8(%r15)
+    jl block_2
+    jmp block_3
+
+    .globl main
+    .align 8
+
+main:
+    pushq %rbp
+    movq %rsp, %rbp
+    subq $16, %rsp
+    movq $65536, %rdi
+    movq $65536, %rsi
+    callq initialize
+    movq rootstack_begin(%rip), %r15
+    movq $0, 0(%r15)
+    addq $8, %r15
+    jmp main_start
+
+main_conclusion:
+    subq $8, %r15
+    addq $16, %rsp
+    popq %rbp
+    retq
+
+fun_start:
+    movq %rdi, -24(%rbp)
+    movq %rsi, -32(%rbp)
+    movq %rdx, -40(%rbp)
+    movq %rcx, -48(%rbp)
+    movq %r8, -56(%rbp)
+    movq %r9, -16(%rbp)
+    movq -16(%rbp), %r11
+    movq 8(%r11), %rcx
+    movq -16(%rbp), %r11
+    movq 16(%r11), %rax
+    movq %rax, -8(%rbp)
+    movq -16(%rbp), %r11
+    movq 24(%r11), %rax
+    movq %rax, -16(%rbp)
+    addq %rax, -8(%rbp)
+    addq -8(%rbp), %rcx
+    movq -56(%rbp), %rax
+    movq %rax, -8(%rbp)
+    addq %rcx, -8(%rbp)
+    movq -48(%rbp), %rcx
+    addq -8(%rbp), %rcx
+    movq -40(%rbp), %rax
+    movq %rax, -8(%rbp)
+    addq %rcx, -8(%rbp)
+    movq -32(%rbp), %rcx
+    addq -8(%rbp), %rcx
+    movq -24(%rbp), %rax
+    addq %rcx, %rax
+    jmp fun_conclusion
+
+    .globl fun
+    .align 8
+
+fun:
+    pushq %rbp
+    movq %rsp, %rbp
+    subq $64, %rsp
+    jmp fun_start
+
+fun_conclusion:
+    addq $64, %rsp
+    popq %rbp
+    retq

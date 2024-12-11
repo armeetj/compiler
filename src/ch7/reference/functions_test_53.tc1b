@@ -1,0 +1,32 @@
+(Program
+  ((Def
+     (Label main)
+     ((args ())
+      (ret Integer)
+      (body
+        (Prim
+          Add
+          ((Apply
+             (FunRef (Label ack) 2)
+             ((Prim Read ()) (Prim Read ())))
+           (Int 41))))))
+   (Def
+     (Label ack)
+     ((args ((m.1 Integer) (n.1 Integer)))
+      (ret Integer)
+      (body
+        (If
+          (Prim Eq ((Var m.1) (Int 0)))
+          (Prim Add ((Int 1) (Var n.1)))
+          (If
+            (Prim Eq ((Var n.1) (Int 0)))
+            (Apply
+              (FunRef (Label ack) 2)
+              ((Prim Sub ((Var m.1) (Int 1))) (Int 1)))
+            (Apply
+              (FunRef (Label ack) 2)
+              ((Prim Sub ((Var m.1) (Int 1)))
+               (Apply
+                 (FunRef (Label ack) 2)
+                 ((Var m.1)
+                  (Prim Sub ((Var n.1) (Int 1))))))))))))))

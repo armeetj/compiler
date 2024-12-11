@@ -1,0 +1,28 @@
+(Program
+  ((Def
+     (Label main)
+     ((args ())
+      (ret Integer)
+      (body
+        (Let
+          tr.1
+          (Apply
+            (FunRef (Label triple) 1)
+            ((Int 13)))
+          (Prim
+            Add
+            ((VecRef (Var tr.1) 0)
+             (Prim
+               Add
+               ((VecRef (Var tr.1) 1)
+                (Prim
+                  Add
+                  ((VecRef (Var tr.1) 2) (Int 3)))))))))))
+   (Def
+     (Label triple)
+     ((args ((x.1 Integer)))
+      (ret (Vector (Integer Integer Integer)))
+      (body
+        (Vec
+          ((Var x.1) (Var x.1) (Var x.1))
+          ((Vector (Integer Integer Integer)))))))))

@@ -1,0 +1,5 @@
+ (define (tailrecur (x : Integer)) : Integer
+   (if (= x 0) 0 (tailrecur (+ x (- 1)))))
+ (if (= 0 (tailrecur 99))
+     42
+     777)

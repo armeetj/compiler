@@ -1,0 +1,122 @@
+main_start:
+    leaq rrrid(%rip), %rax
+    movq %rax, -16(%rbp)
+    movq $0, %rdi
+    callq *-16(%rbp)
+    movq %rax, -16(%rbp)
+    movq $0, %rdi
+    callq *-16(%rbp)
+    movq %rax, -16(%rbp)
+    movq $0, %rdi
+    callq *-16(%rbp)
+    movq %rax, -16(%rbp)
+    movq $42, %rdi
+    movq -16(%rbp), %rax
+    addq $8, %rsp
+    popq %rbx
+    popq %rbp
+    jmp *%rax
+
+    .globl main
+    .align 8
+
+main:
+    pushq %rbp
+    movq %rsp, %rbp
+    pushq %rbx
+    subq $8, %rsp
+    movq $65536, %rdi
+    movq $65536, %rsi
+    callq initialize
+    movq rootstack_begin(%rip), %r15
+    jmp main_start
+
+main_conclusion:
+    addq $8, %rsp
+    popq %rbx
+    popq %rbp
+    retq
+
+id_start:
+    movq %rdi, %rbx
+    movq %rbx, %rax
+    jmp id_conclusion
+
+    .globl id
+    .align 8
+
+id:
+    pushq %rbp
+    movq %rsp, %rbp
+    pushq %rbx
+    subq $8, %rsp
+    jmp id_start
+
+id_conclusion:
+    addq $8, %rsp
+    popq %rbx
+    popq %rbp
+    retq
+
+rid_start:
+    movq %rdi, %rbx
+    leaq id(%rip), %rax
+    jmp rid_conclusion
+
+    .globl rid
+    .align 8
+
+rid:
+    pushq %rbp
+    movq %rsp, %rbp
+    pushq %rbx
+    subq $8, %rsp
+    jmp rid_start
+
+rid_conclusion:
+    addq $8, %rsp
+    popq %rbx
+    popq %rbp
+    retq
+
+rrid_start:
+    movq %rdi, %rbx
+    leaq rid(%rip), %rax
+    jmp rrid_conclusion
+
+    .globl rrid
+    .align 8
+
+rrid:
+    pushq %rbp
+    movq %rsp, %rbp
+    pushq %rbx
+    subq $8, %rsp
+    jmp rrid_start
+
+rrid_conclusion:
+    addq $8, %rsp
+    popq %rbx
+    popq %rbp
+    retq
+
+rrrid_start:
+    movq %rdi, %rbx
+    leaq rrid(%rip), %rax
+    jmp rrrid_conclusion
+
+    .globl rrrid
+    .align 8
+
+rrrid:
+    pushq %rbp
+    movq %rsp, %rbp
+    pushq %rbx
+    subq $8, %rsp
+    jmp rrrid_start
+
+rrrid_conclusion:
+    addq $8, %rsp
+    popq %rbx
+    popq %rbp
+    retq

@@ -1,0 +1,15 @@
+(Program
+  ((Def
+     (Label main)
+     ((args ())
+      (ret Integer)
+      (body (Atm (Int 42)))))
+   (Def
+     (Label bluh)
+     ((args ())
+      (ret (Function (Integer) Integer))
+      (body
+        (Let
+          $tmp.1
+          (FunRef (Label bluh) 0)
+          (Apply (Var $tmp.1) ())))))))

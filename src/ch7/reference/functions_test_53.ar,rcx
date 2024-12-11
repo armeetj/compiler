@@ -1,0 +1,110 @@
+(X86Program
+  ((Def
+     (Label main)
+     (Finfo3
+       (num_spilled 2)
+       (num_spilled_root 0)
+       (used_callee ()))
+     ((nparams 0)
+      (locals
+        (($tmp.1 Integer)
+         ($tmp.2 Integer)
+         ($tmp.3
+           (Function (Integer Integer) Integer))
+         ($tmp.4 Integer)
+         (ack
+           (Function (Integer Integer) Integer))))
+      (body
+        (((Label main_start)
+          (Block
+            Binfo1
+            ((Leaq
+               (GlobalArg (Label ack))
+               (Deref Rbp -16))
+             (Callq (Label read_int) 0)
+             (Movq (Reg Rax) (Deref Rbp -8))
+             (Callq (Label read_int) 0)
+             (Movq (Reg Rax) (Reg Rcx))
+             (Movq (Deref Rbp -8) (Reg Rdi))
+             (Movq (Reg Rcx) (Reg Rsi))
+             (IndirectCallq (Deref Rbp -16) 2)
+             (Movq (Reg Rax) (Reg Rcx))
+             (Movq (Reg Rcx) (Reg Rax))
+             (Addq (Imm 41) (Reg Rax))
+             (Jmp (Label main_conclusion)))))))))
+   (Def
+     (Label ack)
+     (Finfo3
+       (num_spilled 4)
+       (num_spilled_root 0)
+       (used_callee ()))
+     ((nparams 2)
+      (locals
+        ((m.1 Integer)
+         (n.1 Integer)
+         ($tmp.10 Integer)
+         ($tmp.11
+           (Function (Integer Integer) Integer))
+         ($tmp.5 Integer)
+         ($tmp.6
+           (Function (Integer Integer) Integer))
+         ($tmp.7 Integer)
+         ($tmp.8 Integer)
+         ($tmp.9
+           (Function (Integer Integer) Integer))
+         (ack
+           (Function (Integer Integer) Integer))
+         (m.1 Integer)
+         (n.1 Integer)))
+      (body
+        (((Label block_1)
+          (Block
+            Binfo1
+            ((Leaq
+               (GlobalArg (Label ack))
+               (Deref Rbp -8))
+             (Movq (Deref Rbp -32) (Reg Rcx))
+             (Subq (Imm 1) (Reg Rcx))
+             (Movq (Reg Rcx) (Reg Rdi))
+             (Movq (Imm 1) (Reg Rsi))
+             (TailJmp (Deref Rbp -8) 2))))
+         ((Label block_2)
+          (Block
+            Binfo1
+            ((Leaq
+               (GlobalArg (Label ack))
+               (Deref Rbp -8))
+             (Movq (Deref Rbp -32) (Deref Rbp -16))
+             (Subq (Imm 1) (Deref Rbp -16))
+             (Leaq
+               (GlobalArg (Label ack))
+               (Deref Rbp -24))
+             (Movq (Reg Rcx) (Reg Rcx))
+             (Subq (Imm 1) (Reg Rcx))
+             (Movq (Deref Rbp -32) (Reg Rdi))
+             (Movq (Reg Rcx) (Reg Rsi))
+             (IndirectCallq (Deref Rbp -24) 2)
+             (Movq (Reg Rax) (Reg Rcx))
+             (Movq (Deref Rbp -16) (Reg Rdi))
+             (Movq (Reg Rcx) (Reg Rsi))
+             (TailJmp (Deref Rbp -8) 2))))
+         ((Label block_3)
+          (Block
+            Binfo1
+            ((Movq (Imm 1) (Reg Rax))
+             (Addq (Reg Rcx) (Reg Rax))
+             (Jmp (Label ack_conclusion)))))
+         ((Label block_4)
+          (Block
+            Binfo1
+            ((Cmpq (Imm 0) (Reg Rcx))
+             (JmpIf CC_e (Label block_1))
+             (Jmp (Label block_2)))))
+         ((Label ack_start)
+          (Block
+            Binfo1
+            ((Movq (Reg Rdi) (Deref Rbp -32))
+             (Movq (Reg Rsi) (Reg Rcx))
+             (Cmpq (Imm 0) (Deref Rbp -32))
+             (JmpIf CC_e (Label block_3))
+             (Jmp (Label block_4)))))))))))

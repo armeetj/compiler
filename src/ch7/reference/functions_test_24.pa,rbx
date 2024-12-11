@@ -1,0 +1,96 @@
+main_start:
+    leaq big(%rip), %rax
+    movq %rax, -32(%rbp)
+    callq read_int
+    movq %rax, %rbx
+    callq read_int
+    movq %rax, -16(%rbp)
+    callq read_int
+    movq %rax, -24(%rbp)
+    movq %rbx, %rdi
+    movq -16(%rbp), %rsi
+    movq -24(%rbp), %rdx
+    callq *-32(%rbp)
+    movq %rax, %rbx
+    movq $42, %rax
+    addq %rbx, %rax
+    jmp main_conclusion
+
+    .globl main
+    .align 8
+
+main:
+    pushq %rbp
+    movq %rsp, %rbp
+    pushq %rbx
+    subq $24, %rsp
+    movq $65536, %rdi
+    movq $65536, %rsi
+    callq initialize
+    movq rootstack_begin(%rip), %r15
+    jmp main_start
+
+main_conclusion:
+    addq $24, %rsp
+    popq %rbx
+    popq %rbp
+    retq
+
+big_start:
+    movq %rdi, -32(%rbp)
+    movq %rsi, -24(%rbp)
+    movq %rdx, -48(%rbp)
+    movq -32(%rbp), %rax
+    movq %rax, -16(%rbp)
+    movq -24(%rbp), %rax
+    addq %rax, -16(%rbp)
+    movq -32(%rbp), %rbx
+    addq -48(%rbp), %rbx
+    movq -16(%rbp), %rax
+    movq %rax, -40(%rbp)
+    addq %rbx, -40(%rbp)
+    movq -48(%rbp), %rbx
+    addq -32(%rbp), %rbx
+    movq -48(%rbp), %rax
+    movq %rax, -16(%rbp)
+    movq -24(%rbp), %rax
+    addq %rax, -16(%rbp)
+    addq -16(%rbp), %rbx
+    movq -40(%rbp), %rax
+    movq %rax, -16(%rbp)
+    addq %rbx, -16(%rbp)
+    movq -24(%rbp), %rbx
+    addq -24(%rbp), %rbx
+    movq -32(%rbp), %rax
+    addq %rax, -24(%rbp)
+    addq -24(%rbp), %rbx
+    movq -48(%rbp), %rax
+    movq %rax, -24(%rbp)
+    movq -32(%rbp), %rax
+    addq %rax, -24(%rbp)
+    movq -48(%rbp), %rax
+    movq %rax, -32(%rbp)
+    movq -48(%rbp), %rax
+    addq %rax, -32(%rbp)
+    movq -32(%rbp), %rax
+    addq %rax, -24(%rbp)
+    addq -24(%rbp), %rbx
+    movq -16(%rbp), %rax
+    addq %rbx, %rax
+    jmp big_conclusion
+
+    .globl big
+    .align 8
+
+big:
+    pushq %rbp
+    movq %rsp, %rbp
+    pushq %rbx
+    subq $40, %rsp
+    jmp big_start
+
+big_conclusion:
+    addq $40, %rsp
+    popq %rbx
+    popq %rbp
+    retq

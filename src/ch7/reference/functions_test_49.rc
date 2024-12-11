@@ -1,0 +1,45 @@
+(Program
+  ((Def
+     (Label main)
+     ((args ())
+      (ret Integer)
+      (body
+        (If
+          (Let
+            $tmp.1
+            (FunRef (Label g) 0)
+            (Apply (Var $tmp.1) ()))
+          (Let
+            $tmp.2
+            (FunRef (Label h) 0)
+            (Apply (Var $tmp.2) ()))
+          (Let
+            $tmp.5
+            (FunRef (Label l) 1)
+            (Let
+              $tmp.3
+              (FunRef (Label k) 0)
+              (Let
+                $tmp.4
+                (Apply (Var $tmp.3) ())
+                (Apply (Var $tmp.5) ((Var $tmp.4))))))))))
+   (Def
+     (Label g)
+     ((args ())
+      (ret Boolean)
+      (body (Atm (Bool false)))))
+   (Def
+     (Label h)
+     ((args ())
+      (ret Integer)
+      (body (Atm (Int 777)))))
+   (Def
+     (Label k)
+     ((args ())
+      (ret Integer)
+      (body (Atm (Int 41)))))
+   (Def
+     (Label l)
+     ((args ((y.1 Integer)))
+      (ret Integer)
+      (body (Prim Add ((Var y.1) (Int 1))))))))

@@ -1,0 +1,32 @@
+(Program
+  ((Def
+     main
+     ((args ())
+      (ret Integer)
+      (body
+        (Prim
+          Add
+          ((Apply
+             (Var ack)
+             ((Prim Read ()) (Prim Read ())))
+           (Int 41))))))
+   (Def
+     ack
+     ((args ((m.1 Integer) (n.1 Integer)))
+      (ret Integer)
+      (body
+        (If
+          (Prim Eq ((Var m.1) (Int 0)))
+          (Prim Add ((Int 1) (Var n.1)))
+          (If
+            (Prim Eq ((Var n.1) (Int 0)))
+            (Apply
+              (Var ack)
+              ((Prim Sub ((Var m.1) (Int 1))) (Int 1)))
+            (Apply
+              (Var ack)
+              ((Prim Sub ((Var m.1) (Int 1)))
+               (Apply
+                 (Var ack)
+                 ((Var m.1)
+                  (Prim Sub ((Var n.1) (Int 1))))))))))))))

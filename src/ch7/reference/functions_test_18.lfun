@@ -1,0 +1,88 @@
+(Program
+  ((Def
+     o
+     ((args
+        ((i Integer) (v (Vector (Integer)))))
+      (ret (Vector ((Vector (Integer)))))
+      (body
+        (If
+          (Prim Eq ((Var i) (Int 0)))
+          (Vec ((Var v)) ())
+          (Let
+            junk
+            (Vec
+              ((Vec ((Int 1)) ())
+               (Vec ((Int 2)) ())
+               (Vec ((Int 1)) ())
+               (Vec ((Int 2)) ())
+               (Vec ((Int 1)) ()))
+              ())
+            (Apply
+              (Var o)
+              ((Prim
+                 Add
+                 ((Var i) (Prim Negate ((Int 1)))))
+               (Var v))))))))
+   (Def
+     t
+     ((args
+        ((v (Vector ((Vector (Integer)))))))
+      (ret
+        (Vector ((Vector ((Vector (Integer)))))))
+      (body (Vec ((Var v)) ()))))
+   (Def
+     h
+     ((args
+        ((v
+           (Vector ((Vector ((Vector (Integer)))))))))
+      (ret
+        (Vector
+          ((Vector ((Vector ((Vector (Integer)))))))))
+      (body (Vec ((Var v)) ()))))
+   (Def
+     f
+     ((args
+        ((v
+           (Vector
+             ((Vector ((Vector ((Vector (Integer)))))))))))
+      (ret
+        (Vector
+          ((Vector
+             ((Vector ((Vector ((Vector (Integer)))))))))))
+      (body (Vec ((Var v)) ()))))
+   (Def
+     e
+     ((args
+        ((v
+           (Vector
+             ((Vector
+                ((Vector ((Vector ((Vector (Integer)))))))))))))
+      (ret
+        (Vector
+          ((Vector
+             ((Vector
+                ((Vector ((Vector ((Vector (Integer)))))))))))))
+      (body (Vec ((Var v)) ())))))
+  (VecRef
+    (VecRef
+      (VecRef
+        (VecRef
+          (VecRef
+            (VecRef
+              (Apply
+                (Var e)
+                ((Vec
+                   ((Apply
+                      (Var h)
+                      ((Apply
+                         (Var t)
+                         ((Apply
+                            (Var o)
+                            ((Int 1) (Vec ((Int 42)) ()))))))))
+                   ())))
+              0)
+            0)
+          0)
+        0)
+      0)
+    0))

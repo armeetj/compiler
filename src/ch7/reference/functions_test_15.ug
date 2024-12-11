@@ -1,0 +1,68 @@
+(Program
+  ((Def
+     (Label main)
+     ((args ())
+      (ret Integer)
+      (body
+        (VecRef
+          (Apply
+            (FunRef (Label map_vector) 2)
+            ((FunRef (Label minus) 2)
+             (Let
+               _.2
+               (If
+                 (Prim
+                   Lt
+                   ((Prim
+                      Add
+                      ((GlobalVal free_ptr) (Int 16)))
+                    (GlobalVal fromspace_end)))
+                 Void
+                 (Collect 16))
+               (Let
+                 $ea.1
+                 (Allocate 1 (Vector (Integer)))
+                 (Let
+                   _.1
+                   (VecSet (Var $ea.1) 0 (Int 43))
+                   (Var $ea.1))))))
+          0))))
+   (Def
+     (Label minus)
+     ((args ((n.1 Integer) (m.1 Integer)))
+      (ret Integer)
+      (body
+        (Prim
+          Add
+          ((Var n.1) (Prim Negate ((Var m.1))))))))
+   (Def
+     (Label map_vector)
+     ((args
+        ((f.1
+           (Function (Integer Integer) Integer))
+         (v.1 (Vector (Integer)))))
+      (ret (Vector (Integer)))
+      (body
+        (Let
+          $ea.2
+          (Apply
+            (Var f.1)
+            ((VecRef (Var v.1) 0) (Int 1)))
+          (Let
+            _.4
+            (If
+              (Prim
+                Lt
+                ((Prim
+                   Add
+                   ((GlobalVal free_ptr) (Int 16)))
+                 (GlobalVal fromspace_end)))
+              Void
+              (Collect 16))
+            (Let
+              $ea.3
+              (Allocate 1 (Vector (Integer)))
+              (Let
+                _.3
+                (VecSet (Var $ea.3) 0 (Var $ea.2))
+                (Var $ea.3))))))))))

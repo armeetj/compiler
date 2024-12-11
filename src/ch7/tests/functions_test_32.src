@@ -1,0 +1,8 @@
+;; OUTPUT: 42
+
+(define (mult (x : Integer) (y : Integer)) : Integer
+  (if (= 0 x)
+      0
+      (+ y (mult (+ (- 1) x) y))))
+
+(mult 6 7)

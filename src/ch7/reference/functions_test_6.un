@@ -1,0 +1,15 @@
+(Program
+  ((Def
+     main
+     ((args ())
+      (ret Integer)
+      (body
+        (Let
+          f.1
+          (Var id)
+          (Apply (Var f.1) ((Int 42)))))))
+   (Def
+     id
+     ((args ((x.1 Integer)))
+      (ret Integer)
+      (body (Var x.1))))))

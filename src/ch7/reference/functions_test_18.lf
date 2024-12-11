@@ -1,0 +1,121 @@
+(Program
+  ((Def
+     (Label main)
+     ((args ())
+      (ret Integer)
+      (body
+        (VecRef
+          (VecRef
+            (VecRef
+              (VecRef
+                (VecRef
+                  (VecRef
+                    (Apply
+                      (FunRef (Label e) 1)
+                      ((Vec
+                         ((Apply
+                            (FunRef (Label h) 1)
+                            ((Apply
+                               (FunRef (Label t) 1)
+                               ((Apply
+                                  (FunRef (Label o) 2)
+                                  ((Int 1)
+                                   (Vec ((Int 42)) ((Vector (Integer)))))))))))
+                         ((Vector
+                            ((Vector
+                               ((Vector ((Vector ((Vector (Integer))))))))))))))
+                    0)
+                  0)
+                0)
+              0)
+            0)
+          0))))
+   (Def
+     (Label o)
+     ((args
+        ((i.1 Integer) (v.1 (Vector (Integer)))))
+      (ret (Vector ((Vector (Integer)))))
+      (body
+        (If
+          (Prim Eq ((Var i.1) (Int 0)))
+          (Vec
+            ((Var v.1))
+            ((Vector ((Vector (Integer))))))
+          (Let
+            junk.1
+            (Vec
+              ((Vec ((Int 1)) ((Vector (Integer))))
+               (Vec ((Int 2)) ((Vector (Integer))))
+               (Vec ((Int 1)) ((Vector (Integer))))
+               (Vec ((Int 2)) ((Vector (Integer))))
+               (Vec ((Int 1)) ((Vector (Integer)))))
+              ((Vector
+                 ((Vector (Integer))
+                  (Vector (Integer))
+                  (Vector (Integer))
+                  (Vector (Integer))
+                  (Vector (Integer))))))
+            (Apply
+              (FunRef (Label o) 2)
+              ((Prim
+                 Add
+                 ((Var i.1) (Prim Negate ((Int 1)))))
+               (Var v.1))))))))
+   (Def
+     (Label t)
+     ((args
+        ((v.2 (Vector ((Vector (Integer)))))))
+      (ret
+        (Vector ((Vector ((Vector (Integer)))))))
+      (body
+        (Vec
+          ((Var v.2))
+          ((Vector ((Vector ((Vector (Integer)))))))))))
+   (Def
+     (Label h)
+     ((args
+        ((v.3
+           (Vector ((Vector ((Vector (Integer)))))))))
+      (ret
+        (Vector
+          ((Vector ((Vector ((Vector (Integer)))))))))
+      (body
+        (Vec
+          ((Var v.3))
+          ((Vector
+             ((Vector ((Vector ((Vector (Integer)))))))))))))
+   (Def
+     (Label f)
+     ((args
+        ((v.4
+           (Vector
+             ((Vector ((Vector ((Vector (Integer)))))))))))
+      (ret
+        (Vector
+          ((Vector
+             ((Vector ((Vector ((Vector (Integer)))))))))))
+      (body
+        (Vec
+          ((Var v.4))
+          ((Vector
+             ((Vector
+                ((Vector ((Vector ((Vector (Integer)))))))))))))))
+   (Def
+     (Label e)
+     ((args
+        ((v.5
+           (Vector
+             ((Vector
+                ((Vector ((Vector ((Vector (Integer)))))))))))))
+      (ret
+        (Vector
+          ((Vector
+             ((Vector
+                ((Vector ((Vector ((Vector (Integer)))))))))))))
+      (body
+        (Vec
+          ((Var v.5))
+          ((Vector
+             ((Vector
+                ((Vector
+                   ((Vector ((Vector ((Vector (Integer)))))))))))))))))))

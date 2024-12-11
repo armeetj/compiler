@@ -1,0 +1,79 @@
+(X86Program
+  ((Def
+     (Label main)
+     Finfo1
+     ((nparams 0)
+      (locals
+        (($tmp.1 (Function (Integer) Integer))
+         ($tmp.2
+           (Function
+             ((Function (Integer) Integer))
+             (Function (Integer) Integer)))
+         ($tmp.3 (Function (Integer) Integer))
+         (id
+           (Function
+             ((Function (Integer) Integer))
+             (Function (Integer) Integer)))
+         (inc (Function (Integer) Integer))))
+      (body
+        (((Label main_start)
+          (Block
+            (Binfo2
+              ((initial ())
+               (afters
+                 (((VarL $tmp.2))
+                  ((VarL $tmp.1) (VarL $tmp.2))
+                  ((VarL $tmp.2) (RegL Rdi))
+                  ((RegL Rax))
+                  ((VarL $tmp.3))
+                  ((VarL $tmp.3) (RegL Rdi))
+                  ()))))
+            ((Leaq
+               (GlobalArg (Label id))
+               (Var $tmp.2))
+             (Leaq
+               (GlobalArg (Label inc))
+               (Var $tmp.1))
+             (Movq (Var $tmp.1) (Reg Rdi))
+             (IndirectCallq (Var $tmp.2) 1)
+             (Movq (Reg Rax) (Var $tmp.3))
+             (Movq (Imm 41) (Reg Rdi))
+             (TailJmp (Var $tmp.3) 1))))))))
+   (Def
+     (Label id)
+     Finfo1
+     ((nparams 1)
+      (locals
+        ((f.1 (Function (Integer) Integer))
+         (f.1 (Function (Integer) Integer))))
+      (body
+        (((Label id_start)
+          (Block
+            (Binfo2
+              ((initial ((RegL Rsp) (RegL Rdi)))
+               (afters
+                 (((VarL f.1) (RegL Rsp))
+                  ((RegL Rsp) (RegL Rax))
+                  ()))))
+            ((Movq (Reg Rdi) (Var f.1))
+             (Movq (Var f.1) (Reg Rax))
+             (Jmp (Label id_conclusion)))))))))
+   (Def
+     (Label inc)
+     Finfo1
+     ((nparams 1)
+      (locals ((x.1 Integer) (x.1 Integer)))
+      (body
+        (((Label inc_start)
+          (Block
+            (Binfo2
+              ((initial ((RegL Rsp) (RegL Rdi)))
+               (afters
+                 (((VarL x.1) (RegL Rsp))
+                  ((RegL Rsp) (RegL Rax))
+                  ((RegL Rsp) (RegL Rax))
+                  ()))))
+            ((Movq (Reg Rdi) (Var x.1))
+             (Movq (Var x.1) (Reg Rax))
+             (Addq (Imm 1) (Reg Rax))
+             (Jmp (Label inc_conclusion)))))))))))

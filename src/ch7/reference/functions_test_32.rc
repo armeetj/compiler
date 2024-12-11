@@ -1,0 +1,33 @@
+(Program
+  ((Def
+     (Label main)
+     ((args ())
+      (ret Integer)
+      (body
+        (Let
+          $tmp.1
+          (FunRef (Label mult) 2)
+          (Apply (Var $tmp.1) ((Int 6) (Int 7)))))))
+   (Def
+     (Label mult)
+     ((args ((x.1 Integer) (y.1 Integer)))
+      (ret Integer)
+      (body
+        (If
+          (Prim Eq ((Int 0) (Var x.1)))
+          (Atm (Int 0))
+          (Let
+            $tmp.4
+            (FunRef (Label mult) 2)
+            (Let
+              $tmp.2
+              (Prim Negate ((Int 1)))
+              (Let
+                $tmp.3
+                (Prim Add ((Var $tmp.2) (Var x.1)))
+                (Let
+                  $tmp.5
+                  (Apply
+                    (Var $tmp.4)
+                    ((Var $tmp.3) (Var y.1)))
+                  (Prim Add ((Var y.1) (Var $tmp.5)))))))))))))

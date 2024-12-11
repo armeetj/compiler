@@ -1,0 +1,75 @@
+main_start:
+    leaq apply(%rip), %rax
+    movq %rax, -16(%rbp)
+    leaq inc(%rip), %rax
+    movq %rax, -8(%rbp)
+    callq read_int
+    movq %rax, %rcx
+    movq -8(%rbp), %rdi
+    movq %rcx, %rsi
+    movq -16(%rbp), %rax
+    addq $16, %rsp
+    popq %rbp
+    jmp *%rax
+
+    .globl main
+    .align 8
+
+main:
+    pushq %rbp
+    movq %rsp, %rbp
+    subq $16, %rsp
+    movq $65536, %rdi
+    movq $65536, %rsi
+    callq initialize
+    movq rootstack_begin(%rip), %r15
+    jmp main_start
+
+main_conclusion:
+    addq $16, %rsp
+    popq %rbp
+    retq
+
+apply_start:
+    movq %rdi, -8(%rbp)
+    movq %rsi, %rcx
+    movq %rcx, %rdi
+    callq *-8(%rbp)
+    movq %rax, %rcx
+    movq %rcx, %rdi
+    movq -8(%rbp), %rax
+    addq $16, %rsp
+    popq %rbp
+    jmp *%rax
+
+    .globl apply
+    .align 8
+
+apply:
+    pushq %rbp
+    movq %rsp, %rbp
+    subq $16, %rsp
+    jmp apply_start
+
+apply_conclusion:
+    addq $16, %rsp
+    popq %rbp
+    retq
+
+inc_start:
+    movq %rdi, %rcx
+    movq %rcx, %rax
+    addq $1, %rax
+    jmp inc_conclusion
+
+    .globl inc
+    .align 8
+
+inc:
+    pushq %rbp
+    movq %rsp, %rbp
+    jmp inc_start
+
+inc_conclusion:
+    popq %rbp
+    retq
