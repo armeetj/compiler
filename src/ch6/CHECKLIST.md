@@ -1,18 +1,18 @@
 # Checklist (ch6)
 
-- [x] shrink
-- [x] uniquify
+- [x] shrink - ashug
+- [x] uniquify - ashug
 - [ ] expose allocation - armeet
-- [x] uncover get
-- [x] remove complex
+- [x] uncover get - ashug
+- [x] remove complex - ashug
 - [ ] explicate control - armeet
-- [x] remove unused
+- [x] remove unused blocks - armeet
 - [ ] select instructions
 - [ ] uncover live
 - [ ] build interference
-- [ ] graph coloring
+- [x] graph coloring - armeet
 - [ ] allocate registers
-- [ ] remove jumps
+- [x] remove jumps - armeet
 - [ ] patch instructions
 - [ ] prelude conclusion
 
