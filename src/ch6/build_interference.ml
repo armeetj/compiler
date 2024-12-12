@@ -1,5 +1,3 @@
-open Support.Utils
-open Sexplib
 open Types
 open X86_var_global
 
