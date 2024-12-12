@@ -8,13 +8,13 @@
 - [ ] explicate control - armeet
 - [x] remove unused blocks - armeet
 - [x] select instructions - ashug
-- [ ] uncover live
+- [ ] uncover live - ashug
 - [ ] build interference
 - [x] graph coloring - armeet
-- [ ] allocate registers
+- [ ] allocate registers - armeet
 - [x] remove jumps - armeet
-- [ ] patch instructions
-- [ ] prelude conclusion
+- [ ] patch instructions - ashug
+- [ ] prelude conclusion - ashug
 
 ## compile order
 
