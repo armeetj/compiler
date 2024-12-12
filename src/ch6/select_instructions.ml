@@ -8,18 +8,23 @@ open X86_var_global
 (* NOTE: `fix_label` is needed for global variables as well as functions.
    MacOS, for instance, puts `_` before the names of both in assembly code. *)
 let make_tuple_tag (len : int) (vec : ty array) : int =
-  if len < 0 || len > 50 then failwith "Vector length must be between 0 and 50" ;
-  let pointer_bits =
-    Array.fold_left
-      (fun acc ty ->
-        let bit = match ty with Vector _ -> 1 | _ -> 0 in
-        (acc lsl 1) lor bit )
-      0 vec
-  in
-  let length_bits = len lsl 1 in
-  let forwarding_bit = 1 in
-  let tag = (pointer_bits lsl 7) lor length_bits lor forwarding_bit in
-  tag
+  if len < 0 || len > 50 then failwith "vector length not between 0 and 50"
+  else
+    let pointer_bits =
+      Array.fold_left
+        (fun acc ty ->
+          let bit =
+            match ty with
+            | Vector _ -> 1
+            | _ -> 0
+          in
+          (acc * 2) + bit )
+        0 vec
+    in
+    let length_bits = len * 2 in
+    let forwarding_bit = 1 in
+    let tag = (pointer_bits * 128) + length_bits + forwarding_bit in
+    tag
 
 let process_atm atm =
   match atm with
@@ -37,35 +42,30 @@ let process_exp (exp : C.exp) : instr list =
     | `Add, [atm1; atm2] ->
       [Movq (process_atm atm1, Reg Rax); Addq (process_atm atm2, Reg Rax)]
     | `Sub, [atm1; atm2] ->
-        [Movq (process_atm atm1, Reg Rax); Subq (process_atm atm2, Reg Rax)]
-    | `Negate, [atm] ->
-        [Movq (process_atm atm, Reg Rax); Negq (Reg Rax)]
-    | `Not, [atm] ->
-        [Movq (process_atm atm, Reg Rax); Xorq (Imm 1, Reg Rax)]
-    | _ ->
-        failwith "shouldn't reach" )
+      [Movq (process_atm atm1, Reg Rax); Subq (process_atm atm2, Reg Rax)]
+    | `Negate, [atm] -> [Movq (process_atm atm, Reg Rax); Negq (Reg Rax)]
+    | `Not, [atm] -> [Movq (process_atm atm, Reg Rax); Xorq (Imm 1, Reg Rax)]
+    | _ -> failwith "shouldn't reach" )
   | Allocate (len, Vector types) ->
-      let tag = make_tuple_tag len types in
-      [ Movq (GlobalArg (Label (fix_label "free_ptr")), Reg R11)
-      ; Addq (Imm ((8 * len) + 8), GlobalArg (Label (fix_label "free_ptr")))
-      ; Movq (Imm tag, Deref (R11, 0))
-      ; Movq (Reg R11, Reg Rax) ]
+    let tag = make_tuple_tag len types in
+    [ Movq (GlobalArg (Label (fix_label "free_ptr")), Reg R11)
+    ; Addq (Imm ((8 * len) + 8), GlobalArg (Label (fix_label "free_ptr")))
+    ; Movq (Imm tag, Deref (R11, 0))
+    ; Movq (Reg R11, Reg Rax) ]
   | Allocate (len, _) ->
-      [ Movq (GlobalArg (Label (fix_label "free_ptr")), Reg R11)
-      ; Addq (Imm ((8 * len) + 8), GlobalArg (Label (fix_label "free_ptr")))
-      ; Movq (Imm 0, Deref (R11, 0))
-      ; Movq (Reg R11, Reg Rax) ]
-  | GlobalVal var ->
-      [Movq (GlobalArg (Label var), Reg Rax)]
+    [ Movq (GlobalArg (Label (fix_label "free_ptr")), Reg R11)
+    ; Addq (Imm ((8 * len) + 8), GlobalArg (Label (fix_label "free_ptr")))
+    ; Movq (Imm 0, Deref (R11, 0))
+    ; Movq (Reg R11, Reg Rax) ]
+  | GlobalVal var -> [Movq (GlobalArg (Label var), Reg Rax)]
   | VecLen atm ->
-      [Movq (process_atm atm, Reg R11); Movq (Deref (R11, -8), Reg Rax)]
+    [Movq (process_atm atm, Reg R11); Movq (Deref (R11, -8), Reg Rax)]
   | VecRef (atm, int) ->
-      [ Movq (process_atm atm, Reg R11)
-      ; Movq (Deref (R11, (8 * int) + 8), Reg Rax) ]
+    [Movq (process_atm atm, Reg R11); Movq (Deref (R11, (8 * int) + 8), Reg Rax)]
   | VecSet (atm1, i, atm2) ->
-      [ Movq (process_atm atm1, Reg R11)
-      ; Movq (process_atm atm2, Deref (R11, (8 * i) + 8))
-      ; Movq (Reg R11, Reg Rax) ]
+    [ Movq (process_atm atm1, Reg R11)
+    ; Movq (process_atm atm2, Deref (R11, (8 * i) + 8))
+    ; Movq (Reg R11, Reg Rax) ]
 
 let process_stmt stmt : instr list =
   match stmt with
@@ -103,43 +103,39 @@ let process_stmt stmt : instr list =
       ; Set (CC_g, ByteReg Al)
       ; Movzbq (ByteReg Al, Var v) ]
     | `Ge, [atm1; atm2] ->
-        [ Cmpq (process_atm atm2, process_atm atm1)
-        ; Set (CC_ge, ByteReg Al)
-        ; Movzbq (ByteReg Al, Var v) ]
-    | _ ->
-        failwith "shouldn't reach" )
+      [ Cmpq (process_atm atm2, process_atm atm1)
+      ; Set (CC_ge, ByteReg Al)
+      ; Movzbq (ByteReg Al, Var v) ]
+    | _ -> failwith "shouldn't reach" )
   | Assign (v, C.VecSet (atm1, i, atm2)) ->
-      [ Movq (process_atm atm1, Reg R11)
-      ; Movq (process_atm atm2, Deref (R11, (8 * i) + 8))
-      ; Movq (Imm 0, Var v) ]
+    [ Movq (process_atm atm1, Reg R11)
+    ; Movq (process_atm atm2, Deref (R11, (8 * i) + 8))
+    ; Movq (Imm 0, Var v) ]
   | Assign (v, C.Allocate (len, Vector types)) ->
-      let tag = make_tuple_tag len types in
-      [ Movq (GlobalArg (Label (fix_label "free_ptr")), Reg R11)
-      ; Addq (Imm ((8 * len) + 8), GlobalArg (Label (fix_label "free_ptr")))
-      ; Movq (Imm tag, Deref (R11, 0))
-      ; Movq (Reg R11, Var v) ]
+    let tag = make_tuple_tag len types in
+    [ Movq (GlobalArg (Label (fix_label "free_ptr")), Reg R11)
+    ; Addq (Imm ((8 * len) + 8), GlobalArg (Label (fix_label "free_ptr")))
+    ; Movq (Imm tag, Deref (R11, 0))
+    ; Movq (Reg R11, Var v) ]
   | Assign (v, C.Allocate (len, _)) ->
-      [ Movq (GlobalArg (Label (fix_label "free_ptr")), Reg R11)
-      ; Addq (Imm ((8 * len) + 8), GlobalArg (Label (fix_label "free_ptr")))
-      ; Movq (Imm 0, Deref (R11, 0))
-      ; Movq (Reg R11, Var v) ]
+    [ Movq (GlobalArg (Label (fix_label "free_ptr")), Reg R11)
+    ; Addq (Imm ((8 * len) + 8), GlobalArg (Label (fix_label "free_ptr")))
+    ; Movq (Imm 0, Deref (R11, 0))
+    ; Movq (Reg R11, Var v) ]
   | Assign (v, C.VecRef (atm, int)) ->
-      [Movq (process_atm atm, Reg R11); Movq (Deref (R11, (8 * int) + 8), Var v)]
-  | Assign (v, C.GlobalVal var) ->
-      [Movq (GlobalArg (Label var), Var v)]
+    [Movq (process_atm atm, Reg R11); Movq (Deref (R11, (8 * int) + 8), Var v)]
+  | Assign (v, C.GlobalVal var) -> [Movq (GlobalArg (Label var), Var v)]
   | Assign (v, C.VecLen atm) ->
-      [ Movq (process_atm atm, Reg R11)
-      ; Movq (Deref (R11, 0), Reg Rax)
-      ; Andq (Imm 126, Reg Rax)
-      ; Sarq (Imm 1, Reg Rax)
-      ; Movq (Reg Rax, Var v) ]
+    [ Movq (process_atm atm, Reg R11)
+    ; Movq (Deref (R11, 0), Reg Rax)
+    ; Andq (Imm 126, Reg Rax)
+    ; Sarq (Imm 1, Reg Rax)
+    ; Movq (Reg Rax, Var v) ]
   | VecSetS (atm1, i, atm2) ->
-      [ Movq (process_atm atm1, Reg R11)
-      ; Movq (process_atm atm2, Deref (R11, (8 * i) + 8)) ]
+    [ Movq (process_atm atm1, Reg R11)
+    ; Movq (process_atm atm2, Deref (R11, (8 * i) + 8)) ]
   | Collect i ->
-      [ Movq (Reg R15, Reg Rdi)
-      ; Movq (Imm i, Reg Rsi)
-      ; Callq (Label "collect", 2) ]
+    [Movq (Reg R15, Reg Rdi); Movq (Imm i, Reg Rsi); Callq (Label "collect", 2)]
 
 let rec tail_instructions (i : C.tail) : instr list =
   match i with
