@@ -13,7 +13,7 @@
 - [x] graph coloring - armeet
 - [ ] allocate registers - armeet
 - [x] remove jumps - armeet
-- [ ] patch instructions - ashug
+- [x] patch instructions - ashug
 - [ ] prelude conclusion - ashug
 
 ## compile order
