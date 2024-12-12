@@ -10,16 +10,98 @@ let resize_initial_heap_size (n : int) : unit =
     failwithf "heap size must be divisible by 8 and >= %d" min_heap_size ;
   init_heap_size := n
 
-(* Code that has to be added to each program at the end.
-   It's parameterized on the set of callee-save registers (`callee_saves`),
-   the stack space (`ss`), and on the number of rootstack items (`rs`). *)
 let epilog (callee_saves : RegSet.t) (ss : int) (rs : int) : instr list =
   let main = fix_label "main" in
-  failwith "TODO"
+  [ Global (Types.Label main)
+  ; Label main
+  ; Pushq (Reg Rbp)
+  ; Movq (Reg Rsp, Reg Rbp) ]
+  @ List.map (fun reg -> Pushq (Reg reg)) (RegSet.elements callee_saves)
+  @ [ Subq (Imm ss, Reg Rsp)
+    ; Movq (Imm !init_heap_size, Reg Rdi)
+    ; Movq (Imm !init_heap_size, Reg Rsi)
+    ; Callq (Label (fix_label "initialize"))
+    ; Movq (GlobalArg (Rip, Label (fix_label "rootstack_begin")), Reg R15) ]
+  @ List.init rs (fun i -> Movq (Imm 0, Deref (R15, i * 8)))
+  @ [ Addq (Imm (rs * 8), Reg R15)
+    ; Jmp (Label "start")
+    ; Label "conclusion"
+    ; Subq (Imm (rs * 8), Reg R15)
+    ; Addq (Imm ss, Reg Rsp) ]
+  @ List.map
+      (fun reg -> Popq (Reg reg))
+      (List.rev (RegSet.elements callee_saves))
+  @ [Popq (Reg Rbp); Retq]
+
+let convert_arg a =
+  match a with
+  | X.Imm i -> Imm i
+  | X.Reg r -> Reg r
+  | X.Deref (r, i) -> Deref (r, i)
+  | X.ByteReg b -> ByteReg b
+  | X.GlobalArg l -> GlobalArg (Rip, l)
+
+let offset arg deref_adjust =
+  match arg with
+  | Deref (r, curr) -> (
+    match r with
+    | Rbp -> Deref (r, curr - deref_adjust)
+    | _ -> Deref (r, curr) )
+  | arg -> arg
+
+let adjust_stack_access instr deref_adjust =
+  match instr with
+  | X.Addq (a1, a2) ->
+    Addq
+      ( offset (convert_arg a1) deref_adjust
+      , offset (convert_arg a2) deref_adjust )
+  | X.Subq (a1, a2) ->
+    Subq
+      ( offset (convert_arg a1) deref_adjust
+      , offset (convert_arg a2) deref_adjust )
+  | X.Negq a -> Negq (offset (convert_arg a) deref_adjust)
+  | X.Xorq (a1, a2) ->
+    Xorq
+      ( offset (convert_arg a1) deref_adjust
+      , offset (convert_arg a2) deref_adjust )
+  | X.Cmpq (a1, a2) ->
+    Cmpq
+      ( offset (convert_arg a1) deref_adjust
+      , offset (convert_arg a2) deref_adjust )
+  | X.Set (cc, a) -> Set (cc, offset (convert_arg a) deref_adjust)
+  | X.Movq (a1, a2) ->
+    Movq
+      ( offset (convert_arg a1) deref_adjust
+      , offset (convert_arg a2) deref_adjust )
+  | X.Movzbq (a1, a2) ->
+    Movzbq
+      ( offset (convert_arg a1) deref_adjust
+      , offset (convert_arg a2) deref_adjust )
+  | X.Pushq a -> Pushq (offset (convert_arg a) deref_adjust)
+  | X.Popq a -> Popq (offset (convert_arg a) deref_adjust)
+  | X.Andq (a1, a2) ->
+    Andq
+      ( offset (convert_arg a1) deref_adjust
+      , offset (convert_arg a2) deref_adjust )
+  | X.Sarq (a1, a2) ->
+    Sarq
+      ( offset (convert_arg a1) deref_adjust
+      , offset (convert_arg a2) deref_adjust )
+  | X.Callq (l, _) -> Callq l
+  | X.Retq -> Retq
+  | X.Jmp l -> Jmp l
+  | X.JmpIf (cc, l) -> JmpIf (cc, l)
+
+let rec instrs_of_block (b : X.instr list) deref_adjust : instr list =
+  match b with
+  | [] -> []
+  | h :: t ->
+    [adjust_stack_access h deref_adjust] @ instrs_of_block t deref_adjust
 
 (* Convert a labeled block to a list of instructions. *)
 let asm_of_lb (deref_adjust : int) (lb : label * X.block) : instr list =
-  failwith "TODO"
+  let Label l, X.Block b = lb in
+  Label l :: instrs_of_block b deref_adjust
 
 let prelude_conclusion (prog : X.program) : program =
   let (X.X86Program (info, lbs)) = prog in

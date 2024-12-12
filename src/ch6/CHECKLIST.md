@@ -14,7 +14,7 @@
 - [x] allocate registers - armeet
 - [x] remove jumps - armeet
 - [x] patch instructions - ashug
-- [ ] prelude conclusion - ashug
+- [x] prelude conclusion - ashug
 
 ## compile order
 
