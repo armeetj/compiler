@@ -11,7 +11,7 @@
 - [x] uncover live - ashug
 - [x] build interference - ashug
 - [x] graph coloring - armeet
-- [ ] allocate registers - armeet
+- [x] allocate registers - armeet
 - [x] remove jumps - armeet
 - [x] patch instructions - ashug
 - [ ] prelude conclusion - ashug
