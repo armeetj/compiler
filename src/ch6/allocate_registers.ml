@@ -6,7 +6,7 @@ module PQ = Priority_queue.Simple (OrderedLoc)
 module Color = Graph_coloring.Make (OrderedLoc) (LocMap) (PQ) (LocUgraph)
 
 (* Registers that are relevant to register allocation.
- * NOTE: We leave out reserved registers: 
+ * NOTE: We leave out reserved registers:
  *   rax (return value)
  *   rsp (stack pointer)
  *   rbp (base pointer)
@@ -59,7 +59,7 @@ let spilled_location_dict : (int, location) Hashtbl.t = Hashtbl.create 20
 (* Get the location corresponding to a color (int).
  * Usually this will be a register, but if there aren't
  * enough registers, it will be a stack location.
- * If the `vector_typed` argument is `true`, 
+ * If the `vector_typed` argument is `true`,
  * choose a root stack location when spilling;
  * otherwise choose the regular stack.
  * When spilling, choose the next available stack location
@@ -69,8 +69,25 @@ let spilled_location_dict : (int, location) Hashtbl.t = Hashtbl.create 20
  *)
 let location_of_color (i : int) (vector_typed : bool) : location =
   match IntMap.find_opt i (color_register_map ()) with
-  | None -> failwith "TODO"
   | Some loc -> loc
+  | None -> (
+    match Hashtbl.find_opt spilled_location_dict i with
+    | Some loc -> loc
+    | None ->
+      let loc =
+        if vector_typed then
+          (* spill to root stack *)
+          let aux = StackL (R15, -8 * !next_root_stack_index) in
+          let _ = next_root_stack_index := !next_root_stack_index + 1 in
+          aux
+        else
+          (* spill to reg stack *)
+          let aux = StackL (Rbp, -8 * !next_stack_index) in
+          let _ = next_stack_index := !next_stack_index + 1 in
+          aux
+      in
+      let _ = Hashtbl.add spilled_location_dict i loc in
+      loc )
 
 (* ----------------------------------------------------------------- *)
 
@@ -78,7 +95,15 @@ let location_of_color (i : int) (vector_typed : bool) : location =
  * and map them to their (register and stack) locations. *)
 let varmap_of_colormap (vvs : VarSet.t) (color_map : int LocMap.t) :
   location VarMap.t =
-  failwith "TODO"
+  let f loc color map =
+    match loc with
+    (* extrac only var mappings *)
+    | VarL v ->
+      let is_vector = VarSet.mem v vvs in
+      VarMap.add v (location_of_color color is_vector) map
+    | _ -> map
+  in
+  LocMap.fold f color_map VarMap.empty
 
 (* Determine the variable -> location mapping based on the
  * interference graph. *)
@@ -95,7 +120,34 @@ let get_variable_location_map (g : LocUgraph.t) (vvs : VarSet.t) :
 
 (* Convert all the instructions with arguments. *)
 let convert_instr (map : location VarMap.t) (ins : instr) : instr =
-  failwith "TODO"
+  let convert_arg a =
+    match a with
+    | Var v -> (
+      match VarMap.find_opt v map with
+      | Some loc -> (
+        match loc with
+        | StackL (r, i) -> Deref (r, i)
+        | RegL r -> Reg r
+        | _ ->
+          failwith
+            "var location must be a StackL or RegL (some memory location)" )
+      | None -> failwith "key not found" )
+    | _ -> a
+  in
+  match ins with
+  | Addq (a1, a2) -> Addq (convert_arg a1, convert_arg a2)
+  | Subq (a1, a2) -> Subq (convert_arg a1, convert_arg a2)
+  | Negq a -> Negq (convert_arg a)
+  | Xorq (a1, a2) -> Xorq (convert_arg a1, convert_arg a2)
+  | Cmpq (a1, a2) -> Cmpq (convert_arg a1, convert_arg a2)
+  | Set (cc, a) -> Set (cc, convert_arg a)
+  | Movq (a1, a2) -> Movq (convert_arg a1, convert_arg a2)
+  | Movzbq (a1, a2) -> Movzbq (convert_arg a1, convert_arg a2)
+  | Pushq a -> Pushq (convert_arg a)
+  | Popq a -> Popq (convert_arg a)
+  | Andq (a1, a2) -> Andq (convert_arg a1, convert_arg a2)
+  | Sarq (a1, a2) -> Sarq (convert_arg a1, convert_arg a2)
+  | _ -> ins
 
 (* Convert a block.  Block info is empty, so it's just passed through. *)
 let convert_block (map : location VarMap.t) (bl : 'a block) : 'a block =
@@ -112,7 +164,16 @@ let get_num_spilled () : int * int =
   (!next_stack_index - 1, !next_root_stack_index - 1)
 
 (* Compute the set of callee-save registers used. *)
-let get_used_callee (map : location VarMap.t) : RegSet.t = failwith "TODO"
+let get_used_callee (map : location VarMap.t) : RegSet.t =
+  VarMap.fold
+    (fun _ loc set ->
+      match loc with
+      | RegL r -> (
+        match RegSet.find_opt r Types.callee_save_regs with
+        | Some _ -> RegSet.add r set
+        | None -> set )
+      | _ -> set )
+    map RegSet.empty
 
 (* Collect the vector-typed vars. *)
 let vector_vars (lts : (var * ty) list) : VarSet.t =
