@@ -8,12 +8,89 @@ let _debug = ref false
 
 let rflags_reg = X.Reg Rflags
 
-(* Compute the live sets for the instructions of a single labeled block.
- * The `live_before_map` is the live-before sets for each block named
- * by the given labels. *)
-let uncover_live_in_block (live_before_map : LocSet.t LabelMap.t)
+let rec read_set lst set =
+  match lst with
+  | [] -> set
+  | h :: t -> (
+    match h with
+    | X.Var v -> LocSet.add (VarL v) (read_set t set)
+    | X.Reg r -> LocSet.add (RegL r) (read_set t set)
+    | X.Deref (r, _) -> LocSet.add (RegL r) (read_set t set)
+    | _ -> read_set t set )
+
+(* takes in list of args and removes the useful ones from the set *)
+let rec write_set lst set =
+  match lst with
+  | [] -> set
+  | h :: t -> (
+    match h with
+    | X.Var v -> LocSet.remove (VarL v) (write_set t set)
+    | X.Reg r -> LocSet.remove (RegL r) (write_set t set)
+    | X.Deref (r, _) -> LocSet.remove (RegL r) (write_set t set)
+    | _ -> write_set t set )
+
+(* Compute the live sets for the instructions of a single labeled block. *)
+let uncover_live_in_block (label_map : LocSet.t LabelMap.t)
   (instrs : X.instr list) : X.live =
-  failwith "TODO"
+  (* computes l_before given current instruction and l_after in a set *)
+  let l_before instr (l_after : LocSet.t) =
+    match instr with
+    | X.Addq (arg1, arg2) -> read_set [arg1; arg2] l_after
+    | X.Subq (arg1, arg2) -> read_set [arg1; arg2] l_after
+    | X.Negq arg -> read_set [arg] l_after
+    | X.Movq (arg1, arg2) -> read_set [arg1] (write_set [arg2] l_after)
+    | X.Movzbq (arg1, arg2) -> read_set [arg1] (write_set [arg2] l_after)
+    | X.Pushq _ -> l_after
+    | X.Popq arg -> read_set [arg] l_after
+    | X.Retq -> read_set [X.Reg Rax] l_after
+    | X.Andq (arg1, arg2) -> read_set [arg1; arg2] l_after
+    | X.Sarq (_, arg2) -> read_set [arg2] l_after
+    (* remove (write) from caller and then add first i of callee, as according to spec*)
+    | X.Callq (_, int) ->
+      let caller_saved_conv =
+        List.map (fun r -> X.Reg r) (RegSet.elements caller_save_regs)
+      in
+      let arg_passing_conv =
+        List.map (fun r -> X.Reg r) (take int arg_passing_regs)
+      in
+      read_set arg_passing_conv (write_set caller_saved_conv l_after)
+    | X.Jmp label ->
+      let args =
+        List.map
+          (function
+            | x -> (
+              match x with
+              | VarL v -> X.Var v
+              | RegL r -> X.Reg r
+              | _ -> failwith "Shouldn't have this case" ) )
+          (LocSet.elements (LabelMap.find label label_map))
+      in
+      read_set args l_after
+    | X.Xorq (arg1, arg2) -> read_set [arg1; arg2] l_after
+    | X.Cmpq (arg1, arg2) ->
+      read_set [arg1; arg2] (write_set [rflags_reg] l_after)
+    | X.Set (_, arg) -> read_set [Reg Rflags] (write_set [arg] l_after)
+    | X.JmpIf (_, label) ->
+      let args =
+        List.map
+          (function
+            | x -> (
+              match x with
+              | VarL v -> X.Var v
+              | RegL r -> X.Reg r
+              | _ -> failwith "Shouldn't have this case" ) )
+          (LocSet.elements (LabelMap.find label label_map))
+      in
+      read_set (rflags_reg :: args) l_after
+  in
+  let afters =
+    List.fold_right
+      (fun instr acc -> l_before instr (List.hd acc) :: acc)
+      instrs [LocSet.empty]
+  in
+  match afters with
+  | h :: t -> {initial = h; afters = t}
+  | _ -> failwith "no code?"
 
 (* Get the next jump labels, if any.
  * The jump instructions should only be at the end of the block,
@@ -21,7 +98,14 @@ let uncover_live_in_block (live_before_map : LocSet.t LabelMap.t)
  * jumps at the end (one conditional, one not). *)
 let get_next_labels (block : 'a X.block) : LabelSet.t =
   let (X.Block (_, instrs)) = block in
-  failwith "TODO"
+  List.fold_right
+    (fun instr acc ->
+      match instr with
+      | X.Jmp lbl
+       |X.JmpIf (_, lbl) ->
+        LabelSet.add lbl acc
+      | _ -> acc )
+    instrs LabelSet.empty
 
 (* Liveness algorithm (dataflow analysis, but not generic):
  * - Create an empty (imperative) queue.
@@ -43,14 +127,39 @@ let get_next_labels (block : 'a X.block) : LabelSet.t =
  *)
 let compute_liveness (g : LabelDgraph.t) (imap : X.instr list LabelMap.t) :
   LocSet.t LabelMap.t =
-  failwith "TODO"
+  let q = Queue.create () in
+  let init_map =
+    LabelMap.mapi (fun _ _ -> LocSet.empty) imap
+    |> LabelMap.add (Label "conclusion") (LocSet.of_list [RegL Rax; RegL Rsp])
+  in
+  let _ =
+    LabelMap.iter
+      (fun lbl _ -> if lbl <> Label "conclusion" then Queue.add lbl q)
+      init_map
+  in
+  let rec helper map =
+    if Queue.is_empty q then map
+    else
+      let lbl = Queue.take q in
+      let instr = LabelMap.find lbl imap in
+      let o_lbs = LabelMap.find lbl map in
+      let n_lbs = uncover_live_in_block map instr in
+      if not (LocSet.equal o_lbs n_lbs.initial) then (
+        let updated_map = LabelMap.add lbl n_lbs.initial map in
+        let predecessors = LabelDgraph.neighbors_in g lbl in
+        List.iter (fun pred_lbl -> Queue.add pred_lbl q) predecessors ;
+        helper updated_map )
+      else helper map
+  in
+  helper init_map
 
 let uncover_live (prog : (X.info1, X.binfo1) X.program) :
   (X.info1, X.binfo2) X.program =
   let (X.X86Program (info, lbs)) = prog in
   (* Generate the control-flow graph from the (label, block) pairs. *)
   let cfg =
-    LabelDgraph.of_alist lbs (fun bl -> LabelSet.elements (get_next_labels bl))
+    LabelDgraph.of_alist lbs (fun bl ->
+      get_next_labels bl |> LabelSet.elements )
   in
   (* Create a label->instrs map. *)
   let (imap : X.instr list LabelMap.t) =

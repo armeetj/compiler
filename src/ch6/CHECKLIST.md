@@ -8,8 +8,8 @@
 - [x] explicate control - armeet
 - [x] remove unused blocks - armeet
 - [x] select instructions - ashug
-- [ ] uncover live - ashug
-- [ ] build interference - ashug
+- [x] uncover live - ashug
+- [x] build interference - ashug
 - [x] graph coloring - armeet
 - [ ] allocate registers - armeet
 - [x] remove jumps - armeet
