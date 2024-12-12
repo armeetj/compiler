@@ -7,7 +7,7 @@
 - [x] remove complex - ashug
 - [ ] explicate control - armeet
 - [x] remove unused blocks - armeet
-- [ ] select instructions
+- [x] select instructions - ashug
 - [ ] uncover live
 - [ ] build interference
 - [x] graph coloring - armeet
