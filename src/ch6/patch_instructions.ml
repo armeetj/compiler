@@ -1,5 +1,3 @@
-open Sexplib
-open Support.Utils
 open Types
 open X86_global
 module X = X86_var_global
