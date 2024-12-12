@@ -60,10 +60,8 @@ module Make
   (* Return `true` if an element's node in a nodemap is uncolored. *)
   let is_uncolored (e : elt) (map : nodemap) : bool =
     match EMap.find_opt e map with
-    | Some {color = Some _; saturation = _} ->
-        false
-    | _ ->
-        true
+    | Some {color = Some _; saturation = _} -> false
+    | _ -> true
 
   (* Starting from an initial partial mapping
    * between graph elements and colors (the precolored map),
@@ -76,10 +74,8 @@ module Make
       List.fold_left
         (fun acc elt ->
           match EMap.find_opt elt precolored_map with
-          | Some c ->
-              IntSet.add c acc
-          | None ->
-              acc )
+          | Some c -> IntSet.add c acc
+          | None -> acc )
         IntSet.empty neighbors
     in
     let handle_node nmap elt =
@@ -95,17 +91,17 @@ module Make
      * where the int is the priority. *)
     let handle_node elt node q =
       match node with
-      | {color = Some _; saturation = _} ->
-          q
-      | {color = None; saturation = s} ->
-          PQ.insert elt (IntSet.cardinal s) q
+      | {color = Some _; saturation = _} -> q
+      | {color = None; saturation = s} -> PQ.insert elt (IntSet.cardinal s) q
     in
     EMap.fold handle_node map PQ.empty
 
   (* Pick the smallest non-negative integer not in the set. *)
   let pick_color (set : IntSet.t) : int =
     let rec f color =
-      match IntSet.mem color set with true -> f (color + 1) | false -> color
+      match IntSet.mem color set with
+      | true -> f (color + 1)
+      | false -> color
     in
     f 0
 
@@ -116,7 +112,7 @@ module Make
    * adjust the element's position in the priority queue.
    *)
   let add_color (g : graph) (e : elt) (c : int) (map : node eltmap) (pq : PQ.t)
-      : node eltmap * PQ.t =
+    : node eltmap * PQ.t =
     (* a - add color to e *)
     let node = EMap.find e map in
     let new_node = {color = Some c; saturation = node.saturation} in
@@ -139,10 +135,9 @@ module Make
   let make_final_color_map (map : node eltmap) : int eltmap =
     let handle_node e node imap =
       match node with
-      | {color = Some c; saturation = _} ->
-          EMap.add e c imap
+      | {color = Some c; saturation = _} -> EMap.add e c imap
       | {color = None; saturation = _} ->
-          failwith "node doesn't have color! something went wrong in alg"
+        failwith "node doesn't have color! something went wrong in alg"
     in
     EMap.fold handle_node map EMap.empty
 

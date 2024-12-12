@@ -38,11 +38,7 @@ let allocate n =
  * The actual value doesn't matter. *)
 let rec default_val (t : ty) : value =
   match t with
-  | Unit ->
-      VoidV
-  | Boolean ->
-      BoolV false
-  | Integer ->
-      IntV 0
-  | Vector ts ->
-      VecV (Array.map default_val ts)
+  | Unit -> VoidV
+  | Boolean -> BoolV false
+  | Integer -> IntV 0
+  | Vector ts -> VecV (Array.map default_val ts)

@@ -69,23 +69,21 @@ let spilled_location_dict : (int, location) Hashtbl.t = Hashtbl.create 20
  *)
 let location_of_color (i : int) (vector_typed : bool) : location =
   match IntMap.find_opt i (color_register_map ()) with
-  | None ->
-      failwith "TODO"
-  | Some loc ->
-      loc
+  | None -> failwith "TODO"
+  | Some loc -> loc
 
 (* ----------------------------------------------------------------- *)
 
 (* Extract just the variable mappings from a graph coloring,
  * and map them to their (register and stack) locations. *)
 let varmap_of_colormap (vvs : VarSet.t) (color_map : int LocMap.t) :
-    location VarMap.t =
+  location VarMap.t =
   failwith "TODO"
 
 (* Determine the variable -> location mapping based on the
  * interference graph. *)
 let get_variable_location_map (g : LocUgraph.t) (vvs : VarSet.t) :
-    location VarMap.t =
+  location VarMap.t =
   (* Reset the spill counters and location dictionary. *)
   next_stack_index := 1 ;
   (* index 1 --> -8(%rbp) *)
@@ -118,7 +116,10 @@ let get_used_callee (map : location VarMap.t) : RegSet.t = failwith "TODO"
 
 (* Collect the vector-typed vars. *)
 let vector_vars (lts : (var * ty) list) : VarSet.t =
-  let is_vector = function Vector _ -> true | _ -> false in
+  let is_vector = function
+    | Vector _ -> true
+    | _ -> false
+  in
   lts
   |> List.filter_map (fun (v, t) -> if is_vector t then Some v else None)
   |> VarSet.of_list
@@ -126,19 +127,24 @@ let vector_vars (lts : (var * ty) list) : VarSet.t =
 (* Validation function: checks that there are no remaining
  * variable references in the code. *)
 let check_no_variables (prog : (info3, binfo1) program) : unit =
-  let is_var = function Var _ -> true | _ -> false in
+  let is_var = function
+    | Var _ -> true
+    | _ -> false
+  in
   let has_var = function
     | Addq (a1, a2)
-    | Subq (a1, a2)
-    | Xorq (a1, a2)
-    | Cmpq (a1, a2)
-    | Movq (a1, a2)
-    | Movzbq (a1, a2) ->
-        is_var a1 || is_var a2
-    | Negq a | Set (_, a) | Pushq a | Popq a ->
-        is_var a
-    | _ ->
-        false
+     |Subq (a1, a2)
+     |Xorq (a1, a2)
+     |Cmpq (a1, a2)
+     |Movq (a1, a2)
+     |Movzbq (a1, a2) ->
+      is_var a1 || is_var a2
+    | Negq a
+     |Set (_, a)
+     |Pushq a
+     |Popq a ->
+      is_var a
+    | _ -> false
   in
   let (X86Program (_, lbs)) = prog in
   let _, bs = List.split lbs in
@@ -152,7 +158,7 @@ let check_no_variables (prog : (info3, binfo1) program) : unit =
 
 (* Allocate registers to variables in the code. *)
 let allocate_registers (prog : (info2, binfo1) program) :
-    (info3, binfo1) program =
+  (info3, binfo1) program =
   let (X86Program (Info2 info, lbs)) = prog in
   let vvs = vector_vars info.locals_types in
   let (map : location VarMap.t) =

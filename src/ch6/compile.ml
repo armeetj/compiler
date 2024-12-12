@@ -75,8 +75,8 @@ let parse_args () =
     usage ()
   else (
     Arg.current := 0 ;
-    try Arg.parse_argv Sys.argv speclist anon_fun usage_msg
-    with Arg.Help _ -> usage () )
+    try Arg.parse_argv Sys.argv speclist anon_fun usage_msg with
+    | Arg.Help _ -> usage () )
 
 let check_pass pass = List.mem pass passes
 
@@ -244,14 +244,13 @@ let run_evaluator pass filename =
   check_eval_only_error () ;
   match List.assoc_opt pass eval_alist with
   | None ->
-      if List.mem pass passes then (
-        Printf.eprintf "no evaluator for this pass\n" ;
-        exit 1 )
-      else (
-        Printf.eprintf "invalid pass: %s\n" pass ;
-        exit 1 )
-  | Some f ->
-      read_ltup filename |> f |> print_int
+    if List.mem pass passes then (
+      Printf.eprintf "no evaluator for this pass\n" ;
+      exit 1 )
+    else (
+      Printf.eprintf "invalid pass: %s\n" pass ;
+      exit 1 )
+  | Some f -> read_ltup filename |> f |> print_int
 
 (* The `-only` passes. *)
 let only_alist =
@@ -277,12 +276,11 @@ let only_alist =
 let run_only pass filename =
   match List.assoc_opt pass only_alist with
   | None ->
-      if pass = "pa" then read_sexp filename |> x86_asm_in |> pa |> print_string
-      else (
-        Printf.eprintf "invalid pass: %s\n" pass ;
-        exit 1 )
-  | Some f ->
-      read_sexp filename |> f |> print_sexp
+    if pass = "pa" then read_sexp filename |> x86_asm_in |> pa |> print_string
+    else (
+      Printf.eprintf "invalid pass: %s\n" pass ;
+      exit 1 )
+  | Some f -> read_sexp filename |> f |> print_sexp
 
 (* The `-pass` passes, without `-only`. *)
 let pass_alist =
@@ -334,14 +332,13 @@ let pass_alist =
 let run_pass pass filename =
   match List.assoc_opt pass pass_alist with
   | None ->
-      if pass = "pa" then
-        read_ltup filename |> tc1 |> sh |> un |> ea |> ug |> rc |> ec |> tc2
-        |> ru |> si |> ul |> bi |> ar |> rj |> pi |> pc |> pa |> print_string
-      else (
-        Printf.eprintf "invalid pass: %s\n" pass ;
-        exit 1 )
-  | Some f ->
-      read_ltup filename |> f |> print_sexp
+    if pass = "pa" then
+      read_ltup filename |> tc1 |> sh |> un |> ea |> ug |> rc |> ec |> tc2 |> ru
+      |> si |> ul |> bi |> ar |> rj |> pi |> pc |> pa |> print_string
+    else (
+      Printf.eprintf "invalid pass: %s\n" pass ;
+      exit 1 )
+  | Some f -> read_ltup filename |> f |> print_sexp
 
 let run_compiler () =
   let filename = !input_file in
@@ -360,5 +357,8 @@ let () =
     if !regs <> "" then
       Allocate_registers.set_register_color_list (reg_list_of_string !regs) ;
     run_compiler ()
-  with Failure msg | Sys_error msg | Arg.Bad msg ->
+  with
+  | Failure msg
+   |Sys_error msg
+   |Arg.Bad msg ->
     Printf.eprintf "%s\n%!" msg

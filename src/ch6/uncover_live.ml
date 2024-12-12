@@ -12,7 +12,7 @@ let rflags_reg = X.Reg Rflags
  * The `live_before_map` is the live-before sets for each block named
  * by the given labels. *)
 let uncover_live_in_block (live_before_map : LocSet.t LabelMap.t)
-    (instrs : X.instr list) : X.live =
+  (instrs : X.instr list) : X.live =
   failwith "TODO"
 
 (* Get the next jump labels, if any.
@@ -42,11 +42,11 @@ let get_next_labels (block : 'a X.block) : LabelSet.t =
  * It has no corresponding instructions.
  *)
 let compute_liveness (g : LabelDgraph.t) (imap : X.instr list LabelMap.t) :
-    LocSet.t LabelMap.t =
+  LocSet.t LabelMap.t =
   failwith "TODO"
 
 let uncover_live (prog : (X.info1, X.binfo1) X.program) :
-    (X.info1, X.binfo2) X.program =
+  (X.info1, X.binfo2) X.program =
   let (X.X86Program (info, lbs)) = prog in
   (* Generate the control-flow graph from the (label, block) pairs. *)
   let cfg =

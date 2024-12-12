@@ -18,7 +18,7 @@ let is_atom (e : exp) : bool =
    |Bool _
    |Int _
    |Var _ ->
-      true
+    true
   | _ -> false
 
 let convert_atom (e : exp) : [> `Atom of exp | `VarExp of string * exp] =
@@ -29,8 +29,8 @@ let convert_atom (e : exp) : [> `Atom of exp | `VarExp of string * exp] =
 let rec expose_allocation_exp (e : L.exp) : exp =
   match e with
   | L.Vec (es, ty) ->
-      (* look for vectors at any point *)
-      convert_vec (List.map expose_allocation_exp es) ty
+    (* look for vectors at any point *)
+    convert_vec (List.map expose_allocation_exp es) ty
   | L.Bool b -> Bool b
   | L.Var v -> Var v
   | L.Int i -> Int i
@@ -38,28 +38,28 @@ let rec expose_allocation_exp (e : L.exp) : exp =
   | L.Prim (op, es) -> Prim (op, List.map expose_allocation_exp es)
   | L.SetBang (v, e) -> SetBang (v, expose_allocation_exp e)
   | L.Begin (es, e) ->
-      let es = List.map expose_allocation_exp es in
-      let e = expose_allocation_exp e in
-      Begin (es, e)
+    let es = List.map expose_allocation_exp es in
+    let e = expose_allocation_exp e in
+    Begin (es, e)
   | L.If (e1, e2, e3) ->
-      let e1 = expose_allocation_exp e1 in
-      let e2 = expose_allocation_exp e2 in
-      let e3 = expose_allocation_exp e3 in
-      If (e1, e2, e3)
+    let e1 = expose_allocation_exp e1 in
+    let e2 = expose_allocation_exp e2 in
+    let e3 = expose_allocation_exp e3 in
+    If (e1, e2, e3)
   | L.While (cond, body) ->
-      let cond = expose_allocation_exp cond in
-      let body = expose_allocation_exp body in
-      While (cond, body)
+    let cond = expose_allocation_exp cond in
+    let body = expose_allocation_exp body in
+    While (cond, body)
   | L.Let (v, e1, e2) ->
-      let e1 = expose_allocation_exp e1 in
-      let e2 = expose_allocation_exp e2 in
-      Let (v, e1, e2)
+    let e1 = expose_allocation_exp e1 in
+    let e2 = expose_allocation_exp e2 in
+    Let (v, e1, e2)
   | L.VecLen e -> VecLen (expose_allocation_exp e)
   | L.VecRef (e, idx) -> VecRef (expose_allocation_exp e, idx)
   | L.VecSet (e1, idx, e2) ->
-      let e1 = expose_allocation_exp e1 in
-      let e2 = expose_allocation_exp e2 in
-      VecSet (e1, idx, e2)
+    let e1 = expose_allocation_exp e1 in
+    let e2 = expose_allocation_exp e2 in
+    VecSet (e1, idx, e2)
 
 and convert_vec (es : exp list) (ty : Types.ty) : exp =
   (* 1/2 - recurse on all subexps es and generate fresh names *)
@@ -87,7 +87,7 @@ and convert_vec (es : exp list) (ty : Types.ty) : exp =
         match e with
         | `Atom e -> Let (new_void_var (), VecSet (vector_var, i, e), acc)
         | `VarExp (v, _) ->
-            Let (new_void_var (), VecSet (vector_var, i, Var v), acc) )
+          Let (new_void_var (), VecSet (vector_var, i, Var v), acc) )
       enumerated_tagged_es vector_var
   in
   (* 8 - put it all together *)

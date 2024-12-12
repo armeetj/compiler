@@ -3,10 +3,8 @@ open Ctup
 
 let rec tm_of_l lts =
   match lts with
-  | [] ->
-      LabelMap.empty
-  | (l, t) :: rest ->
-      LabelMap.add l t (tm_of_l rest)
+  | [] -> LabelMap.empty
+  | (l, t) :: rest -> LabelMap.add l t (tm_of_l rest)
 
 let rec find_reachable l tm vis =
   if LabelSet.mem l vis then vis
@@ -18,13 +16,11 @@ let rec find_reachable l tm vis =
 
 and find_reachable_list labels tm vis =
   match labels with
-  | [] ->
-      vis
-  | l :: x ->
-      find_reachable_list x tm (find_reachable l tm vis)
+  | [] -> vis
+  | l :: x -> find_reachable_list x tm (find_reachable l tm vis)
 
 (* Return all the (label, tail) pairs that are reachable
-   * from the "start" label. *)
+ * from the "start" label. *)
 let process_blocks (lts : (label * tail) list) : (label * tail) list =
   let reachable = find_reachable (Label "start") (tm_of_l lts) LabelSet.empty in
   List.filter (fun (l, _) -> LabelSet.mem l reachable) lts

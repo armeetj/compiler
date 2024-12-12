@@ -49,53 +49,37 @@ let get_vars (prog : program) : var list =
   let combine_vars (var_lists : var list list) : var list =
     List.fold_left (fun prev vars -> add_vars prev vars) [] var_lists
   in
-  let vars_in_atm = function Var v -> [v] | _ -> [] in
+  let vars_in_atm = function
+    | Var v -> [v]
+    | _ -> []
+  in
   let vars_in_exp = function
-    | Atm a ->
-        vars_in_atm a
-    | Prim (_, atms) ->
-        combine_vars (List.map vars_in_atm atms)
-    | Allocate _ ->
-        []
-    | GlobalVal v ->
-        [v]
-    | VecLen a ->
-        vars_in_atm a
-    | VecRef (a, _) ->
-        vars_in_atm a
-    | VecSet (a1, _, a2) ->
-        add_vars (vars_in_atm a1) (vars_in_atm a2)
+    | Atm a -> vars_in_atm a
+    | Prim (_, atms) -> combine_vars (List.map vars_in_atm atms)
+    | Allocate _ -> []
+    | GlobalVal v -> [v]
+    | VecLen a -> vars_in_atm a
+    | VecRef (a, _) -> vars_in_atm a
+    | VecSet (a1, _, a2) -> add_vars (vars_in_atm a1) (vars_in_atm a2)
   in
   let vars_in_stmt = function
-    | Assign (v, e) ->
-        add_vars (vars_in_exp e) [v]
-    | PrimS (_, atms) ->
-        combine_vars (List.map vars_in_atm atms)
-    | Collect _ ->
-        []
-    | VecSetS (a1, _, a2) ->
-        add_vars (vars_in_atm a1) (vars_in_atm a2)
+    | Assign (v, e) -> add_vars (vars_in_exp e) [v]
+    | PrimS (_, atms) -> combine_vars (List.map vars_in_atm atms)
+    | Collect _ -> []
+    | VecSetS (a1, _, a2) -> add_vars (vars_in_atm a1) (vars_in_atm a2)
   in
   let rec vars_in_tail t =
     match t with
-    | Return e ->
-        vars_in_exp e
-    | Seq (s, t) ->
-        add_vars (vars_in_stmt s) (vars_in_tail t)
-    | Goto _ ->
-        []
-    | IfStmt {arg1; arg2; _} ->
-        add_vars (vars_in_atm arg1) (vars_in_atm arg2)
+    | Return e -> vars_in_exp e
+    | Seq (s, t) -> add_vars (vars_in_stmt s) (vars_in_tail t)
+    | Goto _ -> []
+    | IfStmt {arg1; arg2; _} -> add_vars (vars_in_atm arg1) (vars_in_atm arg2)
   in
   combine_vars (List.map (fun (_, t) -> vars_in_tail t) lts)
 
 let rec get_jump_labels (t : tail) : label list =
   match t with
-  | Return _ ->
-      []
-  | Seq (_, t') ->
-      get_jump_labels t'
-  | Goto lbl ->
-      [lbl]
-  | IfStmt {jump_then; jump_else; _} ->
-      [jump_then; jump_else]
+  | Return _ -> []
+  | Seq (_, t') -> get_jump_labels t'
+  | Goto lbl -> [lbl]
+  | IfStmt {jump_then; jump_else; _} -> [jump_then; jump_else]

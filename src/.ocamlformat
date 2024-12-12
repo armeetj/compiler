@@ -1,3 +1,5 @@
 profile = ocamlformat
 field-space = loose
-break-cases=all
+break-cases = all
+let-and = sparse
+max-indent = 2
