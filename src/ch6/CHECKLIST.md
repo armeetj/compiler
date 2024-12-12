@@ -2,7 +2,7 @@
 
 - [x] shrink - ashug
 - [x] uniquify - ashug
-- [ ] expose allocation - armeet
+- [x] expose allocation - armeet
 - [x] uncover get - ashug
 - [x] remove complex - ashug
 - [ ] explicate control - armeet
