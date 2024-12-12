@@ -5,7 +5,7 @@
 - [x] expose allocation - armeet
 - [x] uncover get - ashug
 - [x] remove complex - ashug
-- [ ] explicate control - armeet
+- [x] explicate control - armeet
 - [x] remove unused blocks - armeet
 - [x] select instructions - ashug
 - [ ] uncover live - ashug

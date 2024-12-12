@@ -21,17 +21,13 @@ let convert_exp (e : L.exp) : exp =
   match e with
   | L.Atm a -> Atm (convert_atom a)
   | L.Prim (op, exp_lst) -> Prim (op, List.map convert_atom exp_lst)
-  (* | L.GlobalVal v ->
-         GlobalVal v
-     | L.Allocate (i, ty) ->
-         Allocate (i, ty)
-     | L.VecLen a ->
-         VecLen (convert_atom a)
-     | L.VecRef (a, idx) ->
-         VecRef (convert_atom a, idx)
-     | L.VecSet (a1, idx, a2) ->
-         VecSet (convert_atom a1, idx, convert_atom a2) *)
-  | _ -> failwith "invalid type passed to convert_exp"
+  (* GlobalVal and Allocate only in convert_exp *)
+  | L.Allocate (i, ty) -> Allocate (i, ty)
+  | L.GlobalVal v -> GlobalVal v
+  | L.VecLen a -> VecLen (convert_atom a)
+  | L.VecRef (a, idx) -> VecRef (convert_atom a, idx)
+  | L.VecSet (a1, idx, a2) -> VecSet (convert_atom a1, idx, convert_atom a2)
+  | _ -> failwith "ec:convert_exp invalid type passed to convert_exp"
 
 (* Convert expressions which are the binding expression of a `let` expression
  * (i.e. in `(let (var <exp1>) <exp2>)` the binding expression is `<exp1>`).
@@ -61,12 +57,13 @@ let rec explicate_assign (e : L.exp) (v : var) (tl : tail) : tail =
     let aux = explicate_assign exp v_in tl in
     (* awkwardly return void *)
     explicate_assign (Atm Void) v aux
-  | Collect i -> failwith "todo"
-  | Allocate (i, ty) -> failwith "todo"
-  | GlobalVal v -> failwith "todo"
-  | VecLen a -> failwith "todo"
-  | VecRef (a, idx) -> failwith "todo"
-  | VecSet (a1, i, a2) -> failwith "todo"
+  | L.Collect i -> Seq (Collect i, tl)
+  | L.VecLen a -> Seq (Assign (v, VecLen (convert_atom a)), tl)
+  | L.VecRef (a, idx) -> Seq (Assign (v, VecRef (convert_atom a, idx)), tl)
+  | L.VecSet (a1, i, a2) ->
+    let a1 = convert_atom a1 in
+    let a2 = convert_atom a2 in
+    Seq (Assign (v, VecSet (a1, i, a2)), tl)
   | _ -> Seq (Assign (v, convert_exp e), tl)
 
 (* Convert `if` expressions.
@@ -139,6 +136,17 @@ and explicate_pred (e : L.exp) (then_tl : tail) (else_tl : tail) : tail =
   | Begin (effect_exps, final_exp) ->
     let aux = explicate_pred final_exp then_tl else_tl in
     List.fold_right explicate_effect effect_exps aux
+  | L.Allocate _
+   |L.GlobalVal _ ->
+    failwith
+      "ec:explicate_pred Allocate & GlobalVal should only be handled in \
+       convert_exp"
+  | L.VecLen _ -> failwith "ec:explicate_pred VecLen cannot return a bool"
+  | L.VecRef (v, i) ->
+    let new_name = !fresh ~base:"vecref" ~sep:"_" in
+    let if_tl = explicate_pred (Atm (Var new_name)) then_tl else_tl in
+    explicate_assign (VecRef (v, i)) new_name if_tl
+  | L.VecSet _ -> failwith "ec:explicate_pred VecSet cannot return a bool"
   | _ -> failwith "invalid cond exp type (must be a boolean resolvable exp)"
 
 (* Convert expressions in effect position.
@@ -174,6 +182,20 @@ and explicate_effect (e : L.exp) (tl : tail) : tail =
   | L.Let (v, bind_exp, body_exp) ->
     let tl = explicate_effect body_exp tl in
     explicate_assign bind_exp v tl
+  | L.Collect i -> Seq (Collect i, tl)
+  | L.Allocate _
+   |L.GlobalVal _ ->
+    failwith
+      "ec:explicate_effect neither Allocate & GlobalVal should be processed \
+       for effects alone"
+  | L.VecLen _
+   |L.VecRef _ ->
+    failwith
+      "ec:explicate_effect neither VecLen nor VecRef have any side-effects"
+  | L.VecSet (a1, i, a2) ->
+    let a1 = convert_atom a1 in
+    let a2 = convert_atom a2 in
+    Seq (VecSetS (a1, i, a2), tl)
   | _ ->
     failwith
       "ec:explicate_effect unsupported exp type passed to explicate_effect"
@@ -206,6 +228,13 @@ and explicate_tail (e : L.exp) : tail =
   | L.Let (v, binding_exp, body_exp) ->
     let aux = explicate_tail body_exp in
     explicate_assign binding_exp v aux
+  | L.Collect _ ->
+    failwith "ec:explicate_tail Collect should never be in tail position"
+  | L.Allocate _
+   |L.GlobalVal _ ->
+    failwith
+      "ec:explicate_tail Allocate & GlobalVal should only be handled in \
+       convert_exp"
   | _ -> Return (convert_exp e)
 
 (* Create a block from a tail.
