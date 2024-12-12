@@ -24,3 +24,10 @@ Ashug Gurijala `agurijal@caltech.edu`
 - same worksplit as Assignment 3
 
 ## Assignment 5
+
+- submitted redo/rework
+- see CHECKLIST.md
+
+## Assignment 6
+
+- see CHECKLIST.md
