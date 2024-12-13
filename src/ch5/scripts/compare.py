@@ -9,7 +9,7 @@ from subprocess import PIPE
 from pathlib import Path
 
 
-passes  = ['lwhile', 'sh', 'un', 'ug', 'rc', 'ec', 'tc2', 'ru',
+passes  = ['lwhile', 'tc1', 'sh', 'un', 'ug', 'rc', 'ec', 'tc2', 'ru',
            'si', 'ul', 'bi', 'ar', 'rj', 'pi', 'pc', 'pa']
 inpatt  = re.compile(r'^reference/(\w+).(\w+)((,.*)?)$')
 numpatt = re.compile(r'^(\d+)')
