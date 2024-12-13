@@ -1,7 +1,7 @@
 Passes order (ch7)
   [x] graph coloring
 
-  [ ] shrink
+  [x] shrink
   [ ] uniquify
   [ ] reveal_functions
   [ ] limit_functions
