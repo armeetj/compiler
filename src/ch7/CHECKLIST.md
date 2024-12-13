@@ -3,7 +3,7 @@
   [x] graph coloring
   [x] shrink
   [x] uniquify
-  [ ] reveal_functions
+  [x] reveal_functions
   [ ] limit_functions
   [ ] expose_allocation
   [x] uncover_get
