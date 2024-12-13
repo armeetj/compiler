@@ -9,7 +9,7 @@ Passes order (ch7)
   [x] uncover_get
   [x] remove_complex
   [ ] explicate_control
-  [ ] remove_unused
+  [x] remove_unused
   [ ] select_instructions
   [x] uncover_live
   [ ] build_interference
