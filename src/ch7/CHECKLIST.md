@@ -13,7 +13,7 @@ Passes order (ch7)
   [ ] select_instructions
   [ ] uncover_live
   [ ] build_interference
-  [ ] allocate_registers
+  [x] allocate_registers
   [x] remove_jumps
   [ ] patch_instructions
   [ ] prelude_conclusion
