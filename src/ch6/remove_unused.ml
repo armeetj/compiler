@@ -19,11 +19,11 @@ and find_reachable_list labels tm vis =
   | [] -> vis
   | l :: x -> find_reachable_list x tm (find_reachable l tm vis)
 
-(* Return all the (label, tail) pairs that are reachable
- * from the "start" label. *)
 let process_blocks (lts : (label * tail) list) : (label * tail) list =
   let reachable = find_reachable (Label "start") (tm_of_l lts) LabelSet.empty in
-  List.filter (fun (l, _) -> LabelSet.mem l reachable) lts
+  lts
+  |> List.filter (fun (l, _) -> LabelSet.mem l reachable)
+  |> List.sort compare
 
 let remove_unused_blocks (prog : program) : program =
   let (CProgram (info, lts)) = prog in
