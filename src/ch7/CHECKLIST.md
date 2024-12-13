@@ -1,6 +1,5 @@
 Passes order (ch7)
   [x] graph coloring
-
   [x] shrink
   [x] uniquify
   [ ] reveal_functions
@@ -18,3 +17,8 @@ Passes order (ch7)
   [ ] patch_instructions
   [ ] prelude_conclusion
   [ ] optimize
+
+
+  ["lfun"; "tc1"; "sh"; "un"; "rf"; "lf"; "tc1b"; "ea"; "ug";
+   "rc"; "ec"; "tc2" ; "ru"; "si"; "ul"; "bi"; "ar"; "rj";
+   "pi"; "pc"; "opt"; "pa"]

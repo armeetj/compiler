@@ -1,7 +1,7 @@
 open Sexplib.Std
 open Types
 
-(* ----------------------------------------------------------------------  
+(* ----------------------------------------------------------------------
  * Types.
  * ---------------------------------------------------------------------- *)
 
@@ -20,21 +20,21 @@ type exp =
   | VecLen    of atm
   | VecRef    of atm * int
   | VecSet    of atm * int * atm
-  | FunRef    of label * int
-  | Call      of atm * atm list
+  | FunRef    of label * int (* new *)
+  | Call      of atm * atm list (* new *)
 [@@deriving sexp]
 
 type stmt =
   | Assign  of var * exp
   | PrimS   of stmt_op * atm list
-  | CallS   of atm * atm list
+  | CallS   of atm * atm list (* new *)
   | Collect of int
   | VecSetS of atm * int * atm
 [@@deriving sexp]
 
 type tail =
   | Return   of exp
-  | TailCall of atm * atm list
+  | TailCall of atm * atm list (* new *)
   | Seq      of stmt * tail
   | Goto     of label
   | IfStmt   of {
@@ -62,7 +62,7 @@ type def =
 type program = CProgram of def list
 [@@deriving sexp]
 
-(* ----------------------------------------------------------------------  
+(* ----------------------------------------------------------------------
  * Utilities.
  * ---------------------------------------------------------------------- *)
 
