@@ -48,13 +48,13 @@ let process_exp (exp : C.exp) : instr list =
     | _ -> failwith "shouldn't reach" )
   | Allocate (len, Vector types) ->
     let tag = make_tuple_tag len types in
-    [ Movq (GlobalArg (Label (fix_label "free_ptr")), Reg R11)
-    ; Addq (Imm ((8 * len) + 8), GlobalArg (Label (fix_label "free_ptr")))
+    [ Movq (GlobalArg (Label "free_ptr"), Reg R11)
+    ; Addq (Imm ((8 * len) + 8), GlobalArg (Label "free_ptr"))
     ; Movq (Imm tag, Deref (R11, 0))
     ; Movq (Reg R11, Reg Rax) ]
   | Allocate (len, _) ->
-    [ Movq (GlobalArg (Label (fix_label "free_ptr")), Reg R11)
-    ; Addq (Imm ((8 * len) + 8), GlobalArg (Label (fix_label "free_ptr")))
+    [ Movq (GlobalArg (Label "free_ptr"), Reg R11)
+    ; Addq (Imm ((8 * len) + 8), GlobalArg (Label "free_ptr"))
     ; Movq (Imm 0, Deref (R11, 0))
     ; Movq (Reg R11, Reg Rax) ]
   | GlobalVal var -> [Movq (GlobalArg (Label var), Reg Rax)]
@@ -113,13 +113,13 @@ let process_stmt stmt : instr list =
     ; Movq (Imm 0, Var v) ]
   | Assign (v, C.Allocate (len, Vector types)) ->
     let tag = make_tuple_tag len types in
-    [ Movq (GlobalArg (Label (fix_label "free_ptr")), Reg R11)
-    ; Addq (Imm ((8 * len) + 8), GlobalArg (Label (fix_label "free_ptr")))
+    [ Movq (GlobalArg (Label "free_ptr"), Reg R11)
+    ; Addq (Imm ((8 * len) + 8), GlobalArg (Label "free_ptr"))
     ; Movq (Imm tag, Deref (R11, 0))
     ; Movq (Reg R11, Var v) ]
   | Assign (v, C.Allocate (len, _)) ->
-    [ Movq (GlobalArg (Label (fix_label "free_ptr")), Reg R11)
-    ; Addq (Imm ((8 * len) + 8), GlobalArg (Label (fix_label "free_ptr")))
+    [ Movq (GlobalArg (Label "free_ptr"), Reg R11)
+    ; Addq (Imm ((8 * len) + 8), GlobalArg (Label "free_ptr"))
     ; Movq (Imm 0, Deref (R11, 0))
     ; Movq (Reg R11, Var v) ]
   | Assign (v, C.VecRef (atm, int)) ->
@@ -135,7 +135,9 @@ let process_stmt stmt : instr list =
     [ Movq (process_atm atm1, Reg R11)
     ; Movq (process_atm atm2, Deref (R11, (8 * i) + 8)) ]
   | Collect i ->
-    [Movq (Reg R15, Reg Rdi); Movq (Imm i, Reg Rsi); Callq (Label "collect", 2)]
+    [ Movq (Reg R15, Reg Rdi)
+    ; Movq (Imm i, Reg Rsi)
+    ; Callq (Label (fix_label "collect"), 2) ]
 
 let rec tail_instructions (i : C.tail) : instr list =
   match i with

@@ -13,7 +13,7 @@ let resize_initial_heap_size (n : int) : unit =
 let epilog (callee_saves : RegSet.t) (ss : int) (rs : int) : instr list =
   let main = fix_label "main" in
   [ Global (Types.Label main)
-  ; Label main
+  ; Label (main)
   ; Pushq (Reg Rbp)
   ; Movq (Reg Rsp, Reg Rbp) ]
   @ List.map (fun reg -> Pushq (Reg reg)) (RegSet.elements callee_saves)
@@ -24,8 +24,8 @@ let epilog (callee_saves : RegSet.t) (ss : int) (rs : int) : instr list =
     ; Movq (GlobalArg (Rip, Label (fix_label "rootstack_begin")), Reg R15) ]
   @ List.init rs (fun i -> Movq (Imm 0, Deref (R15, i * 8)))
   @ [ Addq (Imm (rs * 8), Reg R15)
-    ; Jmp (Label "start")
-    ; Label "conclusion"
+    ; Jmp (Label (fix_label "start"))
+    ; Label (fix_label "conclusion")
     ; Subq (Imm (rs * 8), Reg R15)
     ; Addq (Imm ss, Reg Rsp) ]
   @ List.map
@@ -39,7 +39,7 @@ let convert_arg a =
   | X.Reg r -> Reg r
   | X.Deref (r, i) -> Deref (r, i)
   | X.ByteReg b -> ByteReg b
-  | X.GlobalArg l -> GlobalArg (Rip, l)
+  | X.GlobalArg (Label l) -> GlobalArg (Rip, Label (fix_label l))
 
 let offset arg deref_adjust =
   match arg with
@@ -89,8 +89,8 @@ let adjust_stack_access instr deref_adjust =
       , offset (convert_arg a2) deref_adjust )
   | X.Callq (l, _) -> Callq l
   | X.Retq -> Retq
-  | X.Jmp l -> Jmp l
-  | X.JmpIf (cc, l) -> JmpIf (cc, l)
+  | X.Jmp (Label l) -> Jmp (Label (fix_label l))
+  | X.JmpIf (cc, Label l) -> JmpIf (cc, Label (fix_label l))
 
 let rec instrs_of_block (b : X.instr list) deref_adjust : instr list =
   match b with
@@ -101,7 +101,7 @@ let rec instrs_of_block (b : X.instr list) deref_adjust : instr list =
 (* Convert a labeled block to a list of instructions. *)
 let asm_of_lb (deref_adjust : int) (lb : label * X.block) : instr list =
   let Label l, X.Block b = lb in
-  Label l :: instrs_of_block b deref_adjust
+  Label (fix_label l) :: instrs_of_block b deref_adjust
 
 let prelude_conclusion (prog : X.program) : program =
   let (X.X86Program (info, lbs)) = prog in

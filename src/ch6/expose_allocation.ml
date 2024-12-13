@@ -99,8 +99,8 @@ and convert_vec (es : exp list) (ty : Types.ty) : exp =
       , Let (vector_name, Allocate (len, ty), vector_set_es) )
   in
   (* 7 - generate the outermost lets,
-  the order is weird here 8 before 7 because we have to build the outer lets
-  wrapped around the inside (step 8) *)
+     the order is weird here 8 before 7 because we have to build the outer lets
+     wrapped around the inside (step 8) *)
   let outer_lets =
     List.fold_right
       (fun e acc ->
