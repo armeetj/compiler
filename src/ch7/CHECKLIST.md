@@ -2,7 +2,7 @@ Passes order (ch7)
   [x] graph coloring
 
   [x] shrink
-  [ ] uniquify
+  [x] uniquify
   [ ] reveal_functions
   [ ] limit_functions
   [ ] expose_allocation
