@@ -15,6 +15,6 @@ Passes order (ch7)
   [ ] build_interference
   [x] allocate_registers
   [x] remove_jumps
-  [ ] patch_instructions
+  [x] patch_instructions
   [ ] prelude_conclusion
   [ ] optimize
