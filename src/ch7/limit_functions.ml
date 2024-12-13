@@ -53,8 +53,6 @@ let limit_args (ex : extra_args) (args : (var * ty) list) : (var * ty) list =
       Vector (Array.of_list (List.map (fun x -> limit_type (snd x)) rest))
     in
     head @ [(ex.tup_name, ty)]
-(* let aux = (ex.tup_name, List.map (fun x -> limit_type (snd x)) rest) in
-   head @ [aux] *)
 
 (* Change the body of a function to account for the extra arguments
    of the function. Variable references for extra arguments
@@ -64,11 +62,38 @@ let limit_args (ex : extra_args) (args : (var * ty) list) : (var * ty) list =
    Note: You don't need to specify the type of this vector here;
    that will be handled in the next type checking pass.
 *)
-let limit_functions_exp (ex : extra_args) (e : exp) : exp = failwith "TODO"
+let limit_functions_exp (ex : extra_args) (e : exp) : exp =
+  let fn = function
+    (* change var references to vector references if needed *)
+    | Var v -> (
+      match VarMap.mem v ex.argnums with
+      | true -> VecRef (Var ex.tup_name, VarMap.find v ex.argnums)
+      | false -> Var v )
+    (* change apply expressions with > 6 args *)
+    | Apply (f, args) when List.length args > 6 ->
+      let head = take 5 args in
+      (* don't specify the type of vector here so just None *)
+      let rest_vec = Vec (drop 5 args, None) in
+      (* head @ [rest_vec] has len 6 *)
+      Apply (f, head @ [rest_vec])
+    | _ -> e
+  in
+  convert_exp fn e
 
 (* Create the `extra_args` record from the argument list. *)
 let get_extra_args (args : (var * ty) list) : extra_args * bool =
-  failwith "TODO"
+  match List.length args with
+  | l when l > 6 ->
+    (* get name *)
+    let tup_name = new_tup_var () in
+    let argc = l - 5 in
+    (* enumerate with swap index and val, fst to extract from (var * ty) tuple *)
+    let extra_args_enumerated =
+      List.mapi (fun i x -> (fst x, i)) (drop 5 args)
+    in
+    let argnums = VarMap.of_list extra_args_enumerated in
+    ({tup_name; argc; argnums}, true)
+  | _ -> (no_extra_args, false)
 
 let limit_function_def (d : def) : def =
   let (Def (name, fcont)) = d in
@@ -85,7 +110,18 @@ let limit_function_def (d : def) : def =
   Def (name, fcont')
 
 (* Update all `FunRef` arities for functions that have been limited. *)
-let fix_fun_refs (d : def) : def = failwith "TODO"
+let fix_fun_refs (d : def) : def =
+  let (Def (l, {args; ret; body})) = d in
+  let fn = function
+    | FunRef (l, arity) -> (
+      match VarSet.mem (string_of_label l) !limited_names with
+      (* is limited, so must have 6 args *)
+      | true -> FunRef (l, 6)
+      (* not limited arity < 6 *)
+      | false -> FunRef (l, arity) )
+    | e -> e
+  in
+  Def (l, {args; ret; body = convert_exp fn body})
 
 (* Validation function.
    - Check that no function definition has more than 6 arguments.
