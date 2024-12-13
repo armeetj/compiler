@@ -16,7 +16,7 @@
   [x] allocate_registers
   [x] remove_jumps
   [x] patch_instructions
-  [ ] prelude_conclusion
+  [x] prelude_conclusion
   [ ] optimize
 
 ## Pass Order
