@@ -1,4 +1,5 @@
-Passes order (ch7)
+# Checklist (ch7)
+
   [x] graph coloring
   [x] shrink
   [x] uniquify
@@ -18,7 +19,27 @@ Passes order (ch7)
   [ ] prelude_conclusion
   [ ] optimize
 
+## Pass Order
 
-  ["lfun"; "tc1"; "sh"; "un"; "rf"; "lf"; "tc1b"; "ea"; "ug";
-   "rc"; "ec"; "tc2" ; "ru"; "si"; "ul"; "bi"; "ar"; "rj";
-   "pi"; "pc"; "opt"; "pa"]
+- lfun
+- tc1
+- sh
+- un
+- rf
+- lf
+- tc1b
+- ea
+- ug
+- rc
+- ec
+- tc2
+- ru
+- si
+- ul
+- bi
+- ar
+- rj
+- pi
+- pc
+- opt
+- pa
