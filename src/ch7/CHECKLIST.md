@@ -6,7 +6,7 @@ Passes order (ch7)
   [ ] reveal_functions
   [ ] limit_functions
   [ ] expose_allocation
-  [ ] uncover_get
+  [x] uncover_get
   [ ] remove_complex
   [ ] explicate_control
   [ ] remove_unused
