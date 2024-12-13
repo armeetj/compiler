@@ -6,15 +6,15 @@ Passes order (ch7)
   [ ] limit_functions
   [ ] expose_allocation
   [x] uncover_get
-  [ ] remove_complex
+  [x] remove_complex
   [ ] explicate_control
-  [ ] remove_unused
+  [x] remove_unused
   [ ] select_instructions
-  [ ] uncover_live
+  [x] uncover_live
   [ ] build_interference
   [x] allocate_registers
   [x] remove_jumps
-  [ ] patch_instructions
+  [x] patch_instructions
   [ ] prelude_conclusion
   [ ] optimize
 
