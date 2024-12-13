@@ -11,22 +11,32 @@ let convert_arg (a : X.arg) : arg =
   | X.GlobalArg l -> GlobalArg l
   | X.Var _ -> failwith "We got rid of all Var's after in assign homes"
 
+let is_reference a =
+  match convert_arg a with
+  | Deref _
+   |GlobalArg _ ->
+    true
+  | _ -> false
+
 let convert_instr (i : X.instr) : instr list =
   match i with
-  | X.Addq (X.Deref (r1, a1), X.Deref (r2, a2)) ->
-    let copy_instr = Movq (Deref (r1, a1), Reg Rax) in
-    let comp_instr = Addq (Reg Rax, Deref (r2, a2)) in
+  | X.Addq (a1, a2)
+   |X.Subq (a1, a2)
+   |X.Movq (a1, a2)
+    when convert_arg a1 = convert_arg a2 ->
+    []
+  | X.Addq (a1, a2) when is_reference a1 && is_reference a2 ->
+    let copy_instr = Movq (convert_arg a1, Reg Rax) in
+    let comp_instr = Addq (Reg Rax, convert_arg a2) in
     [copy_instr; comp_instr]
-  | X.Subq (X.Deref (r1, a1), X.Deref (r2, a2)) ->
-    let copy_instr = Movq (Deref (r1, a1), Reg Rax) in
-    let comp_instr = Subq (Reg Rax, Deref (r2, a2)) in
+  | X.Subq (a1, a2) when is_reference a1 && is_reference a2 ->
+    let copy_instr = Movq (convert_arg a1, Reg Rax) in
+    let comp_instr = Subq (Reg Rax, convert_arg a2) in
     [copy_instr; comp_instr]
-  | X.Movq (X.Deref (r1, a1), X.Deref (r2, a2)) ->
-    if compare a1 a2 <> 0 then
-      let instr1 = Movq (Deref (r1, a1), Reg Rax) in
-      let instr2 = Movq (Reg Rax, Deref (r2, a2)) in
-      [instr1; instr2]
-    else []
+  | X.Movq (a1, a2) when is_reference a1 && is_reference a2 ->
+    let instr1 = Movq (convert_arg a1, Reg Rax) in
+    let instr2 = Movq (Reg Rax, convert_arg a2) in
+    [instr1; instr2]
   | X.Addq (a1, a2) -> [Addq (convert_arg a1, convert_arg a2)]
   | X.Subq (a1, a2) -> [Subq (convert_arg a1, convert_arg a2)]
   | X.Andq (a1, a2) -> [Andq (convert_arg a1, convert_arg a2)]
