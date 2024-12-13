@@ -32,10 +32,10 @@ let rec explicate_assign (e : L.exp) (v : var) (tl : tail) : tail =
   | L.Let (v_in, binding_exp, body_exp) ->
       explicate_assign binding_exp v_in (explicate_assign body_exp v tl)
   | L.If (cond, then_exp, else_exp) ->
-      let tail_block = create_block tl in
+      let tail_block = Goto (create_block tl) in
       explicate_pred cond
-        (explicate_assign then_exp v (Goto tail_block))
-        (explicate_assign else_exp v (Goto tail_block))
+        (explicate_assign then_exp v tail_block)
+        (explicate_assign else_exp v tail_block)
   | _ ->
       Seq (Assign (v, convert_exp e), tl)
 
@@ -51,9 +51,9 @@ and explicate_pred (e : L.exp) (then_tl : tail) (else_tl : tail) : tail =
     | L.Bool false ->
         else_tl
     | L.Int _ ->
-        failwith
-          "cond can't be an Int, this shouldn't have made it past the type \
-           checker"
+        failwith @@
+          "cond can't be an Int, " ^
+          "this shouldn't have made it past the type checker"
     | L.Var v ->
         let then_block = create_block then_tl in
         let else_block = create_block else_tl in
@@ -98,13 +98,13 @@ and explicate_pred (e : L.exp) (then_tl : tail) (else_tl : tail) : tail =
   | L.Let (v, binding_exp, body_exp) ->
       explicate_assign binding_exp v (explicate_pred body_exp then_tl else_tl)
   | L.If (cond, then_exp, else_exp) ->
-      let then_block = create_block then_tl in
-      let else_block = create_block else_tl in
+      let then_block = Goto (create_block then_tl) in
+      let else_block = Goto (create_block else_tl) in
       let tail_true =
-        explicate_pred then_exp (Goto then_block) (Goto else_block)
+        explicate_pred then_exp then_block else_block
       in
       let tail_false =
-        explicate_pred else_exp (Goto then_block) (Goto else_block)
+        explicate_pred else_exp then_block else_block
       in
       explicate_pred cond tail_true tail_false
   | _ ->
