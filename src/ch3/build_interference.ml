@@ -23,12 +23,9 @@ let location_of arg =
   | Var v ->
       VarL v
   | _ ->
-      failwith "shouldn't reach"
+      failwith "location_of: shouldn't reach"
 
-(* returns location list, representing W(I)
-   - TODO: Check if functionality of sub, neg, push, and pop are correct.
-     Addq was necessary for 2 tests, but the others weren't, but still added.
-*)
+(* returns location list, representing W(I) *)
 let write instr =
   match instr with
   | Movq (_, arg2) ->

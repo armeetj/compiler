@@ -11,7 +11,7 @@ let convert_arg (a : X.arg) : arg =
   | X.Deref (r, i) ->
       Deref (r, i)
   | X.Var _ ->
-      failwith "We got rid of all Var's after in assign homes"
+      failwith "convert_arg: we got rid of all Var's after in assign homes"
 
 let convert_instr (i : X.instr) : instr list =
   match i with
@@ -33,8 +33,10 @@ let convert_instr (i : X.instr) : instr list =
       [Addq (convert_arg a1, convert_arg a2)]
   | X.Subq (a1, a2) ->
       [Subq (convert_arg a1, convert_arg a2)]
+  | X.Movq (a1, a2) when a1 = a2 ->
+      []
   | X.Movq (a1, a2) ->
-      if compare a1 a2 <> 0 then [Movq (convert_arg a1, convert_arg a2)] else []
+      [Movq (convert_arg a1, convert_arg a2)]
   | X.Negq a ->
       [Negq (convert_arg a)]
   | X.Pushq a ->

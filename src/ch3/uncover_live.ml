@@ -52,7 +52,7 @@ let uncover_live_in_block (label_map : LocSet.t LabelMap.t)
         read_set [arg] l_after
     | X.Retq ->
         read_set [X.Reg Rax] l_after
-    (* remove (write) from caller and then add first i of callee, as according to spec*)
+    (* remove (write) from caller and then add first i of callee, as according to spec *)
     | X.Callq (_, i) ->
         read_set
           (take i (list_of_regset callee_save_regs))
@@ -61,26 +61,24 @@ let uncover_live_in_block (label_map : LocSet.t LabelMap.t)
         let args =
           List.map
             (function
-              | x -> (
-                match x with
-                | VarL v ->
-                    X.Var v
-                | RegL r ->
-                    X.Reg r
-                | _ ->
-                    failwith "Shouldn't have this case" ) )
+               | VarL v ->
+                   X.Var v
+               | RegL r ->
+                   X.Reg r
+               | _ ->
+                   failwith "Shouldn't have this case" )
             (LocSet.elements (LabelMap.find label label_map))
         in
         read_set args l_after
   in
-  (* takes in first instruction in instructions and adds L_before to acc*)
+  (* takes in first instruction in instructions and adds L_before to acc *)
   let process instr acc =
     match acc with
-    (*returns acc with new value*)
+    (* returns acc with new value *)
     | h :: _ ->
         l_before instr h :: acc
     | _ ->
-        failwith "Shouldn't have this case"
+        failwith "process: shouldn't have this case"
   in
   (* actual recursive creation of final list *)
   let rec helper instrs_left acc =
@@ -89,7 +87,7 @@ let uncover_live_in_block (label_map : LocSet.t LabelMap.t)
         acc
     | instr :: tail ->
         helper tail (process instr acc)
-    (* reverse instructions to allow recurrence L_after(k) = L_before(k+1)*)
+    (* reverse instructions to allow recurrence L_after(k) = L_before(k+1) *)
   in
   match helper (List.rev instrs) [LocSet.empty] with
   | h :: t ->
