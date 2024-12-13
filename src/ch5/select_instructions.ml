@@ -33,7 +33,7 @@ let process_exp (exp : C.exp) : instr list =
     | `Not, [atm] ->
         [Movq (process_atm atm, Reg Rax); Xorq (Imm 1, Reg Rax)]
     | _ ->
-        failwith "shouldn't reach" )
+        failwith "process_exp: shouldn't reach" )
 
 let process_stmt stmt : instr list =
   match stmt with

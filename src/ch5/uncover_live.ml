@@ -3,8 +3,6 @@ open Types
 open Utils
 module X = X86_var_loop
 
-(* WILL DO IN REWORK *)
-
 let rec read_set lst set =
   match lst with
   | [] ->
@@ -70,14 +68,12 @@ let uncover_live_in_block (label_map : LocSet.t LabelMap.t)
         let args =
           List.map
             (function
-              | x -> (
-                match x with
-                | VarL v ->
-                    X.Var v
-                | RegL r ->
-                    X.Reg r
-                | _ ->
-                    failwith "Shouldn't have this case" ) )
+              | VarL v ->
+                  X.Var v
+              | RegL r ->
+                  X.Reg r
+              | _ ->
+                  failwith "Shouldn't have this case" )
             (LocSet.elements (LabelMap.find label label_map))
         in
         read_set args l_after
@@ -91,14 +87,12 @@ let uncover_live_in_block (label_map : LocSet.t LabelMap.t)
         let args =
           List.map
             (function
-              | x -> (
-                match x with
-                | VarL v ->
-                    X.Var v
-                | RegL r ->
-                    X.Reg r
-                | _ ->
-                    failwith "Shouldn't have this case" ) )
+              | VarL v ->
+                  X.Var v
+              | RegL r ->
+                  X.Reg r
+              | _ ->
+                  failwith "Shouldn't have this case" )
             (LocSet.elements (LabelMap.find label label_map))
         in
         read_set (rflags_reg :: args) l_after
@@ -125,7 +119,7 @@ let uncover_live_in_block (label_map : LocSet.t LabelMap.t)
   | h :: t ->
       {initial = h; afters = t}
   | _ ->
-      failwith "no code?"
+      failwith "uncover_live_in_block: no code?"
 
 (* Get the next jump labels, if any.
  * The jump instructions should only be at the end of the block,

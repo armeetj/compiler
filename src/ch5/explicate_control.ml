@@ -40,10 +40,10 @@ let rec explicate_assign (e : L.exp) (v : var) (tl : tail) : tail =
   | L.Let (v_in, binding_exp, body_exp) ->
       explicate_assign binding_exp v_in (explicate_assign body_exp v tl)
   | L.If (cond, then_exp, else_exp) ->
-      let tail_block = create_block tl in
+      let tail_block = Goto (create_block tl) in
       explicate_pred cond
-        (explicate_assign then_exp v (Goto tail_block))
-        (explicate_assign else_exp v (Goto tail_block))
+        (explicate_assign then_exp v tail_block)
+        (explicate_assign else_exp v tail_block)
   (* all effect expressions first -> final exp *)
   | L.Begin (effect_exps, final_exp) ->
       (*  first assign (v = final_exp, tl) *)
@@ -119,13 +119,13 @@ and explicate_pred (e : L.exp) (then_tl : tail) (else_tl : tail) : tail =
   | L.Let (v, binding_exp, body_exp) ->
       explicate_assign binding_exp v (explicate_pred body_exp then_tl else_tl)
   | L.If (cond, then_exp, else_exp) ->
-      let then_block = create_block then_tl in
-      let else_block = create_block else_tl in
+      let then_block = Goto (create_block then_tl) in
+      let else_block = Goto (create_block else_tl) in
       let tail_true =
-        explicate_pred then_exp (Goto then_block) (Goto else_block)
+        explicate_pred then_exp then_block else_block
       in
       let tail_false =
-        explicate_pred else_exp (Goto then_block) (Goto else_block)
+        explicate_pred else_exp then_block else_block
       in
       explicate_pred cond tail_true tail_false
   | While _ ->
@@ -158,14 +158,15 @@ and explicate_effect (e : L.exp) (tl : tail) : tail =
       List.fold_right explicate_effect effect_exps
         (explicate_effect final_exp tl)
   | L.If (cond_exp, then_exp, else_exp) ->
-      let aux = create_block tl in
-      let then_tl = explicate_effect then_exp (Goto aux) in
-      let else_tl = explicate_effect else_exp (Goto aux) in
+      let aux = Goto (create_block tl) in
+      let then_tl = explicate_effect then_exp aux in
+      let else_tl = explicate_effect else_exp aux in
       explicate_pred cond_exp then_tl else_tl
   | L.While (cond_exp, body_exp) ->
       let loop_label = Label (!fresh ~base:"loop" ~sep:"_") in
       let body_aux = explicate_effect body_exp (Goto loop_label) in
-      (* "if equiv form has to be processed be explicate_pred returning a tail which constitutes a basic_block" *)
+      (* "if equiv form has to be processed be explicate_pred
+         returning a tail which constitutes a basic_block" *)
       let basic_block = explicate_pred cond_exp body_aux tl in
       let () =
         basic_blocks := LabelMap.add loop_label basic_block !basic_blocks
