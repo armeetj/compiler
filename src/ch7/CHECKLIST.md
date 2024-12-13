@@ -1,4 +1,6 @@
 Passes order (ch7)
+  [x] graph coloring
+
   [ ] shrink
   [ ] uniquify
   [ ] reveal_functions
