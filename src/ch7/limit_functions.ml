@@ -34,25 +34,25 @@ let rec limit_type (t : ty) : ty =
   | Function (arg_tys, ret_ty) -> (
     match List.length arg_tys with
     (* no more than 6 args *)
-    | l when l <= 6 -> Function (arg_tys, ret_ty)
+    | l when l <= 6 -> Function (List.map limit_type arg_tys, limit_type ret_ty)
     (* more than 6 args *)
     | _ ->
-      let head_lst = List.map limit_type (take 5 arg_tys) in
-      let rest_vector = Vector (Array.of_list (drop 5 arg_tys)) in
-      Function (head_lst @ [rest_vector], ret_ty) )
+      let aux = List.map limit_type in
+      let head_lst = aux (take 5 arg_tys) in
+      let rest_vector = Vector (Array.of_list (aux (drop 5 arg_tys))) in
+      Function (head_lst @ [rest_vector], limit_type ret_ty) )
 
 (* Change the argument declaration of a function
    to take extra arguments into account. *)
 let limit_args (ex : extra_args) (args : (var * ty) list) : (var * ty) list =
-  match ex.argc with
-  | argc when argc <= 6 -> args
+  match List.length args with
+  | l when l <= 6 -> args
   | _ ->
-    let head = take 5 args in
-    let rest = drop 5 args in
-    let ty =
-      Vector (Array.of_list (List.map (fun x -> limit_type (snd x)) rest))
-    in
-    head @ [(ex.tup_name, ty)]
+    let aux = List.map (fun (v, ty) -> (v, limit_type ty)) in
+    let head = aux (take 5 args) in
+    let rest = aux (drop 5 args) in
+    let rest = Vector (Array.of_list (List.map snd rest)) in
+    head @ [(ex.tup_name, limit_type rest)]
 
 (* Change the body of a function to account for the extra arguments
    of the function. Variable references for extra arguments
@@ -63,7 +63,7 @@ let limit_args (ex : extra_args) (args : (var * ty) list) : (var * ty) list =
    that will be handled in the next type checking pass.
 *)
 let limit_functions_exp (ex : extra_args) (e : exp) : exp =
-  let fn = function
+  let rec fn = function
     (* change var references to vector references if needed *)
     | Var v -> (
       match VarMap.mem v ex.argnums with
@@ -71,29 +71,28 @@ let limit_functions_exp (ex : extra_args) (e : exp) : exp =
       | false -> Var v )
     (* change apply expressions with > 6 args *)
     | Apply (f, args) when List.length args > 6 ->
-      let head = take 5 args in
+      let head = List.map fn (take 5 args) in
       (* don't specify the type of vector here so just None *)
-      let rest_vec = Vec (drop 5 args, None) in
+      let rest_vec = Vec (List.map fn (drop 5 args), None) in
       (* head @ [rest_vec] has len 6 *)
       Apply (f, head @ [rest_vec])
-    | _ -> e
+    | e -> e
   in
   convert_exp fn e
 
 (* Create the `extra_args` record from the argument list. *)
 let get_extra_args (args : (var * ty) list) : extra_args * bool =
   match List.length args with
-  | l when l > 6 ->
+  | l when l <= 6 -> (no_extra_args, false)
+  | l ->
     (* get name *)
     let tup_name = new_tup_var () in
     let argc = l - 5 in
-    (* enumerate with swap index and val, fst to extract from (var * ty) tuple *)
     let extra_args_enumerated =
-      List.mapi (fun i x -> (fst x, i)) (drop 5 args)
+      List.mapi (fun i (v, _) -> (v, i)) (drop 5 args)
     in
     let argnums = VarMap.of_list extra_args_enumerated in
     ({tup_name; argc; argnums}, true)
-  | _ -> (no_extra_args, false)
 
 let limit_function_def (d : def) : def =
   let (Def (name, fcont)) = d in
@@ -117,7 +116,7 @@ let fix_fun_refs (d : def) : def =
       match VarSet.mem (string_of_label l) !limited_names with
       (* is limited, so must have 6 args *)
       | true -> FunRef (l, 6)
-      (* not limited arity < 6 *)
+      (* not limited arity <= 6 *)
       | false -> FunRef (l, arity) )
     | e -> e
   in
