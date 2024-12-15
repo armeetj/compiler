@@ -3,10 +3,10 @@ author: Emeka Nkurumeh
 date: 2024-12-02
 ---
 
-# Grade (86/100)
+# Grade (99/100)
 
-- Correctness: 86% (6/7 of passes with nontrivial modifications are correct)
-- Quality: 85%
+- Correctness: 100%
+- Quality: 95%
 
 Good work. As a general note, the equivalence `(fun x -> f x) ≡ f` holds in
 OCaml, so `f` is usually prefered over `fun x -> f x`. The same holds for
@@ -14,21 +14,6 @@ functions of multiple arguments as well i.e. prefer `g` to `(fun x y -> g x y)`.
 
 ## Remove Complex Operands
 
-`process` can be replaced with a right fold.
+The helper function in the `Prim` cases can be replaced with a ~~right~~ left fold.
 >> done
-
-The helper function in the `Prim` cases can be replaced with a right fold.
->> done
-
-## Select Instructions
-
-In `process_stmt`, there is a lot of code repetition in the comparison cases.
-Use the `#cmp_op as op` and `cc_of_op` to avoid repeating code.
->> done
-
-## Uncover Live*
-
-`uncover_live_in_block` and `get_next_labels` can be written based off of the
-code for Assignment 4. For `compute_liveness`, follow the steps given in the
-comment.
->> done
+>> The `Prim` case in `rco_atom` still has an explicitly recursive helper function.
