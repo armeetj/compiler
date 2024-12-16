@@ -12,7 +12,7 @@
   [x] remove_unused
   [x] select_instructions
   [x] uncover_live
-  [ ] build_interference
+  [x] build_interference
   [x] allocate_registers
   [x] remove_jumps
   [x] patch_instructions
