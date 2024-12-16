@@ -17,7 +17,7 @@
   [x] remove_jumps
   [x] patch_instructions
   [x] prelude_conclusion
-  [ ] optimize
+  [x] optimize
 
 ## Pass Order
 
