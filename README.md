@@ -32,3 +32,8 @@ Ashug Gurijala `agurijal@caltech.edu`
 
 - see CHECKLIST.md
 - works on macs, need to change any (%lld) long long to just (%ld) long in runtime.c to run on linux (no idea why)
+
+## Assignment 7
+
+- see CHECKLIST.md
+
