@@ -46,7 +46,7 @@ let rec limit_type (t : ty) : ty =
    to take extra arguments into account. *)
 let limit_args (ex : extra_args) (args : (var * ty) list) : (var * ty) list =
   match List.length args with
-  | l when l <= 6 -> args
+  | l when l <= 6 -> List.map (fun (v, ty) -> (v, limit_type ty)) args
   | _ ->
     let aux = List.map (fun (v, ty) -> (v, limit_type ty)) in
     let head = aux (take 5 args) in
