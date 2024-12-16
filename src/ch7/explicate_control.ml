@@ -51,7 +51,7 @@ let rec explicate_assign (e : L.exp) (v : var) (tl : tail) : tail =
     (*  first assign (v = final_exp, tl) *)
     let aux = explicate_assign final_exp v tl in
     (* then fold_right all side effects *)
-    List.fold_right (fun e acc -> explicate_effect e acc) effect_exps aux
+    List.fold_right explicate_effect effect_exps aux
   | L.SetBang (v_in, exp) ->
     let aux = explicate_assign exp v_in tl in
     explicate_assign (Atm Void) v aux
@@ -92,35 +92,15 @@ and explicate_pred (e : L.exp) (then_tl : tail) (else_tl : tail) : tail =
       ; jump_then = then_block
       ; jump_else = else_block }
   (* Not a *)
-  | L.Prim (`Not, [a]) -> (
-    match a with
-    | L.Bool true -> else_tl
-    | L.Bool false -> then_tl
-    | L.Int _
-     |L.Void ->
-      failwith
-        "cond can't be an Int, this shouldn't have made it past the type \
-         checker"
-    | L.Var v ->
-      let then_block = create_block then_tl in
-      let else_block = create_block else_tl in
-      IfStmt
-        { op = `Eq
-        ; arg1 = Var v
-        ; arg2 = Bool false
-        ; jump_then = then_block
-        ; jump_else = else_block } )
+  (* removed repetitive code from last time, can reuse explicate_pred! *)
+  | L.Prim (`Not, [a]) -> explicate_pred (Atm a) else_tl then_tl
   | L.Let (v, binding_exp, body_exp) ->
     explicate_assign binding_exp v (explicate_pred body_exp then_tl else_tl)
   | L.If (cond, then_exp, else_exp) ->
-    let then_block = create_block then_tl in
-    let else_block = create_block else_tl in
-    let tail_true =
-      explicate_pred then_exp (Goto then_block) (Goto else_block)
-    in
-    let tail_false =
-      explicate_pred else_exp (Goto then_block) (Goto else_block)
-    in
+    let then_block = Goto (create_block then_tl) in
+    let else_block = Goto (create_block else_tl) in
+    let tail_true = explicate_pred then_exp then_block else_block in
+    let tail_false = explicate_pred else_exp then_block else_block in
     explicate_pred cond tail_true tail_false
   | L.While _ -> failwith "ec:explicate_pred invalid exp type : While"
   | L.SetBang _ -> failwith "ec:explicate_pred invalid exp type : SetBang"
@@ -151,25 +131,27 @@ and explicate_pred (e : L.exp) (then_tl : tail) (else_tl : tail) : tail =
 and explicate_effect (e : L.exp) (tl : tail) : tail =
   match e with
   | L.Atm _ -> tl
-  | L.Prim (((`Read | `Print) as op), a_lst) ->
+  (* use the better #stmt_op syntax *)
+  | L.Prim ((#stmt_op as op), a_lst) ->
     let atm_lst = List.map convert_atom a_lst in
     Seq (PrimS (op, atm_lst), tl)
+  (* prim without stmt_op:read/print in effect position does nothing *)
+  | L.Prim _ -> tl
   | L.SetBang (v, e) -> explicate_assign e v tl
   | L.Begin (effect_exps, final_exp) ->
     List.fold_right explicate_effect effect_exps (explicate_effect final_exp tl)
   | L.If (cond_exp, then_exp, else_exp) ->
-    let aux = create_block tl in
-    let then_tl = explicate_effect then_exp (Goto aux) in
-    let else_tl = explicate_effect else_exp (Goto aux) in
+    (* better aux from last code review *)
+    let aux = Goto (create_block tl) in
+    let then_tl = explicate_effect then_exp aux in
+    let else_tl = explicate_effect else_exp aux in
     explicate_pred cond_exp then_tl else_tl
   | L.While (cond_exp, body_exp) ->
     let loop_label = Label (!fresh ~base:"loop" ~sep:"_") in
     let body_aux = explicate_effect body_exp (Goto loop_label) in
     (* "if equiv form has to be processed be explicate_pred returning a tail which constitutes a basic_block" *)
     let basic_block = explicate_pred cond_exp body_aux tl in
-    let () =
-      basic_blocks := LabelMap.add loop_label basic_block !basic_blocks
-    in
+    basic_blocks := LabelMap.add loop_label basic_block !basic_blocks ;
     Goto loop_label
   | L.Let (v, bind_exp, body_exp) ->
     let tl = explicate_effect body_exp tl in
@@ -184,15 +166,14 @@ and explicate_effect (e : L.exp) (tl : tail) : tail =
    |L.VecRef _ ->
     failwith
       "ec:explicate_effect neither VecLen nor VecRef have any side-effects"
-  | L.VecSet (a1, i, a2) ->
-    let a1 = convert_atom a1 in
-    let a2 = convert_atom a2 in
-    Seq (VecSetS (a1, i, a2), tl)
+  | L.VecSet (v, i, e) ->
+    let v = convert_atom v in
+    let e = convert_atom e in
+    Seq (VecSetS (v, i, e), tl)
   | L.Apply (f, args) ->
     Seq (CallS (convert_atom f, List.map convert_atom args), tl)
-  | _ ->
-    failwith
-      "ec:explicate_effect unsupported exp type passed to explicate_effect"
+  (* funref doesn't have any effects *)
+  | L.FunRef _ -> tl
 
 (* Convert expressions in tail position.
  * This includes:
@@ -215,8 +196,8 @@ and explicate_tail (e : L.exp) : tail =
     let tl = Return (Atm Void) in
     explicate_assign e v tl
   | L.If (cond, then_exp, else_exp) ->
-    let aux_else = explicate_tail else_exp in
     let aux_then = explicate_tail then_exp in
+    let aux_else = explicate_tail else_exp in
     explicate_pred cond aux_then aux_else
   | L.Let (v, binding_exp, body_exp) ->
     let aux = explicate_tail body_exp in

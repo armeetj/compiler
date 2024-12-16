@@ -5,10 +5,10 @@
   [x] uniquify
   [x] reveal_functions
   [x] limit_functions
-  [ ] expose_allocation
+  [x] expose_allocation
   [x] uncover_get
   [x] remove_complex
-  [ ] explicate_control
+  [x] explicate_control
   [x] remove_unused
   [ ] select_instructions
   [x] uncover_live
