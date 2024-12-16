@@ -4,7 +4,7 @@
   [x] shrink
   [x] uniquify
   [x] reveal_functions
-  [ ] limit_functions
+  [x] limit_functions
   [ ] expose_allocation
   [x] uncover_get
   [x] remove_complex
