@@ -10,7 +10,7 @@
   [x] remove_complex
   [x] explicate_control
   [x] remove_unused
-  [ ] select_instructions
+  [x] select_instructions
   [x] uncover_live
   [ ] build_interference
   [x] allocate_registers
