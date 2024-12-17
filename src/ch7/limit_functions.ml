@@ -61,7 +61,7 @@ let limit_args (ex : extra_args) (args : (var * ty) list) : (var * ty) list =
    that will be handled in the next type checking pass.
 *)
 let limit_functions_exp (ex : extra_args) (e : exp) : exp =
-  let rec fn = function
+  let fn = function
     (* change var references to vector references if needed *)
     | Var v -> (
       match VarMap.find_opt v ex.argnums with

@@ -9,9 +9,6 @@ let fresh = ref (make_gensym ())
 (* Variable to hold labeled blocks for a single function. *)
 let basic_blocks : tail LabelMap.t ref = ref LabelMap.empty
 
-(* Dummy variables should always have the prefix "_.". *)
-let is_dummy_var v = String.sub v 0 2 = "_."
-
 let convert_atom (a : L.atm) : atm =
   match a with
   | L.Bool b -> Bool b
