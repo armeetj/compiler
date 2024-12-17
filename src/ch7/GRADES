@@ -1,0 +1,62 @@
+---
+author: Emeka Nkurumeh
+date: 2024-12-16
+---
+
+# Grade (88/100)
+
+- Correctness: 100%
+- Quality: 50%
+
+## Allocate Registers
+
+On line 234, use `List.concat_map`.
+
+## Reveal Functions
+
+On line 22, you forgot the `VecLen` constructor.
+
+## Limit Functions
+
+On line 35 and 116, use `if` instead of `match`.
+
+On line 69, use `VarMap.find_opt` instead of `VarMap.{mem,find}`.
+
+In the `Apply` case of `limit_functions_exp`, there is no need to map `fn` over
+the list of arguments since `convert_exp` handles this.
+
+## Remove Complex Operands
+
+The helper function in the `Prim` and `Apply` cases of `rco_atom` and `rco_exp`
+can be factored out and replaced with a left fold (a call to `List.fold_left`
+instead of an explicitly recursive function).
+
+## Select Instructions
+
+All the `cmp_op` cases in `proces_stmt` can be combined using `Types.cc_of_op`
+to convert from `cmp_op` to `cc` (use the syntax `#cmp_op as op` mentioned in
+the write-up to ensure the argument to `cc_op_op` is a `cmp_op`).
+
+The `Call` case of `process_exp` should be an error as per the write-up.
+
+You are missing calls to `fix_label` on the labels in `GlobalArg`s.
+
+## Uncover Live
+
+`read_set` and `write_set` can be rewritten as calls to
+`List.{fold_right,fold_left}`.
+
+## Remove Jumps
+
+`make_graph` can be greatly simplified via the use of higher-order list
+functions such as `List.{filter,map,concat_map}`.
+
+## Patch Instructions
+
+On line 45, the conditional is not needed since if self moves are handled on
+line 26.
+
+## Prelude and Conclusion
+
+The body of `instrs_of_block` can be replaced with a call to `List.concat_map`.
+

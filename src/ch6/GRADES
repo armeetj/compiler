@@ -36,8 +36,9 @@ write `function P _ -> ...`.
 
 ## Patch Instructions
 
-Line 45: The conditional is not needed since if `a = b`, then `convert_arg a = convert_arg b`, which you handle on line 26.
+Line 45: The conditional is not needed since if `a = b`, then `convert_arg a =
+convert_arg b`, which you handle on line 26.
 
 ## Prelude and Conclusion
 
-`instrs_of_block` can be replaced with a call to `List.map`.
+The body of `instrs_of_block` can be replaced with a call to `List.map`.
