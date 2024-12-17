@@ -51,18 +51,16 @@ let rec rco_atom (e : L.exp) : (var * exp) list * atm =
   | L.GetBang v ->
     let tmp = gen_temp_name () in
     ([(tmp, Atm (Var v))], Var tmp)
-  (* operations that require deeper recursion
-     since they can't have non-atomic args*)
+    (* operations that require deeper recursion
+       since they can't have non-atomic args*)
   | L.Prim (cop, exp_lst) ->
-    let rec helper exp_lst =
-      match exp_lst with
-      | [] -> ([], [])
-      | h :: t ->
-        let binding, atm = rco_atom h in
-        let bindings, atms = helper t in
-        (binding @ bindings, atm :: atms)
+    let bindings, atm_lst =
+      List.fold_left
+        (fun (bindings_acc, atms_acc) exp ->
+          let binding, atm = rco_atom exp in
+          (bindings_acc @ binding, atms_acc @ [atm]) )
+        ([], []) exp_lst
     in
-    let bindings, atm_lst = helper exp_lst in
     let tmp = gen_temp_name () in
     (bindings @ [(tmp, Prim (cop, atm_lst))], Var tmp)
     (* Let case, weird as usual *)
@@ -119,15 +117,13 @@ and rco_exp (e : L.exp) : exp =
     let exp3 = rco_exp exp3 in
     If (exp1, exp2, exp3)
   | L.Prim (cop, exp_lst) ->
-    let rec helper exp_lst =
-      match exp_lst with
-      | [] -> ([], [])
-      | h :: t ->
-        let binding, atm = rco_atom h in
-        let bindings, atms = helper t in
-        (binding @ bindings, atm :: atms)
+    let bindings, atm_lst =
+      List.fold_left
+        (fun (bindings_acc, atms_acc) exp ->
+          let binding, atm = rco_atom exp in
+          (bindings_acc @ binding, atms_acc @ [atm]) )
+        ([], []) exp_lst
     in
-    let bindings, atm_lst = helper exp_lst in
     process bindings (Prim (cop, atm_lst))
   | L.Collect n -> Collect n
   | L.Allocate (size, ty) -> Allocate (size, ty)
