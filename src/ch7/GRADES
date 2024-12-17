@@ -8,10 +8,6 @@ date: 2024-12-16
 - Correctness: 100%
 - Quality: 50%
 
-## Allocate Registers
-
-On line 234, use `List.concat_map`.
-
 ## Reveal Functions
 
 On line 22, you forgot the `VecLen` constructor.
