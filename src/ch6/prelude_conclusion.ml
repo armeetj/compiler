@@ -13,7 +13,7 @@ let resize_initial_heap_size (n : int) : unit =
 let epilog (callee_saves : RegSet.t) (ss : int) (rs : int) : instr list =
   let main = fix_label "main" in
   [ Global (Types.Label main)
-  ; Label (main)
+  ; Label main
   ; Pushq (Reg Rbp)
   ; Movq (Reg Rsp, Reg Rbp) ]
   @ List.map (fun reg -> Pushq (Reg reg)) (RegSet.elements callee_saves)
@@ -92,11 +92,8 @@ let adjust_stack_access instr deref_adjust =
   | X.Jmp (Label l) -> Jmp (Label (fix_label l))
   | X.JmpIf (cc, Label l) -> JmpIf (cc, Label (fix_label l))
 
-let rec instrs_of_block (b : X.instr list) deref_adjust : instr list =
-  match b with
-  | [] -> []
-  | h :: t ->
-    [adjust_stack_access h deref_adjust] @ instrs_of_block t deref_adjust
+let instrs_of_block (b : X.instr list) deref_adjust : instr list =
+  List.map (fun h -> adjust_stack_access h deref_adjust) b
 
 (* Convert a labeled block to a list of instructions. *)
 let asm_of_lb (deref_adjust : int) (lb : label * X.block) : instr list =
