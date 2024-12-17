@@ -32,31 +32,24 @@ let get_jump_labels (Block (_, instrs) : 'a block) : label list =
   helper instrs
 
 let make_graph (lbs : (label * 'a block) list) : LabelDgraph.t =
-  let rec add_vertices lbs g =
-    match lbs with
-    | [] -> g
-    | (l, _) :: t ->
-      add_vertices t
-        ( if not (String.ends_with ~suffix:"_conclusion" (string_of_label l))
-          then G.add_vertex g l
-          else g )
+  let add_vertices lbs g =
+    List.fold_left
+      (fun g (l, _) ->
+        if not (String.ends_with ~suffix:"_conclusion" (string_of_label l)) then
+          G.add_vertex g l
+        else g )
+      g lbs
   in
-  let rec add_edges lbs g =
-    match lbs with
-    | [] -> g
-    | (l1, b1) :: t ->
-      let rec add_edges_from_label labels g =
-        match labels with
-        | [] -> g
-        | l2 :: t ->
-          add_edges_from_label t
-            ( if
-                not
-                  (String.ends_with ~suffix:"_conclusion" (string_of_label l2))
-              then G.add_edge g l1 l2
-              else g )
-      in
-      add_edges t (add_edges_from_label (get_jump_labels b1) g)
+  let add_edges lbs g =
+    List.fold_left
+      (fun g (l1, b1) ->
+        List.fold_left
+          (fun g l2 ->
+            if not (String.ends_with ~suffix:"_conclusion" (string_of_label l2))
+            then G.add_edge g l1 l2
+            else g )
+          g (get_jump_labels b1) )
+      g lbs
   in
   add_edges lbs (add_vertices lbs G.empty)
 
