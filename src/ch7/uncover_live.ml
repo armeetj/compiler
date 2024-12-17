@@ -8,26 +8,25 @@ let _debug = ref false
 
 let rflags_reg = X.Reg Rflags
 
-let rec read_set lst set =
-  match lst with
-  | [] -> set
-  | h :: t -> (
-    match h with
-    | X.Var v -> LocSet.add (VarL v) (read_set t set)
-    | X.Reg r -> LocSet.add (RegL r) (read_set t set)
-    | X.Deref (r, _) -> LocSet.add (RegL r) (read_set t set)
-    | _ -> read_set t set )
+let read_set lst set =
+  List.fold_left
+    (fun acc h ->
+      match h with
+      | X.Var v -> LocSet.add (VarL v) acc
+      | X.Reg r -> LocSet.add (RegL r) acc
+      | X.Deref (r, _) -> LocSet.add (RegL r) acc
+      | _ -> acc )
+    set lst
 
-(* takes in list of args and removes the useful ones from the set *)
-let rec write_set lst set =
-  match lst with
-  | [] -> set
-  | h :: t -> (
-    match h with
-    | X.Var v -> LocSet.remove (VarL v) (write_set t set)
-    | X.Reg r -> LocSet.remove (RegL r) (write_set t set)
-    | X.Deref (r, _) -> LocSet.remove (RegL r) (write_set t set)
-    | _ -> write_set t set )
+let write_set lst set =
+  List.fold_left
+    (fun acc h ->
+      match h with
+      | X.Var v -> LocSet.remove (VarL v) acc
+      | X.Reg r -> LocSet.remove (RegL r) acc
+      | X.Deref (r, _) -> LocSet.remove (RegL r) acc
+      | _ -> acc )
+    set lst
 
 (* Compute the live sets for the instructions of a single labeled block.
  * The `live_before_map` is the live-before sets for each block named
