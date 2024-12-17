@@ -3,10 +3,12 @@ author: Emeka Nkurumeh
 date: 2024-12-16
 ---
 
-# Grade (88/100)
+# Grade (96/100)
 
 - Correctness: 100%
-- Quality: 50%
+- Quality: 85%
+
+Overall, nice work.
 
 ## Reveal Functions
 
@@ -45,7 +47,7 @@ You are missing calls to `fix_label` on the labels in `GlobalArg`s.
 ## Remove Jumps
 
 `make_graph` can be greatly simplified via the use of higher-order list
-functions such as `List.{filter,map,concat_map}`.
+functions (think `List.{fold_left,fold_right,filter,map,concat_map}`).
 
 ## Patch Instructions
 
