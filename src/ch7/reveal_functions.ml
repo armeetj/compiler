@@ -19,7 +19,7 @@ let rec reveal_functions_exp (fmap : int VarMap.t) (e : L.exp) : exp =
   | While (cond, body) -> While (aux cond, aux body)
   | Let (v, e1, e2) -> Let (v, aux e1, aux e2)
   | Vec (es, ty) -> Vec (List.map aux es, ty)
-  | VecLen e -> aux e
+  | VecLen e -> VecLen (aux e)
   | VecRef (e, i) -> VecRef (aux e, i)
   | VecSet (v, i, e) -> VecSet (aux v, i, aux e)
   | Apply (f, args) -> Apply (aux f, List.map aux args)

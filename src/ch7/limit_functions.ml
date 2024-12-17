@@ -31,16 +31,14 @@ let rec limit_type (t : ty) : ty =
     t
   (* a Vector can have a nested Function type, which must be processed *)
   | Vector ty_arr -> Vector (Array.map limit_type ty_arr)
-  | Function (arg_tys, ret_ty) -> (
-    match List.length arg_tys with
-    (* no more than 6 args *)
-    | l when l <= 6 -> Function (List.map limit_type arg_tys, limit_type ret_ty)
-    (* more than 6 args *)
-    | _ ->
+  | Function (arg_tys, ret_ty) ->
+    let l = List.length arg_tys in
+    if l <= 6 then Function (List.map limit_type arg_tys, limit_type ret_ty)
+    else
       let aux = List.map limit_type in
       let head_lst = aux (take 5 arg_tys) in
       let rest_vector = Vector (Array.of_list (aux (drop 5 arg_tys))) in
-      Function (head_lst @ [rest_vector], limit_type ret_ty) )
+      Function (head_lst @ [rest_vector], limit_type ret_ty)
 
 (* Change the argument declaration of a function
    to take extra arguments into account. *)
@@ -66,14 +64,14 @@ let limit_functions_exp (ex : extra_args) (e : exp) : exp =
   let rec fn = function
     (* change var references to vector references if needed *)
     | Var v -> (
-      match VarMap.mem v ex.argnums with
-      | true -> VecRef (Var ex.tup_name, VarMap.find v ex.argnums)
-      | false -> Var v )
+      match VarMap.find_opt v ex.argnums with
+      | Some i -> VecRef (Var ex.tup_name, i)
+      | None -> Var v )
     (* change apply expressions with > 6 args *)
     | Apply (f, args) when List.length args > 6 ->
-      let head = List.map fn (take 5 args) in
+      let head = take 5 args in
       (* don't specify the type of vector here so just None *)
-      let rest_vec = Vec (List.map fn (drop 5 args), None) in
+      let rest_vec = Vec (drop 5 args, None) in
       (* head @ [rest_vec] has len 6 *)
       Apply (f, head @ [rest_vec])
     | e -> e
@@ -112,12 +110,9 @@ let limit_function_def (d : def) : def =
 let fix_fun_refs (d : def) : def =
   let (Def (l, {args; ret; body})) = d in
   let fn = function
-    | FunRef (l, arity) -> (
-      match VarSet.mem (string_of_label l) !limited_names with
-      (* is limited, so must have 6 args *)
-      | true -> FunRef (l, 6)
-      (* not limited arity <= 6 *)
-      | false -> FunRef (l, arity) )
+    | FunRef (l, arity) ->
+      if VarSet.mem (string_of_label l) !limited_names then FunRef (l, 6)
+      else FunRef (l, arity)
     | e -> e
   in
   Def (l, {args; ret; body = convert_exp fn body})

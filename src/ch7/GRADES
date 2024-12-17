@@ -13,15 +13,19 @@ Overall, nice work.
 ## Reveal Functions
 
 On line 22, you forgot the `VecLen` constructor.
+>> fixed
 
 ## Limit Functions
 
 On line 35 and 116, use `if` instead of `match`.
+>> fixed
 
 On line 69, use `VarMap.find_opt` instead of `VarMap.{mem,find}`.
+>> fixed
 
 In the `Apply` case of `limit_functions_exp`, there is no need to map `fn` over
 the list of arguments since `convert_exp` handles this.
+>> fixed
 
 ## Remove Complex Operands
 
