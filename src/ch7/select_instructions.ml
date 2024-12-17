@@ -151,8 +151,11 @@ let process_stmt stmt : instr list =
 
 let rec tail_instructions (f_lbl : label) (i : C.tail) : instr list =
   match i with
-  | C.Return exp ->
-    process_exp exp @ [Jmp (Label (string_of_label f_lbl ^ "_conclusion"))]
+  | C.Return exp -> (
+    match exp with
+    | Call _ -> failwith "tail_instrs: can't return call"
+    | _ ->
+      process_exp exp @ [Jmp (Label (string_of_label f_lbl ^ "_conclusion"))] )
   | C.Seq (stmt, tail) -> process_stmt stmt @ tail_instructions f_lbl tail
   | C.Goto label -> [Jmp label]
   | C.IfStmt {op; arg1; arg2; jump_then; jump_else} ->
