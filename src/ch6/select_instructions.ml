@@ -86,25 +86,9 @@ let process_stmt stmt : instr list =
       [Movq (process_atm atm1, Var v); Subq (process_atm atm2, Var v)]
     | `Negate, [atm] -> [Movq (process_atm atm, Var v); Negq (Var v)]
     | `Not, [atm] -> [Movq (process_atm atm, Var v); Xorq (Imm 1, Var v)]
-    | `Eq, [atm1; atm2] ->
+    | (#cmp_op as op), [atm1; atm2] ->
       [ Cmpq (process_atm atm2, process_atm atm1)
-      ; Set (CC_e, ByteReg Al)
-      ; Movzbq (ByteReg Al, Var v) ]
-    | `Lt, [atm1; atm2] ->
-      [ Cmpq (process_atm atm2, process_atm atm1)
-      ; Set (CC_l, ByteReg Al)
-      ; Movzbq (ByteReg Al, Var v) ]
-    | `Le, [atm1; atm2] ->
-      [ Cmpq (process_atm atm2, process_atm atm1)
-      ; Set (CC_le, ByteReg Al)
-      ; Movzbq (ByteReg Al, Var v) ]
-    | `Gt, [atm1; atm2] ->
-      [ Cmpq (process_atm atm2, process_atm atm1)
-      ; Set (CC_g, ByteReg Al)
-      ; Movzbq (ByteReg Al, Var v) ]
-    | `Ge, [atm1; atm2] ->
-      [ Cmpq (process_atm atm2, process_atm atm1)
-      ; Set (CC_ge, ByteReg Al)
+      ; Set (cc_of_op op, ByteReg Al)
       ; Movzbq (ByteReg Al, Var v) ]
     | _ -> failwith "shouldn't reach" )
   | Assign (v, C.VecSet (atm1, i, atm2)) ->
