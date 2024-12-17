@@ -128,13 +128,11 @@ let adjust_stack_access conclusion_params instr deref_adjust =
   | X.IndirectCallq (a, _) ->
     [IndirectCallq (offset (convert_arg a) deref_adjust)]
 
-let rec instrs_of_block (conclusion_params : RegSet.t * int * int)
+let instrs_of_block (conclusion_params : RegSet.t * int * int)
   (b : X.instr list) deref_adjust : instr list =
-  match b with
-  | [] -> []
-  | h :: t ->
-    adjust_stack_access conclusion_params h deref_adjust
-    @ instrs_of_block conclusion_params t deref_adjust
+  List.concat_map
+    (fun h -> adjust_stack_access conclusion_params h deref_adjust)
+    b
 
 (* Convert a labeled block to a list of instructions. *)
 let asm_of_lb (conclusion_params : RegSet.t * int * int) (deref_adjust : int)
