@@ -8,26 +8,25 @@ let _debug = ref false
 
 let rflags_reg = X.Reg Rflags
 
-let rec read_set lst set =
-  match lst with
-  | [] -> set
-  | h :: t -> (
-    match h with
-    | X.Var v -> LocSet.add (VarL v) (read_set t set)
-    | X.Reg r -> LocSet.add (RegL r) (read_set t set)
-    | X.Deref (r, _) -> LocSet.add (RegL r) (read_set t set)
-    | _ -> read_set t set )
+let read_set lst set =
+  List.fold_left
+    (fun acc h ->
+      match h with
+      | X.Var v -> LocSet.add (VarL v) acc
+      | X.Reg r -> LocSet.add (RegL r) acc
+      | X.Deref (r, _) -> LocSet.add (RegL r) acc
+      | _ -> acc )
+    set lst
 
-(* takes in list of args and removes the useful ones from the set *)
-let rec write_set lst set =
-  match lst with
-  | [] -> set
-  | h :: t -> (
-    match h with
-    | X.Var v -> LocSet.remove (VarL v) (write_set t set)
-    | X.Reg r -> LocSet.remove (RegL r) (write_set t set)
-    | X.Deref (r, _) -> LocSet.remove (RegL r) (write_set t set)
-    | _ -> write_set t set )
+let write_set lst set =
+  List.fold_left
+    (fun acc h ->
+      match h with
+      | X.Var v -> LocSet.remove (VarL v) acc
+      | X.Reg r -> LocSet.remove (RegL r) acc
+      | X.Deref (r, _) -> LocSet.remove (RegL r) acc
+      | _ -> acc )
+    set lst
 
 (* Compute the live sets for the instructions of a single labeled block. *)
 let uncover_live_in_block (label_map : LocSet.t LabelMap.t)
@@ -58,11 +57,9 @@ let uncover_live_in_block (label_map : LocSet.t LabelMap.t)
       let args =
         List.map
           (function
-            | x -> (
-              match x with
-              | VarL v -> X.Var v
-              | RegL r -> X.Reg r
-              | _ -> failwith "Shouldn't have this case" ) )
+            | VarL v -> X.Var v
+            | RegL r -> X.Reg r
+            | _ -> failwith "Shouldn't have this case" )
           (LocSet.elements (LabelMap.find label label_map))
       in
       read_set args l_after
@@ -74,11 +71,9 @@ let uncover_live_in_block (label_map : LocSet.t LabelMap.t)
       let args =
         List.map
           (function
-            | x -> (
-              match x with
-              | VarL v -> X.Var v
-              | RegL r -> X.Reg r
-              | _ -> failwith "Shouldn't have this case" ) )
+            | VarL v -> X.Var v
+            | RegL r -> X.Reg r
+            | _ -> failwith "Shouldn't have this case" )
           (LocSet.elements (LabelMap.find label label_map))
       in
       read_set (rflags_reg :: args) l_after
@@ -159,7 +154,7 @@ let uncover_live (prog : (X.info1, X.binfo1) X.program) :
   (* Generate the control-flow graph from the (label, block) pairs. *)
   let cfg =
     LabelDgraph.of_alist lbs (fun bl ->
-      get_next_labels bl |> LabelSet.elements )
+        get_next_labels bl |> LabelSet.elements )
   in
   (* Create a label->instrs map. *)
   let (imap : X.instr list LabelMap.t) =
