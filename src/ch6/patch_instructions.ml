@@ -41,8 +41,7 @@ let convert_instr (i : X.instr) : instr list =
   | X.Subq (a1, a2) -> [Subq (convert_arg a1, convert_arg a2)]
   | X.Andq (a1, a2) -> [Andq (convert_arg a1, convert_arg a2)]
   | X.Sarq (a1, a2) -> [Sarq (convert_arg a1, convert_arg a2)]
-  | X.Movq (a1, a2) ->
-    if compare a1 a2 <> 0 then [Movq (convert_arg a1, convert_arg a2)] else []
+  | X.Movq (a1, a2) -> [Movq (convert_arg a1, convert_arg a2)]
   | X.Negq a -> [Negq (convert_arg a)]
   | X.Pushq a -> [Pushq (convert_arg a)]
   | X.Callq (l, i) -> [Callq (l, i)]
