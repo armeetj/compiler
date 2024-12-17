@@ -159,7 +159,7 @@ and explicate_pred (e : L.exp) (then_tl : tail) (else_tl : tail) : tail =
 and explicate_effect (e : L.exp) (tl : tail) : tail =
   match e with
   | L.Atm _ -> tl
-  | L.Prim (((`Read | `Print) as op), a_lst) ->
+  | L.Prim ((#stmt_op as op), a_lst) ->
     let atm_lst = List.map convert_atom a_lst in
     Seq (PrimS (op, atm_lst), tl)
   | L.SetBang (v, e) -> explicate_assign e v tl
