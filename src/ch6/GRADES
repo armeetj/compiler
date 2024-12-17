@@ -3,42 +3,9 @@ author: Emeka Nkurumeh
 date: 2024-12-16
 ---
 
-# Grade (93/100)
+# Grade (100/100)
 
 - Correctness: 100%
-- Quality: 70%
+- Quality: 100%
 
 Nice work!
-
-## Remove Complex Operands
-
-The helper function in the `Prim` cases of `rco_atom` and `rco_exp` can be
-replaced with left folds (calls to `List.fold_left` instead of explicitly
-recursive functions).
-
-## Explicate Control
-
-Line 162: Match on `#stmt_op` instead.
-
-## Select Instructions
-
-All the `cmp_op` cases in `proces_stmt` can be combined using `Types.cc_of_op`
-to convert from `cmp_op` to `cc` (use the syntax `#cmp_op as op` mentioned in
-the write-up to ensure the argument to `cc_op_op` is a `cmp_op`).
-
-## Uncover Live
-
-`read_set` and `write_set` can be rewritten as calls to
-`List.fold_right`/`List.fold_left`.
-
-There is no need to write `function | x -> (match x with P _ -> ...)`. Instead
-write `function P _ -> ...`.
-
-## Patch Instructions
-
-Line 45: The conditional is not needed since if `a = b`, then `convert_arg a =
-convert_arg b`, which you handle on line 26.
-
-## Prelude and Conclusion
-
-The body of `instrs_of_block` can be replaced with a call to `List.map`.
