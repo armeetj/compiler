@@ -56,20 +56,17 @@ struct
   (* This function assumes that `e` is not in the queue. *)
   let rec insert e i pq =
     match pq with
-    | [] ->
-        [(e, i)]
+    | [] -> [(e, i)]
     | (e', _) :: _ when Elt.compare e e' = 0 ->
-        (* This should never happen. *)
-        failwith "can't have duplicate elements in priority queue"
+      (* This should never happen. *)
+      failwith "can't have duplicate elements in priority queue"
     | (e', i') :: t ->
-        if has_higher_priority (e, i) (e', i') then (e, i) :: pq
-        else (e', i') :: insert e i t
+      if has_higher_priority (e, i) (e', i') then (e, i) :: pq
+      else (e', i') :: insert e i t
 
   let remove_top = function
-    | [] ->
-        failwith "no elements in priority queue"
-    | (e, _) :: t ->
-        (e, t)
+    | [] -> failwith "no elements in priority queue"
+    | (e, _) :: t -> (e, t)
 
   (* Remove the element `e` from the priority queue.
    * Return None if it's not in the queue, or
@@ -77,36 +74,29 @@ struct
   let remove e pq =
     let rec iter prev rest =
       match rest with
-      | [] ->
-          None
+      | [] -> None
       | (h, i) :: t ->
-          if Elt.compare h e = 0 then Some (List.rev_append prev t)
-          else iter ((h, i) :: prev) t
+        if Elt.compare h e = 0 then Some (List.rev_append prev t)
+        else iter ((h, i) :: prev) t
     in
     iter [] pq
 
   let update e i pq =
     match remove e pq with
-    | None ->
-        pq (* not in priority queue *)
-    | Some pq' ->
-        insert e i pq'
+    | None -> pq (* not in priority queue *)
+    | Some pq' -> insert e i pq'
 
   let insert_all es i pq = List.fold_left (fun pq e -> insert e i pq) pq es
 
   let remove_all_top t : elt list * int * (elt * int) list =
     let rec iter i best rest =
       match rest with
-      | (e, j) :: t when j = i ->
-          iter i (e :: best) t
-      | _ ->
-          (best, i, rest)
+      | (e, j) :: t when j = i -> iter i (e :: best) t
+      | _ -> (best, i, rest)
     in
     match t with
-    | [] ->
-        failwith "no elements in priority queue"
-    | (e, i) :: rest ->
-        iter i [e] rest
+    | [] -> failwith "no elements in priority queue"
+    | (e, i) :: rest -> iter i [e] rest
 
   let of_list alist =
     (* Need to negate `priority_compare` result or else

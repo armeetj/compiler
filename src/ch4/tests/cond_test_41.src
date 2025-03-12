@@ -1,8 +1,0 @@
-;; INPUT: 0 40 ; -1 32 ; 2 40 ; 3 32
-;; OUTPUT: 42 ; 42 ; 42 ; 42
-(let (x (read))
-  (let (y (read))
-    (if (if (< x 1) (eq? x 0) (eq? x 2))
-        (+ y 2)
-        (+ y 10))))
-  

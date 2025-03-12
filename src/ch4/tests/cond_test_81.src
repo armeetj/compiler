@@ -1,8 +1,0 @@
-;; INPUT: 2 1 0 ; 2 1 -1
-;; OUTPUT: 42 ; 42
-(let (x (read))
-  (let (y (read))
-    (let (z (if (eq? (read) 0)
-                 (+ x 1)
-                 (+ y 2)))
-      (+ 45 (- z)))))

@@ -1,4 +1,0 @@
-;; OUTPUT: 42
-(let (v (vector 40))
-  (let (x (vector 2))
-    (+ (vector-ref x 0) (vector-ref v 0))))

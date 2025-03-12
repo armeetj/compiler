@@ -90,30 +90,30 @@ module Make (Elt : OrderedTypeS) : S with type elt = Elt.t = struct
 
   let add_edge_new g e1 e2 =
     match (mem g e1, mem g e2) with
-    | true, true ->
-        add_edge g e1 e2
+    | true, true -> add_edge g e1 e2
     | true, false ->
-        let g' = add_vertex g e2 in
-        add_edge g' e1 e2
+      let g' = add_vertex g e2 in
+      add_edge g' e1 e2
     | false, true ->
-        let g' = add_vertex g e1 in
-        add_edge g' e1 e2
+      let g' = add_vertex g e1 in
+      add_edge g' e1 e2
     | false, false ->
-        let g1 = add_vertex g e1 in
-        let g2 = add_vertex g1 e2 in
-        add_edge g2 e1 e2
+      let g1 = add_vertex g e1 in
+      let g2 = add_vertex g1 e2 in
+      add_edge g2 e1 e2
 
   let neighbors g e =
     match VMap.find_opt e g with
     | None ->
-        failwith
-        @@ Printf.sprintf "ugraph: neighbors: element %s not in graph"
-             (Elt.to_string e)
-    | Some ns ->
-        VSet.elements ns
+      failwith
+      @@ Printf.sprintf "ugraph: neighbors: element %s not in graph"
+           (Elt.to_string e)
+    | Some ns -> VSet.elements ns
 
   let neighbors_or_none g e =
-    match VMap.find_opt e g with None -> [] | Some ns -> VSet.elements ns
+    match VMap.find_opt e g with
+    | None -> []
+    | Some ns -> VSet.elements ns
 
   let bindings g = VMap.bindings g
 

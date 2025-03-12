@@ -1,9 +1,0 @@
-(X86Program
-  (Info (stack_space 16))
-  (((Label start)
-    (Block
-      ((Callq (Label read_int) 0)
-       (Movq (Reg Rax) (Deref Rbp -8))
-       (Movq (Imm 84) (Reg Rax))
-       (Subq (Deref Rbp -8) (Reg Rax))
-       (Jmp (Label conclusion)))))))

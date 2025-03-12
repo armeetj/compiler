@@ -82,7 +82,11 @@ module Make (Elt : OrderedTypeS) : S with type elt = Elt.t = struct
    * which means incrementing the edge count by 1 if it's present,
    * or assigning it to 1 if it isn't. *)
   let incr_edge_count (e : elt) (map : int VMap.t) : int VMap.t =
-    VMap.update e (function None -> Some 1 | Some n -> Some (n + 1)) map
+    VMap.update e
+      (function
+        | None -> Some 1
+        | Some n -> Some (n + 1) )
+      map
 
   let add_vertex g e =
     if VMap.mem e g then
@@ -96,41 +100,38 @@ module Make (Elt : OrderedTypeS) : S with type elt = Elt.t = struct
     (* Remove in edges from e_in to e. *)
     let remove_in_edges (g : t) (e : elt) (e_in : elt) : t =
       match VMap.find_opt e g with
-      | None ->
-          vertex_missing "remove_vertex: remove_in_edges" e
+      | None -> vertex_missing "remove_vertex: remove_in_edges" e
       | Some node ->
-          let in_edges' = VMap.remove e_in node.in_edges in
-          let node' = {node with in_edges = in_edges'} in
-          VMap.add e node' g
+        let in_edges' = VMap.remove e_in node.in_edges in
+        let node' = {node with in_edges = in_edges'} in
+        VMap.add e node' g
     in
     (* Remove out edges from e to e_out. *)
     let remove_out_edges (g : t) (e : elt) (e_out : elt) : t =
       match VMap.find_opt e g with
-      | None ->
-          vertex_missing "remove_vertex: remove_out_edges" e
+      | None -> vertex_missing "remove_vertex: remove_out_edges" e
       | Some node ->
-          let out_edges' = VMap.remove e_out node.out_edges in
-          let node' = {node with out_edges = out_edges'} in
-          VMap.add e node' g
+        let out_edges' = VMap.remove e_out node.out_edges in
+        let node' = {node with out_edges = out_edges'} in
+        VMap.add e node' g
     in
     match VMap.find_opt e g with
-    | None ->
-        vertex_missing "remove_vertex" e
+    | None -> vertex_missing "remove_vertex" e
     | Some {in_edges; out_edges} ->
-        (* Remove the vertex itself. *)
-        let g' = VMap.remove e g in
-        (* Remove the in edges (edges going to the deleted vertex).
-         * These are the out edges of the connected vertices. *)
-        let g'' =
-          List.fold_left
-            (fun g e_connected -> remove_out_edges g e_connected e)
-            g' (VMap.keys in_edges)
-        in
-        (* Remove the out edges (edges coming from the deleted vertex).
-         * These are the in edges of the connected vertices. *)
+      (* Remove the vertex itself. *)
+      let g' = VMap.remove e g in
+      (* Remove the in edges (edges going to the deleted vertex).
+       * These are the out edges of the connected vertices. *)
+      let g'' =
         List.fold_left
-          (fun g e_connected -> remove_in_edges g e_connected e)
-          g'' (VMap.keys out_edges)
+          (fun g e_connected -> remove_out_edges g e_connected e)
+          g' (VMap.keys in_edges)
+      in
+      (* Remove the out edges (edges coming from the deleted vertex).
+       * These are the in edges of the connected vertices. *)
+      List.fold_left
+        (fun g e_connected -> remove_in_edges g e_connected e)
+        g'' (VMap.keys out_edges)
 
   let add_edge g e1 e2 =
     if not (mem g e1) then vertex_missing "add_neighbor" e1
@@ -153,32 +154,27 @@ module Make (Elt : OrderedTypeS) : S with type elt = Elt.t = struct
 
   let add_edge_new g e1 e2 =
     match (mem g e1, mem g e2) with
-    | true, true ->
-        add_edge g e1 e2
+    | true, true -> add_edge g e1 e2
     | true, false ->
-        let g' = add_vertex g e2 in
-        add_edge g' e1 e2
+      let g' = add_vertex g e2 in
+      add_edge g' e1 e2
     | false, true ->
-        let g' = add_vertex g e1 in
-        add_edge g' e1 e2
+      let g' = add_vertex g e1 in
+      add_edge g' e1 e2
     | false, false ->
-        let g1 = add_vertex g e1 in
-        let g2 = add_vertex g1 e2 in
-        add_edge g2 e1 e2
+      let g1 = add_vertex g e1 in
+      let g2 = add_vertex g1 e2 in
+      add_edge g2 e1 e2
 
   let neighbors_in g e =
     match VMap.find_opt e g with
-    | None ->
-        vertex_missing "neighbors_in" e
-    | Some n ->
-        VMap.keys n.in_edges
+    | None -> vertex_missing "neighbors_in" e
+    | Some n -> VMap.keys n.in_edges
 
   let neighbors_out g e =
     match VMap.find_opt e g with
-    | None ->
-        vertex_missing "neighbors_out" e
-    | Some n ->
-        VMap.keys n.out_edges
+    | None -> vertex_missing "neighbors_out" e
+    | Some n -> VMap.keys n.out_edges
 
   let vertices g = VMap.keys g
 
@@ -206,22 +202,18 @@ module Make (Elt : OrderedTypeS) : S with type elt = Elt.t = struct
     let best_next_vertex (g : t) : elt option =
       let rec best s (rest : elt list) (e_best : elt) : elt =
         match rest with
-        | [] ->
-            e_best
+        | [] -> e_best
         | e :: es ->
-            if Elt.compare s e = 0 then e
-            else if Elt.compare e_best e > 0 then best s es e
-            else best s es e_best
+          if Elt.compare s e = 0 then e
+          else if Elt.compare e_best e > 0 then best s es e
+          else best s es e_best
       in
       match vertices_no_incoming g with
-      | [] ->
-          None
+      | [] -> None
       | e :: es -> (
         match start with
-        | None ->
-            Some (List.fold_left min e es)
-        | Some s ->
-            if Elt.compare s e = 0 then Some e else Some (best s es e) )
+        | None -> Some (List.fold_left min e es)
+        | Some s -> if Elt.compare s e = 0 then Some e else Some (best s es e) )
     in
     (* Get the best next vertex, remove it (and store it),
      * and continue until all vertices have been removed.
@@ -231,11 +223,11 @@ module Make (Elt : OrderedTypeS) : S with type elt = Elt.t = struct
       else
         match best_next_vertex g with
         | None ->
-            (* all vertices have incoming edges *)
-            failwith "multigraph: topological_sort: no best vertex (not a DAG)"
+          (* all vertices have incoming edges *)
+          failwith "multigraph: topological_sort: no best vertex (not a DAG)"
         | Some e ->
-            let g' = remove_vertex g e in
-            iter g' (e :: sorted)
+          let g' = remove_vertex g e in
+          iter g' (e :: sorted)
     in
     if is_empty g then
       failwith "multigraph: topological_sort: no graph to sort!"
@@ -247,6 +239,6 @@ module Make (Elt : OrderedTypeS) : S with type elt = Elt.t = struct
   let of_alist alist get_elts =
     alist
     |> List.concat_map (fun (e, x) ->
-           get_elts x |> List.map (fun e' -> (e, e')) )
+         get_elts x |> List.map (fun e' -> (e, e')) )
     |> of_list
 end

@@ -1,6 +1,0 @@
-;; INPUT: 1 ; 0 34
-;; OUTPUT: 42 ; 42
-(+ 1
-   (if (let (x (read)) (< 0 x))
-       41
-       (let (y (read)) (+ y 7))))

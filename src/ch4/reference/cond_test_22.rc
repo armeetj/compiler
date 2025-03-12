@@ -1,8 +1,0 @@
-(Program
-  (If
-    (Let
-      x.1
-      (Atm (Bool true))
-      (Atm (Var x.1)))
-    (Atm (Int 42))
-    (Atm (Int 0))))

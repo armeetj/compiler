@@ -1,9 +1,0 @@
-(X86Program
-  (Info1 (locals_types ()))
-  (((Label start)
-    (Block
-      (Binfo2
-        ((initial ((RegL Rsp)))
-         (afters (((RegL Rsp) (RegL Rax)) ()))))
-      ((Movq (Imm 47) (Reg Rax))
-       (Jmp (Label conclusion)))))))

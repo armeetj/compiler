@@ -1,2 +1,0 @@
-;; OUTPUT: 42
-(if (if (not #f) #f #t) 777 42)

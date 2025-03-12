@@ -1,5 +1,0 @@
-(Program
-  (If
-    (Prim Gt ((Int 2) (Int 1)))
-    (Atm (Int 42))
-    (Atm (Int 0))))

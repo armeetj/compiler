@@ -1,7 +1,0 @@
-(Program
-  (If
-    (And
-      (Prim Gt ((Int 1) (Int 0)))
-      (Bool true))
-    (Int 42)
-    (Int 777)))

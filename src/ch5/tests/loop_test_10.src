@@ -1,4 +1,0 @@
-;; OUTPUT: 42
-(begin
-  (void)
-  42)

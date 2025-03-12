@@ -1,8 +1,0 @@
-(Program
-  (Let
-    x.1
-    Read
-    (Let
-      y.1
-      Read
-      (Add (Add (Var x.1) (Var y.1)) (Int 42)))))

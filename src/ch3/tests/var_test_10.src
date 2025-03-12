@@ -1,5 +1,0 @@
-;; INPUT: 45 3 ; 21 20
-;; OUTPUT: 42 ; 1
-(let (x (read))
-  (let (y (read))
-    (+ x (- y))))

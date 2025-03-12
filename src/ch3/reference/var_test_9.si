@@ -1,7 +1,0 @@
-(X86Program
-  (Info1 (locals_types ()))
-  (((Label start)
-    (Block
-      Binfo1
-      ((Callq (Label read_int) 0)
-       (Jmp (Label conclusion)))))))

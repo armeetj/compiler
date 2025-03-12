@@ -5,6 +5,7 @@ open Functors
 
 module type S = sig
   type t (* type of graph *)
+
   type elt (* type of vertices *)
 
   val empty : t

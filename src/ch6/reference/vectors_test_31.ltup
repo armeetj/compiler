@@ -1,7 +1,0 @@
-(Program
-  (Let
-    v
-    (Vec ((Int 20) (Int 22)) ())
-    (Prim
-      Add
-      ((VecRef (Var v) 0) (VecRef (Var v) 1)))))

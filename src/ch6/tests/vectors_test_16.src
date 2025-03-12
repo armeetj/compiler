@@ -1,4 +1,0 @@
-;; OUTPUT: 42
-(let (dummy (vector 0))
-  (let (f (vector (vector 1 42 (vector #t)) (vector dummy)))
-    (vector-ref (vector-ref f 0) 1)))

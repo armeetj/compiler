@@ -1,4 +1,0 @@
-(Program
-  (Add
-    (Int 52)
-    (Negate (Add (Int 7) (Int 3)))))

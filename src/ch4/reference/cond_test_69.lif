@@ -1,7 +1,0 @@
-(Program
-  (If
-    (And
-      (Bool true)
-      (Prim Eq ((Int 1) (Int 1))))
-    (Int 42)
-    (Int 777)))

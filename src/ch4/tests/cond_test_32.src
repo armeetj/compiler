@@ -1,6 +1,0 @@
-;; INPUT:   0 ; 10
-;; OUTPUT:  9 ; 12
-(let (a 1)
-  (let (b 2)
-    (let (x (if (eq? (read) 0) (- a) b))
-      (+ x 10))))

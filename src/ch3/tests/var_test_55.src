@@ -1,3 +1,0 @@
-;; INPUT: 20 62
-;; OUTPUT: 42
-(+ (- (read)) (read))

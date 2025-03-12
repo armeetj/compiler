@@ -1,6 +1,0 @@
-(Program
-  (VecRef
-    (VecRef
-      (Vec ((Vec ((Int 42)) ())) ())
-      0)
-    0))

@@ -1,8 +1,0 @@
-(Program
-  (If
-    (If
-      (Atm (Bool false))
-      (Atm (Bool false))
-      (Atm (Bool false)))
-    (Atm (Int 77))
-    (Atm (Int 42))))

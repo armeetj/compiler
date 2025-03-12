@@ -1,4 +1,0 @@
-;; INPUT: 0 ; 10
-;; OUTPUT: 42 ; 77
-(let (x (read))
-  (if (eq? x 0) 42 77))

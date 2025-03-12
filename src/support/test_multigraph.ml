@@ -68,5 +68,5 @@ print_tsort (tsort ~start:(Some "5") g3)
 
 let g4 = graph_of_nums [(1, 2); (2, 3); (3, 1)] ;;
 
-try print_tsort (tsort ~start:(Some "1") g4)
-with Failure msg -> printf "ERROR: %s\n" msg
+try print_tsort (tsort ~start:(Some "1") g4) with
+| Failure msg -> printf "ERROR: %s\n" msg

@@ -1,4 +1,0 @@
-;; OUTPUT: 42
-(let (v (vector 777))
-  (let (_ (vector-set! v 0 42))
-    (vector-ref v 0)))

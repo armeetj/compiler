@@ -1,5 +1,0 @@
-(Program
-  (Let
-    x.1
-    (Atm (Int 41))
-    (Add (Var x.1) (Int 1))))

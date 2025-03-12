@@ -1,8 +1,0 @@
-;; INPUT: 10 20 12
-;; OUTPUT: 42
-(let (a (read))
-  (let (b (read))
-    (let (c (read))
-        (+ (+ a b)
-           c))))
-

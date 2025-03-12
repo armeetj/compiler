@@ -1,8 +1,0 @@
-(Program
-  (If
-    (If
-      (Atm (Bool true))
-      (Prim Eq ((Int 1) (Int 1)))
-      (Atm (Bool false)))
-    (Atm (Int 42))
-    (Atm (Int 777))))

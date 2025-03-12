@@ -1,2 +1,0 @@
-(Program
-  (Let x Read (Add (Var x) (Var x))))

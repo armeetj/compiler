@@ -1,5 +1,0 @@
-(Program
-  (Let
-    x
-    (Int 14)
-    (Add (Var x) (Add (Var x) (Var x)))))

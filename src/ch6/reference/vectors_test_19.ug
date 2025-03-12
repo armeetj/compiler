@@ -1,8 +1,0 @@
-(Program
-  (Let
-    x.1
-    Void
-    (If
-      (Prim Eq ((Var x.1) (Var x.1)))
-      (Int 42)
-      (Int 0))))

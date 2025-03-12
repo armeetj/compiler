@@ -1,8 +1,0 @@
-(Program
-  (If
-    (Let
-      $tmp.1
-      (Prim Gt ((Int 0) (Int 42)))
-      (Prim Not ((Var $tmp.1))))
-    (Atm (Int 42))
-    (Atm (Int 101))))

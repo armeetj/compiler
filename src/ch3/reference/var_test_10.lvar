@@ -1,8 +1,0 @@
-(Program
-  (Let
-    x
-    Read
-    (Let
-      y
-      Read
-      (Add (Var x) (Negate (Var y))))))

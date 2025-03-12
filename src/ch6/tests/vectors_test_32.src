@@ -1,3 +1,0 @@
-;; OUTPUT: 42
-(let (v (vector 60 18))
-  (- (vector-ref v 0) (vector-ref v 1)))

@@ -1,6 +1,0 @@
-(Program
-  (Begin
-    ((While
-       (Atm (Bool false))
-       (Prim Read ())))
-    (Atm (Int 42))))

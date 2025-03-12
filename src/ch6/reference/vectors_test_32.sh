@@ -1,9 +1,0 @@
-(Program
-  (Let
-    v
-    (Vec
-      ((Int 60) (Int 18))
-      (Vector (Integer Integer)))
-    (Prim
-      Sub
-      ((VecRef (Var v) 0) (VecRef (Var v) 1)))))

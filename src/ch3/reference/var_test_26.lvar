@@ -1,1 +1,0 @@
-(Program (Negate (Add Read (Int 10))))

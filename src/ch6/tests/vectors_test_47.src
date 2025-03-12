@@ -1,3 +1,0 @@
-;; OUTPUT: 42
-(let (v0 (vector))
-   42)

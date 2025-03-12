@@ -1,9 +1,0 @@
-(X86Program
-  (Info1 (locals_types ()))
-  (((Label start)
-    (Block
-      (Binfo2
-        ((initial ((RegL Rsp)))
-         (afters (((RegL Rsp) (RegL Rax)) ()))))
-      ((Callq (Label read_int) 0)
-       (Jmp (Label conclusion)))))))

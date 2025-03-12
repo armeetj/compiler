@@ -1,7 +1,0 @@
-;; INPUT: 40 5 7
-;; OUTPUT: 42
-(let (x (read))
-  (let (y (read))
-    (+ x
-       (let (z (read))
-         (+ z (- y))))))

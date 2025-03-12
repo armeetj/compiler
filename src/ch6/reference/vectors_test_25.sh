@@ -1,8 +1,0 @@
-(Program
-  (Let
-    v
-    (Vec ((Int 777)) (Vector (Integer)))
-    (Let
-      _
-      (VecSet (Var v) 0 (Int 42))
-      (VecRef (Var v) 0))))

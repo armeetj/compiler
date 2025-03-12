@@ -73,7 +73,9 @@ module MapS = struct
     let to_string sexp_of_a map = Utils.pretty_print (sexp_of_t sexp_of_a map)
 
     let find_or key map ~f =
-      match find_opt key map with None -> f () | Some x -> x
+      match find_opt key map with
+      | None -> f ()
+      | Some x -> x
 
     let find_or_fail key map ~err_msg =
       find_or key map ~f:(fun () -> failwith err_msg)

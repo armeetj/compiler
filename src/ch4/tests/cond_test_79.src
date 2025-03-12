@@ -1,6 +1,0 @@
-;; INPUT: 1 ; 0 0 ; 0 1
-;; OUTPUT: 42 ; 42 ; 0
-(if (or (eq? (read) 1) (eq? (read) 0))
-    42
-    0)
-    

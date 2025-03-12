@@ -1,4 +1,0 @@
-(Program
-  (Add
-    (Let b.1 Read (Var b.1))
-    (Let c.1 Read (Var c.1))))

@@ -1,1 +1,0 @@
-(Program (Let x.1 (Bool true) (Int 42)))

@@ -1,8 +1,0 @@
-(Program
-  (Let
-    a.1
-    (Let
-      b.1
-      (Let c.1 (Int 1) (Var c.1))
-      (Var b.1))
-    (Var a.1)))

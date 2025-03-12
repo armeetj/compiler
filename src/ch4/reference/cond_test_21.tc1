@@ -1,7 +1,0 @@
-(Program
-  (If
-    (And
-      (Prim Eq ((Prim Read ()) (Int 0)))
-      (Prim Eq ((Prim Read ()) (Int 1))))
-    (Int 0)
-    (Int 42)))

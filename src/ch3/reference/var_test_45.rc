@@ -1,5 +1,0 @@
-(Program
-  (Let
-    $tmp.1
-    Read
-    (Sub (Int 84) (Var $tmp.1))))

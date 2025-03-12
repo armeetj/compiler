@@ -1,2 +1,0 @@
-(Program
-  (Let v0.1 (Vec () (Vector ())) (Int 42)))

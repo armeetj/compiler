@@ -1,6 +1,0 @@
-;; INPUT: 50 ; 0 ; 21
-;; OUTPUT: 42 ; 0 ; 0
-(let (x (read))
-  (let (y #t)
-    (if (eq? (> x 21) y) 42 0)))
-      

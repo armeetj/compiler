@@ -1,6 +1,0 @@
-;; INPUT: 2 ; -10
-;; OUTPUT: 42 ; 30
-(let (x (read))
-  (+ x (begin
-         (set! x 40)
-         x)))

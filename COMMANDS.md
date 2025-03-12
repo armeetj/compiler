@@ -5,7 +5,7 @@
 `python scripts/run_eval_tests.py tests/var_test_*.src`
 
 # Compare
-View ours and reference side by side.
+View compiled code and reference side by side.
 
 ## Random Sample
 `python scripts/compare.py reference/var_test_*.lvar -diff -random 10`

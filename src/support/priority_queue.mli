@@ -6,6 +6,7 @@ open Functors
 (** Priority queue interface. *)
 module type PriorityQueue = sig
   type t (* type of priority queue *)
+
   type elt (* type of priority queue elements *)
 
   val empty : t

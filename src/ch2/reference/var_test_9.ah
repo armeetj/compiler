@@ -1,6 +1,0 @@
-(X86Program
-  (Info2 (stack_space 0))
-  (((Label start)
-    (Block
-      ((Callq (Label read_int) 0)
-       (Jmp (Label conclusion)))))))

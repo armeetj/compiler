@@ -1,7 +1,0 @@
-(Program
-  (Let
-    x.1
-    (Atm (Int 0))
-    (Begin
-      ((SetBang x.1 (Atm (Int 42))))
-      (Atm (Var x.1)))))

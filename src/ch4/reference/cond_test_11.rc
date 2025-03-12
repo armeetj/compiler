@@ -1,5 +1,0 @@
-(Program
-  (If
-    (Prim Not ((Bool false)))
-    (Atm (Int 42))
-    (Atm (Int 77))))

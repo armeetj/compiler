@@ -1,8 +1,0 @@
-(Program
-  (Let
-    x.1
-    (Atm (Int 14))
-    (Let
-      $tmp.1
-      (Add (Var x.1) (Var x.1))
-      (Add (Var $tmp.1) (Var x.1)))))

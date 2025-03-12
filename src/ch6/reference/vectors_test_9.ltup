@@ -1,5 +1,0 @@
-(Program
-  (Let
-    v0
-    (Vec ((Int 42)) ())
-    (VecRef (Var v0) 0)))

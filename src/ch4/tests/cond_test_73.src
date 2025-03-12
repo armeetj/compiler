@@ -1,2 +1,0 @@
-;; OUTPUT: 42
-(if (if (eq? #f #t) #t #f) 11 42)

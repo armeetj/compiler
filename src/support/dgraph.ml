@@ -90,41 +90,38 @@ module Make (Elt : OrderedTypeS) : S with type elt = Elt.t = struct
     (* Remove in edge from e_in to e. *)
     let remove_in_edge (g : t) (e : elt) (e_in : elt) : t =
       match VMap.find_opt e g with
-      | None ->
-          vertex_missing "remove_vertex: remove_in_edge" e
+      | None -> vertex_missing "remove_vertex: remove_in_edge" e
       | Some node ->
-          let in_edges' = VSet.remove e_in node.in_edges in
-          let node' = {node with in_edges = in_edges'} in
-          VMap.add e node' g
+        let in_edges' = VSet.remove e_in node.in_edges in
+        let node' = {node with in_edges = in_edges'} in
+        VMap.add e node' g
     in
     (* Remove out edge from e to e_out. *)
     let remove_out_edge (g : t) (e : elt) (e_out : elt) : t =
       match VMap.find_opt e g with
-      | None ->
-          vertex_missing "remove_vertex: remove_out_edge" e
+      | None -> vertex_missing "remove_vertex: remove_out_edge" e
       | Some node ->
-          let out_edges' = VSet.remove e_out node.out_edges in
-          let node' = {node with out_edges = out_edges'} in
-          VMap.add e node' g
+        let out_edges' = VSet.remove e_out node.out_edges in
+        let node' = {node with out_edges = out_edges'} in
+        VMap.add e node' g
     in
     match VMap.find_opt e g with
-    | None ->
-        vertex_missing "remove_vertex" e
+    | None -> vertex_missing "remove_vertex" e
     | Some {in_edges; out_edges} ->
-        (* Remove the vertex itself. *)
-        let g' = VMap.remove e g in
-        (* Remove the in edges (edges going to the deleted vertex).
-         * These are the out edges of the connected vertices. *)
-        let g'' =
-          List.fold_left
-            (fun g e_connected -> remove_out_edge g e_connected e)
-            g' (VSet.elements in_edges)
-        in
-        (* Remove the out edges (edges coming from the deleted vertex).
-         * These are the in edges of the connected vertices. *)
+      (* Remove the vertex itself. *)
+      let g' = VMap.remove e g in
+      (* Remove the in edges (edges going to the deleted vertex).
+       * These are the out edges of the connected vertices. *)
+      let g'' =
         List.fold_left
-          (fun g e_connected -> remove_in_edge g e_connected e)
-          g'' (VSet.elements out_edges)
+          (fun g e_connected -> remove_out_edge g e_connected e)
+          g' (VSet.elements in_edges)
+      in
+      (* Remove the out edges (edges coming from the deleted vertex).
+       * These are the in edges of the connected vertices. *)
+      List.fold_left
+        (fun g e_connected -> remove_in_edge g e_connected e)
+        g'' (VSet.elements out_edges)
 
   let add_edge g e1 e2 =
     if not (mem g e1) then vertex_missing "add_neighbor" e1
@@ -147,32 +144,27 @@ module Make (Elt : OrderedTypeS) : S with type elt = Elt.t = struct
 
   let add_edge_new g e1 e2 =
     match (mem g e1, mem g e2) with
-    | true, true ->
-        add_edge g e1 e2
+    | true, true -> add_edge g e1 e2
     | true, false ->
-        let g' = add_vertex g e2 in
-        add_edge g' e1 e2
+      let g' = add_vertex g e2 in
+      add_edge g' e1 e2
     | false, true ->
-        let g' = add_vertex g e1 in
-        add_edge g' e1 e2
+      let g' = add_vertex g e1 in
+      add_edge g' e1 e2
     | false, false ->
-        let g1 = add_vertex g e1 in
-        let g2 = add_vertex g1 e2 in
-        add_edge g2 e1 e2
+      let g1 = add_vertex g e1 in
+      let g2 = add_vertex g1 e2 in
+      add_edge g2 e1 e2
 
   let neighbors_in g e =
     match VMap.find_opt e g with
-    | None ->
-        vertex_missing "neighbors_in" e
-    | Some n ->
-        VSet.elements n.in_edges
+    | None -> vertex_missing "neighbors_in" e
+    | Some n -> VSet.elements n.in_edges
 
   let neighbors_out g e =
     match VMap.find_opt e g with
-    | None ->
-        vertex_missing "neighbors_out" e
-    | Some n ->
-        VSet.elements n.out_edges
+    | None -> vertex_missing "neighbors_out" e
+    | Some n -> VSet.elements n.out_edges
 
   let vertices g = VMap.keys g
 
@@ -200,22 +192,18 @@ module Make (Elt : OrderedTypeS) : S with type elt = Elt.t = struct
     let best_next_vertex (g : t) : elt option =
       let rec best s (rest : elt list) (e_best : elt) : elt =
         match rest with
-        | [] ->
-            e_best
+        | [] -> e_best
         | e :: es ->
-            if Elt.compare s e = 0 then e
-            else if Elt.compare e_best e > 0 then best s es e
-            else best s es e_best
+          if Elt.compare s e = 0 then e
+          else if Elt.compare e_best e > 0 then best s es e
+          else best s es e_best
       in
       match vertices_no_incoming g with
-      | [] ->
-          None
+      | [] -> None
       | e :: es -> (
         match start with
-        | None ->
-            Some (List.fold_left min e es)
-        | Some s ->
-            if Elt.compare s e = 0 then Some e else Some (best s es e) )
+        | None -> Some (List.fold_left min e es)
+        | Some s -> if Elt.compare s e = 0 then Some e else Some (best s es e) )
     in
     (* Get the best next vertex, remove it (and store it),
      * and continue until all vertices have been removed.
@@ -225,62 +213,60 @@ module Make (Elt : OrderedTypeS) : S with type elt = Elt.t = struct
       else
         match best_next_vertex g with
         | None ->
-            (* all vertices have incoming edges *)
-            failwith "dgraph: topological_sort: no best vertex (not a DAG)"
+          (* all vertices have incoming edges *)
+          failwith "dgraph: topological_sort: no best vertex (not a DAG)"
         | Some e ->
-            let g' = remove_vertex g e in
-            iter g' (e :: sorted)
+          let g' = remove_vertex g e in
+          iter g' (e :: sorted)
     in
     if is_empty g then failwith "dgraph: topological_sort: no graph to sort!"
     else iter g []
 
   let merge_vertices g e1 e2 =
     match (VMap.find_opt e1 g, VMap.find_opt e2 g) with
-    | None, _ ->
-        vertex_missing "merge_vertices" e1
-    | _, None ->
-        vertex_missing "merge_vertices" e2
+    | None, _ -> vertex_missing "merge_vertices" e1
+    | _, None -> vertex_missing "merge_vertices" e2
     | Some e1_node, Some e2_node ->
-        let label = "dgraph: merge_vertices" in
-        let e1_outs = e1_node.out_edges in
-        let e2_ins = e2_node.in_edges in
-        (* Check that e1 has only one out edge, to e2. *)
-        if VSet.cardinal e1_outs <> 1 || not (VSet.mem e2 e1_outs) then
-          failwith
-          @@ Printf.sprintf "%s: first vertex (%s) cannot be merged" label
-               (Elt.to_string e1)
-          (* Check that e2 has only one in edge, from e1. *)
-        else if VSet.cardinal e2_ins <> 1 || not (VSet.mem e1 e2_ins) then
-          failwith
-          @@ Printf.sprintf "%s: second vertex (%s) cannot be merged" label
-               (Elt.to_string e2)
-        else
-          (* OK to merge. Create the new vertex. *)
-          let out_edges = e2_node.out_edges in
-          let v_node = {e1_node with out_edges} in
-          (* Remove `e2` and all its connections from the graph. *)
-          let g1 = remove_vertex g e2 in
-          (* Add `v` as the new `e1`.
-           * It has the in edges of the old `e1`
-           * and the out edges of `e2`. *)
-          let g2 = VMap.add e1 v_node g1 in
-          (* Add the out edges from `e1` to the in edges of the targets. *)
-          List.fold_left
-            (fun g e_target ->
-              match VMap.find_opt e_target g with
-              | None ->
-                  failwith
-                  @@ Printf.sprintf "%s: expected target node (%s) not found"
-                       label (Elt.to_string e_target)
-              | Some target_node ->
-                  (* Add an in edge from `e1` to the target node.
-                   * Recall that before removing the `e2` vertex,
-                   * it used to have an in edge from `e2`. *)
-                  let target_ins = target_node.in_edges in
-                  let in_edges = VSet.add e1 target_ins in
-                  let target_node' = {target_node with in_edges} in
-                  VMap.add e_target target_node' g )
-            g2 (VSet.elements out_edges)
+      let label = "dgraph: merge_vertices" in
+      let e1_outs = e1_node.out_edges in
+      let e2_ins = e2_node.in_edges in
+      (* Check that e1 has only one out edge, to e2. *)
+      if VSet.cardinal e1_outs <> 1 || not (VSet.mem e2 e1_outs) then
+        failwith
+        @@ Printf.sprintf "%s: first vertex (%s) cannot be merged" label
+             (Elt.to_string e1)
+        (* Check that e2 has only one in edge, from e1. *)
+      else if VSet.cardinal e2_ins <> 1 || not (VSet.mem e1 e2_ins) then
+        failwith
+        @@ Printf.sprintf "%s: second vertex (%s) cannot be merged" label
+             (Elt.to_string e2)
+      else
+        (* OK to merge. Create the new vertex. *)
+        let out_edges = e2_node.out_edges in
+        let v_node = {e1_node with out_edges} in
+        (* Remove `e2` and all its connections from the graph. *)
+        let g1 = remove_vertex g e2 in
+        (* Add `v` as the new `e1`.
+         * It has the in edges of the old `e1`
+         * and the out edges of `e2`. *)
+        let g2 = VMap.add e1 v_node g1 in
+        (* Add the out edges from `e1` to the in edges of the targets. *)
+        List.fold_left
+          (fun g e_target ->
+            match VMap.find_opt e_target g with
+            | None ->
+              failwith
+              @@ Printf.sprintf "%s: expected target node (%s) not found" label
+                   (Elt.to_string e_target)
+            | Some target_node ->
+              (* Add an in edge from `e1` to the target node.
+               * Recall that before removing the `e2` vertex,
+               * it used to have an in edge from `e2`. *)
+              let target_ins = target_node.in_edges in
+              let in_edges = VSet.add e1 target_ins in
+              let target_node' = {target_node with in_edges} in
+              VMap.add e_target target_node' g )
+          g2 (VSet.elements out_edges)
 
   let of_list lst =
     List.fold_left (fun g (x, y) -> add_edge_new g x y) empty lst
@@ -288,6 +274,6 @@ module Make (Elt : OrderedTypeS) : S with type elt = Elt.t = struct
   let of_alist alist get_elts =
     alist
     |> List.concat_map (fun (e, x) ->
-           get_elts x |> List.map (fun e' -> (e, e')) )
+         get_elts x |> List.map (fun e' -> (e, e')) )
     |> of_list
 end

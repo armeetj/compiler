@@ -1,5 +1,0 @@
-;; INPUT: 1 ; 0
-;; OUTPUT: 42 ; 77
-(if (if (eq? (read) 1) #t #f)
-    42
-    77)
