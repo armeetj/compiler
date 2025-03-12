@@ -1,9 +1,56 @@
-# Racket Compiler
+# Compiler
 
-Racket to x86-64 nanopass Compiler written from scratch in OCaml.
+Scheme to x86-64 nanopass Compiler written from scratch in OCaml.
 
 Armeet Singh Jatyani `armeet@caltech.edu`   
 Ashug Gurijala `agurijal@caltech.edu`
+
+Example (left: scheme-like, right: x86-64 assembly)
+```assembly
+;; OUTPUT: 42
+                                                     |   main_start:                          
+                                                     |       leaq add(%rip), %rcx             
+(define (add (x : Integer) (y : Integer)) : Integer  |       movq $40, %rdi                   
+  (+ x y))                                           |       movq $2, %rsi                    
+                                                     |       movq %rcx, %rax                  
+(add 40 2)                                           |       popq %rbp                        
+                                                     |       jmp *%rax                        
+                                                     |                                        
+                                                     |       .globl main                      
+                                                     |       .align 8                         
+                                                     |                                        
+                                                     |   main:                                
+                                                     |       pushq %rbp                       
+                                                     |       movq %rsp, %rbp                  
+                                                     |       movq $65536, %rdi                
+                                                     |       movq $65536, %rsi                
+                                                     |       callq initialize                 
+                                                     |       movq rootstack_begin(%rip), %r15 
+                                                     |       jmp main_start                   
+                                                     |                                        
+                                                     |   main_conclusion:                     
+                                                     |       popq %rbp                        
+                                                     |       retq                             
+                                                     |                                        
+                                                     |   add_start:                           
+                                                     |       movq %rdi, %rcx                  
+                                                     |       movq %rsi, %rdx                  
+                                                     |       movq %rcx, %rax                  
+                                                     |       addq %rdx, %rax                  
+                                                     |       jmp add_conclusion               
+                                                     |                                        
+                                                     |       .globl add                       
+                                                     |       .align 8                         
+                                                     |                                        
+                                                     |   add:                                 
+                                                     |       pushq %rbp                       
+                                                     |       movq %rsp, %rbp                  
+                                                     |       jmp add_start                    
+                                                     |                                        
+                                                     |   add_conclusion:                      
+                                                     |       popq %rbp                        
+                                                     |       retq                             
+```
 
 ## Architecture
 
@@ -37,11 +84,13 @@ allocated on the stack.
 
 
 ## Setup
-`opam install ocamlfind dune utop sexplib ppx_sexp_conv ocaml-lsp-server`
+```bash
+opam install ocamlfind dune utop sexplib ppx_sexp_conv ocaml-lsp-server
+```
 
 ## Build
 ```bash
-cd compiler
+cd src/compiler
 make
 ```
 
